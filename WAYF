@@ -3,8 +3,8 @@
 /*
 ******************************************************************************
 SWITCH PHP WAYF, 
-Copyright 2010 SWITCH - Serving Swiss Universities
-Version: 1.12.1
+Copyright 2009 SWITCH - Serving Swiss Universities
+Version: 1.13
 Contact:  aai@switch.ch
 Web site: http://www.switch.ch/aai/wayf
 ******************************************************************************
@@ -147,18 +147,18 @@ if (isset($_POST['permanent'])
 		setcookie ($redirectCookieName, $_POST['user_idp'], time() + (100*24*3600), '/', $commonDomain, false);
 	}
 } elseif (
-	isset($_POST['session']) 
-	&& isset($_POST['user_idp']) 
+	isset($_POST['user_idp']) 
 	&& checkIDP($_POST['user_idp'])
 	){
-	// Set redirection cookie and redirection state cookie
-	setcookie ($redirectCookieName, $_POST['user_idp'], null, '/', $commonDomain, false);
-	setcookie ($redirectStateCookieName, 'checked', time() + (100*24*3600), '/', $commonDomain, false);
-} else {
-	// Delete cookie for session checkbox
-	setcookie ($redirectStateCookieName, 'checked', time() - 3600, '/', $commonDomain, false);
+	
+	if (isset($_POST['session'])){
+		// Set redirection cookie and redirection state cookie
+		setcookie ($redirectCookieName, $_POST['user_idp'], null, '/', $commonDomain, false);
+		setcookie ($redirectStateCookieName, 'checked', time() + (100*24*3600), '/', $commonDomain, false);
+	} else {
+		setcookie ($redirectStateCookieName, 'checked', time() - 3600, '/', $commonDomain, false);
+	}
 }
-
 
 /*------------------------------------------------*/
 // Redirecting user
@@ -442,7 +442,7 @@ if (
 	$invalidstring = preg_replace('/&/',"&\n",$invalidstring);
 	if ($invalidstring == '')
 		$invalidstring = getLocalString('no_arguments');
-	$message = getLocalString('arguments_missing') . '<pre><code>'.$invalidstring.'</code></pre></p>
+	$message = getLocalString('arguments_missing') . '<pre><code>'.htmlentities($invalidstring).'</code></pre></p>
 		<p>'. getLocalString('valid_request_description');
 	printError($message);
 	exit;
@@ -456,7 +456,7 @@ if (
 	$invalidstring = preg_replace('/&/',"&\n",$invalidstring);
 	if ($invalidstring == '')
 		$invalidstring = getLocalString('no_arguments');
-	$message = getLocalString('arguments_missing') . '<pre><code>'.$invalidstring.'</code></pre></p>
+	$message = getLocalString('arguments_missing') . '<pre><code>'.htmlentities($invalidstring).'</code></pre></p>
 		<p>'. getLocalString('valid_saml2_request_description');
 	printError($message);
 	exit;
