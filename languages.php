@@ -67,7 +67,7 @@ $langStrings['de'] = array (
 'confirm_permanent_selection' => 'Sind Sie sicher, dass Sie die Auswahl als Home Organisation Einstellung speichern wollen? Dies ist z.B. nicht empfehlenswert, wenn Sie mehrere AAI Accounts verwenden.',
 'save_button' => 'Speichern',
 'access_target' => 'Eine g&uuml;ltige Benutzerauthentifizierung ist n&ouml;tig um auf den Dienst <tt>\'<a href="%s">%s</a>\'</tt> zuzugreifen.',
-'access_host' => 'Um auf Dienste auf dem Rechner <tt>\'%s\'</tt> zuzugreifen, ist eine g&uuml;ltige Benutzerauthentifizierung n&ouml;tig.',
+'access_host' => 'Um auf Dienste auf dem Server <tt>\'%s\'</tt> zuzugreifen, ist eine g&uuml;ltige Benutzerauthentifizierung n&ouml;tig.',
 'select_idp' => 'W&auml;hlen Sie Ihre Home Organisation',
 'remember_selection' => 'Auswahl f&uuml;r die laufende Webbrowser Sitzung speichern.',
 'switch_description' => 'Die <a href="http://www.switch.ch/" target="_blank">Stiftung SWITCH</a> betreibt neben anderen Dienstleistungen das Schweizer Bildungs- &amp; Forschungsnetzwerk, welches allen h&ouml;heren Ausbildungseinrichtungen Hochgeschwindigkeitsanschl&uuml;sse ans Internet und an andere globale Wissenschaftsnetze zur Verf&uuml;gung stellt.',

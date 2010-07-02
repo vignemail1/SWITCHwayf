@@ -3,19 +3,18 @@ SWITCH WAYF
 Copyright 2010 SWITCH - Serving Swiss Universities
 Contact: aai@switch.ch or go to http://www.switch.ch/aai/wayf
 Version: See head of file 'WAYF' in the same directory
+Project web site: https://forge.switch.ch/redmine/projects/wayf
+Bug reports/feature requests: https://forge.switch.ch/redmine/projects/wayf/issues
 -------------------------------------------------------------------------------
 
 Description:
-This implementation of a Shibboleth WAYF is compliant to the Common Domain 
-Cookie described in:
-http://docs.oasis-open.org/security/saml/v2.0/saml-profiles-2.0-os.pdf
-
-and the Identity Provider Discovery Service Protocol and Profile (Draft 2) 
-(Draft 1 is available here: http://www.oasis-open.org/committees/download.php/22041)
+The SWITCHwayf is an implementation of the Shibboleth WAYF and SAML2 Discovery Service protocol for use withing a Shibboleth architecture.
 
 -------------------------------------------------------------------------------
 
 Features:
+Some of the features include
+
 - Preselecting entry in drop down list by
   - SAML common domain cookie that contains selected Identity Providers 
   - resource path info hint (e.g. 
@@ -24,23 +23,17 @@ Features:
   - Kerberos preselection
   - IP range preselection
   - IP reverse DNS lookup preselection
-- Support for SAML2/Shibboleth 2 IdP discovery
-- Support of the OASIS Directory Service protocol used by Shibboleth2 SPs
-- Transparent mode, e.g. /WAYF/unige.ch/redirect?shire=https://...
-- Read metadata from SAML2 metadata file
-- Customizations of header, footer, language strings etc
-- Generate code for embedding wayf directly on an SP-protected web site
-- Permanent cookie support to redirect user directly
+- Transparent redirection mode, e.g. /WAYF/unige.ch/redirect?shire=https://...
+- Support for SAML2 metadata files
+- Various customizations optionas for header, footer, language strings etc.
+- HTML code generation for embedding the WAYF directly into a web page
+- Support for remembering IdP selection permanently
 - I18N support, currently language packs for en, de, it, fr and pt are included
-- Light-weight
-
-Wish List:
-- Favourites list of IdPs for the Embedded WAYF
 
 -------------------------------------------------------------------------------
 
 Requirements:
-- Web server must be able to process PHP5 scripts.
+- The web server must support PHP5
 - If the configuration and the backup configuration differ, you have to make 
   sure the user that runs the php script has write access for the configuration
   files.
@@ -81,14 +74,15 @@ You also could rename the file 'WAYF' to 'WAYF.php' or
 make a directory called 'WAYF', rename WAYF to 'index.php' and put it in that 
 directory.
 
-When using the embedded WAYF you also should also add a line to the Apache 
-configuration like:
+When using the embedded WAYF feature it's probabl necessary to add a line to 
+the Apache configuration like below in order to prevent certain web browsers 
+from not displaying the Embedded WAYF or parts of it:
 
 --
 Header set P3P "CP=\"NOI CUR DEVa OUR IND COM NAV PRE\""
 --
 
-and enable the Apache header extension
+For that to work, the Apache header extension must also be enabled
 with a command like:
 
 --
@@ -96,7 +90,7 @@ a2enmod headers
 /etc/init.d/apache2 reload
 --
 
-See http://www.w3.org/P3P/ for more details
+See http://www.w3.org/P3P/ for more details on P3P.
 
 -------------------------------------------------------------------------------
 
@@ -204,9 +198,9 @@ services will depend on it.
 -------------------------------------------------------------------------------
 
 Kerberos support:
-Your Apache needs to support Negotiate/SPNEGO Kerberos protocol (for example, 
-using mod_auth_kerb).
-- Make a symlink of the file 'WAYF' and name it like configured in variable 
+Your web server needs to support Negotiate/SPNEGO Kerberos protocol. For 
+example by using mod_auth_kerb.
+- Make a symlink of the file 'WAYF' and name it like configured in the variable 
   $kerberosRedirectURL
 - Protect file $kerberosRedirectURL with Kerberos. The Kerberos realm must be
   specified in "IDProvider.conf.php" for each IdP. Each IdP's KDC must also
