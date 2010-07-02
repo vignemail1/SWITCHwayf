@@ -42,7 +42,7 @@ $langStrings['en'] = array (
 'login_with' => 'Login with:',
 'other_federation' => 'From other federations',
 'logged_in' => 'You are already authenticated.',
-'favourites' => 'Most used Home Organisations',
+'most_used' => 'Most used Home Organisations',
 );
 
 
@@ -83,7 +83,7 @@ $langStrings['de'] = array (
 'login_with' => 'Anmelden &uuml;ber:',
 'other_federation' => 'Von anderen F&ouml;derationen',
 'logged_in' => 'Sie sind bereits angemeldet.',
-'favourites' => 'Meist genutzte Home Organisationen',
+'most_used' => 'Meist genutzte Home Organisationen',
 );
 
 
@@ -124,7 +124,7 @@ $langStrings['fr'] =  array (
 'login_with' => 'Se connecter avec:',
 'other_federation' => 'D\'autres f&eacute;derations',
 'logged_in' => 'Vous &ecirc;tes d&eacute;j&agrave; authentifi&eacute;.',
-'favourites' => 'Home Organisations plus utilis&eacute;es',
+'most_used' => 'Home Organisations plus utilis&eacute;es',
 );
 
 
@@ -165,7 +165,7 @@ $langStrings['it'] = array (
 'login_with' => 'Login con:',
 'other_federation' => 'Di altra federaziones',
 'logged_in' => 'Lei &egrave; gi&agrave; autenticato.',
-'favourites' => 'Home Organisations favorite',
+'most_used' => 'Home Organisations favorite',
 );
 
 // Portuguese
@@ -206,7 +206,7 @@ $langStrings['pt'] = array (
 'login_with' => 'Autenticar em:',
 'other_federation' => 'Outra Federa&ccedil;Atilde;o',
 'logged_in' => 'J&aacute; se encontra autenticado',
-'favourites' => 'Institui&ccedil;&atilde;o de Origem mais utilizada',
+'most_used' => 'Institui&ccedil;&atilde;o de Origem mais utilizada',
 );
 
 ?>
