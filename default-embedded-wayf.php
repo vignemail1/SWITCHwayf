@@ -82,10 +82,10 @@ var wayf_hide_after_login = true;
 var wayf_show_categories =  true;
 
 
-// Favourite Identity Providers will be shown as top category in the drop down
+// Most used Identity Providers will be shown as top category in the drop down
 // list if this feature is used.
 // [Optional, commented out by default]
-// var wayf_favourite_idps =  new Array("urn:mace:switch.ch:SWITCHaai:unibas.ch", "https://aai.unil.ch/idp/shibboleth");
+// var wayf_most_used_idps =  new Array("urn:mace:switch.ch:SWITCHaai:unibas.ch", "https://aai.unil.ch/idp/shibboleth");
 
 
 // Categories of Identity Provider that shall not be shown

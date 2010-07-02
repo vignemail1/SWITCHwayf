@@ -13,9 +13,9 @@
 		<input type="submit" name="Select" accesskey="s" tabindex="10" value="<?php echo getLocalString('select_button') ?>" > 
 	</p>
 	<p>
-		<input tabindex="8" type="checkbox" <?php $rememberSelectionChecked ?> name="session" value="true">
+		<input tabindex="8" type="checkbox" <?php echo $rememberSelectionChecked ?> name="session" value="true">
 		<span class="warning"><?php echo getLocalString('remember_selection') ?></span><br>
-		<?if ($showPermanentSetting) : ?>
+		<?php if ($showPermanentSetting) : ?>
 		<!-- Value permanent must be a number which is equivalent to the days the cookie shall be valid -->
 		<input type="checkbox" tabindex="9" name="permanent" value="100">
 		<span class="warning"><?php echo getLocalString('permanently_remember_selection') ?></span>

@@ -82,13 +82,14 @@ function checkIDP($IDP, $showError = true){
 	} elseif(!$showError){
 		return false;
 	} else {
-		$message = sprintf(getLocalString('invalid_user_idp'), $IDP)."</p><p>\n<tt>";
+		$message = sprintf(getLocalString('invalid_user_idp'), htmlentities($IDP))."</p><p>\n<tt>";
 					foreach ($IDProviders as $key => $value){
 						if (isset($value['SSO'])){
 							$message .= $key."<br>\n";
 						}
 					}
 		$message .= "</tt>\n";
+		
 		printError($message);
 		exit;
 	}

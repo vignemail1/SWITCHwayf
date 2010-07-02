@@ -223,7 +223,7 @@ function printEmbeddedWAYFScript(){
 	$loginString = addslashes(getLocalString('login'));
 	$selectIdPString = addslashes(getLocalString('select_idp'));
 	$otherFederationString = addslashes(getLocalString('other_federation'));
-	$favouritesString = addslashes(getLocalString('favourites'));
+	$mostUsedIdPsString = addslashes(getLocalString('most_used'));
 	
 	echo <<<SCRIPT
 
@@ -252,7 +252,7 @@ var wayf_hide_logo;
 var wayf_auto_login;
 var wayf_logged_in_messsage;
 var wayf_hide_after_login;
-var wayf_favourite_idps;
+var wayf_most_used_idps;
 var wayf_show_categories;
 var wayf_hide_categories;
 var wayf_hide_idps;
@@ -651,10 +651,10 @@ function decodeBase64(input) {
 	}
 	
 	if(
-		typeof(wayf_favourite_idps) == "undefined"
-		|| typeof(wayf_favourite_idps) != "object"
+		typeof(wayf_most_used_idps) == "undefined"
+		|| typeof(wayf_most_used_idps) != "object"
 		){
-		wayf_favourite_idps = new Array();
+		wayf_most_used_idps = new Array();
 	}
 	
 	if(
@@ -845,13 +845,13 @@ SCRIPT;
 		
 		
 		// Favourites
-		if (wayf_favourite_idps.length > 0){
-			writeHTML('<optgroup label="{$favouritesString}">');
+		if (wayf_most_used_idps.length > 0){
+			writeHTML('<optgroup label="{$mostUsedIdPsString}">');
 			
 			// Show additional IdPs in the order they are defined
-			for ( var i=0; i < wayf_favourite_idps.length; i++){
-				if (wayf_idps[wayf_favourite_idps[i]]){
-					writeHTML('<option value="' + wayf_favourite_idps[i] + '">' + wayf_idps[wayf_favourite_idps[i]].name + '</option>');
+			for ( var i=0; i < wayf_most_used_idps.length; i++){
+				if (wayf_idps[wayf_most_used_idps[i]]){
+					writeHTML('<option value="' + wayf_most_used_idps[i] + '">' + wayf_idps[wayf_most_used_idps[i]].name + '</option>');
 				}
 			}
 			
