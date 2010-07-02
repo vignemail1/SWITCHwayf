@@ -33,7 +33,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 
 // Width of the embedded WAYF in pixels or "auto"
 // [Optional, default: "auto"]
-var wayf_width = 200;
+var wayf_width = "auto";
 
 // Height of the embedded WAYF in pixels or "auto"
 // [Optional, default: "auto"]
