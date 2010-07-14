@@ -225,6 +225,37 @@ function printEmbeddedWAYFScript(){
 	$otherFederationString = addslashes(getLocalString('other_federation'));
 	$mostUsedIdPsString = addslashes(getLocalString('most_used'));
 	
+	// Generate list of Identity Providers
+	$JSONIdPArray = array();
+	foreach ($IDProviders as $key => $value){
+		
+		// Get IdP Name
+		if (isset($value[$language]['Name'])){
+			$IdPName = addslashes($value[$language]['Name']);
+		} else {
+			$IdPName = addslashes($value['Name']);
+		}
+		
+		// Set selected attribute
+		$selected = ($selectedIDP == $key) ? ' selected="selected"' : '' ;
+		$IdPType = isset($IDProviders[$key]['Type']) ? $IDProviders[$key]['Type'] : '';
+		
+		// Skip non-IdP entries
+		if ($IdPType == '' || $IdPType == 'category'){
+			continue;
+		}
+		
+		$JSONIdPArray[] = <<<ENTRY
+
+	"{$key}":{
+		type:"{$IdPType}",
+		name:"{$IdPName}",
+		SAML1SSOurl:"{$value['SSO']}"
+		}
+ENTRY;
+	}
+	$JSONIdPList = join(',', $JSONIdPArray);
+	
 	echo <<<SCRIPT
 
 // To use this JavaScript, please access:
@@ -262,42 +293,7 @@ var wayf_additional_idps;
 var wayf_sp_samlDSURL;
 var wayf_sp_samlACURL;
 var wayf_html = "";
-var wayf_idps = {
-
-SCRIPT;
-
-// Generate list of Identity Providers
-foreach ($IDProviders as $key => $value){
-		
-		// Get IdP Name
-		if (isset($value[$language]['Name'])){
-			$IdPName = addslashes($value[$language]['Name']);
-		} else {
-			$IdPName = addslashes($value['Name']);
-		}
-		
-		// Set selected attribute
-		$selected = ($selectedIDP == $key) ? ' selected="selected"' : '' ;
-		$IdPType = isset($IDProviders[$key]['Type']) ? $IDProviders[$key]['Type'] : '';
-		
-		// Skip non-IdP entries
-		if ($IdPType == '' || $IdPType == 'category'){
-			continue;
-		}
-		
-		echo <<<SCRIPT
-
-"{$key}":{
-		type:"{$IdPType}",
-		name:"{$IdPName}",
-		SAML1SSOurl:"{$value['SSO']}"
-		},
-SCRIPT;
-	}
-
-
-echo <<<SCRIPT
-};
+var wayf_idps = { {$JSONIdPList} };
 
 // Define functions
 function submitForm(){
