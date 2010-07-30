@@ -121,6 +121,8 @@ function parseMetadata($metadataFile, $defaultLanguage){
 					//Remove used entries from array $idps
 					$usedIdp = array_splice($idps, 0, 2);
 					$entityAttrs = count($entity);
+					$entityId = '';
+					$location = '';
 					
 					for($k=0; $k<$entityAttrs; $k++){
 						if(strcmp($entity[$k]['type'], 'close')){
