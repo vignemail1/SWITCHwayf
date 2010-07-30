@@ -114,11 +114,14 @@ var wayf_show_categories =  true;
 
 //////////////////// ADVANCED SETTINGS ////////////////////
 
-// Whether or not the new SAML2/Shibboleth 2 flow shall be used that
-// sends the user from the discovery service back to the the Service Provider
-// Set this to true if you are using a Shibboleth Service Provider 2.x
-// [Optional, default: true]
-var wayf_use_discovery_service = true
+// Use the SAML2/Shibboleth 2 Discovery Service protocol where
+// the user is sent back to the Service Provider after selection
+// of his Home Organisation.
+// This is true by default and it should only be uncommented and set to false
+// if there is a good reason why to use the old and deprecated Shibboleth WAYF
+// protocol instead.
+// [Optional, default: commented out]
+// var wayf_use_discovery_service = false
 
 // Session Initiator URL of the Service Provider
 // Examples: "https://econf.switch.ch/Shibboleth.sso/DS", "https://dokeos.unige.ch/Shibboleth.sso/DS"
@@ -153,6 +156,11 @@ var wayf_use_discovery_service = true
 // Overwrites the intro text above the drop-down list
 // [Optional, commented out by default]
 // var wayf_overwrite_intro_text = 'Select your Home Organisation to log in';
+
+// Overwrites the category name of the most used IdP category in the drop-down list
+// [Optional, commented out by default]
+// var wayf_overwrite_most_used_idps_text = 'Most popular';
+
 
 // Whether to hide the WAYF after the user was logged in
 // This requires that the _shib_session_* cookie is set when a user 
