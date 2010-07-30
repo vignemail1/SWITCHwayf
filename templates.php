@@ -544,7 +544,6 @@ function decodeBase64(input) {
 		|| typeof(wayf_use_discovery_service) != "boolean"
 	){
 		wayf_use_discovery_service = true;
-		config_ok = false;
 	}
 	
 	if(typeof(wayf_sp_entityID) == "undefined"){
@@ -839,10 +838,13 @@ SCRIPT;
 		// Add first entry: "Select your IdP..."
 		writeHTML('<option value="-">{$selectIdPString} ...</option>');
 		
-		
 		// Favourites
 		if (wayf_most_used_idps.length > 0){
-			writeHTML('<optgroup label="{$mostUsedIdPsString}">');
+			if(typeof(wayf_overwrite_most_used_idps_text) == "undefined"){
+				writeHTML('<optgroup label="{$mostUsedIdPsString}">');
+			} else {
+				writeHTML('<optgroup label="' + wayf_overwrite_most_used_idps_text + '">');
+			}
 			
 			// Show additional IdPs in the order they are defined
 			for ( var i=0; i < wayf_most_used_idps.length; i++){
