@@ -725,9 +725,9 @@ function decodeBase64(input) {
 		wayf_hide_after_login 
 		&& user_logged_in
 	){
-		writeHTML('<div id="wayf_div" style="background:' + wayf_background_color + ';border-style: solid;border-color: ' + wayf_border_color + ';border-width: 1px;padding: 10px;height: auto;width: ' + wayf_width + ';text-align: left;overflow: hidden;">');
+		writeHTML('<div id="wayf_div" style="background:' + wayf_background_color + ';border-style: solid;border-color: ' + wayf_border_color + ';border-width: 1px;padding: 10px; height: auto;width: ' + wayf_width + ';text-align: left;overflow: hidden;">');
 	} else {
-		writeHTML('<div id="wayf_div" style="background:' + wayf_background_color + ';border-style: solid;border-color: ' + wayf_border_color + ';border-width: 1px;padding: 10px;height: ' + wayf_height + ';width: ' + wayf_width + ';text-align: left;overflow: hidden;">');
+		writeHTML('<div id="wayf_div" style="background:' + wayf_background_color + ';border-style: solid;border-color: ' + wayf_border_color + ';border-width: 1px;padding: 10px; height: ' + wayf_height + ';width: ' + wayf_width + ';text-align: left;overflow: hidden;">');
 	}
 	
 	// Shall we display the logo
@@ -748,13 +748,12 @@ function decodeBase64(input) {
 	}
 	
 	// Start login check
+	// Search for login state cookie
+	// If one exists, we only draw the logged_in_message
 	if(
 		wayf_hide_after_login 
 		&& user_logged_in
 	){
-		// Search for login state cookie
-		// If one exists, we stop drawing embedded WAYF
-		
 		writeHTML('<p id="wayf_intro_div" style="float:left;font-size:' + wayf_font_size + 'px;color:' + wayf_font_color + ';">' + wayf_logged_in_messsage + '</p>');
 		
 	} else {
@@ -1004,7 +1003,7 @@ SCRIPT;
 	// Close box
 	writeHTML('</div>');
 	
-	// Now output HTML
+	// Now output HTML all at once
 	document.write(wayf_html);
 })()
 
