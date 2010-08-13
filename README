@@ -250,7 +250,8 @@ flexible when it comes to ordering the category and IdP entries.
 
 Changes:
 1.13   - Added Favourite IdPs to Embedded WAYF
-       - Fixed Remember Selection preference
+       - Fixed a bug where the state of the "Remember for session" checkbox was
+         not remembered.
 1.12.2 - Fixed a XSS security vulnerability
        - Fixed an error in function appendValueToIdPArray
          Thanks to Martins Purins from Latvijas Universitates for reporting this

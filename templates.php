@@ -218,7 +218,7 @@ function printEmbeddedWAYFScript(){
 	$loggedInString =  getLocalString('logged_in');
 	$configurationScriptUrl = preg_replace('/embedded-wayf.js/', 'embedded-wayf.js/snippet.html', 'https://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
 	$utcTime = time();
-	$checkedBool = (isset($_COOKIE[$redirectCookieName]) && !empty($_COOKIE[$redirectCookieName])) ? 'checked="checked"' : '' ;
+	$checkedBool = (isset($_COOKIE[$redirectStateCookieName]) && !empty($_COOKIE[$redirectStateCookieName])) ? 'checked="checked"' : '' ;
 	$rememberSelectionText = addslashes(getLocalString('remember_selection'));
 	$loginString = addslashes(getLocalString('login'));
 	$selectIdPString = addslashes(getLocalString('select_idp'));
