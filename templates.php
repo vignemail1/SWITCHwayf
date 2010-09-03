@@ -145,21 +145,20 @@ function printNotice(){
 	$actionURL = $_SERVER['SCRIPT_NAME'].'?'.htmlentities($_SERVER['QUERY_STRING']);
 	
 	$hiddenUserIdPInput = '';
+	$permanentUserIdPName = '';
 	if (
 			isset($_POST['user_idp']) 
 			&& checkIDP($_POST['user_idp'])
 		){
 		$hiddenUserIdPInput = '<input type="hidden" name="user_idp" value="'.$_POST['user_idp'].'">';
+		$permanentUserIdPName = $IDProviders[$_POST['user_idp']]['Name'];
 	} elseif (
 			isset($_COOKIE[$redirectCookieName]) 
 			&& checkIDP($_COOKIE[$redirectCookieName])
 		){
 		$hiddenUserIdPInput = '<input type="hidden" name="user_idp" value="'.$_COOKIE[$redirectCookieName].'">';
+		$permanentUserIdPName = $IDProviders[$_COOKIE[$redirectCookieName]]['Name'];
 	}
-	
-	$permanentUserIdPName = (isset($_COOKIE[$redirectCookieName])) ? 
-			$IDProviders[$_COOKIE[$redirectCookieName]]['Name'] :
-			$IDProviders[$_POST['user_idp']]['Name'];
 	
 	// Check if footer template exists
 	if(file_exists('custom-notice.php')){
