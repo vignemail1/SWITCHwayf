@@ -198,7 +198,7 @@ if (
 
 // Redirect using Kerberos
 // Check if $REMOTE_USER has been set by mod_auth_kerb
-if (isset($_SERVER['REMOTE_USER'])) {
+if ($useKerberos && isset($_SERVER['REMOTE_USER'])) {
 	$kerberosPrincipal = $_SERVER['REMOTE_USER'];
 	// Bingo - we have a winner!
 	$kerberosRealm = substr($user, 1 + strlen($kerberosPrincipal) - strlen(strrchr($kerberosPrincipal, "@")));
