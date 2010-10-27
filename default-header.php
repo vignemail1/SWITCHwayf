@@ -128,7 +128,7 @@
 -->
 </style>
 </head>
-<body bgcolor="#ffffff" onLoad="if (document.IdPList && document.IdPList.Select) document.IdPList.Select.focus()">
+<body bgcolor="#ffffff" onLoad="if (top != self) {top.location = self.location;};if (document.IdPList && document.IdPList.Select) document.IdPList.Select.focus()">
 <script language="JavaScript" type="text/javascript">
 <!--
 function showConfirmation(){

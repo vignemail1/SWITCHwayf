@@ -344,7 +344,7 @@ function getIPAdressHint() {
 	global $IDProviders;
 	
 	foreach($IDProviders as $name => $idp) {
-		if (array_key_exists("IP", $idp)) {
+		if (is_array($idp) && array_key_exists("IP", $idp)) {
 			$clientIP = $_SERVER["REMOTE_ADDR"];
 			
 			foreach( $idp["IP"] as $network ) {
@@ -509,6 +509,92 @@ function convertToShibDSStructure($IDProviders){
 	
 	return $ShibDSIDProviders;
 	
+}
+
+/******************************************************************************/
+// Sorts the IDProviders array
+function sortIdentityProviders(&$IDProviders){
+	$sortedIDProviders = Array();
+	$sortedCategories = Array();
+	
+	foreach ($IDProviders as $entityId => $IDProvider){
+		if (!is_array($IDProvider)){
+			// Remove any entries that are not arrays
+			unset($IDProviders[$entityId]);
+		} elseif ($IDProvider['Type'] == 'category'){
+			$sortedCategories[$entityId] = $IDProvider;
+		} else {
+			$sortedIDProviders[$entityId] = $IDProvider;
+		}
+	}
+	
+	// Sort categories and IdPs
+	
+	if (count($sortedCategories) > 1){
+		// Sort using index
+		uasort($sortedCategories, 'sortUsingTypeIndexAndName');
+	} else {
+		// Sort alphabetically using the key of a category
+		ksort($sortedCategories);
+	}
+	
+	// Add category 'unknown' if not present
+	if (!isset($IDProviders['unknown'])){
+		$sortedCategories['unknown'] = array (
+		'Name' => 'Unknown',
+		'Type' => 'category',
+		);
+	}
+	
+	// Sort Identity Providers
+	uasort($sortedIDProviders, 'sortUsingTypeIndexAndName');
+	$IDProviders = Array();
+	
+	// Compose array
+	$showUnknownCategory = false;
+	while(list($categoryKey, $categoryValue) = each($sortedCategories)){
+		$IDProviders[$categoryKey] = $categoryValue;
+		
+		// Loop through all IdPs
+		foreach ($sortedIDProviders as $IDProvidersPKey => $IDProvidersValue){
+			// Add IdP if its type matches the current category
+			if ($IDProvidersValue['Type'] == $categoryKey){
+				$IDProviders[$IDProvidersPKey] = $IDProvidersValue;
+				unset($sortedIDProviders[$IDProvidersPKey]);
+			}
+			
+			// Add IdP if its type is 'unknown' or if there doesnt exist a category for its type
+			if ($categoryKey == 'unknown' || !isset($sortedCategories[$IDProvidersValue['Type']])){
+				$IDProviders[$IDProvidersPKey] = $IDProvidersValue;
+				unset($sortedIDProviders[$IDProvidersPKey]);
+				$showUnknownCategory = true;
+			}
+			
+		}
+	}
+	
+	// Check if unkown category is needed
+	if (!$showUnknownCategory){
+		unset($IDProviders['unknown']);
+	}
+	
+}
+
+/******************************************************************************/
+// Sorts two entries according to their Type, Index and (local) Name
+function sortUsingTypeIndexAndName($a, $b){
+	global $language;
+	
+	if ($a['Type'] != $b['Type']){
+		return strcmp($b['Type'], $a['Type']);
+	} elseif (isset($a['Index']) && isset($b['Index']) && $a['Index'] != $b['Index']){
+		return strcmp($a['Index'], $b['Index']);
+	} else {
+		// Sort using locale names
+		$localNameB = (isset($a[$language]['Name'])) ? $a[$language]['Name'] : $a['Name'];
+		$localNameA = (isset($b[$language]['Name'])) ? $b[$language]['Name'] : $b['Name'];
+		return strcmp($localNameB, $localNameA);
+	}
 }
 
 ?>

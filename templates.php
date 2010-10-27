@@ -226,18 +226,25 @@ function printEmbeddedWAYFScript(){
 	
 	// Generate list of Identity Providers
 	$JSONIdPArray = array();
-	foreach ($IDProviders as $key => $value){
+	foreach ($IDProviders as $key => $IDProvider){
 		
 		// Get IdP Name
-		if (isset($value[$language]['Name'])){
-			$IdPName = addslashes($value[$language]['Name']);
+		if (isset($IDProvider[$language]['Name'])){
+			$IdPName = addslashes($IDProvider[$language]['Name']);
 		} else {
-			$IdPName = addslashes($value['Name']);
+			$IdPName = addslashes($IDProvider['Name']);
 		}
 		
 		// Set selected attribute
 		$selected = ($selectedIDP == $key) ? ' selected="selected"' : '' ;
 		$IdPType = isset($IDProviders[$key]['Type']) ? $IDProviders[$key]['Type'] : '';
+		
+		// SSO
+		if (isset($IDProvider['SSO'])){
+			$IdPSSO = $IDProvider['SSO'];
+		} else {
+			$IdPSSO = '';
+		}
 		
 		// Skip non-IdP entries
 		if ($IdPType == '' || $IdPType == 'category'){
@@ -249,7 +256,7 @@ function printEmbeddedWAYFScript(){
 	"{$key}":{
 		type:"{$IdPType}",
 		name:"{$IdPName}",
-		SAML1SSOurl:"{$value['SSO']}"
+		SAML1SSOurl:"{$IdPSSO}"
 		}
 ENTRY;
 	}
@@ -858,20 +865,20 @@ SCRIPT;
 	
 	// Generate drop-down list
 	$optgroup = '';
-	foreach ($IDProviders as $key => $value){
+	foreach ($IDProviders as $key => $IDProvider){
 		
 		// Get IdP Name
-		if (isset($value[$language]['Name'])){
-			$IdPName = addslashes($value[$language]['Name']);
+		if (isset($IDProvider[$language]['Name'])){
+			$IdPName = addslashes($IDProvider[$language]['Name']);
 		} else {
-			$IdPName = addslashes($value['Name']);
+			$IdPName = addslashes($IDProvider['Name']);
 		}
 		
 		// Figure out if entry is valid or a category
-		if (!isset($value['SSO'])){
+		if (!isset($IDProvider['SSO'])){
 			
 			// Check if entry is a category
-			if (isset($value['Type']) && $value['Type'] == 'category'){
+			if (isset($IDProvider['Type']) && $IDProvider['Type'] == 'category'){
 			
 				echo <<<SCRIPT
 

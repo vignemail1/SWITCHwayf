@@ -1,26 +1,31 @@
 <?php
 // WAYF Identity Provider Configuration file
 
-// In the following you see some example entries of Identity Providers and 
+// Find below some example entries of Identity Providers, categories and 
 // cascaded WAYFs
 // The keys of $IDProviders must correspond to the entityId of the 
 // Identity Providers or a unique value in case of a cascaded WAYF/DS or 
-// a category
+// a category. In the case of a category, the key must correspond to the the 
+// Type value of Identity Provider entries.
 // The sequence of IdPs and SPs play a role. No sorting is done.
 
 // A general entry for an IdP can consist of the form:
-// Type:   [Optional]    Some type that is used for the embedded wayf to hide
-//                       or show certain categories. Default type will 
+// Type:   [Optional]    Type of the entry. Default type will 
 //                       be 'unknown' if not specified.
+//                       Categories should have the type 'category'
+//                       An entry for a cascaded WAYF that the user shall be
+//                        redirected to should have the type 'wayf'
 // Name:   [Mandatory]   Default name to display in drop-down list
 // [en|it|fr||de|pt][Name]: [Optional] Display name in other languages
 // SSO:    [Mandatory]   Should be the SAML1 SSO endpoint of the IdP
 // Realm:  [Optional]    Kerberos Realm
 // IP[]:   [Optional]    IP ranges of that organizations that can be used to guess
 //                       a user's Identity Provider
-
-// An entry for another WAYF that the user shall be redirected to should have:
-// Type:   'wayf'
+// Index:  [Optional]    An alphanumerical value that is used for sorting 
+//                       categories and Identity Provider in ascending order 
+//                       if the Identity Providers are parsed from metadata.
+//                       This is only relevant if 
+//                       $includeLocalConfEntries = true
 
 // A category entry can be used to group multiple IdP entries into a optgroup
 // The category entries should look like:
@@ -59,7 +64,7 @@ $IDProviders['aitta.funet.fi'] = array (
 // Category
 $IDProviders['vho'] = array (
 		'Type' => 'category',
-		'Name' => 'Virtual Home Organization',
+		'Name' => 'Virtual Home Organizations',
 );
 
 // An example of a configuration with multiple network blocks and multiple languages 
@@ -107,10 +112,10 @@ $IDProviders['other'] = array (
 
 // Standard example with a Type that could be used to hide certain
 // Identity Providers in the list of an embedded WAYF according to their type
-$IDProviders['https://toba.switch.ch/idp/shibboleth'] = array(
+$IDProviders['https://aai-logon.switch.ch/idp/shibboleth'] = array(
 		'Type' => 'other',
 		'Name' => 'SWITCH - Serving Swiss Universities',
-		'SSO' => 'https://toba.switch.ch/idp/profile/Shibboleth/SSO',
+		'SSO' => 'https://aai-logon.switch.ch/idp/profile/Shibboleth/SSO',
 );
 
 ?>

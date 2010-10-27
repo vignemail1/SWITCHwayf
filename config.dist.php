@@ -45,16 +45,20 @@ $SPCookieName = $cookieNamePrefix.'_saml_sp';
 // Whether to show the checkbox to permanently remember a setting
 $showPermanentSetting = false;
 
-// Set to true in order to enable dynamic generation of the IdP list displayed
+// Set to true in order to enable reading the Identity Provider from a SAML2 
+// metadata file defined below in $metadataFile
 $useSAML2Metadata = false; 
 
-// Parsed metadata shall have precedence
-// when conflicts between SAML2 metadata and local IDProvider.conf are detected.
+// If ture parsed metadata shall have precedence if there are entries defined 
+// in metadata as well as the local IDProviders configuration file.
+// Only relevant if $useSAML2Metadata is true
 $SAML2MetaOverLocalConf = false;
 
-// If includeLocalConfEntries parameter is set to true, mergeInfo() will also consider IDPs
-// not listed in metadataIDProviders but defined in IDProviders file
-// This is required if you need to add local exceptions over the federation metadata
+// If includeLocalConfEntries parameter is set to true, Identity Providers
+// not listed in metadata but defined in the local IDProviders file will also
+// be displayed in the drop down list. This is required if you need to add 
+// local exceptions over the federation metadata
+// Only relevant if $useSAML2Metadata is true
 $includeLocalConfEntries = true;
 
 // Whether to turn on Kerberos support for IdP preselection
@@ -128,6 +132,6 @@ $WAYFLogFile = '/var/log/apache2/wayf.log';
 // Development mode settings
 //**************************
 // If the development mode is activated, PHP errors and warnings will be displayed
-$developmentMode = true;
+$developmentMode = false;
 
 ?>

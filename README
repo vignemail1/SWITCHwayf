@@ -8,7 +8,23 @@ Bug reports/feature requests: https://forge.switch.ch/redmine/projects/wayf/issu
 -------------------------------------------------------------------------------
 
 Description:
-The SWITCHwayf is an implementation of the Shibboleth WAYF and SAML2 Discovery Service protocol for use withing a Shibboleth architecture.
+The SWITCHwayf is an implementation of the Shibboleth WAYF and SAML2 Discovery 
+Service protocol for use withing a Shibboleth architecture.
+
+-------------------------------------------------------------------------------
+
+Security Note (25. October 2010):
+The current implementation of the Discovery Service protocol as defined in 
+http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-idp-discovery.pdf 
+states that the protocol creates opportunities for phishing attacks as do all
+SSO protocols that make use of redirection. Therefore, the specification states
+that an implementation should examine the 'return' parameter used in a 
+Discovery Service request and match it against the <idpdisc:DiscoveryResponse> 
+extension in SAML metadata. The implementation of the Discovery Service protocol
+in the SWITCHwayf does NOT verify the return parameter because it only 
+optionally reads SAML metadata.
+
+Thanks to Tom Scavo for making us aware of this issue.
 
 -------------------------------------------------------------------------------
 
@@ -29,6 +45,7 @@ Some of the features include
 - HTML code generation for embedding the WAYF directly into a web page
 - Support for remembering IdP selection permanently
 - I18N support, currently language packs for en, de, it, fr and pt are included
+- Support for templates
 
 -------------------------------------------------------------------------------
 
@@ -211,7 +228,7 @@ Credits for this feature go to Josh Howlett from Bristol University.
 
 -------------------------------------------------------------------------------
 
-Identity Provider configuration file format:
+Configuration file format:
 Checkout the file 'IDProvider.conf.php' for an example of the file format. It's 
 supposed to be mostly self-explanatory. Basically the file format is PHP code 
 that defines an array of arrays called $IDProviders.
@@ -221,34 +238,64 @@ Identity Providers or a unique value in case of a cascaded WAYF/DS or
 a category. The entityID must be a valid URI (URL or URN) where in the
 case of a URN the last component must be a valid hostname.
 
-The sequence of IdPs and SPs matters and no sorting is done.
+If metadata is not parsed from SAML2 metadta (using the setting 
+$useSAML2Metadata = false), the IdPs and category entries will be displayed 
+in order as defined in the configuration file and no sorting is done.
 
-A general entry for an IdP can consist of the form:
-Type:   [Optional]        Some type that is used for the embedded wayf to hide
-                          or show certain categories. Default type will 
-                          be 'unknown' if not specified.
-Name:   [Mandatory]       Default name to display in drop-down list
-[en|it|fr||de|pt][Name]:  [Optional] Display name in other languages
-SSO:    [Mandatory]       Should be the SAML1 SSO endpoint of the IdP
-Realm:  [Optional]        Kerberos Realm
-IP[]:   [Optional]        IP ranges of that organizations that can be used to 
-                          guess a user's Identity Provider
+If metadata is used ($useSAML2Metadata = true) to generate the list of Identity 
+Providers, the Identity Providers will first be sorted according to their 
+type/category, their Index value (see below) and then alphabetically after their 
+(local) Name within the same type category. 
+If an IdP does not have a type, its category is 'unknown'.
+If there exists a type for an IdP that does not have a corresponding category 
+it will be displayed in the category 'unknown' at the end of the drop down list 
+but will keep its type value (this is important for the Embedded Discovery 
+Service).
 
-An entry for another WAYF that the user shall be redirected to should have:
-Type:   'wayf'
+A general entry for an Identity Provider, a cascaded WAYF/DS or a category is 
+of the following form:
+$IDProviders[#key#] = #entry#
 
-A category entry can be used to group multiple IdP entries into a optgroup
-The category entries should look like:
-Name:   [Mandatory]   Default name to display in drop-down list
-[en|it|fr||de|pt][Name]: [Optional] Display name in other languages
-Type:   'category'    Category type 
+#key# is a unique value that must correspond to the entity's entityID in case 
+the entry stands for an Identity Provider. For entries of Type category, the
+#key# should be an identifier that corresponds to a 'Type' of an IdP.
 
-As stated above, the sequence of entries is important. So, one is completely
-flexible when it comes to ordering the category and IdP entries.
+#entry# is another hash array with the following keys: 
+['Type']:   Optional        Type that is used for the embedded wayf to hide
+                            or show certain categories. Default type will 
+                            be 'unknown' if not specified.
+                            An entry for another WAYF/DS that the user shall be 
+                            redirected to should have ['Type'] ='wayf
+                            The Type values 'category' and 'wayf' are reserved 
+                            words that are not allowed to be assigned to 
+                            entries for Identity Providers.
+['Name']:   Mandatory       Default name to display in drop-down list
+['en'|'it'|'fr'|'de'|'pt']['Name']:
+            Optional        Display name in other languages
+['SSO']:    Mandatory       Should be the SAML1 SSO endpoint of the IdP
+['Realm']:  Optional        Kerberos Realm
+['IP'][]:   Optional        IP ranges of that organizations that can be used to 
+                            guess a user's Identity Provider
+['Index']:  Optional        An alphanumerical value that is used for sorting 
+                            categories and Identity Provider in ascending order 
+                            if the Identity Providers are parsed from metadata.
+                            This is only relevant if 
+                            $includeLocalConfEntries = true
+
+For category entries, only Type, (local) Name and Index are relevant.
 
 -------------------------------------------------------------------------------
 
 Changes:
+1.14   - Sorting within categories works now correctly if SAML2 metadata is 
+         used to generate Identity Provider drop-down list. Thanks to Prof. 
+         Kazu Yamaji from NII for reporting this issue.
+       - Fixed a minor bug in templates.php that cause PHP warnings to show up
+         in case an invalid IdP was stored in the cookie.
+       - Fixed a bug affecting the Kerberos authentication.
+         Thanks to Robert Basch from MIT for reporting these bugs and for 
+         submitting patches.
+       - Fixed a bug where hidden IdPs would still be shown in Embedded WAYF
 1.13   - Added Favourite IdPs to Embedded WAYF
        - Fixed a bug where the state of the "Remember for session" checkbox was
          not remembered.

@@ -173,9 +173,6 @@ function parseMetadata($metadataFile, $defaultLanguage){
 		}
 	}
 	
-	// Sort IdPs
-	uasort($metadataIDProviders, 'sortIdPs');
-	
 	return $metadataIDProviders;
 }
 
@@ -216,12 +213,6 @@ function dumpFile($metadataIDPFile, $IDProviders){
 	}
 }
 
-/******************************************************************************/
-// Sort IdP array using the default name of an IdP
-function sortIdPs($a, $b){
-	return strcmp($a['Name'], $b['Name']);
-}
-
 
 /******************************************************************************/
 // Function mergeInfo is used to create the effective $IDProviders array.
@@ -233,33 +224,38 @@ function mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, 
 	// If $includeLocalConfEntries parameter is set to true, mergeInfo() will also consider IDPs
 	// not listed in metadataIDProviders but defined in IDProviders file
 	// This is required if you need to add local exceptions over the federation metadata
-	$arrayOfIDPs = $metadataIDProviders;
+	$allIDPS = $metadataIDProviders;
+	$mergedArray = Array();
 	if ($includeLocalConfEntries) {
-		  $arrayOfIDPs = array_merge($metadataIDProviders, $IDProviders);
-		  uasort($arrayOfIDPs, 'sortIdPs');
+		  $allIDPS = array_merge($metadataIDProviders, $IDProviders);
 	}
-
-	foreach ($arrayOfIDPs as $meta => $metaArray){
-		
-		// Skip IDPs
-		if (
-			!$SAML2MetaOverLocalConf && 
-			isset($IDProviders[$meta]) 
-			&& !is_array($IDProviders[$meta])
-			) { continue; }
-		
-		if(isset($IDProviders[$meta])){
-		  if (isset($metadataIDProviders[$meta]) && is_array($metadataIDProviders[$meta])) {
-		        if($SAML2MetaOverLocalConf){
-				$mergedArray[$meta] = array_merge($IDProviders[$meta], $metadataIDProviders[$meta]);
-			} else {
-				$mergedArray[$meta] = $metadataIDProviders[$meta];
-			}
-		  } else {
-		        $mergedArray[$meta] = $IDProviders[$meta];
-		  }
+	
+	foreach ($allIDPS as $allIDPsKey => $allIDPsEntry){
+		if(isset($IDProviders[$allIDPsKey])){
+			// Entry exists also in local IDProviders.conf.php
+			if (isset($metadataIDProviders[$allIDPsKey]) && is_array($metadataIDProviders[$allIDPsKey])) {
+				
+				// Remove IdP if there is a removal rule in local IDProviders.conf.php 
+				if (!is_array($IDProviders[$allIDPsKey])){
+					unset($metadataIDProviders[$allIDPsKey]);
+					continue;
+				}
+				
+				// Entry exists in both IDProviders sources and is an array
+				if($SAML2MetaOverLocalConf){
+					// Metadata entry overwrite local conf
+					$mergedArray[$allIDPsKey] = array_merge($IDProviders[$allIDPsKey], $metadataIDProviders[$allIDPsKey]);
+				} else {
+					// Local conf overwrites metada entry
+					$mergedArray[$allIDPsKey] = array_merge($metadataIDProviders[$allIDPsKey], $IDProviders[$allIDPsKey]);
+				}
+			  } else {
+					// Entry only exists in local IDProviders file
+					$mergedArray[$allIDPsKey] = $IDProviders[$allIDPsKey];
+			  }
 		} else {
-			$mergedArray[$meta] = $metadataIDProviders[$meta];
+			// Entry doesnt exist in in local IDProviders.conf.php
+			$mergedArray[$allIDPsKey] = $metadataIDProviders[$allIDPsKey];
 		}
 	}
 	
