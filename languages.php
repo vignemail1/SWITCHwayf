@@ -43,6 +43,8 @@ $langStrings['en'] = array (
 'other_federation' => 'From other federations',
 'logged_in' => 'You are already authenticated.',
 'most_used' => 'Most often used Home Organisations',
+'invalid_return_url' => 'The return URL <tt>\'%s\'</tt> is not a valid URL.',
+'unverified_return_url' => 'The return URL <tt>\'%s\'</tt> could not be verified for Service Provider <tt>\'%s\'</tt>.',
 );
 
 
@@ -84,6 +86,8 @@ $langStrings['de'] = array (
 'other_federation' => 'Von anderen F&ouml;derationen',
 'logged_in' => 'Sie sind bereits angemeldet.',
 'most_used' => 'Meist genutzte Home Organisationen',
+'invalid_return_url' => 'Die return URL <tt>\'%s\'</tt> ist keine g&uuml;tige URL.',
+'unverified_return_url' => 'Die return URL <tt>\'%s\'</tt> ist nicht g&uuml;tige f&uuml;r den Service Provider <tt>\'%s\'</tt>.',
 );
 
 
