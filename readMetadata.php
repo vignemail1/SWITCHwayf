@@ -6,7 +6,7 @@
  */
 
 // Make sure this script is not accessed directly
-if(!isset($_SERVER['REMOTE_ADDR'])){
+if(isRunViaCLI()){
 	// Run in cli mode.
 	// Could be used for testing purposes or to facilitate startup confiduration.
 	// Results are dumped in $metadataIDPFile (see config.php)
@@ -19,197 +19,242 @@ if(!isset($_SERVER['REMOTE_ADDR'])){
 		|| trim(@file_get_contents($metadataFile)) == '') {
 	  exit ("Exiting: File ".$metadataFile." is empty or does not exist\n");
 	}
-
-	echo 'Enforced parsing of metadata file '.$metadataFile.'... ';
-	$metadataIDProviders = parseMetadata($metadataFile, $defaultLanguage);
-	echo "done\n";
+	
+	echo 'Parsing metadata file '.$metadataFile."\n";
+	list($metadataIDProviders, $metadataSProviders) = parseMetadata($metadataFile, $defaultLanguage);
 	
 	// If $metadataIDProviders is not FALSE update $IDProviders and dump results in $metadataIDPFile, else do nothing.
 	if(is_array($metadataIDProviders)){ 
 		
-		echo 'Dumping parsed Identity Providers to file '.$metadataIDPFile.'... ';
-		dumpFile($metadataIDPFile, $metadataIDProviders);
-		echo "done\n";
+		echo 'Dumping parsed Identity Providers to file '.$metadataIDPFile."\n";
+		dumpFile($metadataIDPFile, $metadataIDProviders, 'metadataIDProviders');
 		
-		echo 'Merging parsed Identity Providers with data from file '.$IDProviders.'... ';
+		echo 'Merging parsed Identity Providers with data from file '.$IDProviders."\n";
 		$IDProviders = mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries);
-		echo "done\n";
 		
 		echo "Printing parsed Identity Providers:\n";
+		print_r($metadataIDProviders);
+		
+		echo "Printing effective Identity Providers:\n";
 		print_r($IDProviders);
 	}
 	
-} elseif (basename($_SERVER['SCRIPT_NAME']) != 'readMetadata.php') {
-	// Run as included file
+	// If $metadataSProviders is not FALSE update $SProviders and dump results in $metadataSPFile, else do nothing.
+	if(is_array($metadataSProviders)){ 
+		
+		echo 'Dumping parsed Service Providers to file '.$metadataSPFile."\n";
+		dumpFile($metadataSPFile, $metadataSProviders, 'metadataSProviders');
+		
+		// Fow now copy the array by reference
+		$SProviders = &$metadataSProviders;
+		
+		echo "Printing parsed Service Providers:\n";
+		print_r($metadataSProviders);
+	}
 	
+	
+} elseif (isRunViaInclude()) {
+	// Run as included file
 	if(!file_exists($metadataIDPFile) or filemtime($metadataFile) > filemtime($metadataIDPFile)){
 		// Regenerate $metadataIDPFile.
-		$metadataIDProviders = parseMetadata($metadataFile, $defaultLanguage);
+		list($metadataIDProviders, $metadataSProviders) = parseMetadata($metadataFile, $defaultLanguage);
 		
 		// If $metadataIDProviders is not an array (parse error in metadata),
 		// $IDProviders from $IDPConfigFile will be used.
 		if(is_array($metadataIDProviders)){
-			dumpFile($metadataIDPFile, $metadataIDProviders);
+			dumpFile($metadataIDPFile, $metadataIDProviders, 'metadataIDProviders');
 			$IDProviders = mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries);
 		}
+		
+		if(is_array($metadataSProviders)){
+			dumpFile($metadataSPFile, $metadataSProviders, 'metadataSProviders');
+			require($metadataSPFile);
+		}
+		
 	} elseif (file_exists($metadataIDPFile)){
 		
-		// Read metadata file with generated IDProviders
+		// Read SP and IDP files generated with metadata
 		require($metadataIDPFile);
+		require($metadataSPFile);
 	}
 	
 	// Now merge IDPs from metadata and static file
 	$IDProviders = mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries);
+	
+	// Fow now copy the array by reference
+	$SProviders = &$metadataSProviders;
+	
 	
 } else {
 	exit('No direct script access allowed');
 }
 
 /*****************************************************************************/
-// Function parseMetadata, parses metadata file ($metadataFile declared in config.php).
-// Returns FALSE if error occurs while parsing metadata file, else returns $metadataIDProviders array.
+// Function parseMetadata, parses metadata file and returns Array($IdPs, SPs)  or
+// Array(false, false) if error occurs while parsing metadata file
 function parseMetadata($metadataFile, $defaultLanguage){
 	
-	$data = implode("", file($metadataFile));
-	$parser = xml_parser_create('UTF-8');
-	xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 1);
-	xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
-	
-	$xmlParseResult = xml_parse_into_struct($parser, $data, $values, $tags);
-	if(!$xmlParseResult){
-		//Could not parse metadata file.
-		//Log error to syslog (these errors are to be seen only by administrators).
-		$errorMsg = 'ERROR: Line:'.xml_get_current_line_number($parser).', Column:'.xml_get_current_column_number($parser).': '.xml_error_string(xml_get_error_code($parser)).'. Could not parse metadata file.'; 
-		syslog(LOG_ERR, $errorMsg);
-		xml_parser_free($parser);
-		return FALSE;
-	} else {
-		xml_parser_free($parser);
-		//If entityID contains federation info, set this to true, else set it to false
-		$federationPartOfEntityId = false;
-		
-		$entities = array();
-		$idps = array();
-		foreach ($tags as $tag => $positions){
-			if (preg_match('/:?EntityDescriptor$/i', $tag)){
-				$entities = array_merge($entities, $positions);
-			} else if (preg_match('/:?IDPSSODescriptor$/i', $tag)){
-				$idps = array_merge($idps, $positions);
-			}
-			
+	if(!file_exists($metadataFile)){
+		$errorMsg = 'File '.$metadataFile." does not exist.\n"; 
+		if (isRunViaCLI()){
+			echo $errorMsg;
+		} else {
+			syslog(LOG_ERR, $errorMsg);
 		}
+		return Array(false, false);
+	}
+
+	if(!is_readable($metadataFile)){
+		$errorMsg = 'File '.$metadataFile." cannot be read due to insufficient permissions\n"; 
+		syslog(LOG_ERR, $errorMsg);
+		echo $errorMsg;
+		return Array(false, false);
+	}
+	
+	$doc = new DOMDocument();
+	if(!$doc->load( $metadataFile )){
+		$errorMsg = 'Could not parse metadata file '.$metadataFile.".\n"; 
+		syslog(LOG_ERR, $errorMsg);
+		echo $errorMsg;
+		return Array(false, false);
+	}
+	
+	$EntityDescriptors = $doc->getElementsByTagNameNS( 'urn:oasis:names:tc:SAML:2.0:metadata', 'EntityDescriptor' );
+	
+	$metadataIDProviders = Array();
+	$metadataSProviders = Array();
+	foreach( $EntityDescriptors as $EntityDescriptor ){
+		$entityID = $EntityDescriptor->getAttribute('entityID');
 		
-		if(count($idps) > 0){
-			for($i=0; $i < count($entities); $i+=2){
-				// $i runs on entities array, which contains info for identity and service providers.
-				// Every entity has two entries in entities array (open and close element in metadata),
-				// so the iteration step is 2. Same thing applies to IdPs array.
-				// In every iteration check if $idps[0]>$entities[$i] && $idps[1]<$entities[$i+1].
-				// If the above is true, then entities[$i], $entities[$i+1] refer to an identity provider, so use them
-				// and remove from idps array the first 2 entries
-				 
-				if(
-					   isset($idps[0]) 
-					&& isset($entities[$i]) 
-					&& $idps[0] > $entities[$i] 
-					&& $idps[1] < $entities[$i+1]
-				   ){
-					
-					// Get entity info
-					$entity = array_slice($values, $entities[$i], ($entities[$i+1]-$entities[$i]+1));
-					
-					//Remove used entries from array $idps
-					$usedIdp = array_splice($idps, 0, 2);
-					$entityAttrs = count($entity);
-					$entityId = '';
-					$location = '';
-					
-					for($k=0; $k<$entityAttrs; $k++){
-						if(strcmp($entity[$k]['type'], 'close')){
-						// do not get attributes twice (only for the opening element)
-							
-							if (preg_match('/:?EntityDescriptor$/i', $entity[$k]['tag'])){
-								$entityId = $entity[$k]['attributes']['ENTITYID'];
-							} elseif (
-								preg_match('/:?SingleSignOnService$/i', $entity[$k]['tag'])
-								&& $entity[$k]['attributes']['BINDING'] == 'urn:mace:shibboleth:1.0:profiles:AuthnRequest'
-								){
-								// We have to guarantee that only the SSO URL of the shibboleth:1.0 binding is used
-								$location = $entity[$k]['attributes']['LOCATION'];
-							} elseif (preg_match('/:?OrganizationDisplayName$/i', $entity[$k]['tag'])){
-								$name[$entity[$k]['attributes']['XML:LANG']] = $entity[$k]['value'];
-							}
-						}
+		foreach($EntityDescriptor->childNodes as $RoleDescriptor) {
+			switch($RoleDescriptor->nodeName){
+				case 'IDPSSODescriptor':
+					$IDP = processIDPRoleDescriptor($RoleDescriptor);
+					if ($IDP){
+						$metadataIDProviders[$entityID] = $IDP;
 					}
-					
-					$metadataIDProviders[$entityId]['SSO'] = $location;
-					
-					if(isset($name)){
-						foreach($name as $lang => $value){
-							if($lang == $defaultLanguage){
-								$metadataIDProviders[$entityId]['Name'] = $value;
-							} else {
-								$metadataIDProviders[$entityId][$lang]['Name'] = $value;
-							}
-						}
-						
-						// Set last value as default name if non could be found
-						if (!isset($metadataIDProviders[$entityId]['Name'])){
-							$metadataIDProviders[$entityId]['Name'] = $value;
-						}
+					break;
+				case 'SPSSODescriptor':
+					$SP = processSPRoleDescriptor($RoleDescriptor);
+					if ($SP){
+						$metadataSProviders[$entityID] = $SP;
 					}
-					
-					// If we can not determine the name of an idp found in metadata
-					// (no <OrganizationDisplayName xml:lang = "$defaultLanguage"> element in metadata),
-					// use SSO location hostname as its name.
-					
-					if(!isset($metadataIDProviders[$entityId]['Name'])){
-						$metadataIDProviders[$entityId]['Name'] = parse_url($location, PHP_URL_HOST);
-					}
-					unset($name);
-					
-				}
+					break;
+				default:
 			}
 		}
 	}
 	
-	return $metadataIDProviders;
+	return Array($metadataIDProviders, $metadataSProviders);
 }
 
 /******************************************************************************/
-// Dump $IDProviders array to a file (specified in config.php), using IDProviders.conf.php style.
-function dumpFile($metadataIDPFile, $IDProviders){
-	 
-	if(($idpFp = fopen($metadataIDPFile, 'w')) !== false){
-		
-		fwrite($idpFp, "<?php\n\n");
-		fwrite($idpFp, "// This file was automatically generated by readMetadata.php\n");
-		fwrite($idpFp, "// In case you want to overwrite some of these values, do this\n");
-		fwrite($idpFp, "// in the file IDProviders.conf.php\n\n");
-		
-		if (isset($IDProviders)){
-			foreach($IDProviders as $idps => $field){
-				foreach($field as $f => $value){
-					if(is_array($value)){
-						foreach($value as $v => $val){
-							if(is_int($v)){
-								fwrite($idpFp, '$metadataIDProviders[\''.$idps.'\'][\''.$f.'\']['.$v.'] = \''.str_replace("'", "\\'", $val).'\';'."\n");
-							} else {
-								fwrite($idpFp, '$metadataIDProviders[\''.$idps.'\'][\''.$f.'\'][\''.$v.'\'] = \''.str_replace("'", "\\'", $val).'\';'."\n");
-							}
-						}
-					} else{
-						fwrite($idpFp, '$metadataIDProviders[\''.$idps.'\'][\''.$f.'\'] = \''.str_replace("'", "\\'", $value).'\';'."\n");
-					}
-				}
-				fwrite($idpFp, "\n");
-			}
+// Is this script run in CLI mode
+function isRunViaCLI(){
+	return !isset($_SERVER['REMOTE_ADDR']);
+}
+
+/******************************************************************************/
+// Is this script run in CLI mode
+function isRunViaInclude(){
+	return basename($_SERVER['SCRIPT_NAME']) != 'readMetadata.php';
+}
+
+/******************************************************************************/
+// Processes an IDPRoleDescriptor XML node and returns an IDP entry or false if 
+// something went wrong
+function processIDPRoleDescriptor($IDPRoleDescriptorNode){
+	$IDP = Array();
+	
+	// Get SSO URL
+	$SSOServices = $IDPRoleDescriptorNode->getElementsByTagNameNS( 'urn:oasis:names:tc:SAML:2.0:metadata', 'SingleSignOnService' );
+	foreach( $SSOServices as $SSOService ){
+		if ($SSOService->getAttribute('Binding') == 'urn:mace:shibboleth:1.0:profiles:AuthnRequest'){
+			$IDP['SSO'] =  $SSOService->getAttribute('Location');
+		}
+	}
+	
+	// Set a default value for backward compatibility
+	if (!isset($IDP['SSO'])){
+		$IDP['SSO'] = 'https://no.saml1.sso.url.defined.com/error';
+	}
+	
+	
+	// Get Name
+	$Orgnization = $IDPRoleDescriptorNode->parentNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:metadata', 'Organization' )->item(0);
+	if ($Orgnization){
+		// Get DisplayNames
+		$DisplayNames = $Orgnization->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:metadata', 'OrganizationDisplayName');
+		foreach ($DisplayNames as $DisplayName){
+			$lang = $DisplayName->getAttributeNodeNS('http://www.w3.org/XML/1998/namespace', 'lang')->nodeValue;
+			$IDP['Name'] = $DisplayName->nodeValue;
+			$IDP[$lang]['Name'] = $DisplayName->nodeValue;
 		}
 		
-		fwrite($idpFp, "\n?>");
-		fclose($idpFp);
+		// Set default name
+		if (isset($IDP[$defaultLanguage])){
+			$IDP['Name'] = $IDP[$defaultLanguage]['Name'];
+		} elseif (isset($IDP['en'])){
+			$IDP['Name'] = $IDP['en']['Name'];
+		} else {
+			$IDP['Name'] = $DisplayNames->item(0)->nodeValue;
+		}
 	} else {
-		syslog(LOG_ERR, 'Could not open '.$metadataIDPFile.' for writting.');
+		// Set entityID as Name if no organization is available
+		$IDP['Name'] = $IDPRoleDescriptorNode->parentNode->getAttribute('entityID');
+	}
+	
+	return $IDP;
+}
+
+/******************************************************************************/
+// Processes an SPRoleDescriptor XML node and returns an SP entry or false if 
+// something went wrong
+function processSPRoleDescriptor($SPRoleDescriptorNode){
+	$SP = Array();
+	
+	// Get <idpdisc:DiscoveryResponse> extensions
+	$DResponses = $SPRoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol', 'DiscoveryResponse');
+	foreach( $DResponses as $DResponse ){
+		if ($DResponse->getAttribute('Binding') == 'urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol'){
+			$SP['DSURL'][] =  $DResponse->getAttribute('Location');
+		}
+	}
+	
+	// Get Assertion Consumer Services and store their hostnames
+	$ACServices = $SPRoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:metadata', 'AssertionConsumerService');
+	foreach( $ACServices as $ACService ){
+		$SP['ACURL'][] =  $ACService->getAttribute('Location');
+	}
+	
+	return $SP;
+}
+
+/******************************************************************************/
+// Dump variable to a file 
+function dumpFile($dumpFile, $providers, $variableName){
+	 
+	if(($fp = fopen($dumpFile, 'w')) !== false){
+		
+		if (flock($fp, LOCK_EX)) { // do an exclusive lock
+			fwrite($fp, "<?php\n\n");
+			fwrite($fp, "// This file was automatically generated by readMetadata.php\n");
+			fwrite($fp, "// Don't edit!\n\n");
+			
+			fwrite($fp, '$'.$variableName.' = ');
+			fwrite($fp, var_export($providers,true));
+			
+			fwrite($fp, "\n?>");
+			
+			// release the lock
+			flock($fp, LOCK_UN); 
+		} else {
+			syslog(LOG_ERR, 'Could not lock file '.$dumpFile.' for writting.');
+		}
+		
+		fclose($fp);
+	} else {
+		syslog(LOG_ERR, 'Could not open file '.$dumpFile.' for writting.');
 	}
 }
 
