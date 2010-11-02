@@ -158,21 +158,63 @@ where {$template} stands for the file you want to customize.
 
 -------------------------------------------------------------------------------
 
+Logging:
+
+The general log where errors are written to is syslog. This log file will 
+contain error messages for example in case files cannot be read or written.
+
+If the configuration option $useLogging is true, a log file will be written to 
+the path specified in $WAYFLogFile. This log file is an audit log file where 
+each line is an entry of the form:
+
+#DATE# #TIME# #IP# #IDP_SELECTION# #REQUEST_TYPE# #IDP_ENTITYID# #FORWARDING_URL#
+
+Log entries are only created if the user was forwarded to an Identity Provider.
+
+#DATE#            Date of request, e.g. 2010-11-02
+#TIME#            Time of request, e.g. 06:25:13
+#IP#              IP of requester, e.g. 127.0.0.1
+#IDP_SELECTION#   How the IdP was selected: Cookie or Request
+#REQUEST_TYPE#    Type of request: DS, WAYF, Embedded-DS, Embedded-WAYF
+#IDP_ENTITYID#    EntityID of the IdP the user was forwarded to.
+#FORWARDING_URL#  URL the user was redirected to
+
+-------------------------------------------------------------------------------
+
+Optimizations:
+
+If your instance of the SWITCHwayf has many requests and the load is becoming 
+higher and higher, you might want to think about using a PHP opcode cacher like 
+XCache, apc,  eaccelerator,  phpa,  truck-mmcache or similar.  
+Using such a tool can decrease the processing time of the PHP code almost by 
+half. However, internal tests have shown that the bottleneck in general is noth 
+the PHP processing but the TLS handshake, which has nothing to do with PHP 
+itself.
+
+-------------------------------------------------------------------------------
+
 SAML2 Metadata support:
+
 In case you want the WAYF/DS to display the list of IdPs by parsing them from a
 SAML2 Medatadata file that is used by Shibboleth
 
 - Set $useSAML2Metadata in config.php to true
 - Specify the path to the metadata file that shall be read in $metadataFile
   and make sure this file is updated regularely by Shibboleth or a cron job
-- Make sure the file specified in $metadataIDPFile can be written by the user
-  that executes the PHP script (the web server user, e.g. www-data or _www)
+- Make sure the files specified in $metadataIDPFile and $metadataSPFile can be 
+  written by the userthat executes the PHP script (the web server user, 
+  e.g. www-data or _www)
 
-The parsend IDP entries then will be stored in $metadataIDPFile. If you want to 
-change, remove or extend an entry from this automatically generated file, you 
-can extend the IDP definitions by modifying them in the $IDPConfigFile.
-In case you want to overwrite some values with entries in the $IDPConfigFile, 
-make sure the entry $SAML2MetaOverLocalConf is set to false;
+The parsend IDP and SP entries will be stored in $metadataIDPFile and 
+$metadataSPFile as executable PHP code. Storing parsed information in JSON or 
+PHP serialized format would allow faster reading and executing in general. 
+However, for large numbers of entities an opcode cacher might speed up execution 
+time considerably (see chapter "Optimization" above) thanks to this format. 
+
+If you want to change, remove or extend an entry from this automatically 
+generated file, you  can extend the IDP definitions by modifying them in 
+the $IDPConfigFile. In case you want to overwrite some IDP values with entries in 
+the $IDPConfigFile, make sure the entry $SAML2MetaOverLocalConf is set to false;
 For example you could change the displayed name of an IdP by adding an entry in
 the file $IDPConfigFile like:
 
@@ -287,7 +329,9 @@ For category entries, only Type, (local) Name and Index are relevant.
 -------------------------------------------------------------------------------
 
 Changes:
-1.14   - Sorting within categories works now correctly if SAML2 metadata is 
+1.14   - Metadata parsing now uses DOM XML for PHP5 instead of Simple XML
+       - Fixed a minor HTML error in template for Embedded WAYF
+       - Sorting within categories works now correctly if SAML2 metadata is 
          used to generate Identity Provider drop-down list. Thanks to Prof. 
          Kazu Yamaji from NII for reporting this issue.
        - Fixed a minor bug in templates.php that cause PHP warnings to show up
