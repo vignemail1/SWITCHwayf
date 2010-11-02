@@ -44,10 +44,14 @@ function printWAYF(){
 	$promptMessage =  '<strong>'.getLocalString('make_selection').'</strong>';
 	if (isset($_GET['target']) && preg_match('|:/|', $_GET['target'])){
 		$promptMessage = sprintf(getLocalString('access_target'), $_GET['target'], $_GET['target']);
+	} else if (isset($_GET['return'])){
+		$promptMessage =  sprintf(getLocalString('access_host'), getHostNameFromURI($_GET['return']));
 	} else if (isset($_GET['entityID'])){
 		$promptMessage =  sprintf(getLocalString('access_host'), getHostNameFromURI($_GET['entityID']));
 	} else if (isset($_GET['shire'])){
 		$promptMessage =  sprintf(getLocalString('access_host'), getHostNameFromURI($_GET['shire']));
+	} else {
+		$promptMessage =  sprintf(getLocalString('access_host'), 'unknown');
 	}
 	$actionURL = $_SERVER['SCRIPT_NAME'].'?'.htmlentities($_SERVER['QUERY_STRING']);
 	$defaultSelected = ($selectedIDP == '-') ? 'selected="selected"' : '';
@@ -825,7 +829,7 @@ SCRIPT;
 	echo <<<SCRIPT
 		
 		writeHTML(form_start);
-		writeHTML('<input name="request_type" type="hidden" value="embedded" />');
+		writeHTML('<input name="request_type" type="hidden" value="embedded">');
 		writeHTML('<select id="user_idp" name="user_idp" style="margin-top: 15px;margin-bottom: 10px; width: 100%;">');
 		
 		// Get local cookie
