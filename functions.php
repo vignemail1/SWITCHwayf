@@ -95,6 +95,45 @@ function checkIDP($IDP, $showError = true){
 	}
 }
 
+
+
+/******************************************************************************/
+// Validates the URL format and returns the URL without GET arguments and fragment
+function verifyAndStripReturnURL($url){
+	
+	$components = parse_url($url);
+	
+	if (!$components){
+		return false;
+	}
+	
+	$recomposedURL = $components['scheme'].'://';
+	
+	if (isset($components['user'])){
+		$recomposedURL .= $components['user'];
+		
+		if (isset($components['pass'])){
+			$recomposedURL .= ':'.$components['pass'];
+		}
+		
+		$recomposedURL .= '@';
+	}
+	
+	if (isset($components['host'])){
+		$recomposedURL .= $components['host'];
+	}
+	
+	if (isset($components['port'])){
+		$recomposedURL .= ':'.$components['port'];
+	}
+	
+	if (isset($components['path'])){
+		$recomposedURL .= $components['path'];
+	}
+	
+	return $recomposedURL;
+}
+
 /******************************************************************************/
 // Parses the hostname out of a string and returns it
 function getHostNameFromURI($string){
@@ -356,6 +395,39 @@ function getIPAdressHint() {
 	}
 	return '-';
 }
+/******************************************************************************/
+// Returns true if URL could be verified, false otherwise
+function isVerifiedReturnURL($entityID, $returnURL) {
+	global $SProviders, $enableDSReturnParamCheck, $useACURLsForReturnParamCheck;
+	
+	// Is check necessary
+	if (!isset($enableDSReturnParamCheck) || !$enableDSReturnParamCheck){
+		return true;
+	}
+	
+	// SP unknown, therefore return false
+	if (!isset($SProviders[$entityID])){
+		return false;
+	}
+	
+	// Check using DiscoveryResponse extension
+	if (in_array($returnURL, $SProviders[$entityID]['DSURL'])){
+		return true;
+	}
+	
+	if ($useACURLsForReturnParamCheck){
+		$returnURLHostName = getHostNameFromURI($returnURL);
+		foreach($SProviders[$entityID]['DSURL'] as $ACURL){
+			if (getHostNameFromURI($ACURL) == $returnURLHostName){
+				return true;
+			}
+		}
+	}
+	
+	// Default return value
+	return false;
+}
+
 /******************************************************************************/
 // Returns a reasonable value for returnIDParam
 function getReturnIDParam() {
