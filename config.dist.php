@@ -47,7 +47,7 @@ $showPermanentSetting = false;
 
 // Set to true in order to enable reading the Identity Provider from a SAML2 
 // metadata file defined below in $metadataFile
-$useSAML2Metadata = false; 
+$useSAML2Metadata = true; 
 
 // If ture parsed metadata shall have precedence if there are entries defined 
 // in metadata as well as the local IDProviders configuration file.
@@ -60,6 +60,23 @@ $SAML2MetaOverLocalConf = false;
 // local exceptions over the federation metadata
 // Only relevant if $useSAML2Metadata is true
 $includeLocalConfEntries = true;
+
+// Whether the return parameter is checked against SAML2 metadata or not
+// The Discovery Service specification says the DS SHOULD check this in order
+// to mitigate phising problems
+// This check only is active if $useSAML2Metadata = true 
+$enableDSReturnParamCheck = true;
+
+// If true, not only the the URLs defined in the metadata extension 
+// <idpdisc:DiscoveryResponse> are used for the check but also the hostnames
+// of the assertion consumer URLs. The hostnames are compared against the 
+// hostname used in the return parameter
+// This feature is especially useful in case metadata doesn't contain the
+// <idpdisc:DiscoveryResponse> extension. However, enabling this feature also
+// reduces the security of the check.
+// This feature only is active if $enableDSReturnParamCheck = true 
+// and if  $useSAML2Metadata = true 
+$useACURLsForReturnParamCheck = false;
 
 // Whether to turn on Kerberos support for IdP preselection
 $useKerberos = false;
@@ -116,10 +133,17 @@ $backupIDPConfigFile = 'IDProvider.conf.php'; // Backup config file
 // Use $metadataFile as source federation's metadata.
 $metadataFile = '/etc/shibboleth/metadata.switchaai.xml';
 
-// File to store the parsed IdP list in if the metadataFile modification time
-// is more recent than the metadataIDPFile's
+// File to store the parsed IdP list
+// Will be updated automatically if the metadataFile modification time
+// is more recent than this file's
 // The user running the script must have permission to create $metadataIdpFile
 $metadataIDPFile = 'IDProvider.metadata.conf.php';
+
+// File to store the parsed SP list.
+// Will be updated automatically if the metadataFile modification time
+// is more recent than this file's
+// The user running the script must have permission to create $metadataIdpFile
+$metadataSPFile = 'SProvider.metadata.conf.php';
 
 // A Kerboros-protected soft link back to this script!
 $kerberosRedirectURL = '/SWITCHaai/kerberosRedirect.php';
