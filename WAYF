@@ -4,7 +4,7 @@
 ******************************************************************************
 SWITCH PHP WAYF, 
 Copyright 2009 SWITCH - Serving Swiss Universities
-Version: 1.14
+Version: 1.14b2
 Contact:  aai@switch.ch
 Web site: http://www.switch.ch/aai/wayf
 ******************************************************************************
@@ -14,7 +14,7 @@ Web site: http://www.switch.ch/aai/wayf
 // Load general configuration and template file
 /*------------------------------------------------*/
 
-require_once('config.test.php');
+require_once('config.php');
 require_once('templates.php');
 require_once('functions.php');
 require_once('languages.php');
@@ -74,6 +74,29 @@ foreach ($IDProviders as $key => $values){
 if (isset($_GET['getArguments']) && isset($_GET['origin']) && isset($_GET['redirect'])){
 	header('Location: '.$_SERVER['PHP_SELF'].'/redirect/'.$_GET['origin'].'?'.$_GET['getArguments']);
 	exit;
+}
+
+/*------------------------------------------------*/
+// Input validation
+/*------------------------------------------------*/
+
+if(isValidDSRequest()){
+	// Check that return URL in DS request is a valid URL
+	$returnURL = verifyAndStripReturnURL($_GET['return']);
+	if(!$returnURL){
+		// Show error
+		$message = sprintf(getLocalString('invalid_return_url'), htmlentities($_GET['return']));
+		printError($message);
+		exit;
+	}
+	
+	// Check that return URL in DS request is verified
+	if(!isVerifiedReturnURL($_GET['entityID'], $returnURL)){
+		// Show error
+		$message = sprintf(getLocalString('unverified_return_url'), htmlentities($returnURL), htmlentities($_GET['entityID']));
+		printError($message);
+		exit;
+	}
 }
 
 /*------------------------------------------------*/
