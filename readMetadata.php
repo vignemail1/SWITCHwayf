@@ -5,6 +5,13 @@
  * Configuration parameters are specified in config.php.
  */
 
+// Check configuration
+if (!isset($metadataSPFile)){
+	$errorMsg = 'Please first define a file $metadataSPFile = \'SProvider.metadata.conf.php\'; in config.php before running this script.';
+	syslog(LOG_ERR, $errorMsg);
+	die($errorMsg);
+}
+
 // Make sure this script is not accessed directly
 if(isRunViaCLI()){
 	// Run in cli mode.
@@ -164,6 +171,8 @@ function isRunViaInclude(){
 // Processes an IDPRoleDescriptor XML node and returns an IDP entry or false if 
 // something went wrong
 function processIDPRoleDescriptor($IDPRoleDescriptorNode){
+	global $defaultLanguage;
+	
 	$IDP = Array();
 	
 	// Get SSO URL

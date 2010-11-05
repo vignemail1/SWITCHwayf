@@ -329,7 +329,10 @@ For category entries, only Type, (local) Name and Index are relevant.
 -------------------------------------------------------------------------------
 
 Changes:
-1.14   - Metadata parsing now uses DOM XML for PHP5 instead of Simple XML
+1.14   - Added the configuration option wayf_force_remember_for_session to
+         the Embedded WAYF on request of Wolgang Lierz from ETH Zurich. This
+         option allows setting the remember for session checkbox to true
+       - Metadata parsing now uses DOM XML for PHP5 instead of Simple XML
        - Fixed a minor HTML error in template for Embedded WAYF
        - Sorting within categories works now correctly if SAML2 metadata is 
          used to generate Identity Provider drop-down list. Thanks to Prof. 

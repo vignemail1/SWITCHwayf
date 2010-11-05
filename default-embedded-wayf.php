@@ -49,6 +49,15 @@ var wayf_height = "auto";
 // [Optional, default: true]
 var wayf_show_remember_checkbox = true;
 
+// Force the user's Home Organisation selection to be remembered for the
+// current browser session. If wayf_show_remember_checkbox is true
+// the checkbox will be shown but will be read only.
+// WARNING: Only use this feature if you know exactly what you are doing
+//          This option will cause problems that are difficult to find 
+//          in case they accidentially select a wrong Home Organisation
+// [Optional, false]
+var wayf_force_remember_for_session = true;
+
 // Logo size
 // Choose whether the small or large logo shall be used
 // [Optional, default: true]
@@ -100,7 +109,6 @@ var wayf_show_categories =  true;
 // [Optional, commented out by default]
 // var wayf_hide_categories =  new Array();
 
-
 // EntityIDs of Identity Provider whose category is hidden but that shall be shown anyway
 // If this array is not empty, wayf_show_categories will be disabled because
 // otherwise, unhidden IdPs may be displayed in the wrong category
@@ -114,8 +122,6 @@ var wayf_show_categories =  true;
 // var wayf_hide_idps = new Array("https://idp.unige.ch/idp/shibboleth", "https://lewotolo.switch.ch/idp/shibboleth");
 // [Optional, commented out by default]
 // var wayf_hide_idps = new Array();
-
-
 
 //////////////////// ADVANCED SETTINGS ////////////////////
 

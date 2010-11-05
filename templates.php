@@ -299,6 +299,7 @@ var wayf_hide_categories;
 var wayf_hide_idps;
 var wayf_unhide_idps;
 var wayf_show_remember_checkbox;
+var wayf_force_remember_for_session;
 var wayf_additional_idps;
 var wayf_sp_samlDSURL;
 var wayf_sp_samlACURL;
@@ -635,6 +636,13 @@ function decodeBase64(input) {
 		|| typeof(wayf_show_remember_checkbox) != "boolean"
 		){
 		wayf_show_remember_checkbox = true;
+	}
+	
+	if(
+		typeof(wayf_force_remember_for_session) == "undefined"
+		|| typeof(wayf_force_remember_for_session) != "boolean"
+		){
+		wayf_force_remember_for_session = false;
 	}
 	
 	if(
@@ -985,7 +993,15 @@ SCRIPT;
 		
 		// Do we have to show the remember settings checkbox?
 		if (wayf_show_remember_checkbox){
-			writeHTML('<input id="wayf_remember_checkbox" type="checkbox" name="session" value="true" {$checkedBool}>&nbsp;');
+			// Is the checkbox forced to be checked
+			if (wayf_force_remember_for_session){
+				// First draw the dummy checkbox ...
+				writeHTML('<input id="wayf_remember_checkbox" type="checkbox" name="session_dummy" value="true" checked="checked" disabled="disabled" >&nbsp;');
+				// ... and now the real but hidden checkbox
+				writeHTML('<input type="hidden" name="session" value="true">&nbsp;');
+			} else {
+				writeHTML('<input id="wayf_remember_checkbox" type="checkbox" name="session" value="true" {$checkedBool}>&nbsp;');
+			}
 			
 			// Do we have to display custom text?
 			if(typeof(wayf_overwrite_checkbox_label_text) == "undefined"){
@@ -994,6 +1010,9 @@ SCRIPT;
 			} else if (wayf_overwrite_checkbox_label_text != "")  {
 				writeHTML('<label for="wayf_remember_checkbox" id="wayf_remember_checkbox_label" style="min-width:80px; font-size:' + wayf_font_size + 'px;color:' + wayf_font_color + ';">' + wayf_overwrite_checkbox_label_text + '</label>');
 			}
+		} else if (wayf_force_remember_for_session){
+			// Is the checkbox forced to be checked but hidden
+			writeHTML('<input id="wayf_remember_checkbox" type="hidden" name="session" value="true">&nbsp;');
 		}
 		
 		writeHTML('</div>');
