@@ -411,7 +411,7 @@ function isVerifiedReturnURL($entityID, $returnURL) {
 	}
 	
 	// Check using DiscoveryResponse extension
-	if (in_array($returnURL, $SProviders[$entityID]['DSURL'])){
+	if (isset($SProviders[$entityID]['DSURL']) in_array($returnURL, $SProviders[$entityID]['DSURL'])){
 		return true;
 	}
 	

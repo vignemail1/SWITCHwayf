@@ -78,18 +78,24 @@ if(isRunViaCLI()){
 			require($metadataSPFile);
 		}
 		
+				// Now merge IDPs from metadata and static file
+		$IDProviders = mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries);
+		
+		// Fow now copy the array by reference
+		$SProviders = &$metadataSProviders;
+		
 	} elseif (file_exists($metadataIDPFile)){
 		
 		// Read SP and IDP files generated with metadata
 		require($metadataIDPFile);
 		require($metadataSPFile);
+	
+		// Now merge IDPs from metadata and static file
+		$IDProviders = mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries);
+		
+		// Fow now copy the array by reference
+		$SProviders = &$metadataSProviders;
 	}
-	
-	// Now merge IDPs from metadata and static file
-	$IDProviders = mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries);
-	
-	// Fow now copy the array by reference
-	$SProviders = &$metadataSProviders;
 	
 	
 } else {
