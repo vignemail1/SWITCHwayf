@@ -590,7 +590,7 @@ function sortIdentityProviders(&$IDProviders){
 	$sortedCategories = Array();
 	
 	foreach ($IDProviders as $entityId => $IDProvider){
-		if (!is_array($IDProvider)){
+		if (!is_array($IDProvider) || !isset($IDProvider['Name'])){
 			// Remove any entries that are not arrays
 			unset($IDProviders[$entityId]);
 		} elseif ($IDProvider['Type'] == 'category'){
@@ -601,7 +601,6 @@ function sortIdentityProviders(&$IDProviders){
 	}
 	
 	// Sort categories and IdPs
-	
 	if (count($sortedCategories) > 1){
 		// Sort using index
 		uasort($sortedCategories, 'sortUsingTypeIndexAndName');
