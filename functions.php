@@ -415,9 +415,9 @@ function isVerifiedReturnURL($entityID, $returnURL) {
 		return true;
 	}
 	
-	if ($useACURLsForReturnParamCheck){
+	if ($useACURLsForReturnParamCheck && isset($SProviders[$entityID]['ACURL'])){
 		$returnURLHostName = getHostNameFromURI($returnURL);
-		foreach($SProviders[$entityID]['DSURL'] as $ACURL){
+		foreach($SProviders[$entityID]['ACURL'] as $ACURL){
 			if (getHostNameFromURI($ACURL) == $returnURLHostName){
 				return true;
 			}
