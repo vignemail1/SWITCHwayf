@@ -137,13 +137,13 @@ $metadataFile = '/etc/shibboleth/metadata.switchaai.xml';
 // Will be updated automatically if the metadataFile modification time
 // is more recent than this file's
 // The user running the script must have permission to create $metadataIdpFile
-$metadataIDPFile = 'IDProvider.metadata.conf.php';
+$metadataIDPFile = 'IDProvider.metadata.php';
 
 // File to store the parsed SP list.
 // Will be updated automatically if the metadataFile modification time
 // is more recent than this file's
 // The user running the script must have permission to create $metadataIdpFile
-$metadataSPFile = 'SProvider.metadata.conf.php';
+$metadataSPFile = 'SProvider.metadata.php';
 
 // A Kerboros-protected soft link back to this script!
 $kerberosRedirectURL = '/SWITCHaai/kerberosRedirect.php';
