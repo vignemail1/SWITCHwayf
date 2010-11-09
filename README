@@ -21,8 +21,9 @@ SSO protocols that make use of redirection. Therefore, the specification states
 that an implementation should examine the 'return' parameter used in a 
 Discovery Service request and match it against the <idpdisc:DiscoveryResponse> 
 extension in SAML metadata. The implementation of the Discovery Service protocol
-in the SWITCHwayf does NOT verify the return parameter because it only 
-optionally reads SAML metadata.
+in the SWITCHwayf prior to version 1.14 does NOT verify the return parameter 
+even if SAML metadata was used to generate the list of Identity Provider.
+Version 1.14 or newer fixes this problem.
 
 Thanks to Tom Scavo for making us aware of this issue.
 
@@ -58,15 +59,13 @@ Requirements:
 -------------------------------------------------------------------------------
 
 Installation:
-If you use Apache 2, insert the following statement in your Apache config file:
 
---
-<Location /path/to/WAYF>
-  SetHandler php-script
-</Location>
---
+Unpack the Zip archive into an arbitrary directory on a host that has a deployed
+Apache (IIS also should work though). Make sure that permissions for the files 
+'SProvider.metadata.php' and 'IDProvider.metadata.php' are set such that the 
+web server user (e.g. www-data, www or httpd) has write access on the files:
 
-or for PHP5
+If you use Apache 2, add the following statement to the Apache configugration:
 
 --
 <Location /path/to/WAYF>
@@ -87,11 +86,9 @@ Options +FollowSymLinks
 </IfModule>
 --
 
-You also could rename the file 'WAYF' to 'WAYF.php' or 
-make a directory called 'WAYF', rename WAYF to 'index.php' and put it in that 
-directory.
+Alternatively, one also could rename the file 'WAYF' to 'WAYF.php'.
 
-When using the embedded WAYF feature it's probabl necessary to add a line to 
+When using the embedded WAYF feature it might be necessary to add a line to 
 the Apache configuration like below in order to prevent certain web browsers 
 from not displaying the Embedded WAYF or parts of it:
 
@@ -117,6 +114,18 @@ Therefore, it is recommended to start with a clean installation.
 However, you should be able to take over most of your old config.php 
 functions and use them in the new template.php file again to keep your 
 customized look and feel.
+
+
+-------------------------------------------------------------------------------
+
+Troubleshooting:
+Generall, if there is an error or an exception, the WAYF will log the to syslog. 
+In case there is a problem and you see only a white page without any output, 
+open config.php in a text editor, go to the bottom of the file and set:
+
+$developmentMode = true;
+
+This will output PHP warning messages which are otherwise supressed.
 
 -------------------------------------------------------------------------------
 
@@ -187,9 +196,13 @@ If your instance of the SWITCHwayf has many requests and the load is becoming
 higher and higher, you might want to think about using a PHP opcode cacher like 
 XCache, apc,  eaccelerator,  phpa,  truck-mmcache or similar.  
 Using such a tool can decrease the processing time of the PHP code almost by 
-half. However, internal tests have shown that the bottleneck in general is noth 
+half. However, internal tests have shown that the bottleneck in general is not 
 the PHP processing but the TLS handshake, which has nothing to do with PHP 
-itself.
+itself. Benchmark tests conducted by SWITCH demonstrated that generating the 
+Javascript WAYF/embedded-wayf.js can be speed up by 100% if the script provided
+the script is accessed via HTTP (without TLS). However, if the script is 
+accessed via HTTPS (default in SWITCHaai), the overall speed gain by using 
+XCache is less than 1% because the TLS hand-shake is what consumes most CPU time.
 
 -------------------------------------------------------------------------------
 
@@ -328,15 +341,16 @@ For category entries, only Type, (local) Name and Index are relevant.
 
 -------------------------------------------------------------------------------
 
-Changes:
+Version History:
 1.14   - Added the configuration option wayf_force_remember_for_session to
          the Embedded WAYF on request of Wolgang Lierz from ETH Zurich. This
          option allows setting the remember for session checkbox to true
        - Metadata parsing now uses DOM XML for PHP5 instead of Simple XML
        - Fixed a minor HTML error in template for Embedded WAYF
        - Sorting within categories works now correctly if SAML2 metadata is 
-         used to generate Identity Provider drop-down list. Thanks to Prof. 
-         Kazu Yamaji from NII for reporting this issue.
+         used to generate Identity Provider drop-down list. Thanks to 
+         Kazutsuna Yamaji from the Japanese National Institute of 
+         Informatics (NII) for reporting this issue.
        - Fixed a minor bug in templates.php that cause PHP warnings to show up
          in case an invalid IdP was stored in the cookie.
        - Fixed a bug affecting the Kerberos authentication.
