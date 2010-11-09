@@ -56,7 +56,7 @@ var wayf_show_remember_checkbox = true;
 //          This option will cause problems that are difficult to find 
 //          in case they accidentially select a wrong Home Organisation
 // [Optional, false]
-var wayf_force_remember_for_session = true;
+var wayf_force_remember_for_session = false;
 
 // Logo size
 // Choose whether the small or large logo shall be used
