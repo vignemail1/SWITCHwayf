@@ -345,6 +345,12 @@ Version History:
 1.14   - Added the configuration option wayf_force_remember_for_session to
          the Embedded WAYF on request of Wolgang Lierz from ETH Zurich. This
          option allows setting the remember for session checkbox to true
+       - The 'return' parameter of a Discovery Service request can now be 
+         checked using the idp-discovery-protocol extension or using the FQDN 
+         of all the Service Provider's assertion consumer URLs. The latter 
+         alternative is less secure but still offers better security against 
+         phising attacks. Have a look at config.dist.php and the README for 
+         more detailed explanations on these feature.
        - Metadata parsing now uses DOM XML for PHP5 instead of Simple XML
        - Fixed a minor HTML error in template for Embedded WAYF
        - Sorting within categories works now correctly if SAML2 metadata is 
