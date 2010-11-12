@@ -413,9 +413,7 @@ if ($hintedCookieIdP != '-'){
 // Sort Identity Providers
 /*------------------------------------------------*/
 
-//if (isset($useSAML2Metadata) && $useSAML2Metadata){
-if (true){
-
+if (isset($useSAML2Metadata) && $useSAML2Metadata){
 	// Only automatically sort if list of Identity Provider is parsed
 	// from metadata instead of being manualy managed
 	sortIdentityProviders($IDProviders);
