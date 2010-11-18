@@ -14,12 +14,12 @@ Service protocol for use withing a Shibboleth architecture.
 -------------------------------------------------------------------------------
 
 Security Note (25. October 2010):
-The current implementation of the Discovery Service protocol as defined in 
+The Discovery Service protocol as defined in 
 http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-idp-discovery.pdf 
 states that the protocol creates opportunities for phishing attacks as do all
-SSO protocols that make use of redirection. Therefore, the specification states
-that an implementation should examine the 'return' parameter used in a 
-Discovery Service request and match it against the <idpdisc:DiscoveryResponse> 
+SSO protocols that make use of redirection. The specification states that an 
+implementation should examine the 'return' parameter used in a Discovery 
+Service request and match it against the <idpdisc:DiscoveryResponse> 
 extension in SAML metadata. The implementation of the Discovery Service protocol
 in the SWITCHwayf prior to version 1.14 does NOT verify the return parameter 
 even if SAML metadata was used to generate the list of Identity Provider.
@@ -29,9 +29,7 @@ Thanks to Tom Scavo for making us aware of this issue.
 
 -------------------------------------------------------------------------------
 
-Features:
-Some of the features include
-
+Some of the Features:
 - Preselecting entry in drop down list by
   - SAML common domain cookie that contains selected Identity Providers 
   - resource path info hint (e.g. 
@@ -41,12 +39,13 @@ Some of the features include
   - IP range preselection
   - IP reverse DNS lookup preselection
 - Transparent redirection mode, e.g. /WAYF/unige.ch/redirect?shire=https://...
-- Support for SAML2 metadata files
-- Various customizations optionas for header, footer, language strings etc.
+- Can read SAML2 metadata files
+- Supports Discovery Service and the Shibboleth authentication request protocol 
+- Various customizations options for header, footer, language strings etc.
 - HTML code generation for embedding the WAYF directly into a web page
+- Support for templates
 - Support for remembering IdP selection permanently
 - I18N support, currently language packs for en, de, it, fr and pt are included
-- Support for templates
 
 -------------------------------------------------------------------------------
 
@@ -59,11 +58,12 @@ Requirements:
 -------------------------------------------------------------------------------
 
 Installation:
-
-Unpack the Zip archive into an arbitrary directory on a host that has a deployed
-Apache (IIS also should work though). Make sure that permissions for the files 
+Unpack the Zip archive into a directory on a host where Apache (IIS also should 
+work) is deployed. Make sure that permissions for the files 
 'SProvider.metadata.php' and 'IDProvider.metadata.php' are set such that the 
-web server user (e.g. www-data, www or httpd) has write access on the files:
+web server user (e.g. www-data, www or httpd) has write permissions for these 
+two files. If logging is enabled, also make sure the web server user also
+has write permissions for the log file configured in $WAYFLogFile:
 
 If you use Apache 2, add the following statement to the Apache configugration:
 
@@ -347,6 +347,8 @@ Version History:
          has no <idpdisc:DiscoveryResponse> extension defined. In such a case
          there will only be a check if $useACURLsForReturnParamCheck is enabled.
        - Fixed a bug in readMetadata.php that prevented CLI execution
+       - Changed the default configuration option to generate the Embedded WAYF
+         to false due to some concerns regarding phishing attacks
 1.14   - Added the configuration option wayf_force_remember_for_session to
          the Embedded WAYF on request of Wolgang Lierz from ETH Zurich. This
          option allows setting the remember for session checkbox to true

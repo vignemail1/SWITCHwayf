@@ -8,7 +8,6 @@
 //******************
 $defaultLanguage = 'en'; 
 
-
 // Cookie settings
 //****************
 
@@ -66,32 +65,36 @@ $includeLocalConfEntries = true;
 // to mitigate phising problems.
 // You must have $useSAML2Metadata = true in order to activate this check.
 // The return parameter will only be checked if the Service Provider's metadata 
-// contains an <idpdisc:DiscoveryResponse> or if 
-// $useACURLsForReturnParamCheck = true
+// contains an <idpdisc:DiscoveryResponse> or if the assertion consumer url 
+// check below is enabled
 $enableDSReturnParamCheck = true;
 
-// If true, the return parameter is checked also for Service Providers that
+// If true, the return parameter is checked for Service Providers that
 // don't have and <idpdisc:DiscoveryResponse> extension set. Instead of this
-// extension the hostnames of the assertion consumer URLs are used to check 
-// the return paraemter against. 
+// extension, the hostnames of the assertion consumer URLs are used to check 
+// the return parameter against. 
 // This feature is useful in case the Service Provider's metadata doesn't contain 
-// a <idpdisc:DiscoveryResponse> extension. Enabling this feature increases
-// security for Service Provider's that don't have an <idpdisc:DiscoveryResponse>
-// extensions.
+// a <idpdisc:DiscoveryResponse> extension. It increases security for Service 
+// Provider's that don't have an <idpdisc:DiscoveryResponse> extensions.
 // This feature only is active if $enableDSReturnParamCheck = true 
 // and if  $useSAML2Metadata = true 
 $useACURLsForReturnParamCheck = false;
 
-// Whether to turn on Kerberos support for IdP preselection
+// Whether to turn on Kerberos support for Identity Provider preselection
 $useKerberos = false;
 
-// If true, the users IP is used for a reverse DNS lookup whose
-// resulting domain name then is matched with the URN values of the IdPs
+// If enabled, the user's IP is used for a reverse DNS lookup whose resulting 
+// domain name then is matched with the URN values of the Identity Providers
 $useReverseDNSLookup = false;
 
-// Whether the JavaScript for embedding the WAYF
+// Whether the JavaScript required for embedding the WAYF
 // on a remote site shall be generated or not
-$useEmbeddedWAYF = true;
+// Lowers security against phising!
+// If this value is set to true, any web page in the world can 
+// (with some efforts) find out with a high probability from which 
+// organization a user is from. This could be misused for phishing attacks. 
+// Therefore, only enable this feature if you know what you are doing!
+$useEmbeddedWAYF = false;
 
 // Whether to enable logging of WAYF/DS requests
 // If turned on make sure to also configure $WAYFLogFile
@@ -99,11 +102,11 @@ $useLogging = true;
 
 // Whether or not to add the entityID of the preselected IdP to the
 // exported JSON/Text/PHP Code
-// You have to be aware that if this value is set to true, any web page
+// Lowers security against phising!
+// If this value is set to true, any web page
 // in the world can easily find out with a high probability from which 
-// organization a user is from. This could be misused for various kinds of 
-// things and even for phishing attacks. Therefore, only enable this feature
-// if you know what you are doing!
+// organization a user is from. This could be misused for phishing attacks. 
+// Therefore, only enable this feature if you know what you are doing!
 $exportPreselectedIdP = false;
 
 
