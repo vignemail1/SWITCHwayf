@@ -395,23 +395,11 @@ function getIPAdressHint() {
 	}
 	return '-';
 }
+
 /******************************************************************************/
 // Returns true if URL could be verified or if no check is necessary, false otherwise
 function verifyReturnURL($entityID, $returnURL) {
-	global $SProviders, $enableDSReturnParamCheck, $useACURLsForReturnParamCheck;
-	
-	// Skip check if is is deactivated
-	if (
-		   !isset($enableDSReturnParamCheck) 
-		|| !$enableDSReturnParamCheck
-	   ){
-		return true;
-	}
-	
-	// SP is unknown, therefore return false
-	if (!isset($SProviders[$entityID])){
-		return false;
-	}
+	global $SProviders, $useACURLsForReturnParamCheck;
 	
 	// If SP has a <idpdisc:DiscoveryResponse>, check return param
 	if (isset($SProviders[$entityID]['DSURL'])){
@@ -419,7 +407,14 @@ function verifyReturnURL($entityID, $returnURL) {
 	}
 	
 	// If fall back check is enabled, check return param
-	if ($useACURLsForReturnParamCheck){
+	if (isset($useACURLsForReturnParamCheck) && $useACURLsForReturnParamCheck){
+		
+		// Return true if no assertion consumer URL is defined to check against
+		// Should never happend
+		if (!isset($SProviders[$entityID]['ACURL'])){
+			return false;
+		}
+		
 		$returnURLHostName = getHostNameFromURI($returnURL);
 		foreach($SProviders[$entityID]['ACURL'] as $ACURL){
 			if (getHostNameFromURI($ACURL) == $returnURLHostName){

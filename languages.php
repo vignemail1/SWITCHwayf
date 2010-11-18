@@ -45,6 +45,7 @@ $langStrings['en'] = array (
 'most_used' => 'Most often used Home Organisations',
 'invalid_return_url' => 'The return URL <tt>\'%s\'</tt> is not a valid URL.',
 'unverified_return_url' => 'The return URL <tt>\'%s\'</tt> could not be verified for Service Provider <tt>\'%s\'</tt>.',
+'unknown_sp' => 'The Service Provider <tt>\'%s\'</tt> could not be found in metadata and is therefore unknown.',
 );
 
 
@@ -88,6 +89,7 @@ $langStrings['de'] = array (
 'most_used' => 'Meist genutzte Home Organisationen',
 'invalid_return_url' => 'Die return URL <tt>\'%s\'</tt> ist keine g&uuml;tige URL.',
 'unverified_return_url' => 'Die return URL <tt>\'%s\'</tt> ist nicht g&uuml;tige f&uuml;r den Service Provider <tt>\'%s\'</tt>.',
+'unknown_sp' => 'Der Service Provider <tt>\'%s\'</tt> konnte nicht in den Metadaten gefunden werden und ist deshalb unbekannt.',
 );
 
 

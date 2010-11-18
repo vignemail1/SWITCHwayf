@@ -90,14 +90,26 @@ if(isValidDSRequest()){
 		exit;
 	}
 	
-	// Check return URL in DS request if checks are enabled
-	$returnURLOK = verifyReturnURL($_GET['entityID'], $returnURL);
-	if(!$returnURLOK){
-		// Show error
-		$message = sprintf(getLocalString('unverified_return_url'), htmlentities($returnURL), htmlentities($_GET['entityID']));
-		printError($message);
-		exit;
+	if (isset($enableDSReturnParamCheck) && $enableDSReturnParamCheck){
+		// Check SP
+		if(!isset($SProviders[$_GET['entityID']])){
+			// Show error
+			$message = sprintf(getLocalString('unknown_sp'), htmlentities($_GET['entityID']));
+			printError($message);
+			exit;
+		}
+		
+		// Check return URL in DS request if checks are enabled
+		$returnURLOK = verifyReturnURL($_GET['entityID'], $returnURL);
+		if(!$returnURLOK){
+			// Show error
+			$message = sprintf(getLocalString('unverified_return_url'), htmlentities($returnURL), htmlentities($_GET['entityID']));
+			printError($message);
+			exit;
+		}
 	}
+	
+	
 }
 
 /*------------------------------------------------*/
