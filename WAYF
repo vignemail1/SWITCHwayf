@@ -4,7 +4,7 @@
 ******************************************************************************
 SWITCH PHP WAYF, 
 Copyright 2009 SWITCH - Serving Swiss Universities
-Version: 1.14
+Version: 1.14.1
 Contact:  aai@switch.ch
 Web site: http://www.switch.ch/aai/wayf
 ******************************************************************************
@@ -90,8 +90,9 @@ if(isValidDSRequest()){
 		exit;
 	}
 	
-	// Check that return URL in DS request is verified
-	if(!isVerifiedReturnURL($_GET['entityID'], $returnURL)){
+	// Check return URL in DS request if checks are enabled
+	$returnURLOK = verifyReturnURL($_GET['entityID'], $returnURL);
+	if(!$returnURLOK){
 		// Show error
 		$message = sprintf(getLocalString('unverified_return_url'), htmlentities($returnURL), htmlentities($_GET['entityID']));
 		printError($message);

@@ -63,17 +63,21 @@ $includeLocalConfEntries = true;
 
 // Whether the return parameter is checked against SAML2 metadata or not
 // The Discovery Service specification says the DS SHOULD check this in order
-// to mitigate phising problems
-// This check only is active if $useSAML2Metadata = true 
+// to mitigate phising problems.
+// You must have $useSAML2Metadata = true in order to activate this check.
+// The return parameter will only be checked if the Service Provider's metadata 
+// contains an <idpdisc:DiscoveryResponse> or if 
+// $useACURLsForReturnParamCheck = true
 $enableDSReturnParamCheck = true;
 
-// If true, not only the the URLs defined in the metadata extension 
-// <idpdisc:DiscoveryResponse> are used for the check but also the hostnames
-// of the assertion consumer URLs. The hostnames are compared against the 
-// hostname used in the return parameter
-// This feature is especially useful in case metadata doesn't contain the
-// <idpdisc:DiscoveryResponse> extension. However, enabling this feature also
-// reduces the security of the check.
+// If true, the return parameter is checked also for Service Providers that
+// don't have and <idpdisc:DiscoveryResponse> extension set. Instead of this
+// extension the hostnames of the assertion consumer URLs are used to check 
+// the return paraemter against. 
+// This feature is useful in case the Service Provider's metadata doesn't contain 
+// a <idpdisc:DiscoveryResponse> extension. Enabling this feature increases
+// security for Service Provider's that don't have an <idpdisc:DiscoveryResponse>
+// extensions.
 // This feature only is active if $enableDSReturnParamCheck = true 
 // and if  $useSAML2Metadata = true 
 $useACURLsForReturnParamCheck = false;
@@ -157,5 +161,6 @@ $WAYFLogFile = '/var/log/apache2/wayf.log';
 //**************************
 // If the development mode is activated, PHP errors and warnings will be displayed
 $developmentMode = false;
+
 
 ?>

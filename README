@@ -342,6 +342,11 @@ For category entries, only Type, (local) Name and Index are relevant.
 -------------------------------------------------------------------------------
 
 Version History:
+1.14.1 - Corrected behaviour of $enableDSReturnParamCheck and 
+         $useACURLsForReturnParamCheck. There won't be an error anymore if an SP 
+         has no <idpdisc:DiscoveryResponse> extension defined. In such a case
+         there will only be a check if $useACURLsForReturnParamCheck is enabled.
+       - Fixed a bug in readMetadata.php that prevented CLI execution
 1.14   - Added the configuration option wayf_force_remember_for_session to
          the Embedded WAYF on request of Wolgang Lierz from ETH Zurich. This
          option allows setting the remember for session checkbox to true

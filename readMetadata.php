@@ -5,13 +5,6 @@
  * Configuration parameters are specified in config.php.
  */
 
-// Check configuration
-if (!isset($metadataSPFile)){
-	$errorMsg = 'Please first define a file $metadataSPFile = \'SProvider.metadata.conf.php\'; in config.php before running this script.';
-	syslog(LOG_ERR, $errorMsg);
-	die($errorMsg);
-}
-
 // Make sure this script is not accessed directly
 if(isRunViaCLI()){
 	// Run in cli mode.
@@ -25,6 +18,13 @@ if(isRunViaCLI()){
 		|| !file_exists($metadataFile) 
 		|| trim(@file_get_contents($metadataFile)) == '') {
 	  exit ("Exiting: File ".$metadataFile." is empty or does not exist\n");
+	}
+	
+	// Check configuration
+	if (!isset($metadataSPFile)){
+		$errorMsg = 'Please first define a file $metadataSPFile = \'SProvider.metadata.conf.php\'; in config.php before running this script.';
+		syslog(LOG_ERR, $errorMsg);
+		die($errorMsg);
 	}
 	
 	echo 'Parsing metadata file '.$metadataFile."\n";
@@ -61,6 +61,14 @@ if(isRunViaCLI()){
 	
 	
 } elseif (isRunViaInclude()) {
+	
+	// Check configuration
+	if (!isset($metadataSPFile)){
+		$errorMsg = 'Please first define a file $metadataSPFile = \'SProvider.metadata.conf.php\'; in config.php before running this script.';
+		syslog(LOG_ERR, $errorMsg);
+		die($errorMsg);
+	}
+	
 	// Run as included file
 	if(!file_exists($metadataIDPFile) or filemtime($metadataFile) > filemtime($metadataIDPFile)){
 		// Regenerate $metadataIDPFile.
@@ -96,7 +104,6 @@ if(isRunViaCLI()){
 		// Fow now copy the array by reference
 		$SProviders = &$metadataSProviders;
 	}
-	
 	
 } else {
 	exit('No direct script access allowed');
