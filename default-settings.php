@@ -1,3 +1,5 @@
+<?php // Copyright (c) 2010, SWITCH - Serving Swiss Universities ?>
+
 <!-- Identity Provider Permanent Settings: Start-->
 <h1><?php echo getLocalString('permanent_select_header') ?></h1> 
 <p class="switchaai">

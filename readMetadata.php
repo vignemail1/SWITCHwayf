@@ -1,9 +1,9 @@
-<?php
-/* 
- * This file is used to dynamically create the list of IdPs to be 
- * displayed for the WAYF/DS service based on the federation metadata.
- * Configuration parameters are specified in config.php.
- */
+<?php // Copyright (c) 2010, SWITCH - Serving Swiss Universities
+
+// This file is used to dynamically create the list of IdPs to be 
+// displayed for the WAYF/DS service based on the federation metadata.
+// Configuration parameters are specified in config.php.
+
 
 // Make sure this script is not accessed directly
 if(isRunViaCLI()){

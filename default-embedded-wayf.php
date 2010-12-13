@@ -1,3 +1,5 @@
+<?php // Copyright (c) 2010, SWITCH - Serving Swiss Universities ?>
+
 <!-- EMBEDDED-WAYF-START -->
 <script type="text/javascript"><!--
 // To use this JavaScript, please access:

@@ -1,3 +1,5 @@
+<?php // Copyright (c) 2010, SWITCH - Serving Swiss Universities ?>
+
 <!-- Identity Provider Selection: Start-->
 <h1><?php echo getLocalString('header'); ?></h1> 
 <p class="switchaai">

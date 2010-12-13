@@ -1,4 +1,5 @@
-<?php
+<?php // Copyright (c) 2010, SWITCH - Serving Swiss Universities
+
 // WAYF Identity Provider Configuration file
 
 // Find below some example entries of Identity Providers, categories and 

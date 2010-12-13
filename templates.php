@@ -1,4 +1,5 @@
-<?php
+<?php // Copyright (c) 2010, SWITCH - Serving Swiss Universities
+
 /*
 ******************************************************************************
 This file contains the some functions that render HTML code.
@@ -331,7 +332,7 @@ function submitForm(){
 		// Redirect user to SP handler
 		if (wayf_use_discovery_service){
 			redirect_url = wayf_sp_samlDSURL + '?entityID=' 
-			+ NonFedEntityID
+			+ encodeURIComponent(NonFedEntityID)
 			+ '&target=' + encodeURIComponent(wayf_return_url);
 			
 			// Make sure the redirect always is being done in parent window
@@ -343,7 +344,7 @@ function submitForm(){
 			
 		} else {
 			redirect_url = wayf_sp_handlerURL + '?providerId=' 
-			+ NonFedEntityID
+			+ encodeURIComponent(NonFedEntityID)
 			+ '&target=' + encodeURIComponent(wayf_return_url);
 			
 			// Make sure the redirect always is being done in parent window

@@ -1,6 +1,8 @@
-SWITCH WAYF
+Copyright 2010 SWITCH - Serving Swiss Universities. 
+See LICENSE file for details.
+
 -------------------------------------------------------------------------------
-Copyright 2010 SWITCH - Serving Swiss Universities
+SWITCH WAYF
 Contact: aai@switch.ch or go to http://www.switch.ch/aai/wayf
 Version: See head of file 'WAYF' in the same directory
 Project web site: https://forge.switch.ch/redmine/projects/wayf
@@ -18,7 +20,7 @@ The Discovery Service protocol as defined in
 http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-idp-discovery.pdf 
 states that the protocol creates opportunities for phishing attacks as do all
 SSO protocols that make use of redirection. The specification states that an 
-implementation should examine the 'return' parameter used in a Discovery 
+implementation "SHOULD" examine the 'return' parameter used in a Discovery 
 Service request and match it against the <idpdisc:DiscoveryResponse> 
 extension in SAML metadata. The implementation of the Discovery Service protocol
 in the SWITCHwayf prior to version 1.14 does NOT verify the return parameter 
@@ -342,6 +344,7 @@ For category entries, only Type, (local) Name and Index are relevant.
 -------------------------------------------------------------------------------
 
 Version History:
+X.Y.Z  - Added proper copyright statements to all source code files
 1.14.1 - Corrected behaviour of $enableDSReturnParamCheck and 
          $useACURLsForReturnParamCheck. There won't be an error anymore if an SP 
          has no <idpdisc:DiscoveryResponse> extension defined. In such a case

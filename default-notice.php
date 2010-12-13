@@ -1,3 +1,5 @@
+<?php // Copyright (c) 2010, SWITCH - Serving Swiss Universities ?>
+
 <!-- Identity Provider Permanent Note: Start-->
 <h1><?php echo getLocalString('settings'); ?></h1> 
 <script language="JavaScript" type="text/javascript">

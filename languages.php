@@ -1,6 +1,7 @@
-<?php
+<?php // Copyright (c) 2010, SWITCH - Serving Swiss Universities
+
 // WAYF localized language strings
-// Make sure to use entities instead of plain UTF-8 characters for 
+// Make sure to use HTML entities instead of plain UTF-8 characters for 
 // non-ASCII characters if you are using the Embedded WAYF. It could be that the
 // Embedded WAYF is used on non-UTF8 web pages, which then could cause 
 // encoding issues
