@@ -306,7 +306,7 @@ function getLocalString($string, $encoding = ''){
 /******************************************************************************/
 // Converts string to a JavaScript format that can be used in JS alert
 function convertToJSString($string){
-	return addslashes(utf8_encode(html_entity_decode($string)));
+	return addslashes(html_entity_decode($string, ENT_COMPAT, 'UTF-8'));
 }
 
 /******************************************************************************/
