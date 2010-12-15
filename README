@@ -344,14 +344,17 @@ For category entries, only Type, (local) Name and Index are relevant.
 -------------------------------------------------------------------------------
 
 Version History:
-X.Y.Z  - Added proper copyright statements to all source code files
-1.14.1 - Corrected behaviour of $enableDSReturnParamCheck and 
+1.14.1  - Fixed an encoding bug that affected non-ASCII characters in 
+         JavaScripts. Thanks to Prof. Kazutsuna Yamaji from the Japanese National 
+         Institute of Informatics (NII) for reporting this issue.
+        - Corrected behaviour of $enableDSReturnParamCheck and 
          $useACURLsForReturnParamCheck. There won't be an error anymore if an SP 
          has no <idpdisc:DiscoveryResponse> extension defined. In such a case
          there will only be a check if $useACURLsForReturnParamCheck is enabled.
        - Fixed a bug in readMetadata.php that prevented CLI execution
        - Changed the default configuration option to generate the Embedded WAYF
          to false due to some concerns regarding phishing attacks
+       - Added proper copyright statements to all source code files
 1.14   - Added the configuration option wayf_force_remember_for_session to
          the Embedded WAYF on request of Wolgang Lierz from ETH Zurich. This
          option allows setting the remember for session checkbox to true
@@ -365,7 +368,7 @@ X.Y.Z  - Added proper copyright statements to all source code files
        - Fixed a minor HTML error in template for Embedded WAYF
        - Sorting within categories works now correctly if SAML2 metadata is 
          used to generate Identity Provider drop-down list. Thanks to 
-         Kazutsuna Yamaji from the Japanese National Institute of 
+         Prof. Kazutsuna Yamaji from the Japanese National Institute of 
          Informatics (NII) for reporting this issue.
        - Fixed a minor bug in templates.php that cause PHP warnings to show up
          in case an invalid IdP was stored in the cookie.
