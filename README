@@ -56,7 +56,7 @@ Requirements:
 - If the configuration and the backup configuration differ, you have to make 
   sure the user that runs the php script has write access for the configuration
   files.
-
+- PHP XML Parser extension for parsing SAML2 metadata
 -------------------------------------------------------------------------------
 
 Installation:
@@ -268,6 +268,10 @@ on the remote site in a malicous wayf (e.g. phish the user's password, redirect
 users to malicous pages, steal their sessions etc). You also have to make sure
 that your central WAYF has a very high availability because a lot of third-party
 services will depend on it.
+
+Also, please be aware that using the Embedded WAYF allows anybody to guess a 
+user's Home Organisation without much effort. This information then could be 
+used for phising attacks for example!
 
 -------------------------------------------------------------------------------
 
