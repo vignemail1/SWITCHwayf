@@ -1,9 +1,12 @@
-<?php // Copyright (c) 2010, SWITCH - Serving Swiss Universities
+<?php // Copyright (c) 2011, SWITCH - Serving Swiss Universities
 
 // This file is used to dynamically create the list of IdPs to be 
 // displayed for the WAYF/DS service based on the federation metadata.
 // Configuration parameters are specified in config.php.
-
+//
+// The list of Identity Providers can also be updated by running the script
+// readMetadata.php periodically as web server user, e.g. with a cron entry like:
+// 5 * * * * /usr/bin/php readMetadata.php > /dev/null
 
 // Make sure this script is not accessed directly
 if(isRunViaCLI()){
