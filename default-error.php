@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2010, SWITCH - Serving Swiss Universities ?>
+<?php // Copyright (c) 2011, SWITCH - Serving Swiss Universities ?>
 
 <!-- Error Message: Start-->
 <h2><?php echo getLocalString('invalid_query') ?></h2>

@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2010, SWITCH - Serving Swiss Universities
+<?php // Copyright (c) 2011, SWITCH - Serving Swiss Universities
 
 // WAYF localized language strings
 // Make sure to use HTML entities instead of plain UTF-8 characters for 

@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2010, SWITCH - Serving Swiss Universities
+<?php // Copyright (c) 2011, SWITCH - Serving Swiss Universities
 
 //******************************************************************************
 // This file contains the WAYF/DS configuration. Adapt the settings to reflect

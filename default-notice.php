@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2010, SWITCH - Serving Swiss Universities ?>
+<?php // Copyright (c) 2011, SWITCH - Serving Swiss Universities ?>
 
 <!-- Identity Provider Permanent Note: Start-->
 <h1><?php echo getLocalString('settings'); ?></h1> 
