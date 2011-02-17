@@ -20,8 +20,8 @@ var wayf_URL = "https://<?php echo $host ?><?php echo $path ?>";
 // [Mandatory]
 var wayf_sp_entityID = "https://my-app.switch.ch/shibboleth";
 
-// Session Initiator URL of the Service Provider
-// Examples: "https://econf.switch.ch/Shibboleth.sso/DS", "https://dokeos.unige.ch/Shibboleth.sso/DS"
+// Shibboleth Service Provider handler URL
+// Examples: "https://point.switch.ch/Shibboleth.sso", "https://rr.aai.switch.ch/aaitest/Shibboleth.sso"
 // [Mandatory, if wayf_use_discovery_service = false]
 var wayf_sp_handlerURL = "https://my-app.switch.ch/Shibboleth.sso";
 
