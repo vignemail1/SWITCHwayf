@@ -97,6 +97,13 @@ $useReverseDNSLookup = false;
 // Therefore, only enable this feature if you know what you are doing!
 $useEmbeddedWAYF = false;
 
+// If activated the Embedded WAYF will prevent releasing information
+// about the user's preselected Identity Provider
+// While this is benefical to the data protection of the user, it will also
+// prevent preselecting the user's Identity Provider. Thus, users will have
+// to preselect their IdP each and every time
+$useEmbeddedWAYFPrivacyProtection = false;
+
 // Whether to enable logging of WAYF/DS requests
 // If turned on make sure to also configure $WAYFLogFile
 $useLogging = true; 

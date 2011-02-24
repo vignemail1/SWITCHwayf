@@ -545,6 +545,14 @@ if (
 	// Set JavaScript content type
 	header('Content-type: text/javascript;charset="utf-8"');
 	
+	// Is Embedded WAYF data protection feature enabled?
+	if (
+		   isset($useEmbeddedWAYFPrivacyProtection) 
+		&& $useEmbeddedWAYFPrivacyProtection == true
+		){
+		$selectedIDP = '-';
+	}
+	
 	// Generate JavaScript code
 	printEmbeddedWAYFScript();
 	
