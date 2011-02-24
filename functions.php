@@ -625,7 +625,7 @@ function sortIdentityProviders(&$IDProviders){
 	$IDProviders = Array();
 	
 	// Compose array
-	$showUnknownCategory = false;
+	$unknownCategoryIsEmpty = true;
 	while(list($categoryKey, $categoryValue) = each($sortedCategories)){
 		$IDProviders[$categoryKey] = $categoryValue;
 		
@@ -641,14 +641,14 @@ function sortIdentityProviders(&$IDProviders){
 			if ($categoryKey == 'unknown' || !isset($sortedCategories[$IDProvidersValue['Type']])){
 				$IDProviders[$IDProvidersPKey] = $IDProvidersValue;
 				unset($sortedIDProviders[$IDProvidersPKey]);
-				$showUnknownCategory = true;
+				$unknownCategoryIsEmpty = false;
 			}
 			
 		}
 	}
 	
 	// Check if unkown category is needed
-	if (!$showUnknownCategory){
+	if ($unknownCategoryIsEmpty || (count($sortedCategories) == 1)){
 		unset($IDProviders['unknown']);
 	}
 	
