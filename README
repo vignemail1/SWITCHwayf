@@ -60,14 +60,26 @@ Requirements:
 -------------------------------------------------------------------------------
 
 Installation:
-Unpack the Zip archive into a directory on a host where Apache (IIS also should 
-work) is deployed. Make sure that permissions for the files 
-'SProvider.metadata.php' and 'IDProvider.metadata.php' are set such that the 
-web server user (e.g. www-data, www or httpd) has write permissions for these 
-two files. If logging is enabled, also make sure the web server user also
-has write permissions for the log file configured in $WAYFLogFile:
+1. Unpack the Zip archive into a directory on a host where Apache 
+  (IIS also should work) is deployed. 
 
-If you use Apache 2, add the following statement to the Apache configugration:
+2. Make a copy of the *.dist.php files
+   - Copy the file config.dist.php and name it config.php 
+     This is the main configuration file of the SWITCHwayf
+   - Copy the file IDProvider.conf.dist.php and name it IDProvider.conf.php
+     This file contains the list of Identity Providers that you configure 
+     by hand
+
+3. Make sure that permissions for the files 'SProvider.metadata.php' and 
+   IDProvider.metadata.php are set such that the web server user 
+   (e.g. www-data, www or httpd) has write permissions for these two files. 
+   If logging is enabled, also make sure the web server user also
+   has write permissions for the log file configured in $WAYFLogFile:
+
+4. Adapt the SWITCHwayf configuration in config.php. There are comments in that
+   file that should help you make suitable choices for your use case.
+
+5. If you use Apache 2, add the following statement to the Apache configugration:
 
 --
 <Location /path/to/WAYF>
@@ -75,8 +87,8 @@ If you use Apache 2, add the following statement to the Apache configugration:
 </Location>
 --
 
-In some clustered environments with FastCGI it may be necessary to use something
-like
+   In some clustered environments with FastCGI it may be necessary to use 
+   something like
 
 --
 Options +FollowSymLinks
@@ -88,27 +100,45 @@ Options +FollowSymLinks
 </IfModule>
 --
 
-Alternatively, one also could rename the file 'WAYF' to 'WAYF.php'.
+   Alternatively, one also could rename the file 'WAYF' to 'WAYF.php'.
 
-When using the embedded WAYF feature it might be necessary to add a line to 
-the Apache configuration like below in order to prevent certain web browsers 
-from not displaying the Embedded WAYF or parts of it:
+6. When using the embedded WAYF feature it might be necessary to add a line to 
+   the Apache configuration like below in order to prevent certain web browsers 
+   from not displaying the Embedded WAYF or parts of it:
 
 --
 Header set P3P "CP=\"NOI CUR DEVa OUR IND COM NAV PRE\""
 --
 
-For that to work, the Apache header extension must also be enabled
-with a command like:
+   For that to work, the Apache header extension must also be enabled
+   with a command like:
 
 --
 a2enmod headers
 /etc/init.d/apache2 reload
 --
 
-See http://www.w3.org/P3P/ for more details on P3P.
+   See http://www.w3.org/P3P/ for more details on P3P.
+
+7. Test access by calling the WAYF with a URL like:
+   https://your.host.com/path/to/WAYF
+   Use this URL as Location for your Shibboleth configuration. The WAYF
+   will automatically be able to detect whether it receives a Shibboleth 
+   authentication request or a Discovery Service request.
 
 -------------------------------------------------------------------------------
+
+Update in general:
+1. Make a backup of the directory where the currently active version of the 
+   SWITCHwayf is installed
+2. Get the compressed archive of the new version and move it into the directory
+   of the currently deployed version
+3. Unpack the archive with zip or tar
+   This step will overwrite some existing files. Files whose name starts 
+   with 'custom-' will not be overwritten.
+4. Have a look at config.dist.php and compare this file with your current
+   config.php in order to identify new configuration options.
+
 
 Update from versions before 1.8:
 This version has a slightly different structure than previous versions. 
@@ -348,6 +378,16 @@ For category entries, only Type, (local) Name and Index are relevant.
 -------------------------------------------------------------------------------
 
 Version History:
+Releases with a version number X.Y.Z usually are bug fix releases whereas
+releases with a version number X.Y introduce new functionality.
+
+1.14.2  - IDProvider.conf.php and config.php are not overwritten anymore by upgrades
+        - Logging to Syslog now works properly
+        - Unknown category is not shown anymore when there is no other category
+        - Namespaces are now taken properly into account when parsing SAML2 
+          metadata. Thanks go to Olivier Salaün for reporting this issue and
+          submitting a patch.
+        - Improved installation instructions
 1.14.1  - Fixed an encoding bug that affected non-ASCII characters in 
          JavaScripts. Thanks to Prof. Kazutsuna Yamaji for reporting this issue.
         - Corrected behaviour of $enableDSReturnParamCheck and 
@@ -614,7 +654,7 @@ alphabetically.
 - Wolgang Lierz from ETH Zurich (CH)
 - Lourival Pereira Vieira Neto from RNP (BR)
 - Martins Purins from Latvijas Universitates (LV)
-- Olivier Salaun from RENATER (FR)
+- Olivier Salaün from RENATER (FR)
 - Tom Scavo from Internet2 (US)
 - Mika Suvanto from CSC (FI)
 - Huân Thebault from Centre de Calcul de l'IN2P3 (FR)
