@@ -3,7 +3,7 @@
 /*
 ******************************************************************************
 SWITCHwayf
-Version: 1.14.1
+Version: 1.14.2
 Contact:  aai@switch.ch
 Web site: http://www.switch.ch/aai/wayf
 ******************************************************************************
@@ -24,7 +24,7 @@ if (file_exists('custom-languages.php')){
 }
 
 /*------------------------------------------------*/
-// Turn on logging depending on development mode
+// Turn on PHP error reporting
 /*------------------------------------------------*/
 if (isset($developmentMode) && $developmentMode){
 	ini_set('error_reporting', E_ALL);
