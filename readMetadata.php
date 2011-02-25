@@ -16,6 +16,11 @@ if(isRunViaCLI()){
 	// Run in cli mode.
 	// Could be used for testing purposes or to facilitate startup confiduration.
 	// Results are dumped in $metadataIDPFile (see config.php)
+	
+	// Set dummy server name
+	$_SERVER['SERVER_NAME'] = 'localhost';
+	
+	// Load configuration files
 	require('config.php');
 	require($IDPConfigFile);
 	
@@ -166,10 +171,10 @@ function parseMetadata($metadataFile, $defaultLanguage){
 					$SP = processSPRoleDescriptor($RoleDescriptor);
 					if ($SP){
 						$metadataSProviders[$entityID] = $SP;
-						echo "SP added: $entityID\n";
- 					} else {
- 						echo "Failed to load SP with entityID $entityID from metadata file $metadataFile";
- 					}
+					} else {
+						$errorMsg = "Failed to load SP with entityID $entityID from metadata file $metadataFile";
+						syslog(LOG_ERR, $errorMsg);
+					}
 					break;
 				default:
 			}
