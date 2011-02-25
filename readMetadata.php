@@ -8,6 +8,9 @@
 // readMetadata.php periodically as web server user, e.g. with a cron entry like:
 // 5 * * * * /usr/bin/php readMetadata.php > /dev/null
 
+// Init log file
+openlog("SWITCHwayf.readMetadata.php", LOG_PID | LOG_PERROR, LOG_LOCAL0);
+
 // Make sure this script is not accessed directly
 if(isRunViaCLI()){
 	// Run in cli mode.
@@ -150,7 +153,9 @@ function parseMetadata($metadataFile, $defaultLanguage){
 		$entityID = $EntityDescriptor->getAttribute('entityID');
 		
 		foreach($EntityDescriptor->childNodes as $RoleDescriptor) {
-			switch($RoleDescriptor->nodeName){
+			$nodeName = $RoleDescriptor->nodeName;
+ 			$nodeName = preg_replace('/^(\w+\:)/', '', $nodeName);
+ 			switch($nodeName){
 				case 'IDPSSODescriptor':
 					$IDP = processIDPRoleDescriptor($RoleDescriptor);
 					if ($IDP){
@@ -161,7 +166,10 @@ function parseMetadata($metadataFile, $defaultLanguage){
 					$SP = processSPRoleDescriptor($RoleDescriptor);
 					if ($SP){
 						$metadataSProviders[$entityID] = $SP;
-					}
+						echo "SP added: $entityID\n";
+ 					} else {
+ 						echo "Failed to load SP with entityID $entityID from metadata file $metadataFile";
+ 					}
 					break;
 				default:
 			}
