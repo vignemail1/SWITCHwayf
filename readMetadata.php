@@ -80,6 +80,12 @@ if(isRunViaCLI()){
 		die($errorMsg);
 	}
 	
+	if (!isset($metadataFile)){
+		$errorMsg = 'Please first define a file $metadataFile in config.php before running this script.';
+		syslog(LOG_ERR, $errorMsg);
+		die($errorMsg);
+	}
+	
 	// Run as included file
 	if(!file_exists($metadataIDPFile) or filemtime($metadataFile) > filemtime($metadataIDPFile)){
 		// Regenerate $metadataIDPFile.
@@ -126,9 +132,9 @@ if(isRunViaCLI()){
 function parseMetadata($metadataFile, $defaultLanguage){
 	
 	if(!file_exists($metadataFile)){
-		$errorMsg = 'File '.$metadataFile." does not exist.\n"; 
+		$errorMsg = 'File '.$metadataFile." does not exist"; 
 		if (isRunViaCLI()){
-			echo $errorMsg;
+			echo $errorMsg."\n";
 		} else {
 			syslog(LOG_ERR, $errorMsg);
 		}
@@ -136,17 +142,23 @@ function parseMetadata($metadataFile, $defaultLanguage){
 	}
 
 	if(!is_readable($metadataFile)){
-		$errorMsg = 'File '.$metadataFile." cannot be read due to insufficient permissions\n"; 
-		syslog(LOG_ERR, $errorMsg);
-		echo $errorMsg;
+		$errorMsg = 'File '.$metadataFile." cannot be read due to insufficient permissions"; 
+		if (isRunViaCLI()){
+			echo $errorMsg."\n";
+		} else {
+			syslog(LOG_ERR, $errorMsg);
+		}
 		return Array(false, false);
 	}
 	
 	$doc = new DOMDocument();
 	if(!$doc->load( $metadataFile )){
-		$errorMsg = 'Could not parse metadata file '.$metadataFile.".\n"; 
-		syslog(LOG_ERR, $errorMsg);
-		echo $errorMsg;
+		$errorMsg = 'Could not parse metadata file '.$metadataFile; 
+		if (isRunViaCLI()){
+			echo $errorMsg."\n";
+		} else {
+			syslog(LOG_ERR, $errorMsg);
+		}
 		return Array(false, false);
 	}
 	
@@ -173,13 +185,27 @@ function parseMetadata($metadataFile, $defaultLanguage){
 						$metadataSProviders[$entityID] = $SP;
 					} else {
 						$errorMsg = "Failed to load SP with entityID $entityID from metadata file $metadataFile";
-						syslog(LOG_ERR, $errorMsg);
+						if (isRunViaCLI()){
+							echo $errorMsg."\n";
+						} else {
+							syslog(LOG_WARNING, $errorMsg);
+						}
 					}
 					break;
 				default:
 			}
 		}
 	}
+	
+	
+	// Output result
+	$infoMsg = "Successfully parsed metadata file ".$metadataFile. ". Found ".count($metadataIDProviders)." IdPs and ".count($metadataSProviders)." SPs";
+	if (isRunViaCLI()){
+		echo $infoMsg."\n";
+	} else {
+		syslog(LOG_INFO, $infoMsg);
+	}
+	
 	
 	return Array($metadataIDProviders, $metadataSProviders);
 }
@@ -287,12 +313,22 @@ function dumpFile($dumpFile, $providers, $variableName){
 			// release the lock
 			flock($fp, LOCK_UN); 
 		} else {
-			syslog(LOG_ERR, 'Could not lock file '.$dumpFile.' for writting.');
+			$errorMsg = 'Could not lock file '.$dumpFile.' for writting';
+			if (isRunViaCLI()){
+				echo $errorMsg."\n";
+			} else {
+				syslog(LOG_ERR, $errorMsg);
+			}
 		}
 		
 		fclose($fp);
 	} else {
-		syslog(LOG_ERR, 'Could not open file '.$dumpFile.' for writting.');
+		$errorMsg = 'Could not open file '.$dumpFile.' for writting';
+		if (isRunViaCLI()){
+			echo $errorMsg."\n";
+		} else {
+			syslog(LOG_ERR, $errorMsg);
+		}
 	}
 }
 
