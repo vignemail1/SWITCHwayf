@@ -382,7 +382,8 @@ Releases with a version number X.Y.Z usually are bug fix releases whereas
 releases with a version number X.Y introduce new functionality.
 
 1.14.2  - IDProvider.conf.php and config.php are not overwritten anymore by upgrades
-        - Logging to Syslog now works properly
+        - Logging to Syslog now works properly and is more consistent
+        - Access log now properly locks file
         - Unknown category is not shown anymore when there is no other category
         - Namespaces are now taken properly into account when parsing SAML2 
           metadata. Thanks go to Olivier Salaün for reporting this issue and

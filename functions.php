@@ -479,20 +479,29 @@ function logAccessEntry($protocol, $type, $sp, $idp){
 	
 	// Let's make sure the file exists and is writable first.
 	if (is_writable($WAYFLogFile)) {
-			// In our example we're opening $filename in append mode.
-			// The file pointer is at the bottom of the file hence
-			// that's where $somecontent will go when we fwrite() it.
-			if (!$handle = fopen($WAYFLogFile, 'a')) {
-					return;
-			}
 			
 			// Create log entry
 			$entry = date('Y-m-d H:i:s').' '.$_SERVER['REMOTE_ADDR'].' '.$protocol.' '.$type.' '.$idp.' '.$sp."\n";
 			
-			// Write $somecontent to our opened file.
-			if (fwrite($handle, $entry) === FALSE) {
-					return;
+			// We are opening $filename in append mode.
+			// The file pointer is at the bottom of the file hence
+			// that's where $somecontent will go when we fwrite() it.
+			if (!$handle = fopen($WAYFLogFile, 'a')) {
+				return;
 			}
+			
+			// Try getting lock
+			while (!flock($handle, LOCK_EX)){
+				usleep(rand(10, 100));
+			}
+			
+			// Write $somecontent to our opened file.
+			fwrite($handle, $entry);
+			
+			// Release the lock
+			flock($handle, LOCK_UN);
+			
+			// Close file handle
 			fclose($handle);
 	}
 }
