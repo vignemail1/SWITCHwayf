@@ -126,6 +126,8 @@ if(isRunViaCLI()){
 	exit('No direct script access allowed');
 }
 
+closelog();
+
 /*****************************************************************************/
 // Function parseMetadata, parses metadata file and returns Array($IdPs, SPs)  or
 // Array(false, false) if error occurs while parsing metadata file
