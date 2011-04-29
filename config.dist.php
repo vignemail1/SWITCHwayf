@@ -5,12 +5,12 @@
 // your environment and then do some testing before deploying the WAYF.
 //******************************************************************************
 
-// Language settings
-//******************
+// 1. Language settings
+//*********************
 $defaultLanguage = 'en'; 
 
-// Cookie settings
-//****************
+// 2. Cookie settings
+//*******************
 
 // Domain within the WAYF cookei shall be readable. Must start with a .
 $commonDomain = '.switch.ch';
@@ -39,8 +39,8 @@ $SAMLDomainCookieName = $cookieNamePrefix.'_saml_idp';
 $SPCookieName = $cookieNamePrefix.'_saml_sp';
 
 
-// Enabled/Disabled Features
-//**************************
+// 3. Features and extensions
+//***************************
 
 // Whether to show the checkbox to permanently remember a setting
 $showPermanentSetting = false;
@@ -118,8 +118,8 @@ $useLogging = true;
 $exportPreselectedIdP = false;
 
 
-// Look&feel settings
-//*******************
+// 4. Look and feel settings
+//**************************
 
 // Name of the federation
 $federationName = 'SWITCHaai Federation';
@@ -137,8 +137,9 @@ $logoURL = $imageURL.'/switch-aai-transparent.png';
 $smallLogoURL = $imageURL.'/switch-aai-transparent-small.png';
 
 
-// Involved files settings
-//************************
+// 5. Files and path settings
+//***************************
+
 // Set both config files to the same value if you don't want to use the 
 // the WAYF to read a (potential) automatically generated file that undergoes
 // some plausability checks before being used
@@ -160,18 +161,24 @@ $metadataIDPFile = 'IDProvider.metadata.php';
 // The user running the script must have permission to create $metadataIdpFile
 $metadataSPFile = 'SProvider.metadata.php';
 
-// A Kerboros-protected soft link back to this script!
-$kerberosRedirectURL = '/SWITCHaai/kerberosRedirect.php';
+// File to use as the lock file for writing the parsed IdP and SP lists.
+// The user running the script must have permission to write $metadataLockFile
+$metadataLockFile = '/tmp/wayf_metadata.lock';
 
 // Where to log the access
 // Make sure the web server user has write access to this file!
 $WAYFLogFile = '/var/log/apache2/wayf.log'; 
 
 
+// 6. Other settings
+//******************
+
+// A Kerboros-protected soft link back to this script!
+$kerberosRedirectURL = '/SWITCHaai/kerberosRedirect.php';
+
 // Development mode settings
 //**************************
 // If the development mode is activated, PHP errors and warnings will be displayed
 $developmentMode = false;
-
 
 ?>
