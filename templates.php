@@ -487,6 +487,54 @@ function isCookie(check_name){
 	return false;
 }
 
+// Query Shibboleth Session handler and process response afterwards
+function queryShibSessionHandler(url){
+	var xmlhttp;
+	if (window.XMLHttpRequest){
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp = new XMLHttpRequest();
+	}  else {
+		// code for IE6, IE5
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	// Send request
+	xmlhttp.open("GET", url, false);
+	xmlhttp.send();
+	
+	// Check response code
+	if (xmlhttp.readyState != 4 || xmlhttp.status != 200 ){
+		return false;
+	}
+	
+	// Return true if session handler shows valid session
+	if (
+		xmlhttp.responseText.search(/Authentication Time/i) > 0){
+		return true;
+	}
+	
+	return false;
+}
+
+// Returns true if user is logged in
+function isUserLoggedIn(){
+	
+	if (
+		   typeof(wayf_check_login_state_function) != "undefined"
+		&& typeof(wayf_check_login_state_function) == "function" ){
+		
+		// Use custom function
+		return wayf_check_login_state_function();
+	
+	} else {
+		
+		// Use default Shibboleth Service Provider login check
+		var shibSessionCookieExists = isCookie('shibsession');
+		var shibSessionHandlerShowsSession = queryShibSessionHandler(wayf_sp_handlerURL + '/Session');
+		return (shibSessionCookieExists || shibSessionHandlerShowsSession);
+	}
+}
+
 function encodeBase64(input) {
 	var base64chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 	var output = "", c1, c2, c3, e1, e2, e3, e4;
@@ -717,15 +765,7 @@ function decodeBase64(input) {
 	}
 	
 	// Check if user is logged in already:
-	var user_logged_in = false;
-	if (typeof(wayf_check_login_state_function) == "undefined"
-		|| typeof(wayf_check_login_state_function) != "function" ){
-		// Use default Shibboleth Service Provider login check
-		user_logged_in = isCookie('shibsession');
-	} else {
-		// Use custom function
-		user_logged_in = wayf_check_login_state_function();
-	}
+	var user_logged_in = isUserLoggedIn();
 	
 	// Check if user is authenticated already and 
 	// whether something has to be drawn
