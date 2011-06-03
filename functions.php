@@ -394,8 +394,8 @@ function isIPinCIDRBlock($cidr, $ip) {
 	list ($net, $mask) = split ("/", $cidr);
 	
 	// Convert to binary string value of 1s and 0s
-	$netAsBinary = ip2bin($net);
-	$ipAsBinary =  ip2bin($ip);
+	$netAsBinary = convertIPtoBinaryForm($net);
+	$ipAsBinary =  convertIPtoBinaryForm($ip);
 	
 	// Return false if netmask and ip are using different protocols
 	if (strlen($netAsBinary) != strlen($ipAsBinary)){
@@ -418,7 +418,7 @@ function isIPinCIDRBlock($cidr, $ip) {
 
 /******************************************************************************/
 // Converts IP in human readable format to binary string
-function ip2bin($ip){
+function convertIPtoBinaryForm($ip){
 	
 	//  Handle IPv4 IP
 	if(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false){
