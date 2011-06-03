@@ -175,7 +175,7 @@ function printNotice(){
 }
 
 /******************************************************************************/
-
+// Prints end of HTML page
 function printFooter(){
 	
 	// Check if footer template exists
@@ -188,7 +188,6 @@ function printFooter(){
 }
 
 /******************************************************************************/
-
 // Prints an error message
 function printError($message){
 	
@@ -210,7 +209,7 @@ function printError($message){
 }
 
 /******************************************************************************/
-
+// Prints the JavaScript that renders the Embedded WAYF
 function printEmbeddedWAYFScript(){
 
 	global $langStrings, $language, $imageURL, $logoURL, $smallLogoURL, $federationURL;
@@ -1081,7 +1080,7 @@ SCRIPT;
 }
 
 /******************************************************************************/
-
+// Print sample configuration script used for Embedded WAYF
 function printEmbeddedConfigurationScript(){
 	global $IDProviders;
 	
