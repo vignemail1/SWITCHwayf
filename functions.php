@@ -365,18 +365,6 @@ function getKerberosRealm($string){
 	return '-';
 }
 
-/******************************************************************************/
-// Tries to match an IP to a network mask
-function getNetMatch($network, $ip) {
-	$ip_arr = explode('/', $network);
-	$network_long = ip2long($ip_arr[0]);
-	
-	$x = ip2long($ip_arr[1]);
-	$mask = long2ip($x) == $ip_arr[1] ? $x : 0xffffffff << (32 - $ip_arr[1]);
-	$ip_long = ip2long($ip);
-	
-	return ($ip_long & $mask) == ($network_long & $mask);
-}
 
 /******************************************************************************/
 // Determines the IdP according to the IP address if possible
@@ -388,13 +376,85 @@ function getIPAdressHint() {
 			$clientIP = $_SERVER["REMOTE_ADDR"];
 			
 			foreach( $idp["IP"] as $network ) {
-				if (getNetMatch($network, $clientIP)) {
+				if (isIPinCIDRBlock($network, $clientIP)) {
 					return $name;
 				}
 			}
 		}
 	}
 	return '-';
+}
+
+/******************************************************************************/
+// Returns true if IP is in IPv4/IPv6 CIDR range
+// and returns false otherwise
+function isIPinCIDRBlock($cidr, $ip) {
+	
+	// Split CIDR notation
+	list ($net, $mask) = split ("/", $cidr);
+	
+	// Convert to binary string value of 1s and 0s
+	$netAsBinary = ip2bin($net);
+	$ipAsBinary =  ip2bin($ip);
+	
+	// Return false if netmask and ip are using different protocols
+	if (strlen($netAsBinary) != strlen($ipAsBinary)){
+		return false;
+	}
+	
+	// Compare the first $mask bits
+	for($i = 0; $i < $mask; $i++){
+	
+		// Return false if bits don't match
+		if ($netAsBinary[$i] != $ipAsBinary[$i]){
+			return false;
+		}
+	}
+	
+	// If we got here, ip matches net
+	return true;
+	
+}
+
+/******************************************************************************/
+// Converts IP in human readable format to binary string
+function ip2bin($ip){
+	
+	//  Handle IPv4 IP
+	if(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false){
+		return base_convert(ip2long($ip),10,2);
+	}
+	
+	// Return false if IP is neither IPv4 nor a IPv6 IP
+	if(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false){
+		return false;
+	}
+	
+	// Convert IP to binary structure and return false if this fails
+	if(($ipAsBinStructure = inet_pton($ip)) === false) {
+		return false;
+	}
+	
+	
+	$numOfBytes = 16; 
+	$ipAsBinaryString = '';
+	
+	// Convert IP to binary string
+	while ($numOfBytes > 0){
+		// Convert current byte to decimal number
+		$currentByte = ord($ipAsBinStructure[$numOfBytes - 1]);
+		
+		// Convert currenty byte to string of 1 and 0
+		$currentByteAsBinary = sprintf("%08b", $currentByte);
+		
+		// Prepend to rest of IP in binary string
+		$ipAsBinaryString = $currentByteAsBinary.$ipAsBinaryString;
+		
+		// Decrease byte counter
+		$numOfBytes--;
+	}
+	
+	return $ipAsBinaryString;
 }
 
 /******************************************************************************/
