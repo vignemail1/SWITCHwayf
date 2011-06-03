@@ -487,8 +487,9 @@ if (
 	$invalidstring = preg_replace('/&/',"&\n",$invalidstring);
 	if ($invalidstring == '')
 		$invalidstring = getLocalString('no_arguments');
-	$message = getLocalString('arguments_missing') . '<pre><code>'.htmlentities($invalidstring).'</code></pre></p>
-		<p>'. getLocalString('valid_request_description');
+	$message = getLocalString('arguments_missing') . '<pre>';
+	$message .= '<code>'.htmlentities($invalidstring).'</code></pre></p>';
+	$message .= '<p>'. getLocalString('valid_request_description');
 	printError($message);
 	exit;
 }  elseif(
@@ -501,8 +502,9 @@ if (
 	$invalidstring = preg_replace('/&/',"&\n",$invalidstring);
 	if ($invalidstring == '')
 		$invalidstring = getLocalString('no_arguments');
-	$message = getLocalString('arguments_missing') . '<pre><code>'.htmlentities($invalidstring).'</code></pre></p>
-		<p>'. getLocalString('valid_saml2_request_description');
+	$message = getLocalString('arguments_missing') . '</p><pre>';
+	$message .= '<code>'.htmlentities($invalidstring).'</code></pre>';
+	$message .= '<p>'. getLocalString('valid_saml2_request_description');
 	printError($message);
 	exit;
 	
@@ -647,7 +649,10 @@ if (
 	
 } elseif (
 			(isset($_POST['user_idp']) && checkIDP($_POST['user_idp']))
-			|| (isset($_COOKIE[$redirectCookieName]) && checkIDP($_COOKIE[$redirectCookieName], false))
+			|| (
+				   isset($_COOKIE[$redirectCookieName]) 
+				&& checkIDP($_COOKIE[$redirectCookieName], false)
+				)
 		){
 	
 	// Show confirmatin notice
