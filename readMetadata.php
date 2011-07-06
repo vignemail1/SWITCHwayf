@@ -230,8 +230,7 @@ function parseMetadata($metadataFile, $defaultLanguage){
 		$entityID = $EntityDescriptor->getAttribute('entityID');
 		
 		foreach($EntityDescriptor->childNodes as $RoleDescriptor) {
-			$nodeName = $RoleDescriptor->nodeName;
- 			$nodeName = preg_replace('/^(\w+\:)/', '', $nodeName);
+			$nodeName = $RoleDescriptor->localName;
  			switch($nodeName){
 				case 'IDPSSODescriptor':
 					$IDP = processIDPRoleDescriptor($RoleDescriptor);
