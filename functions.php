@@ -188,25 +188,26 @@ function getDomainNameFromURIHint(){
 	
 	global $IDProviders;
 	
-	$hostname = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-	if ($hostname == $_SERVER['REMOTE_ADDR']){
+	$clientHostname = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+	if ($clientHostname == $_SERVER['REMOTE_ADDR']){
 		return '-';
 	}
 	
-	// Do we still have something
-	$domainname = getDomainNameFromURI($hostname);
-	if ($domainname != ''){
-		// Find a matching IdP SSO, must be matching the IdP urn 
-		// or at least the last part of the urn
-		foreach ($IDProviders as $key => $value){
-			if (preg_match('/'.$domainname.'$/', $key)){
-				return $key;
-			}
+	// Get domain name from client host name
+	$clientDomainName = getDomainNameFromURI($clientHostname);
+	if ($clientDomainName == ''){
+		return '-';
+	}
+	
+	// Return first matching IdP entityID that contains the client domain name
+	foreach ($IDProviders as $key => $value){
+		if (preg_match('/'.$clientDomainName.'/', $key)){
+			return $key;
 		}
-	} else {
-		return '-';
 	}
 	
+	// No matching entityID was found
+	return '-';
 }
 
 /******************************************************************************/
