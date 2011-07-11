@@ -11,6 +11,18 @@
 // Init log file
 openlog("SWITCHwayf.readMetadata.php", LOG_PID | LOG_PERROR, LOG_LOCAL0);
 
+// Set configuration defaults
+
+// Set lock file
+if (!isset($metadataLockFile)){
+	if(substr($_SERVER['PATH'],0,1) == '/'){
+		$metadataLockFile = '/tmp/wayf_metadata.lock';
+	} else {
+		$metadataLockFile = 'C:\windows\TEMP';
+	}
+}
+
+
 // Make sure this script is not accessed directly
 if(isRunViaCLI()){
 	// Run in cli mode.
