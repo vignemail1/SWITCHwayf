@@ -22,7 +22,7 @@ function showConfirmation(){
 			<?php echo $permanentUserIdPName ?>
 			</div>
 			<p>
-				<input type="submit" tabindex="7" accesskey="c" name="clear_user_idp" value="<?php echo getLocalString('delete_permanent_cookie_button') ?>">
+				<input type="submit" accesskey="c" name="clear_user_idp" value="<?php echo getLocalString('delete_permanent_cookie_button') ?>">
 				<?php if (isValidShibRequest()) : ?>
 				<input type="submit" accesskey="s" name="Select" name="permanent" value="<?php echo getLocalString('goto_sp') ?>" onClick="showConfirmation()">
 				<?php endif ?>
