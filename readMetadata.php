@@ -314,30 +314,40 @@ function processIDPRoleDescriptor($IDPRoleDescriptorNode){
 		$IDP['SSO'] = 'https://no.saml1.sso.url.defined.com/error';
 	}
 	
+	// First get MDUI name
+	$MDUIDisplayNames = getMDUIDisplayNames($IDPRoleDescriptorNode);
+	if (count($MDUIDisplayNames)){
+		$IDP['Name'] = current($MDUIDisplayNames);
+	}
+	foreach ($MDUIDisplayNames as $lang => $value){
+		$IDP[$lang]['Name'] = $value;
+	}
 	
-	// Get Name
-	$Orgnization = $IDPRoleDescriptorNode->parentNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:metadata', 'Organization' )->item(0);
-	if ($Orgnization){
-		// Get DisplayNames
-		$DisplayNames = $Orgnization->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:metadata', 'OrganizationDisplayName');
-		foreach ($DisplayNames as $DisplayName){
-			$lang = $DisplayName->getAttributeNodeNS('http://www.w3.org/XML/1998/namespace', 'lang')->nodeValue;
-			$IDP['Name'] = $DisplayName->nodeValue;
-			$IDP[$lang]['Name'] = $DisplayName->nodeValue;
-		}
+	// Then try organization names 
+	if (empty($IDP['Name'])){
+		$OrgnizationNames = getOrganizationNames($IDPRoleDescriptorNode);
+		$IDP['Name'] = current($OrgnizationNames);
 		
-		// Set default name
-		if (isset($IDP[$defaultLanguage])){
-			$IDP['Name'] = $IDP[$defaultLanguage]['Name'];
-		} elseif (isset($IDP['en'])){
-			$IDP['Name'] = $IDP['en']['Name'];
-		} else {
-			$IDP['Name'] = $DisplayNames->item(0)->nodeValue;
+		foreach ($OrgnizationNames as $lang => $value){
+			$IDP[$lang]['Name'] = $value;
 		}
-	} else {
-		// Set entityID as Name if no organization is available
+	} 
+	
+	// As last resort, use entityID
+	if (empty($IDP['Name'])){
 		$IDP['Name'] = $IDPRoleDescriptorNode->parentNode->getAttribute('entityID');
 	}
+	
+	// Set default name
+	if (isset($IDP[$defaultLanguage])){
+		$IDP['Name'] = $IDP[$defaultLanguage]['Name'];
+	} elseif (isset($IDP['en'])){
+		$IDP['Name'] = $IDP['en']['Name'];
+	}
+	
+	// Get supported protocols
+	$protocols = $IDPRoleDescriptorNode->getAttribute('protocolSupportEnumeration');
+	$IDP['Protocols'] = $protocols;
 	
 	return $IDP;
 }
@@ -356,11 +366,46 @@ function processSPRoleDescriptor($SPRoleDescriptorNode){
 		}
 	}
 	
+	// First get MDUI name
+	$MDUIDisplayNames = getMDUIDisplayNames($SPRoleDescriptorNode);
+	if (count($MDUIDisplayNames)){
+		$SP['Name'] = current($MDUIDisplayNames);
+	}
+	foreach ($MDUIDisplayNames as $lang => $value){
+		$SP[$lang]['Name'] = $value;
+	}
+	
+	// Then try attribute consuming service
+	if (empty($SP['Name'])){
+		$ConsumingServiceNames = getAttributeConsumingServiceNames($SPRoleDescriptorNode);
+		$SP['Name'] = current($ConsumingServiceNames);
+		
+		foreach ($ConsumingServiceNames as $lang => $value){
+			$SP[$lang]['Name'] = $value;
+		}
+	} 
+	
+	// As last resort, use entityID
+	if (empty($SP['Name'])){
+		$SP['Name'] = $SPRoleDescriptorNode->parentNode->getAttribute('entityID');
+	}
+	
+	// Set default name
+	if (isset($SP[$defaultLanguage])){
+		$SP['Name'] = $SP[$defaultLanguage]['Name'];
+	} elseif (isset($SP['en'])){
+		$SP['Name'] = $SP['en']['Name'];
+	}
+	
 	// Get Assertion Consumer Services and store their hostnames
 	$ACServices = $SPRoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:metadata', 'AssertionConsumerService');
 	foreach( $ACServices as $ACService ){
 		$SP['ACURL'][] =  $ACService->getAttribute('Location');
 	}
+	
+	// Get supported protocols
+	$protocols = $SPRoleDescriptorNode->getAttribute('protocolSupportEnumeration');
+	$SP['Protocols'] = $protocols;
 	
 	return $SP;
 }
@@ -438,6 +483,56 @@ function mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, 
 	}
 	
 	return $mergedArray;
+}
+
+/******************************************************************************/
+// Get MD Display Names from RoleDescriptor
+function getMDUIDisplayNames($RoleDescriptorNode){
+	
+	$Entity = Array();
+	
+	$MDUIDisplayNames = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:metadata:ui', 'DisplayName');
+	echo $MDUIDisplayNames->length."\n";
+	foreach( $MDUIDisplayNames as $MDUIDisplayName ){
+		$lang = $MDUIDisplayName->getAttributeNodeNS('http://www.w3.org/XML/1998/namespace', 'lang')->nodeValue;
+		$Entity[$lang] = $MDUIDisplayName->nodeValue;
+	}
+	
+	return $Entity;
+}
+
+/******************************************************************************/
+// Get Organization Names from RoleDescriptor
+function getOrganizationNames($RoleDescriptorNode){
+	
+	$Entity = Array();
+	
+	$Orgnization = $RoleDescriptorNode->parentNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:metadata', 'Organization' )->item(0);
+	if ($Orgnization){
+		$DisplayNames = $Orgnization->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:metadata', 'OrganizationDisplayName');
+		foreach ($DisplayNames as $DisplayName){
+			$lang = $DisplayName->getAttributeNodeNS('http://www.w3.org/XML/1998/namespace', 'lang')->nodeValue;
+			$Entity[$lang] = $DisplayName->nodeValue;
+		}
+	}
+	
+	return $Entity;
+}
+
+
+/******************************************************************************/
+// Get Organization Names from RoleDescriptor
+function getAttributeConsumingServiceNames($RoleDescriptorNode){
+	
+	$Entity = Array();
+	
+	$ServiceDescriptions = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:metadata', 'ServiceDescription' );
+	foreach ($ServiceDescriptions as $ServiceDescription){
+		$lang = $ServiceDescription->getAttributeNodeNS('http://www.w3.org/XML/1998/namespace', 'lang')->nodeValue;
+		$Entity[$lang] = $ServiceDescription->nodeValue;
+	}
+	
+	return $Entity;
 }
 
 ?>
