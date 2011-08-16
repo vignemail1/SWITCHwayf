@@ -26,7 +26,7 @@ $langStrings['en'] = array (
 'permanently_remember_selection' => 'Remember selection permanently and bypass the WAYF service from now on.',
 'confirm_permanent_selection' => 'Are you sure that you want to set the selected entry as your default Home Organisation? Don\'t proceed if you have user accounts at multiple organisations.',
 'save_button' => 'Save',
-'access_host' => 'In order to access a service on host <tt>\'%s\'</tt> please select the organization you are affiliated with.',
+'access_host' => 'In order to access a service on host <tt>\'%s\'</tt> please select the organisation you are affiliated with.',
 'select_idp' => 'Select the organisation you are affiliated with',
 'remember_selection' => 'Remember selection for this web browser session.',
 'switch_description' => 'At the service of the universities: <a href="http://www.switch.ch/" target="_blank">SWITCH</a> provides innovative, unique internet services for the Swiss universities and internet users.',
