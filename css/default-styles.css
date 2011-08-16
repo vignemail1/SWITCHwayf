@@ -1,5 +1,5 @@
 h1 {
-	font-family:Verdana, Geneva, sans-serif;
+	font-family:Verdana, sans-serif;
 	font-size: 13px;
 	padding-bottom: 6px;
 	text-align: left;
@@ -7,7 +7,7 @@ h1 {
 }
 
 p {
-	font-family:Verdana, Geneva, sans-serif;
+	font-family:Verdana, sans-serif;
 	font-size: 12px;
 	text-align: left;
 }
@@ -35,7 +35,7 @@ select {
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	margin-left: -300px; 
+	margin-left: -320px; 
 	margin-top: -200px; 
 }
 
@@ -50,7 +50,7 @@ select {
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 	overflow: hidden;
-	padding: 1.268em;
+	padding: 24px;
 	filter: progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=0, Strength=5)
 	    progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=45, Strength=4)
 	    progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=90, Strength=5)
@@ -72,7 +72,7 @@ select {
 	margin-left: 0;
 	float: left;
 	background: url("{$imageURL}/dual_line.gif") repeat-x scroll 0 100% transparent;
-	font-family: Verdana, Geneva, sans-serif;
+	font-family: Verdana, sans-serif;
 	font-size: 12px;
 	line-height: 45px;
 }
@@ -92,7 +92,6 @@ select {
 	margin-right:10px;
 	list-style:none;
 }
-
 
 .content {
 	width: 100%;
@@ -123,7 +122,7 @@ select {
 
 .selectedIdP
 {
-	font-family:Verdana, Geneva, sans-serif;
+	font-family:Verdana, sans-serif;
 	font-size: 13px;
 	width: 380px;
 	background-color: white;

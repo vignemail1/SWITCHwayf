@@ -67,7 +67,7 @@ function checkForm(){
 		</div>
 			<div class="content">
 			<ul class="menu">
-			  <li class="last"><a href="http://www.switch.ch/<?php echo $language ?>/aai/about/"><?php echo getLocalString('about_aai'); ?></a></li>
+			  <li><a href="http://www.switch.ch/<?php echo $language ?>/aai/about/"><?php echo getLocalString('about_aai'); ?></a></li>
 			  <li class="last"><a href="http://www.switch.ch/<?php echo $language ?>/aai/faq/"><?php echo getLocalString('faq') ?></a></li>
 			  <li class="last"><a href="http://www.switch.ch/<?php echo $language ?>/aai/help/"><?php echo getLocalString('help') ?></a></li>
 			  <li class="last"><a href="http://www.switch.ch/<?php echo $language ?>/aai/privacy/"><?php echo getLocalString('privacy') ?></a></li>
