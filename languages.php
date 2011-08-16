@@ -152,7 +152,7 @@ $langStrings['it'] = array (
 'permanently_remember_selection' => 'Salvare la scelta permanentemente e non passare pi&ugrave; per il WAYF.',
 'confirm_permanent_selection' => 'E\' sicuro di voler impostare la Home Organisation selezionata come sua Home Organisation predefinita? Non &egrave; da impostare se usa regolarmente diversi account AAI.',
 'save_button' => 'Salva',
-'access_host' => 'Per poter accedere alla risorsa sull\' host <tt>\'%s\'</tt> per favor selezioni l\'organizzazione con la quale &egrave; affiliato.',
+'access_host' => 'Per poter accedere alla risorsa sull\' host <tt>\'%s\'</tt> per favore selezioni l\'organizzazione con la quale &egrave; affiliato.',
 'select_idp' => 'Selezioni l\'organizzazione con la quale &egrave; affiliato.',
 'remember_selection' => 'Ricorda la selezione per questa sessione.',
 'switch_description' => 'Al servizio delle scuole universitarie: <a href="http://www.switch.ch/" target="_blank">SWITCH</a> eroga servizi Internet innovativi e unici per le scuole universitarie svizzere e per gli utenti di Internet.',
