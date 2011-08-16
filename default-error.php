@@ -1,7 +1,7 @@
 <?php // Copyright (c) 2011, SWITCH - Serving Swiss Universities ?>
 
 <!-- Error Message: Start-->
-<h2><?php echo getLocalString('invalid_query') ?></h2>
+<h1><?php echo getLocalString('invalid_query') ?></h1>
 <p>
 	<?php echo $message ?>
 </p>

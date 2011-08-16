@@ -43,9 +43,7 @@ function printWAYF(){
 		$showPermanentSetting = false;
 	}
 	$promptMessage =  '<strong>'.getLocalString('make_selection').'</strong>';
-	if (isset($_GET['target']) && preg_match('|:/|', $_GET['target'])){
-		$promptMessage = sprintf(getLocalString('access_target'), $_GET['target'], $_GET['target']);
-	} else if (isset($_GET['return'])){
+	if (isset($_GET['return'])){
 		$promptMessage =  sprintf(getLocalString('access_host'), getHostNameFromURI($_GET['return']));
 	} else if (isset($_GET['entityID'])){
 		$promptMessage =  sprintf(getLocalString('access_host'), getHostNameFromURI($_GET['entityID']));
@@ -487,13 +485,13 @@ function isCookie(check_name){
 }
 
 // Query Shibboleth Session handler and process response afterwards
+// This method has to be used because HttpOnly prevents reading 
+// the shib session cookies via JavaScript
 function queryShibSessionHandler(url){
 	var xmlhttp;
 	if (window.XMLHttpRequest){
-		// code for IE7+, Firefox, Chrome, Opera, Safari
 		xmlhttp = new XMLHttpRequest();
 	}  else {
-		// code for IE6, IE5
 		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 	}
 	
@@ -1103,6 +1101,26 @@ function printEmbeddedConfigurationScript(){
 		// Use default code
 		include('default-embedded-wayf.php');
 	}
+}
+
+/******************************************************************************/
+// Print sample configuration script used for Embedded WAYF
+function printCSS(){
+	
+	global $imageURL;
+	
+	// Read custom CSS
+	if (file_exists('css/custom-styles.css')){
+		$cssFile =  'css/custom-styles.css';
+	} else {
+		$cssFile =  'css/default-styles.css';
+	}
+	
+	// Read CSS and substitute content
+	$cssContent = file_get_contents($cssFile);
+	$cssContent = preg_replace('/{?\$imageURL}?/',$imageURL, $cssContent);
+	
+	echo $cssContent;
 }
 
 ?>

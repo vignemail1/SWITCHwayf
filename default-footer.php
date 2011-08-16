@@ -1,12 +1,9 @@
 <?php // Copyright (c) 2011, SWITCH - Serving Swiss Universities ?>
+	
+	<!-- Body: End -->
+		</div>
+	</div>
 
-<!-- Body: End -->
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
-
+</div>
 </body>
 </html>

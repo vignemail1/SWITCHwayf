@@ -172,8 +172,11 @@ This will output PHP warning messages which are otherwise supressed.
 
 Customizations:
 Since version 1.12 any graphical aspects of this WAYF/DS implementation can be 
-customized such that these changes survive an upgrade. In particular, the 
-following customizations can be applied:
+customized such that these changes survive an upgrade. Files whose names start
+with 'default-' can be copied and renamed to start with 'custom-' in order to 
+customize the file's behaviour.
+
+In particular, the following customizations can be applied:
 
 HTML header:   custom-header.php
 Customize page header
@@ -195,6 +198,9 @@ Customize WAYF/DS body
 
 HTML Error:    custom-error.php
 Customize error messages
+
+CSS Styles:    css/custom-styles.css
+Customize CSS styles that are printed inline in header
 
 Languages:     custom-languages.php
 Can be used to change default or add new language strings. In contrast to the 
@@ -388,6 +394,10 @@ For category entries, only Type, (local) Name and Index are relevant.
 
 Version History:
 
+1.14.4  Release data: August 2011
+        - Graphical design now is based new SWITCH harmos elements
+        - Focus on submit button works better with different browsers
+
 1.14.3  Release date: 4. March 2011
         - Fixed a race condition. Thanks go to Robert Basch from MIT for 
           reporting the issue and providing a patch.
@@ -417,8 +427,9 @@ Version History:
 To see the revision history of older versions, please have a look at:
 https://forge.switch.ch/redmine/projects/wayf/wiki/Changes
 
-Releases with a version number X.Y.Z usually are bug fix releases whereas
-releases with a version number X.Y introduce new functionality.
+Releases with a version number X.Y.Z usually contain bug fix releases, typo 
+corrections and graphical changes whereas releases with a version number X.Y 
+usually introduce new functionality.
 
 -------------------------------------------------------------------------------
 Embedded WAYF code snippet:
