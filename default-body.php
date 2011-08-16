@@ -8,11 +8,11 @@
 			<td>
 				<p><?php echo $promptMessage ?></p>
 				<div align="center">
-					<select name="user_idp" name="user_idp"> 
+					<select name="user_idp"> 
 						<option value="-" <?php echo $defaultSelected ?>><?php echo getLocalString('select_idp') ?> ...</option>
 					<?php printDropDownList($IDProviders, $selectedIDP) ?>
 					</select>
-					<input type="submit" name="Select" accesskey="s" value="<?php echo getLocalString('select_button') ?>" autofocus> 
+					<input type="submit" name="Select" accesskey="s" value="<?php echo getLocalString('select_button') ?>"> 
 				</div>
 				<div align="left">
 					<p>
