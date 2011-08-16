@@ -79,17 +79,16 @@ select {
 
 
 .menu li {
-    float: left;
+	float: left;
 	list-style:none;
 	line-height:35px;
+	margin-right:10px;
 }
 
 .menu li.last {
-	
 	background: url("{$imageURL}/separator.gif") no-repeat scroll left center transparent;
-	padding: 0  0 0 8px;
+	padding-left: 8px;
 	float: left;
-	margin-right:10px;
 	list-style:none;
 }
 
