@@ -43,12 +43,12 @@ select {
 	width:600px;
 	text-align: center;
 	background-color: #FFFFFF;
-	box-shadow: 1px 1px 15px #999999;
-	border-radius: 8px;
-	-webkit-box-shadow: 1px 1px 15px #999999;
-	-moz-box-shadow: 1px 1px 15px #999999;
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
+	box-shadow: 1px 1px 8px #999999;
+	border-radius: 13px;  
+	-webkit-box-shadow: 1px 1px 8px #999999;
+	-webkit-border-radius: 13px;
+	-moz-box-shadow: 1px 1px 8px #999999;
+	-moz-border-radius: 13px;
 	overflow: hidden;
 	padding: 24px;
 	filter: progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=0, Strength=5)
