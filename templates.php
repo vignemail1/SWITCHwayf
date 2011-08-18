@@ -665,15 +665,15 @@ function decodeBase64(input) {
 		wayf_hide_logo = false;
 	}
 	
-	if(typeof(wayf_width) == "undefined"){
+	if(typeof(wayf_width) == "undefined" || typeof(wayf_width) != "number"){
 		wayf_width = "auto";
-	} else if (typeof(wayf_width) == "number"){
+	} else {
 		wayf_width += 'px';
 	}
 	
-	if(typeof(wayf_height) == "undefined"){
+	if(typeof(wayf_height) == "undefined" || typeof(wayf_height) != "number"){
 		wayf_height = "auto";
-	} else if (typeof(wayf_height) == "number"){
+	} else {
 		wayf_height += "px";
 	}
 	
