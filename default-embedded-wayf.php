@@ -38,6 +38,8 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // Add 2 x (10px + 1px) = 22px for padding and border to get the actual 
 // width of everything that is drawn.
 // [Optional, default: "auto"]
+// Example for fixed size: 
+// var wayf_width  = 250;
 var wayf_width = "auto";
 
 // Height of the embedded WAYF in pixels or "auto"
@@ -45,6 +47,8 @@ var wayf_width = "auto";
 // Add 2 x (10px + 1px) = 22px for padding and border to get the actual 
 // height of everything that is drawn.
 // [Optional, default: "auto"]
+// Example for fixed size: 
+// var wayf_height = 150;
 var wayf_height = "auto";
 
 // Whether to show the checkbox to remember settings for this session
