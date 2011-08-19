@@ -84,11 +84,11 @@ function checkIDP($IDP, $showError = true){
 		return false;
 	} else {
 		$message = sprintf(getLocalString('invalid_user_idp'), htmlentities($IDP))."</p><p>\n<tt>";
-					foreach ($IDProviders as $key => $value){
-						if (isset($value['SSO'])){
-							$message .= $key."<br>\n";
-						}
-					}
+		foreach ($IDProviders as $key => $value){
+			if (isset($value['SSO'])){
+				$message .= $key."<br>\n";
+			}
+		}
 		$message .= "</tt>\n";
 		
 		printError($message);
@@ -594,7 +594,7 @@ function checkPathInfo($needle){
 function convertToShibDSStructure($IDProviders){
 	global $federationName;
 	
-	$ShibDSIDProviders['identityProviders'] = array();
+	$ShibDSIDProviders = array();
 	
 	foreach ($IDProviders as $key => $value){
 		
@@ -610,13 +610,9 @@ function convertToShibDSStructure($IDProviders){
 		// Init and fill IdP data
 		$identityProvider = array();
 		$identityProvider['entityID'] = $key;
-		$identityProvider['shibSSOEndpoint'] =  $value['SSO'];
-		$identityProvider['displayNames'][] = array('lang' => 'en', 'name' => $value['Name']);
-		$identityProvider['attributes'][] = array(
-		'name' => 'type', 'value' => $value['Type']
-		);
+		$identityProvider['DisplayNames'][] = array('lang' => 'en', 'value' => $value['Name']);
 		
-		// Add displayNames in other languages
+		// Add DisplayNames in other languages
 		foreach($value as $lang => $name){
 			if(
 				   $lang == 'Name'
@@ -630,28 +626,12 @@ function convertToShibDSStructure($IDProviders){
 			}
 			
 			if (isset($name['Name'])){
-				$identityProvider['displayNames'][] = array('lang' => $lang, 'name' => $name['Name']);
+				$identityProvider['DisplayNames'][] = array('lang' => $lang, 'value' => $name['Name']);
 			}
 		}
 		
-		
-		// Add kerberos realm
-		if(isset($value['Realm'])){
-			$identityProvider['attributes'][] = array(
-		'name' => 'kerberosRealm', 'value' => $value['Realm']
-		);
-		}
-		
-		
-		// Add IP ranges
-		if(isset($value['IP'])){
-			$identityProvider['attributes'][] = array(
-		'name' => 'IP', 'value' => $value['IP']
-		);
-		}
-		
 		// Add data to ShibDSIDProviders
-		$ShibDSIDProviders['identityProviders'][] = $identityProvider;
+		$ShibDSIDProviders[] = $identityProvider;
 	}
 	
 	return $ShibDSIDProviders;
