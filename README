@@ -153,6 +153,7 @@ Updates from versions before 1.15
   adapted in your custom languages.php file:
   - 'about_aai' was renamed to 'about_federation'
   - 'about_switch' was renamed to 'about_organisation'
+  - 'switch_description' was renamed to 'additional_info'
 
 Update from versions before 1.4.3:
   The new setting '$metadataLockFile' was introduced in config.php. It allows
@@ -409,6 +410,7 @@ Version History:
 1.15    Release data: August 2011
         - A default and custom CSS file can now be used
         - Graphical design now is based new SWITCH harmos elements
+        - Adapted JSON output to be compatible with the supported by Shibboleth 
         - Renamed some string keys to make them independent from SWITCH. 
           Please review the 'Specific Update Instructions' in this document
         - Focus on submit button works better with different browsers

@@ -25,7 +25,7 @@
 <table border="0" cellpadding="1" cellspacing="0">
 	<tr>
 		<td valign="top">
-			<p><?php echo getLocalString('switch_description') ?></p>
+			<p><?php echo getLocalString('additional_info') ?></p>
 		</td>
 	</tr>
 </table>
