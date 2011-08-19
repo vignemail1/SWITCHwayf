@@ -71,7 +71,7 @@ select {
 	margin-top: 10px;
 	margin-left: 0;
 	float: left;
-	background: url("{$imageURL}/dual_line.gif") repeat-x scroll 0 100% transparent;
+	background: url("{$imageURL}/dual_line.png") repeat-x scroll 0 100% transparent;
 	font-family: Verdana, sans-serif;
 	font-size: 12px;
 	line-height: 45px;
@@ -86,7 +86,7 @@ select {
 }
 
 .menu li.last {
-	background: url("{$imageURL}/separator.gif") no-repeat scroll left center transparent;
+	background: url("{$imageURL}/separator.png") no-repeat scroll left center transparent;
 	padding-left: 8px;
 	float: left;
 	list-style:none;
