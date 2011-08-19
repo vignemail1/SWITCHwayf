@@ -132,7 +132,7 @@ a2enmod headers
 
 -------------------------------------------------------------------------------
 
-Update in general:
+General Update Instructions:
 1. Make a backup of the directory where the currently active version of the 
    SWITCHwayf is installed
 2. Get the compressed archive of the new version and move it into the directory
@@ -143,19 +143,29 @@ Update in general:
 4. Have a look at config.dist.php and compare this file with your current
    config.php in order to identify new configuration options.
 
+
+-------------------------------------------------------------------------------
+
+Specific Update Instructions:
+
+Updates from versions before 1.15
+  The keys of the following languages strings were renamed and should be  
+  adapted in your custom languages.php file:
+  - 'about_aai' was renamed to 'about_federation'
+  - 'about_switch' was renamed to 'about_organisation'
+
 Update from versions before 1.4.3:
-The new setting '$metadataLockFile' was introduced in config.php. It allows
-configuring the location of the lock file. When the SWITCHwayf is used in a 
-Windows environment, the path to this file probably has to be adapted.
+  The new setting '$metadataLockFile' was introduced in config.php. It allows
+  configuring the location of the lock file. When the SWITCHwayf is used in a 
+  Windows environment, the path to this file probably has to be adapted.
 
 
 Update from versions before 1.8:
-This version has a slightly different structure than previous versions. 
-Therefore, it is recommended to start with a clean installation. 
-However, you should be able to take over most of your old config.php 
-functions and use them in the new template.php file again to keep your 
-customized look and feel.
-
+  This version has a slightly different structure than previous versions. 
+  Therefore, it is recommended to start with a clean installation. 
+  However, you should be able to take over most of your old config.php 
+  functions and use them in the new template.php file again to keep your 
+  customized look and feel.
 
 -------------------------------------------------------------------------------
 
@@ -396,8 +406,11 @@ For category entries, only Type, (local) Name and Index are relevant.
 
 Version History:
 
-1.14.4  Release data: August 2011
+1.15    Release data: August 2011
+        - A default and custom CSS file can now be used
         - Graphical design now is based new SWITCH harmos elements
+        - Renamed some string keys to make them independent from SWITCH. 
+          Please review the 'Specific Update Instructions' in this document
         - Focus on submit button works better with different browsers
         - Invalid values for width and height are now defaulted to auto for
           Embedded WAYF

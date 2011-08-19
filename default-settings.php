@@ -3,7 +3,7 @@
 <!-- Identity Provider Selection: Start -->
 <h1><?php echo getLocalString('permanent_select_header'); ?></h1> 
 <form id="IdPList" name="IdPList" method="post" onSubmit="return checkForm()" action="<?php echo $actionURL ?>">
-	<table class="login_field" width="500">
+	<table class="userInputArea" width="500">
 		<tr>
 			<td>
 				<!-- Value permanent must be a number which is equivalent to the days the cookie shall be valid -->

@@ -3,7 +3,7 @@
 <!-- Identity Provider Selection: Start -->
 <h1><?php echo getLocalString('settings'); ?></h1> 
 <form id="IdPList" name="IdPList" method="post" onSubmit="return checkForm()" action="<?php echo $actionURL ?>">
-	<table class="login_field" width="500">
+	<table class="userInputArea" width="500">
 		<tr>
 			<td>
 				<p><?php echo getLocalString('permanent_cookie_notice'); ?></p>

@@ -1,3 +1,4 @@
+/*  Copyright (c) 2011, SWITCH - Serving Swiss Universities  */
 h1 {
 	font-family:Verdana, sans-serif;
 	font-size: 13px;
@@ -13,25 +14,25 @@ p {
 }
 
 a {
-    color: #00247D;
-    text-decoration: underline;
+	color: #00247D;
+	text-decoration: underline;
 }
 
 a:visited {
-    color: #00247D;
-    text-decoration: underline;
+	color: #00247D;
+	text-decoration: underline;
 }
 
 a:focus, a:hover, a:active {
-    color: #F39800;
-    text-decoration: underline;
+	color: #F39800;
+	text-decoration: underline;
 }
 
 select {
 	max-width: 480px;
 }
 
-.outer_container {
+.container {
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -39,7 +40,7 @@ select {
 	margin-top: -200px; 
 }
 
-.wayf_box {
+.box {
 	width:600px;
 	text-align: center;
 	background-color: #FFFFFF;
@@ -52,13 +53,13 @@ select {
 	overflow: hidden;
 	padding: 24px;
 	filter: progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=0, Strength=5)
-	    progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=45, Strength=4)
-	    progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=90, Strength=5)
-	    progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=135, Strength=4)
-	    progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=180, Strength=5)
-	    progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=225, Strength=4)
-	    progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=260, Strength=5)
-	    progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=305, Strength=4);
+		progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=45, Strength=4)
+		progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=90, Strength=5)
+		progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=135, Strength=4)
+		progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=180, Strength=5)
+		progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=225, Strength=4)
+		progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=260, Strength=5)
+		progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=305, Strength=4);
 }
 
 .header {
@@ -67,7 +68,7 @@ select {
 
 .menu {
 	width: 100%;
-    padding-left: 2px;
+	padding-left: 2px;
 	margin-top: 10px;
 	margin-left: 0;
 	float: left;
@@ -97,19 +98,19 @@ select {
 	float:left;
 }
 
-.aai_logo {
+.federationLogo {
 	float:left;
 	margin-top: 32px;
 	margin-left: 2px;
 	border:0;
 }
 
-.switch_logo {
+.organisationLogo {
 	float:right;
 	border:0;
 }
 
-.login_field {
+.userInputArea {
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;

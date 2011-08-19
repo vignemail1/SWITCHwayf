@@ -60,14 +60,14 @@ function checkForm(){
 -->
 </script>
 
-<div class="outer_container">
-	<div class="wayf_box">
+<div class="container">
+	<div class="box">
 		<div class="header">
-			<a href="http://www.switch.ch/aai"><img src="<?php echo $imageURL ?>/switchaai-logo.png" alt="SWITCHaai" class="aai_logo"></a><a href="http://www.switch.ch/"><img src="<?php echo $imageURL ?>/switch-logo.png" alt="SWITCH" class="switch_logo" align="right"></a>
+			<a href="http://www.switch.ch/aai"><img src="<?php echo $imageURL ?>/switchaai-logo.png" alt="SWITCHaai" class="federationLogo"></a><a href="http://www.switch.ch/"><img src="<?php echo $imageURL ?>/switch-logo.png" alt="SWITCH" class="organisationLogo" align="right"></a>
 		</div>
 			<div class="content">
 			<ul class="menu">
-			  <li><a href="http://www.switch.ch/<?php echo $language ?>/aai/about/"><?php echo getLocalString('about_aai'); ?></a></li>
+			  <li><a href="http://www.switch.ch/<?php echo $language ?>/aai/about/"><?php echo getLocalString('about_federation'); ?></a></li>
 			  <li class="last"><a href="http://www.switch.ch/<?php echo $language ?>/aai/faq/"><?php echo getLocalString('faq') ?></a></li>
 			  <li class="last"><a href="http://www.switch.ch/<?php echo $language ?>/aai/help/"><?php echo getLocalString('help') ?></a></li>
 			  <li class="last"><a href="http://www.switch.ch/<?php echo $language ?>/aai/privacy/"><?php echo getLocalString('privacy') ?></a></li>
