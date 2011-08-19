@@ -1106,21 +1106,21 @@ function printEmbeddedConfigurationScript(){
 /******************************************************************************/
 // Print sample configuration script used for Embedded WAYF
 function printCSS(){
-	
-	global $imageURL;
-	
-	// Read custom CSS
-	if (file_exists('css/custom-styles.css')){
-		$cssFile =  'css/custom-styles.css';
-	} else {
-		$cssFile =  'css/default-styles.css';
-	}
-	
-	// Read CSS and substitute content
-	$cssContent = file_get_contents($cssFile);
-	$cssContent = preg_replace('/{?\$imageURL}?/',$imageURL, $cssContent);
-	
-	echo $cssContent;
-}
 
+        global $imageURL;
+
+        $defaultCSSFile =  'css/default-styles.css';
+        $cssContent = file_get_contents($defaultCSSFile);
+
+        // Read custom CSS if available
+        if (file_exists('css/custom-styles.css')){
+                $customCSSFile =  'css/custom-styles.css';
+                $cssContent .= file_get_contents($customCSSFile);
+        }
+
+        // Read CSS and substitute content
+        $cssContent = preg_replace('/{?\$imageURL}?/',$imageURL, $cssContent);
+
+        echo $cssContent;
+}
 ?>

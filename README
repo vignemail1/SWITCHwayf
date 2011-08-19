@@ -200,12 +200,14 @@ HTML Error:    custom-error.php
 Customize error messages
 
 CSS Styles:    css/custom-styles.css
-Customize CSS styles that are printed inline in header
+Customize CSS styles that are printed inline in header. The custom styles are
+loaded in addition to the default styles. Therefore, they can be used to 
+overwrite the default CSS styles.
 
 Languages:     custom-languages.php
-Can be used to change default or add new language strings. In contrast to the 
-above template files, this won't replace the default-languages.php but extend or
-modify it.
+Can be used to change default or add new language strings. The custom languages
+strings in addition to the default styles. Therefore, they can be used to 
+overwrite the default CSS styles.
 
 If the above files don't exist, the default templates and settings 
 will be used. To create a custom template, copy of the default files with 
