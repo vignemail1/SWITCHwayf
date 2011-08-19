@@ -397,6 +397,8 @@ Version History:
 1.14.4  Release data: August 2011
         - Graphical design now is based new SWITCH harmos elements
         - Focus on submit button works better with different browsers
+        - Invalid values for width and height are now defaulted to auto for
+          Embedded WAYF
 
 1.14.3  Release date: 4. March 2011
         - Fixed a race condition. Thanks go to Robert Basch from MIT for 
