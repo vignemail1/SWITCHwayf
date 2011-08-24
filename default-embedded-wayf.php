@@ -78,12 +78,12 @@ var wayf_font_size = 12;
 var wayf_font_color = '#000000';
 
 // Border color
-// [Optional, default: #00247D]
-var wayf_border_color = '#00247D';
+// [Optional, default: #969696]
+var wayf_border_color = '#969696';
 
 // Background color
-// [Optional, default: #F4F7F7]
-var wayf_background_color = '#F4F7F7';
+// [Optional, default: #F0F0F0]
+var wayf_background_color = '#F0F0F0';
 
 // Whether to automatically log in user if he has a session/permanent redirect
 // cookie set at central wayf

@@ -644,11 +644,11 @@ function decodeBase64(input) {
 	}
 	
 	if(typeof(wayf_border_color) == "undefined"){
-		wayf_border_color = '#00247D';
+		wayf_border_color = '#969696';
 	}
 	
 	if(typeof(wayf_background_color) == "undefined"){
-		wayf_background_color = '#F4F7F7';
+		wayf_background_color = '#F0F0F0';
 	}
 	
 	if(

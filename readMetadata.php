@@ -306,12 +306,15 @@ function processIDPRoleDescriptor($IDPRoleDescriptorNode){
 	foreach( $SSOServices as $SSOService ){
 		if ($SSOService->getAttribute('Binding') == 'urn:mace:shibboleth:1.0:profiles:AuthnRequest'){
 			$IDP['SSO'] =  $SSOService->getAttribute('Location');
+			break;
+		} else if ($SSOService->getAttribute('Binding') == 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'){
+			$IDP['SSO'] =  $SSOService->getAttribute('Location');
+			break;
 		}
 	}
 	
-	// Set a default value for backward compatibility
 	if (!isset($IDP['SSO'])){
-		$IDP['SSO'] = 'https://no.saml1.sso.url.defined.com/error';
+		$IDP['SSO'] = 'https://no.saml1.or.saml2.sso.url.defined.com/error';
 	}
 	
 	// First get MDUI name
@@ -492,7 +495,6 @@ function getMDUIDisplayNames($RoleDescriptorNode){
 	$Entity = Array();
 	
 	$MDUIDisplayNames = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:metadata:ui', 'DisplayName');
-	echo $MDUIDisplayNames->length."\n";
 	foreach( $MDUIDisplayNames as $MDUIDisplayName ){
 		$lang = $MDUIDisplayName->getAttributeNodeNS('http://www.w3.org/XML/1998/namespace', 'lang')->nodeValue;
 		$Entity[$lang] = $MDUIDisplayName->nodeValue;
