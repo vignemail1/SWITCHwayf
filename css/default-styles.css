@@ -50,10 +50,6 @@ a:focus, a:hover, a:active {
 		progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=305, Strength=4);
 }
 
-.header {
-	width: 100%;
-}
-
 .menu {
 	width: 100%;
 	padding-left: 2px;
@@ -85,24 +81,30 @@ a:focus, a:hover, a:active {
 	left: 50%;
 	top: 50%;
 	margin-left: -320px; 
-	margin-top: -200px; 
+	margin-top: -200px;
 }
 
 #content {
+	width: 98%;
+}
+
+#header {
 	width: 100%;
-	float:left;
+	height: 50px;
+	text-align: left;
 }
 
 #federationLogo {
-	float:left;
 	margin-top: 32px;
 	margin-left: 2px;
-	border:0;
+	border: 0;
+	float: left;
 }
 
-#organisationLogo {
-	float:right;
-	border:0;
+#organisationLogo
+{
+	border: 0;
+	float: right;
 }
 
 #userInputArea {

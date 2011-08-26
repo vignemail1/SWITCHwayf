@@ -62,8 +62,9 @@ function checkForm(){
 
 <div id="container">
 	<div class="box">
-		<div class="header">
-			<a href="http://www.switch.ch/aai"><img src="<?php echo $logoURL ?>" alt="SWITCHaai" id="federationLogo"></a><a href="http://www.switch.ch/"><img src="<?php echo $imageURL ?>/switch-logo.png" alt="SWITCH" id="organisationLogo" align="right"></a>
+		<div id="header">
+			<a href="http://www.switch.ch/aai"><img src="<?php echo $logoURL ?>" alt="SWITCHaai" id="federationLogo"></a>
+			<a href="http://www.switch.ch/"><img src="<?php echo $imageURL ?>/switch-logo.png" alt="SWITCH" id="organisationLogo"></a>
 		</div>
 			<div id="content">
 				<ul class="menu">
