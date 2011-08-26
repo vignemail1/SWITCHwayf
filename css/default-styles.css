@@ -40,14 +40,19 @@ a:focus, a:hover, a:active {
 	-moz-border-radius: 13px;
 	overflow: hidden;
 	padding: 24px;
-	filter: progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=0, Strength=5)
-		progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=45, Strength=4)
-		progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=90, Strength=5)
-		progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=135, Strength=4)
-		progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=180, Strength=5)
-		progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=225, Strength=4)
-		progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=260, Strength=5)
-		progid:DXImageTransform.Microsoft.Shadow(color='#CCCCCC', Direction=305, Strength=4);
+}
+
+
+/* IE 6 hack */
+* html .box { border: 2px #969696 solid; }
+
+/* IE 7 hack */
+*+html .box { border: 2px #969696 solid; }
+
+
+/* IE 8 hack */
+@media \0screen {
+	.box { border: 2px #969696 solid; }
 }
 
 .menu {
