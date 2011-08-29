@@ -487,7 +487,7 @@ function isCookie(check_name){
 // Query Shibboleth Session handler and process response afterwards
 // This method has to be used because HttpOnly prevents reading 
 // the shib session cookies via JavaScript
-function queryShibSessionHandler(url){
+function isShibbolethSession(url){
 	var xmlhttp;
 	if (window.XMLHttpRequest){
 		xmlhttp = new XMLHttpRequest();
@@ -496,8 +496,13 @@ function queryShibSessionHandler(url){
 	}
 	
 	// Send request
-	xmlhttp.open("GET", url, false);
-	xmlhttp.send();
+	try {
+		xmlhttp.open("GET", url, false);
+		xmlhttp.send();
+	} catch (e) {
+		// Something went wrong, send back false
+		return false;
+	} 
 	
 	// Check response code
 	if (xmlhttp.readyState != 4 || xmlhttp.status != 200 ){
@@ -524,10 +529,13 @@ function isUserLoggedIn(){
 		return wayf_check_login_state_function();
 	
 	} else {
-		
-		// Use default Shibboleth Service Provider login check
+		// Check if Shibboleth session cookie exists
 		var shibSessionCookieExists = isCookie('shibsession');
-		var shibSessionHandlerShowsSession = queryShibSessionHandler(wayf_sp_handlerURL + '/Session');
+		
+		// Check if Shibboleth session handler 
+		var shibSessionHandlerShowsSession = isShibbolethSession(wayf_sp_handlerURL + '/Session');
+		
+		// Return true if one of these checks is succsesful
 		return (shibSessionCookieExists || shibSessionHandlerShowsSession);
 	}
 }
