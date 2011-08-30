@@ -359,6 +359,8 @@ function processIDPRoleDescriptor($IDPRoleDescriptorNode){
 // Processes an SPRoleDescriptor XML node and returns an SP entry or false if 
 // something went wrong
 function processSPRoleDescriptor($SPRoleDescriptorNode){
+	global $defaultLanguage;
+
 	$SP = Array();
 	
 	// Get <idpdisc:DiscoveryResponse> extensions
