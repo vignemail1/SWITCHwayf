@@ -1002,10 +1002,6 @@ SCRIPT;
 				writeHTML('<optgroup label="' + wayf_overwrite_most_used_idps_text + '">');
 			}
 			
-			if (wayf_use_disco_feed){
-				loadDiscoFeedIdPs();
-			}
-			
 			// Show additional IdPs in the order they are defined
 			for ( var i=0; i < wayf_most_used_idps.length; i++){
 				if (wayf_idps[wayf_most_used_idps[i]]){
@@ -1095,6 +1091,11 @@ SCRIPT;
 	}
 	
 	echo <<<SCRIPT
+		// Load additional IdPs from DiscoFeed if feature is enabled
+		if (wayf_use_disco_feed){
+				loadDiscoFeedIdPs();
+		}
+		
 		if (wayf_additional_idps.length > 0){
 			
 			if (wayf_show_categories == true){
