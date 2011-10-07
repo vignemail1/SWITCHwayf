@@ -550,6 +550,11 @@ function loadDiscoFeedIdPs(){
 			continue;
 		}
 		
+		// Skip hidden IdPs
+		if (!isAllowedIdP(IdPs[i].entityID)){
+			continue;
+		}
+		
 		var newIdP;
 		if (IdPs[i].DisplayNames){
 			newIdP = {"name": IdPs[i].DisplayNames[0].value, "entityID":IdPs[i].entityID, "SAML1SSOurl":"https://www.example.org/test"};
