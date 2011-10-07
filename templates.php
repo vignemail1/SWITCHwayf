@@ -430,8 +430,7 @@ function getCookie(check_name){
 	var cookie_name = '';
 	var cookie_value = '';
 	
-	for ( var i = 0; i < a_all_cookies.length; i++ )
-	{
+	for ( var i = 0; i < a_all_cookies.length; i++ ){
 		// now we'll split apart each name=value pair
 		a_temp_cookie = a_all_cookies[i].split( '=' );
 		
@@ -517,6 +516,50 @@ function isShibbolethSession(url){
 	
 	return false;
 }
+
+// Loads Identity Provider from DiscoFeed and adds them to additional IdPs
+function loadDiscoFeedIdPs(){
+	var xmlhttp;
+	
+	if (window.XMLHttpRequest){
+		xmlhttp = new XMLHttpRequest();
+	}  else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	// Send request
+	try {
+		xmlhttp.open("GET", wayf_discofeed_url, false);
+		xmlhttp.send();
+	} catch (e) {
+		// Something went wrong, send back false
+		return;
+	} 
+	
+	// Check response code
+	if (xmlhttp.readyState != 4 || xmlhttp.status != 200 ){
+		return;
+	}
+	
+	// Load JSON
+	var IdPs = eval("(" + xmlhttp.responseText + ")");
+	
+	for ( var i = 0; i < IdPs.length; i++) {
+		// Skip IdPs that are in same federation
+		if (wayf_idps[IdPs[i].entityID]){
+			continue;
+		}
+		
+		var newIdP;
+		if (IdPs[i].DisplayNames){
+			newIdP = {"name": IdPs[i].DisplayNames[0].value, "entityID":IdPs[i].entityID, "SAML1SSOurl":"https://www.example.org/test"};
+		} else {
+			newIdP = {"name":IdPs[i].entityID, "entityID":IdPs[i].entityID, "SAML1SSOurl":"https://www.example.org/test"};
+		}
+		wayf_additional_idps.push(newIdP);
+	}
+}
+
 
 // Returns true if user is logged in
 function isUserLoggedIn(){
@@ -611,36 +654,57 @@ function decodeBase64(input) {
 		wayf_use_discovery_service = true;
 	}
 	
-	if(typeof(wayf_sp_entityID) == "undefined"){
+	if(
+		typeof(wayf_sp_entityID) == "undefined"
+		|| typeof(wayf_sp_entityID) != "string"
+		){
 		alert('The mandatory parameter \'wayf_sp_entityID\' is missing. Please add it as a javascript variable on this page.');
 		config_ok = false;
 	}
 	
-	if(typeof(wayf_URL) == "undefined"){
+	if(
+		typeof(wayf_URL) == "undefined"
+		|| typeof(wayf_URL) != "string"
+		){
 		alert('The mandatory parameter \'wayf_URL\' is missing. Please add it as a javascript variable on this page.');
 		config_ok = false;
 	}
 	
-	if(typeof(wayf_return_url) == "undefined"){
+	if(
+		typeof(wayf_return_url) == "undefined"
+		|| typeof(wayf_return_url) != "string"
+		){
 		alert('The mandatory parameter \'wayf_return_url\' is missing. Please add it as a javascript variable on this page.');
 		config_ok = false;
 	}
 	
-	if(wayf_use_discovery_service == false && typeof(wayf_sp_handlerURL) == "undefined"){
+	if(
+		wayf_use_discovery_service == false 
+		&& typeof(wayf_sp_handlerURL) == "undefined"
+		){
 		alert('The mandatory parameter \'wayf_sp_handlerURL\' is missing. Please add it as a javascript variable on this page.');
 		config_ok = false;
 	}
 	
-	if(wayf_use_discovery_service == true && typeof(wayf_sp_samlDSURL) == "undefined"){
+	if(
+		wayf_use_discovery_service == true 
+		&& typeof(wayf_sp_samlDSURL) == "undefined"
+		){
 		// Set to default DS handler
 		wayf_sp_samlDSURL = wayf_sp_handlerURL + "/DS";
 	}
 	
-	if (typeof(wayf_sp_samlACURL) == "undefined"){
+	if (
+		typeof(wayf_sp_samlACURL) == "undefined"
+		|| typeof(wayf_sp_samlACURL) != "string"
+		){
 		wayf_sp_samlACURL = wayf_sp_handlerURL + '/SAML/POST';
 	}
 	
-	if(typeof(wayf_font_color) == "undefined"){
+	if(
+		typeof(wayf_font_color) == "undefined"
+		|| typeof(wayf_font_color) != "string"
+		){
 		wayf_font_color = 'black';
 	}
 	
@@ -651,11 +715,17 @@ function decodeBase64(input) {
 		wayf_font_size = 12;
 	}
 	
-	if(typeof(wayf_border_color) == "undefined"){
+	if(
+		typeof(wayf_border_color) == "undefined"
+		|| typeof(wayf_border_color) != "string"
+		){
 		wayf_border_color = '#969696';
 	}
 	
-	if(typeof(wayf_background_color) == "undefined"){
+	if(
+		typeof(wayf_background_color) == "undefined"
+		|| typeof(wayf_background_color) != "string"
+		){
 		wayf_background_color = '#F0F0F0';
 	}
 	
@@ -673,13 +743,19 @@ function decodeBase64(input) {
 		wayf_hide_logo = false;
 	}
 	
-	if(typeof(wayf_width) == "undefined" || typeof(wayf_width) != "number"){
+	if(
+		typeof(wayf_width) == "undefined" 
+		|| typeof(wayf_width) != "number"
+	){
 		wayf_width = "auto";
 	} else {
 		wayf_width += 'px';
 	}
 	
-	if(typeof(wayf_height) == "undefined" || typeof(wayf_height) != "number"){
+	if(
+		typeof(wayf_height) == "undefined" 
+		|| typeof(wayf_height) != "number"
+		){
 		wayf_height = "auto";
 	} else {
 		wayf_height += "px";
@@ -713,7 +789,10 @@ function decodeBase64(input) {
 		wayf_hide_after_login = true;
 	}
 	
-	if(typeof(wayf_logged_in_messsage) == "undefined"){
+	if(
+		typeof(wayf_logged_in_messsage) == "undefined"
+		|| typeof(wayf_logged_in_messsage) != "string"
+		){
 		wayf_logged_in_messsage = "{$loggedInString}";
 	}
 	
@@ -762,6 +841,20 @@ function decodeBase64(input) {
 		|| typeof(wayf_additional_idps) != "object"
 		){
 		wayf_additional_idps = [];
+	}
+	
+	if(
+		typeof(wayf_use_disco_feed) == "undefined"
+		|| typeof(wayf_use_disco_feed) != "boolean"
+		){
+		wayf_use_disco_feed = false;
+	}
+	
+	if(
+		typeof(wayf_discofeed_url) == "undefined"
+		|| typeof(wayf_discofeed_url) != "string"
+		){
+		wayf_discofeed_url = "/Shibboleth.sso/DiscoFeed";
 	}
 	
 	// Exit without outputting html if config is not ok
@@ -907,6 +1000,10 @@ SCRIPT;
 				writeHTML('<optgroup label="{$mostUsedIdPsString}">');
 			} else {
 				writeHTML('<optgroup label="' + wayf_overwrite_most_used_idps_text + '">');
+			}
+			
+			if (wayf_use_disco_feed){
+				loadDiscoFeedIdPs();
 			}
 			
 			// Show additional IdPs in the order they are defined
