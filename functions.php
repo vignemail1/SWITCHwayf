@@ -532,6 +532,21 @@ function isValidDSRequest(){
 }
 
 /******************************************************************************/
+// Sets the Location header to redirect the user's web browser
+function redirectTo($url){
+	header('Location: '.$url);
+}
+
+/******************************************************************************/
+// Sets the Location that is used for redirect the web browser back to the SP
+function redirectToSP($url, $IdP){
+	if (preg_match('/\?/', $url) > 0){
+		redirectTo($url.'&'.getReturnIDParam().'='.urlencode($IdP));
+	} else {
+		redirectTo($url.'?'.getReturnIDParam().'='.urlencode($IdP));
+	}
+}
+/******************************************************************************/
 // Returns true if valid Directory Service request
 function logAccessEntry($protocol, $type, $sp, $idp){
 	global $WAYFLogFile, $useLogging;

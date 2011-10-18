@@ -416,7 +416,9 @@ Version History:
         - Focus on submit button works better with different browsers
         - Invalid values for width and height are now defaulted to auto for
           Embedded WAYF
-
+        - Fixed a Discovery Service bug that resulted in a wrong return URL to 
+          the Service Provider. Reported by Tom Scavo
+          
 1.14.3  Release date: 4. March 2011
         - Fixed a race condition. Thanks go to Robert Basch from MIT for 
           reporting the issue and providing a patch.

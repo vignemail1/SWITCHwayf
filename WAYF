@@ -71,7 +71,7 @@ foreach ($IDProviders as $key => $values){
 
 // This is for back-wards compatibility with very old versions of the WAYF
 if (isset($_GET['getArguments']) && isset($_GET['origin']) && isset($_GET['redirect'])){
-	header('Location: '.$_SERVER['PHP_SELF'].'/redirect/'.$_GET['origin'].'?'.$_GET['getArguments']);
+	redirectTo($_SERVER['PHP_SELF'].'/redirect/'.$_GET['origin'].'?'.$_GET['getArguments']);
 	exit;
 }
 
@@ -125,9 +125,9 @@ if (isRequestType('deleteSettings')){
 	}
 	
 	if (isset($_GET['return'])){
-		header('Location: '.$_GET['return']);
+		redirectTo($_GET['return']);
 	} else {
-		header('Location: '.$_SERVER['SCRIPT_NAME']);
+		redirectTo($_SERVER['SCRIPT_NAME']);
 	}
 	exit;
 }
@@ -136,7 +136,7 @@ if (isRequestType('deleteSettings')){
 // Delete permanent cookie
 if (isset($_POST['clear_user_idp'])){
 	setcookie ($redirectCookieName, '', time() - 3600, '/', $commonDomain, false);
-	header('Location: ?'.$_SERVER['QUERY_STRING']);
+	redirectTo('?'.$_SERVER['QUERY_STRING']);
 	exit;
 }
 
@@ -212,16 +212,16 @@ if (
 	if (isset($IDProviders[$cookieIdP]['Type']) && $IDProviders[$cookieIdP]['Type'] == 'wayf'){
 		
 		// Send user to cascaded WAYF with same request
-		header('Location: '.$IDProviders[$cookieIdP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
+		redirectTo($IDProviders[$cookieIdP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 		
 	} elseif (isValidDSRequest()){
-		header('Location: '.$_GET['return'].'&'.getReturnIDParam().'='.urlencode($cookieIdP));
+		redirectToSP($_GET['return'], $cookieIdP);
 		
 		// Create log entry
 		logAccessEntry('DS', 'Cookie', $_GET['return'], $cookieIdP);
 		
 	} else {
-		header('Location: '.$IDProviders[$cookieIdP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
+		redirectTo($IDProviders[$cookieIdP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 		
 		// Create log entry
 		logAccessEntry('WAYF', 'Cookie', $_GET['shire'], $cookieIdP);
@@ -244,15 +244,15 @@ if ($useKerberos && isset($_SERVER['REMOTE_USER'])) {
 		if (isset($IDProviders[$kerberosIDP]['Type']) && $IDProviders[$kerberosIDP]['Type'] == 'wayf'){
 			
 			// Send user to cascaded WAYF with same request
-			header('Location: '.$IDProviders[$kerberosIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
+			redirectTo($IDProviders[$kerberosIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 			
 		} elseif (isValidDSRequest()){
-			header('Location: '.$_GET['return'].'&'.getReturnIDParam().'='.urlencode($kerberosIDP));
+			redirectToSP($_GET['return'], $kerberosIDP);
 			
 			// Create log entry
 			logAccessEntry('DS', 'Kerberos', $_GET['return'], $kerberosIDP);
 		} else {
-			header('Location: '.$IDProviders[$kerberosIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
+			redirectTo($IDProviders[$kerberosIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 			
 			// Create log entry
 			logAccessEntry('WAYF', 'Kerberos', $_GET['shire'], $kerberosIDP);
@@ -272,7 +272,7 @@ if ($useKerberos && !isset($kerberosRealm)) {
 			// redirect to the soft link (that points back to this script)
 			// which is	 protected by mod_auth_kerb.
 			$url = $kerberosRedirectURL."?".$_SERVER['QUERY_STRING'];
-			header("Location: $url");
+			redirectTo($url);
 			exit();
 		}
 	}
@@ -292,7 +292,7 @@ if (
 		&& isset($_GET['origin'])
 		&& checkIDP($_GET['origin'])
 	){
-	header('Location: '.$IDProviders[$_GET['origin']]['SSO'].'?'.$_SERVER['QUERY_STRING']);
+	redirectTo($IDProviders[$_GET['origin']]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 	
 	// Create log entry
 	logAccessEntry('WAYF', 'Old-Request', $_GET['shire'], $_GET['origin']);
@@ -306,7 +306,7 @@ if ($hintedPathIDP != '-'){
 	if (isset($IDProviders[$hintedPathIDP]['Type']) && $IDProviders[$hintedPathIDP]['Type'] == 'wayf'){
 		
 		// Send user to cascaded WAYF with same request
-		header('Location: '.$IDProviders[$hintedPathIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
+		redirectTo($IDProviders[$hintedPathIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 		exit;
 		
 	} elseif ( checkPathInfo('redirect') ){
@@ -315,13 +315,13 @@ if ($hintedPathIDP != '-'){
 		
 		// Determine if DS or WAYF request
 		if (isValidDSRequest()){
-			header('Location: '.$_GET['return'].'&'.getReturnIDParam().'='.urlencode($hintedPathIDP));
+			redirectToSP($_GET['return'], $hintedPathIDP);
 			
 			// Create log entry
 			logAccessEntry('DS', 'Path', $_GET['return'], $hintedPathIDP);
 			
 		} else {
-			header('Location: '.$IDProviders[$hintedPathIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
+			redirectTo($IDProviders[$hintedPathIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 			
 			// Create log entry
 			logAccessEntry('WAYF', 'Path', $_GET['shire'], $hintedPathIDP);
@@ -345,10 +345,10 @@ if (
 	if (isset($IDProviders[$selectedIDP]['Type']) && $IDProviders[$selectedIDP]['Type'] == 'wayf'){
 		
 		// Send user to cascaded WAYF with same request
-		header('Location: '.$IDProviders[$selectedIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
+		redirectTo($IDProviders[$selectedIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 		
 	} else if (isValidDSRequest()){
-		header('Location: '.$_GET['return'].'&'.getReturnIDParam().'='.urlencode($selectedIDP));
+		redirectToSP($_GET['return'], $selectedIDP);
 		
 		// Create log entry
 		if (isset($_POST['request_type']) && $_POST['request_type'] == 'embedded'){
@@ -358,7 +358,7 @@ if (
 		}
 		
 	} else {
-		header('Location: '.$IDProviders[$selectedIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
+		redirectTo($IDProviders[$selectedIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 		
 		// Create log entry
 		if (isset($_POST['request_type']) && $_POST['request_type'] == 'embedded'){
@@ -450,14 +450,14 @@ if (
 		
 		// Only return user with returnIDParam to SP if IdP could be guessed
 		if ($selectedIDP == '-' || $selectedIDP == ''){
-			header('Location: '.$_GET['return']);
+			redirectTo($_GET['return']);
 			
 			// Create log entry
 			logAccessEntry('DS', 'Passive', $_GET['return'], '-');
 			
 			
 		} else {
-			header('Location: '.$_GET['return'].'&'.getReturnIDParam().'='.urlencode($selectedIDP));
+			redirectToSP($_GET['return'], $selectedIDP);
 			
 			// Create log entry
 			logAccessEntry('DS', 'Passive', $_GET['return'], $selectedIDP);
