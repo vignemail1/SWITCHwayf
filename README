@@ -416,8 +416,13 @@ Version History:
         - Focus on submit button works better with different browsers
         - Invalid values for width and height are now defaulted to auto for
           Embedded WAYF
-        - Fixed a Discovery Service bug that resulted in a wrong return URL to 
-          the Service Provider. Reported by Tom Scavo
+        - Fixed a URL composing bug that resulted in a wrong return URL to 
+          the Service Provider if the return parameter did not contain any GET
+          arguments. Reported by Tom Scavo
+        - Made implementation behave according to the Discovery Service protocol
+          specification when it comes to the return parameter. This parameter
+          is optional in case the DS knows the SP Discovery URL.
+          Reported by Tom Scavo.
           
 1.14.3  Release date: 4. March 2011
         - Fixed a race condition. Thanks go to Robert Basch from MIT for 

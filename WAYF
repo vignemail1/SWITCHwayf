@@ -492,7 +492,7 @@ if (
 	$message .= '<p>'. getLocalString('valid_request_description');
 	printError($message);
 	exit;
-}  elseif(
+} elseif(
 		(!isset($_GET['entityID']) && isset($_GET['return'])) 
 		|| (isset($_GET['entityID']) && !isset($_GET['return']))
 ){

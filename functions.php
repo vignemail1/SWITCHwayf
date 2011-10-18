@@ -522,13 +522,33 @@ function isValidShib1Request(){
 }
 
 /******************************************************************************/
-// Returns true if valid Directory Service request
+// Returns true if request is a valid Directory Service request
 function isValidDSRequest(){
-	if (isset($_GET['entityID']) && isset($_GET['return'])){
-		return true;
-	} else {
+	global $SProviders;
+	
+	// If entityID is not present, request is invalid
+	if (!isset($_GET['entityID'])){
 		return false;
 	}
+	
+	// If entityID and return parameters are present, request is valid
+	if (isset($_GET['return'])){
+		return true;
+	}
+	
+	// If no return parameter and no Discovery Service endpoint is available 
+	// for SP, request is invalid
+	if (!isset($SProviders[$_GET['entityID']]['DSURL'])){
+		return false;
+	}
+	
+	if (count($SProviders[$_GET['entityID']]['DSURL']) < 1){
+		return false;
+	}
+	
+	// EntityID is available and there is at least one DiscoveryService 
+	// endpoint defined. Therefore, the request is valid
+	return true;
 }
 
 /******************************************************************************/
