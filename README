@@ -407,7 +407,7 @@ For category entries, only Type, (local) Name and Index are relevant.
 
 Version History:
 
-1.15    Release data: August 2011
+1.15    Release date: 18. October 2011
         - A default and custom CSS file can now be used
         - Graphical design now is based new SWITCH harmos elements
         - Adapted JSON output to be compatible with the supported by Shibboleth 
