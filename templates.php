@@ -565,6 +565,21 @@ function loadDiscoFeedIdPs(){
 	}
 }
 
+// Sorts Discofeed 
+function sortEntities(a, b){
+	var nameA = a.name.toLowerCase();
+	var nameB = b.name.toLowerCase();
+	
+	if (nameA < nameB){
+		return -1;
+	}
+	
+	if (nameA > nameB){
+		return 1;
+	}
+	
+	return 0;
+}
 
 // Returns true if user is logged in
 function isUserLoggedIn(){
@@ -1098,7 +1113,7 @@ SCRIPT;
 	echo <<<SCRIPT
 		// Load additional IdPs from DiscoFeed if feature is enabled
 		if (wayf_use_disco_feed){
-				loadDiscoFeedIdPs();
+			loadDiscoFeedIdPs();
 		}
 		
 		if (wayf_additional_idps.length > 0){
@@ -1107,7 +1122,10 @@ SCRIPT;
 				writeHTML('<optgroup label="{$otherFederationString}">');
 			}
 			
-			// Show additional IdPs in the order they are defined
+			// Sort Array
+			wayf_additional_idps.sort(sortEntities)
+			
+			// Show additional IdPs
 			for ( var i=0; i < wayf_additional_idps.length ; i++){
 				if (wayf_additional_idps[i]){
 					// Last used IdP is known because of local _saml_idp cookie

@@ -221,14 +221,16 @@ var wayf_show_categories =  true;
 
 
 // Whether to load Identity Providers from the Discovery Feed provided by
-// the Service Provider. This feature might have to be activated on the SP.
-// The loaded Identity Providers are added to the wayf_additional_idps.
+// the Service Provider. The discovery feed feature might have to be activated 
+// on the SP first.
+// The loaded Identity Providers are added to the wayf_additional_idps and the 
+// whole array will be sorted alphabetically
 // [Optional, commented out by default]
-// wayf_use_disco_feed = true;
+// var wayf_use_disco_feed = true;
 
 // URL where to load the Discovery Feed from in case wayf_use_disco_feed is true
 // [Optional, commented out by default]
-// wayf_discofeed_url = "/Shibboleth.sso/DiscoFeed";
+// var wayf_discofeed_url = "/Shibboleth.sso/DiscoFeed";
 
 
 //////////////////// ADDITIONAL CSS CUSTOMIZATIONS ////////////////////
