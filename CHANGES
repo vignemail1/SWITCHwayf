@@ -9,16 +9,30 @@ Project web site: https://forge.switch.ch/redmine/projects/wayf
 Bug reports/feature requests: https://forge.switch.ch/redmine/projects/wayf/issues
 -------------------------------------------------------------------------------
 
+Version Number Policy:
+
+Releases with a 0version number X.Y.Z usually are bug fix releases, typo 
+corrections and graphical changes.
+Releases with a version number X.Y usually are minor releases that introduce 
+new functionality. Few adapations in the configuration might be necessary to
+upgrade to minor releases.
+Releases with a version number X are major releases that will require major 
+changes in the configuration files. Therefore, a clean instalation might be 
+necessary for such releases.
+
+-------------------------------------------------------------------------------
+
+
 SWITCHwayf Changes and Version History:
 
 1.15    Release date: 21. October 2011
-          ###################################################################
-          Please review the 'Specific Update Instructions' in the README file
-          ###################################################################
         - A default and custom CSS file can now be used
         - Graphical design now is based new SWITCH harmos elements
         - Adapted JSON output to use format used by Shibboleth SP
         - Renamed some string keys to make them independent from SWITCH
+          ###################################################################
+          Please review the 'Specific Update Instructions' in the README file
+          ###################################################################
         - Added support for the Shibboleth SP 2.4 Discovery Feed JSON output
           in Embedded WAYF
         - Focus on submit button works better with different browsers
@@ -81,13 +95,8 @@ SWITCHwayf Changes and Version History:
          submitting patches.
        - Fixed a bug where hidden IdPs would still be shown in Embedded WAYF
 
-To see the revision history of older versions, please have a look at:
+The revision history of older versions, can be found on the SWITCHwayf web page:
 https://forge.switch.ch/redmine/projects/wayf/wiki/Changes
-
-Releases with a version number X.Y.Z usually contain bug fix releases, typo 
-corrections and graphical changes whereas releases with a version number X.Y 
-usually introduce new functionality.
-
 
 -------------------------------------------------------------------------------
 
