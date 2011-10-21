@@ -530,10 +530,10 @@ function getAttributeConsumingServiceNames($RoleDescriptorNode){
 	
 	$Entity = Array();
 	
-	$ServiceDescriptions = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:metadata', 'ServiceDescription' );
-	foreach ($ServiceDescriptions as $ServiceDescription){
-		$lang = $ServiceDescription->getAttributeNodeNS('http://www.w3.org/XML/1998/namespace', 'lang')->nodeValue;
-		$Entity[$lang] = $ServiceDescription->nodeValue;
+	$ServiceNames = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:metadata', 'ServiceName' );
+	foreach ($ServiceNames as $ServiceName){
+		$lang = $ServiceName->getAttributeNodeNS('http://www.w3.org/XML/1998/namespace', 'lang')->nodeValue;
+		$Entity[$lang] = $ServiceName->nodeValue;
 	}
 	
 	return $Entity;
