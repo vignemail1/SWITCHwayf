@@ -1,0 +1,117 @@
+Copyright 2011 SWITCH - Serving Swiss Universities. 
+See LICENSE file for details.
+
+-------------------------------------------------------------------------------
+SWITCH WAYF
+Contact: aai@switch.ch or go to http://www.switch.ch/aai/wayf
+Version: See head of file 'WAYF' in the same directory
+Project web site: https://forge.switch.ch/redmine/projects/wayf
+Bug reports/feature requests: https://forge.switch.ch/redmine/projects/wayf/issues
+-------------------------------------------------------------------------------
+
+SWITCHwayf Changes and Version History:
+
+1.15    Release date: 21. October 2011
+          ###################################################################
+          Please review the 'Specific Update Instructions' in the README file
+          ###################################################################
+        - A default and custom CSS file can now be used
+        - Graphical design now is based new SWITCH harmos elements
+        - Adapted JSON output to use format used by Shibboleth SP
+        - Renamed some string keys to make them independent from SWITCH
+        - Added support for the Shibboleth SP 2.4 Discovery Feed JSON output
+          in Embedded WAYF
+        - Focus on submit button works better with different browsers
+        - Invalid values for width and height are now defaulted to auto for
+          Embedded WAYF
+        - Fixed a URL composing bug that resulted in a wrong return URL to 
+          the Service Provider if the return parameter did not contain any GET
+          arguments. Reported by Tom Scavo
+        - Made implementation behave according to the Discovery Service protocol
+          specification when it comes to the return parameter. This parameter
+          is optional in case the DS knows the SP Discovery URL.
+          Reported by Tom Scavo.
+          
+1.14.3  Release date: 4. March 2011
+        - Fixed a race condition. Thanks go to Robert Basch from MIT for 
+          reporting the issue and providing a patch.
+
+1.14.2  Release date: 15. December 2010
+        - IDProvider.conf.php and config.php are not overwritten anymore by upgrades
+        - Logging to syslog now works properly and is more consistent
+        - Access log now properly locks file
+        - Unknown category is not shown anymore when there is no other category
+        - Namespaces are now taken properly into account when parsing SAML2 
+          metadata. Thanks go to Olivier Salaün for reporting this issue and
+          submitting a patch.
+        - Improved installation instructions
+
+1.14.1  Release date: 12. November 2010
+        - Fixed an encoding bug that affected non-ASCII characters in 
+          JavaScripts. Thanks to Prof. Kazutsuna Yamaji for reporting this issue.
+        - Corrected behaviour of $enableDSReturnParamCheck and 
+          $useACURLsForReturnParamCheck. There won't be an error anymore if an SP 
+          has no <idpdisc:DiscoveryResponse> extension defined. In such a case
+          there will only be a check if $useACURLsForReturnParamCheck is enabled.
+        - Fixed a bug in readMetadata.php that prevented CLI execution
+        - Changed the default configuration option to generate the Embedded WAYF
+          to false due to some concerns regarding phishing attacks
+        - Added proper copyright statements to all source code files
+
+1.14   Release date: 9. November 2010
+        - Added the configuration option wayf_force_remember_for_session to
+         the Embedded WAYF on request of Wolgang Lierz. This
+         option allows setting the remember for session checkbox to true
+       - The 'return' parameter of a Discovery Service request can now be 
+         checked using the idp-discovery-protocol extension or using the FQDN 
+         of all the Service Provider's assertion consumer URLs. The latter 
+         alternative is less secure but still offers better security against 
+         phising attacks. Have a look at config.dist.php and the README for 
+         more detailed explanations on these feature.
+       - Metadata parsing now uses DOM XML for PHP5 instead of Simple XML
+       - Fixed a minor HTML error in template for Embedded WAYF
+       - Sorting within categories works now correctly if SAML2 metadata is 
+         used to generate Identity Provider drop-down list. 
+         Thanks to Prof. Kazutsuna Yamaji
+         Informatics (NII) for reporting this issue.
+       - Fixed a minor bug in templates.php that cause PHP warnings to show up
+         in case an invalid IdP was stored in the cookie.
+       - Fixed a bug affecting the Kerberos authentication.
+         Thanks to Robert Basch for reporting these bugs and for 
+         submitting patches.
+       - Fixed a bug where hidden IdPs would still be shown in Embedded WAYF
+
+To see the revision history of older versions, please have a look at:
+https://forge.switch.ch/redmine/projects/wayf/wiki/Changes
+
+Releases with a version number X.Y.Z usually contain bug fix releases, typo 
+corrections and graphical changes whereas releases with a version number X.Y 
+usually introduce new functionality.
+
+
+-------------------------------------------------------------------------------
+
+Credits:
+Find below the list of people who have contributed to code, either because they 
+found bugs, suggested improvements or contributed code. Have a look at the 
+version history in order to see the individual contributions. The list is sorted 
+alphabetically.
+
+- Robert Basch from MIT (US)
+- Pavlos Drandakis from University of Athens (GR)
+- Nicolas Dunand from Université Lausanne (CH)
+- Michael R. Gettes from Internet2 (US)
+- Nuno Gonçalves from FCCN (PT)
+- Florent Guilleux from CRU (FR)
+- Josh Howlett from University of Bristol (UK)
+- Franz Kuster from ETHZ (CH)
+- Wolgang Lierz from ETH Zurich (CH)
+- Lourival Pereira Vieira Neto from RNP (BR)
+- Martins Purins from Latvijas Universitates (LV)
+- Olivier Salaün from RENATER (FR)
+- Tom Scavo from Internet2 (US)
+- Mika Suvanto from CSC (FI)
+- Huân Thebault from Centre de Calcul de l'IN2P3 (FR)
+- Prof. Kazutsuna Yamaji from NII (JP)
+- And of course all SWITCH staff members who have contributed suggestions,
+  bug fixes and translation to this code.

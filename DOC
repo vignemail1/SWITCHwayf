@@ -1,0 +1,375 @@
+Copyright 2011 SWITCH - Serving Swiss Universities. 
+See LICENSE file for details.
+
+-------------------------------------------------------------------------------
+SWITCH WAYF
+Contact: aai@switch.ch or go to http://www.switch.ch/aai/wayf
+Version: See head of file 'WAYF' in the same directory
+Project web site: https://forge.switch.ch/redmine/projects/wayf
+Bug reports/feature requests: https://forge.switch.ch/redmine/projects/wayf/issues
+-------------------------------------------------------------------------------
+
+Description:
+The SWITCHwayf is an implementation of the Shibboleth WAYF and SAML2 Discovery 
+Service protocol for use withing a Shibboleth architecture.
+
+Some of the Features:
+- Preselecting entry in drop down list by
+  - SAML common domain cookie that contains selected Identity Providers 
+  - resource path info hint (e.g. 
+    /WAYF/unige.ch?shire=https://... selects University  of Geneva, depends 
+    of course on the ID scheme a federation uses)
+  - Kerberos preselection
+  - IP range preselection
+  - IP reverse DNS lookup preselection
+- Transparent redirection mode, e.g. /WAYF/unige.ch/redirect?shire=https://...
+- Can read SAML2 metadata files
+- Supports Discovery Service and the Shibboleth authentication request protocol 
+- Various customizations options for header, footer, language strings etc.
+- HTML code generation for embedding the WAYF directly into a web page
+- Support for templates
+- Support for remembering IdP selection permanently
+- I18N support, currently language packs for en, de, it, fr and pt are included
+
+-------------------------------------------------------------------------------
+
+Customization Options:
+Since version 1.12 any graphical aspects of this WAYF/DS implementation can be 
+customized such that these changes survive a minor version upgrade. 
+Files whose names start with 'default-' can be copied and renamed to start with 
+'custom-' in order to  customize the file's behaviour.
+
+In particular, the following customizations can be applied:
+
+HTML header:   custom-header.php
+Customize page header
+
+HTML Footer:   custom-footer.php
+Customize page footer 
+
+HTML Body:     custom-body.php
+Customize WAYF/DS body
+
+HTML Body:     custom-settings.php
+Customize WAYF/DS permanent settings body
+
+HTML Body:     custom-notice.php
+Customize WAYF/DS permanent settings notice body
+
+HTML Body:     custom-embedded-wayf.php
+Customize WAYF/DS body
+
+HTML Error:    custom-error.php
+Customize error messages
+
+CSS Styles:    css/custom-styles.css
+Customize CSS styles that are printed inline in header. The custom styles are
+loaded in addition to the default styles. Therefore, they can be used to 
+overwrite the default CSS styles.
+
+Languages:     custom-languages.php
+Can be used to change default or add new language strings. The custom languages
+strings in addition to the default styles. Therefore, they can be used to 
+overwrite the default CSS styles.
+
+If the above files don't exist, the default templates and settings 
+will be used. To create a custom template, copy of the default files with 
+cp default-{$template}.php custom-{$template}.php 
+where {$template} stands for the file you want to customize.
+
+-------------------------------------------------------------------------------
+
+Logging:
+Errors are generally written to syslog. Error messages might be cases where
+files cannot be read or written due to permission problems.
+
+If the configuration option $useLogging is true, a log file will be written to 
+the path specified in $WAYFLogFile. This log file is an audit log file where 
+each line is an entry of the form:
+
+#DATE# #TIME# #IP# #IDP_SELECTION# #REQUEST_TYPE# #IDP_ENTITYID# #FORWARDING_URL#
+
+Log entries are only created if the user was forwarded to an Identity Provider.
+
+#DATE#            Date of request, e.g. 2010-11-02
+#TIME#            Time of request, e.g. 06:25:13
+#IP#              IP of requester, e.g. 127.0.0.1
+#IDP_SELECTION#   How the IdP was selected: Cookie or Request
+#REQUEST_TYPE#    Type of request: DS, WAYF, Embedded-DS, Embedded-WAYF
+#IDP_ENTITYID#    EntityID of the IdP the user was forwarded to.
+#FORWARDING_URL#  URL the user was redirected to
+
+-------------------------------------------------------------------------------
+
+Optimizations:
+If your instance of the SWITCHwayf has to deal with many requests and the load 
+is becoming  higher and higher, you might want to think about using a PHP opcode 
+cacher like XCache, apc,  eaccelerator,  phpa,  truck-mmcache or similar.  
+
+Using such a tool can decrease the processing time of the PHP code almost by 
+half. However, own tests have shown that the bottleneck in general is not 
+the PHP processing but the TLS handshake, which has nothing to do with PHP 
+or the SWITCHwayf itself. 
+
+Benchmark tests conducted by SWITCH demonstrated that generating the 
+Javascript WAYF/embedded-wayf.js can be speed up usign XCache by 100% if the 
+script is accessed via HTTP (without TLS). However, if the script is 
+accessed via HTTPS (default in SWITCHaai), the overall speed gain by using 
+XCache is less than 1% because the TLS hand-shake is what consumes most CPU time.
+
+-------------------------------------------------------------------------------
+
+SAML2 Metadata support:
+In case the WAYF/DS shall display the list of IdPs by parsing them from a
+SAML2 Medatadata file that is used by Shibboleth:
+
+- Set $useSAML2Metadata in config.php to true
+- Specify the path to the metadata file that shall be read in $metadataFile
+  and make sure this file is updated regularely by Shibboleth or a cron job
+- Make sure the files specified in $metadataIDPFile and $metadataSPFile can be 
+  written by the userthat executes the PHP script (the web server user, 
+  e.g. www-data or _www)
+
+The parsend IDP and SP entries will be stored in $metadataIDPFile and 
+$metadataSPFile as executable PHP code. Storing parsed information in JSON or 
+PHP serialized format would allow slightly faster reading and executing in 
+general. However, for large numbers of entities an opcode cacher might speed up 
+execution time considerably (see chapter "Optimization" above) thanks to 
+this format. 
+
+If an entry shall be changed, removed or extended in this automatically 
+generated file, one can extend the IDP definitions by modifying them in 
+the $IDPConfigFile. To overwrite IDP values with entries in the $IDPConfigFile, 
+make sure the entry $SAML2MetaOverLocalConf is set to 'false';
+For example one could change the displayed name of an IdP by adding an entry in
+the file $IDPConfigFile like:
+
+$IDProviders["https://sso.example.org/idp/shibboleth"]["Name"] = "Foobar";
+
+It is also possible to manually force the IdP list being upgraded by running the 
+readMetadata.php in command line mode, e.g. by executing a cron script like:
+
+5 * * * * /usr/bin/php readMetadata.php > /dev/null
+
+This feature has been initially developed in the framework of GRNET's project 
+VNOC by Pavlos Drandakis.
+
+-------------------------------------------------------------------------------
+
+Embedded WAYF support:
+With the embedded WAYF support administrators of a Shibboleth protected 
+application can easily integrate a Discovery Service on the any page of their 
+application just by copying and adapting the HTML code snippet generated by the
+SWITCHwayf via the URL /WAYF/embedded-wayf.js/snippet.html
+
+The embedded WAYF then will display on the remote site a drop-down list with the
+Identity Provider to authenticate.
+
+One can also configure the embedded WAYF to hide or add Identity Providers 
+(even from remote federations) or adapt the look and feel of the embedded wayf. 
+This can be done by simpling modifying the JavaScript variables in the HTML 
+snippet.
+
+
+Note:
+When activating the Embedded WAYF, carefully protect the host where the WAYF is 
+operated on. If your WAYF host gets compromised, an attacker could modify the 
+JavaScript that is embedded on the remote site in a malicous wayf (e.g. phish 
+the user's password, redirect users to malicous pages, steal their sessions etc). 
+You also have to make sure that your central WAYF has a very high availability 
+because a lot of third-party services will depend on it.
+
+Also, please be aware that using the Embedded WAYF allows anybody to guess a 
+user's Home Organisation without much effort. This information then could be 
+used for phising attacks for example!
+
+-------------------------------------------------------------------------------
+
+Embedded WAYF code snippet:
+To get a valid HTML snippet to embedd in a web page, please access the WAYF 
+with a URL like:
+
+https://#HOSTNAME#/#PATH_TO_WAYF#/WAYF/embedded-wayf.js/snippet.html
+
+The script should return HTML code that can be embedded together with short 
+descriptions of the available settings.
+
+Embedded WAYF code limitations:
+If the embedded WAYF is placed on the right side or at the bottom of a web page,
+it may be that the web browser cannot expand and render the complete drop-down
+list of Identity Providers.
+If placed on a host where no Service Provider is installed, the Embedded WAYF
+might not be able to detect wheter a user is logged in or not. Also, the 
+wayf_use_disco_feed might not be used. 
+
+-------------------------------------------------------------------------------
+
+Kerberos support:
+If this features shall be used the web server needs to support Negotiate/SPNEGO 
+Kerberos protocol. For example by using mod_auth_kerb.
+- Make a symlink of the file 'WAYF' and name it like configured in the variable 
+  $kerberosRedirectURL
+- Protect file $kerberosRedirectURL with Kerberos. The Kerberos realm must be
+  specified in "IDProvider.conf.php" for each IdP. Each IdP's KDC must also
+  establish a Kerberos cross-realm trust with the WAYF's KDC. This was tested 
+  with a Windows 2000 KDC, with the WAYF running on RHEL4. 
+
+Credits for this feature go to Josh Howlett from Bristol University.
+
+-------------------------------------------------------------------------------
+
+Configuration file format:
+Have a look at the file 'IDProvider.conf.php' for an example of the file format 
+that is used to configure the list of Identity Provider to display. It's 
+supposed to be mostly self-explanatory. Basically the file format is PHP code 
+that defines an array of arrays called $IDProviders.
+
+The keys of the array $IDProviders must correspond to the entityIDs of the 
+Identity Providers or a unique value in case of a cascaded WAYF/DS or 
+a category. The entityID must be a valid URI (URL or URN) where in the
+case of a URN the last component must be a valid hostname.
+
+If metadata is not parsed from SAML2 metadta (using the setting 
+$useSAML2Metadata = false), the IdPs and category entries will be displayed 
+in order as defined in the configuration file and no sorting is done.
+
+If metadata is used ($useSAML2Metadata = true) to generate the list of Identity 
+Providers, the Identity Providers will first be sorted according to their 
+type/category, their Index value (see below) and then alphabetically after their 
+(local) Name within the same type category. 
+If an IdP does not have a type, its category is 'unknown'.
+If there exists a type for an IdP that does not have a corresponding category 
+it will be displayed in the category 'unknown' at the end of the drop down list 
+but will keep its type value (this is important for the Embedded Discovery 
+Service).
+
+A general entry for an Identity Provider, a cascaded WAYF/DS or a category is 
+of the following form:
+$IDProviders[#key#] = #entry#
+
+#key# is a unique value that must correspond to the entity's entityID in case 
+the entry stands for an Identity Provider. For entries of Type category, the
+#key# should be an identifier that corresponds to a 'Type' of an IdP.
+
+#entry# is a hash array with the following keys: 
+['Type']:   Optional        Type that is used for the embedded wayf to hide
+                            or show certain categories. Default type will 
+                            be 'unknown' if not specified.
+                            An entry for another WAYF/DS that the user shall be 
+                            redirected to should have ['Type'] ='wayf
+                            The Type values 'category' and 'wayf' are reserved 
+                            words that are not allowed to be assigned to 
+                            entries for Identity Providers.
+['Name']:   Mandatory       Default name to display in drop-down list
+['en'|'it'|'fr'|'de'|'pt']['Name']:
+            Optional        Display name in other languages
+['SSO']:    Mandatory       Should be the SAML1 SSO endpoint of the IdP
+['Realm']:  Optional        Kerberos Realm
+['IP'][]:   Optional        IP ranges of that organizations that can be used to 
+                            guess a user's Identity Provider
+['Index']:  Optional        An alphanumerical value that is used for sorting 
+                            categories and Identity Provider in ascending order 
+                            if the Identity Providers are parsed from metadata.
+                            This is only relevant if 
+                            $includeLocalConfEntries = true
+
+For category entries, only Type, (local) Name and Index are relevant.
+
+The format for the file $metadataSPFile looks very similar:
+
+A general entry for an Identity Provider, a cascaded WAYF/DS or a category is 
+of the following form:
+
+$metadataSProviders[#key#] = #entry#
+
+#key# is a unique value that must correspond to the Service Provider's entityID.
+
+#entry# is a hash array with the following keys: 
+['Name']:       Mandatory   Default name to display in drop-down list. By 
+                            default the MDUI:DisplayName, the ServiceName or
+                            the entityID is used. If there is a display name
+                            available in the WAYF's default language that one
+                            will be used. Otherwise English or the only 
+                            available DisplayName is used.
+['en'|'it'|'fr'|'de'|'pt']['Name']:
+                Optional    Display name in other languages
+['DSURL']:      Optional    List of DiscoveryService endpoints of the SP.
+['ACURL']:      Mandatory   List of Assertion Consumer endpoints of the SP.
+['Protocols']:  Mandatory   Protocols supported by the SP, e.g. :
+                            urn:oasis:names:tc:SAML:2.0:protocol 
+                            urn:oasis:names:tc:SAML:1.1:protocol
+
+-------------------------------------------------------------------------------
+
+Path Info parameters and files:
+Modifying the WAYF's URL it is possible to influence its behaviour. This can be
+done by appending certain Path Info extension to the URL. The Path Info 
+components can also be combined. The allowed syntax is:
+
+[/#i18n string#][/redirect][/#entityID hostname#]
+[/#i18n string#][/embedded-wayf.js]
+[/embedded-wayf.js/snippet.html]
+[/IDProviders.json]
+[/IDProviders.php]
+[/IDProviders.txt]
+
+Note: The web server must support the use of Path Info.
+
+Hinted Identity Provider and transparent redirects
+--------------------------------------------------
+Path Info Extensions: [/redirect][/#entityID hostname#]
+
+#entityID hostname# must be the host name of an entityId or the last component 
+of a URN. Examples:
+https://aai-login.switch.ch/idp/shibboleth         -> aai-login.switch.ch
+urn:mace:switch.ch:aaitest:aai-demo-idp.switch.ch  -> aai-demo-idp.switch.ch
+
+If the '/redirect' is included in the Path Info as well, the web browser is 
+redirected transparently to the specified entityID hostname.
+
+Note: One must make sure that the entityID hostname is not the same as one of
+      the reserved keywords like 'redirect', the below mentioned file types
+      or a i18n langauge abbreviation.
+
+Language preselection:
+----------------------
+Path Info Extensions: [/#i18n string#]
+
+Examples of i18n strings are 'en', 'de_CH' or 'fr_CH.ISO8859-1' etc. However, in
+the default distribution only 'en', 'de', 'fr', 'it' and 'pt' are available and 
+supported. But it would be easy to create sub types of existing languages  for
+country/region support by adding something like this to languages.php:
+
+--
+// Create a country specific copy of the German language strings
+$langStrings['de_CH'] = $langStrings['de'];
+
+// Overwrite a specific string
+$langStrings['de_CH']['title'] = 'Auswahl der Heimorganisation';
+--
+
+
+Special handlers:
+-----------------
+In order for the Embedded WAYF feature to work there are some special files that
+need to be generated. The following Path Info Extensions must be the last 
+components of the Path Info URL.
+
+Path Info Extensions:
+[/deleteSettings]                  As the name suggests, this handler deletes
+                                   all settings cookies that were stored by the 
+                                   WAYF service in cookies.
+                                   Unless there is a 'return' GET argument 
+                                   provided the user is sent to the settings 
+                                   page.
+[/embedded-wayf.js]                Generates the JavaScript for the Embedded WAYF
+[/embedded-wayf.js/snippet.html]   Generates HTML snippet for the Embedded WAYF
+[/idps-and-state.json]             Returns JSON data structure that contains
+                                   the content of the IDProviders array. The last
+                                   element of that array will be a key called 
+                                   'preselectedIDP', which contains the 
+                                   Identity Provider that would be preselected
+                                   in the drop-down list for that user.
+[/IDProviders.txt]                 Same as above but in human readable form.
+[/IDProviders.php]                 Same as above but as PHP code
+
