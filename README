@@ -25,11 +25,11 @@ SSO protocols that make use of redirection. The specification states that an
 implementation "SHOULD" examine the 'return' parameter used in a Discovery 
 Service request and match it against the <idpdisc:DiscoveryResponse> 
 extension in SAML metadata. The implementation of the Discovery Service protocol
-in the SWITCHwayf prior to version 1.14 does NOT verify the return parameter 
+in the SWITCHwayf prior to version 1.14 did NOT verify the return parameter 
 even if SAML metadata was used to generate the list of Identity Provider.
 Version 1.14 or newer fixes this problem.
 
-Thanks to Tom Scavo for making us aware of this issue.
+Thanks to Tom Scavo for reporting this issue.
 
 -------------------------------------------------------------------------------
 
@@ -83,7 +83,7 @@ Installation:
 4. Adapt the SWITCHwayf configuration in config.php. There are comments in that
    file that should help you make suitable choices for your use case.
 
-5. If you use Apache 2, add the following statement to the Apache configugration:
+5. If Apache 2 is used, add the following statement to the Apache configugration:
 
 --
 <Location /path/to/WAYF>
@@ -92,7 +92,7 @@ Installation:
 --
 
    In some clustered environments with FastCGI it may be necessary to use 
-   something like
+   something like:
 
 --
 Options +FollowSymLinks
@@ -155,11 +155,10 @@ Updates from versions before 1.15
   - 'about_switch' was renamed to 'about_organisation'
   - 'switch_description' was renamed to 'additional_info'
 
-Update from versions before 1.4.3:
+Update from versions before 1.14.3:
   The new setting '$metadataLockFile' was introduced in config.php. It allows
   configuring the location of the lock file. When the SWITCHwayf is used in a 
   Windows environment, the path to this file probably has to be adapted.
-
 
 Update from versions before 1.8:
   This version has a slightly different structure than previous versions. 
@@ -171,21 +170,21 @@ Update from versions before 1.8:
 -------------------------------------------------------------------------------
 
 Troubleshooting:
-Generall, if there is an error or an exception, the WAYF will log the to syslog. 
+Generally, if there is an error or an exception, the WAYF will log it to syslog. 
 In case there is a problem and you see only a white page without any output, 
 open config.php in a text editor, go to the bottom of the file and set:
 
 $developmentMode = true;
 
-This will output PHP warning messages which are otherwise supressed.
+This should output PHP warning messages which are otherwise supressed.
 
 -------------------------------------------------------------------------------
 
-Customizations:
+Customization Options:
 Since version 1.12 any graphical aspects of this WAYF/DS implementation can be 
-customized such that these changes survive an upgrade. Files whose names start
-with 'default-' can be copied and renamed to start with 'custom-' in order to 
-customize the file's behaviour.
+customized such that these changes survive a minor version upgrade. 
+Files whose names start with 'default-' can be copied and renamed to start with 
+'custom-' in order to  customize the file's behaviour.
 
 In particular, the following customizations can be applied:
 
@@ -228,9 +227,8 @@ where {$template} stands for the file you want to customize.
 -------------------------------------------------------------------------------
 
 Logging:
-
-The general log where errors are written to is syslog. This log file will 
-contain error messages for example in case files cannot be read or written.
+Errors are generally written to syslog. Error messages might be cases where
+files cannot be read or written due to permission problems.
 
 If the configuration option $useLogging is true, a log file will be written to 
 the path specified in $WAYFLogFile. This log file is an audit log file where 
@@ -251,25 +249,26 @@ Log entries are only created if the user was forwarded to an Identity Provider.
 -------------------------------------------------------------------------------
 
 Optimizations:
+If your instance of the SWITCHwayf has to deal with many requests and the load 
+is becoming  higher and higher, you might want to think about using a PHP opcode 
+cacher like XCache, apc,  eaccelerator,  phpa,  truck-mmcache or similar.  
 
-If your instance of the SWITCHwayf has many requests and the load is becoming 
-higher and higher, you might want to think about using a PHP opcode cacher like 
-XCache, apc,  eaccelerator,  phpa,  truck-mmcache or similar.  
 Using such a tool can decrease the processing time of the PHP code almost by 
-half. However, internal tests have shown that the bottleneck in general is not 
+half. However, own tests have shown that the bottleneck in general is not 
 the PHP processing but the TLS handshake, which has nothing to do with PHP 
-itself. Benchmark tests conducted by SWITCH demonstrated that generating the 
-Javascript WAYF/embedded-wayf.js can be speed up by 100% if the script provided
-the script is accessed via HTTP (without TLS). However, if the script is 
+or the SWITCHwayf itself. 
+
+Benchmark tests conducted by SWITCH demonstrated that generating the 
+Javascript WAYF/embedded-wayf.js can be speed up usign XCache by 100% if the 
+script is accessed via HTTP (without TLS). However, if the script is 
 accessed via HTTPS (default in SWITCHaai), the overall speed gain by using 
 XCache is less than 1% because the TLS hand-shake is what consumes most CPU time.
 
 -------------------------------------------------------------------------------
 
 SAML2 Metadata support:
-
-In case you want the WAYF/DS to display the list of IdPs by parsing them from a
-SAML2 Medatadata file that is used by Shibboleth
+In case the WAYF/DS shall display the list of IdPs by parsing them from a
+SAML2 Medatadata file that is used by Shibboleth:
 
 - Set $useSAML2Metadata in config.php to true
 - Specify the path to the metadata file that shall be read in $metadataFile
@@ -280,21 +279,23 @@ SAML2 Medatadata file that is used by Shibboleth
 
 The parsend IDP and SP entries will be stored in $metadataIDPFile and 
 $metadataSPFile as executable PHP code. Storing parsed information in JSON or 
-PHP serialized format would allow faster reading and executing in general. 
-However, for large numbers of entities an opcode cacher might speed up execution 
-time considerably (see chapter "Optimization" above) thanks to this format. 
+PHP serialized format would allow slightly faster reading and executing in 
+general. However, for large numbers of entities an opcode cacher might speed up 
+execution time considerably (see chapter "Optimization" above) thanks to 
+this format. 
 
-If you want to change, remove or extend an entry from this automatically 
-generated file, you  can extend the IDP definitions by modifying them in 
-the $IDPConfigFile. In case you want to overwrite some IDP values with entries in 
-the $IDPConfigFile, make sure the entry $SAML2MetaOverLocalConf is set to false;
-For example you could change the displayed name of an IdP by adding an entry in
+If an entry shall be changed, removed or extended in this automatically 
+generated file, one can extend the IDP definitions by modifying them in 
+the $IDPConfigFile. To overwrite IDP values with entries in the $IDPConfigFile, 
+make sure the entry $SAML2MetaOverLocalConf is set to 'false';
+For example one could change the displayed name of an IdP by adding an entry in
 the file $IDPConfigFile like:
 
-$IDProviders["urn:mace:switch.ch:SWITCHaai:switch.ch"]["Name"] = "Foobar";
+$IDProviders["https://sso.example.org/idp/shibboleth"]["Name"] = "Foobar";
 
-You could also manually force the IdP list being upgraded by running the 
+It is also possible to manually force the IdP list being upgraded by running the 
 readMetadata.php in command line mode, e.g. by executing a cron script like:
+
 5 * * * * /usr/bin/php readMetadata.php > /dev/null
 
 This feature has been initially developed in the framework of GRNET's project 
@@ -303,29 +304,27 @@ VNOC by Pavlos Drandakis.
 -------------------------------------------------------------------------------
 
 Embedded WAYF support:
-With the embedded WAYF support you as an administrator of an application that is
-protected by Shibboleth, can easily integrate a Discovery Service on the home 
-page of your application just by copying and adapting the HTML code snippet at 
-the bottom of this file.
+With the embedded WAYF support administrators of a Shibboleth protected 
+application can easily integrate a Discovery Service on the any page of their 
+application just by copying and adapting the HTML code snippet generated by the
+SWITCHwayf via the URL /WAYF/embedded-wayf.js/snippet.html
 
 The embedded WAYF then will display on the remote site a drop-down list with the
-same Identity  Providers as if you were on this instance of the WAYF directly.
+Identity Provider to authenticate.
 
-However, you can also configure the embedded WAYF for your site by hiding or 
-adding certain Identity Providers (even from remote federations) or adapt the
-look and feel of the embedded wayf. This can be done by simpling modifying the
-JavaScript variables in the HTML snippet that can be found at the bottom of 
-the page.
+One can also configure the embedded WAYF to hide or add Identity Providers 
+(even from remote federations) or adapt the look and feel of the embedded wayf. 
+This can be done by simpling modifying the JavaScript variables in the HTML 
+snippet.
 
 
 Note:
-If you operate a WAYF for your federation, you must carefully protect the 
-host this WAYF is operated on when you activate this feature. If your WAYF 
-host gets compromised, an attacker could modify the JavaScript that is embedded
-on the remote site in a malicous wayf (e.g. phish the user's password, redirect
-users to malicous pages, steal their sessions etc). You also have to make sure
-that your central WAYF has a very high availability because a lot of third-party
-services will depend on it.
+When activating the Embedded WAYF, carefully protect the host where the WAYF is 
+operated on. If your WAYF host gets compromised, an attacker could modify the 
+JavaScript that is embedded on the remote site in a malicous wayf (e.g. phish 
+the user's password, redirect users to malicous pages, steal their sessions etc). 
+You also have to make sure that your central WAYF has a very high availability 
+because a lot of third-party services will depend on it.
 
 Also, please be aware that using the Embedded WAYF allows anybody to guess a 
 user's Home Organisation without much effort. This information then could be 
@@ -333,9 +332,28 @@ used for phising attacks for example!
 
 -------------------------------------------------------------------------------
 
+Embedded WAYF code snippet:
+To get a valid HTML snippet to embedd in a web page, please access the WAYF 
+with a URL like:
+
+https://#HOSTNAME#/#PATH_TO_WAYF#/WAYF/embedded-wayf.js/snippet.html
+
+The script should return HTML code that can be embedded together with short 
+descriptions of the available settings.
+
+Embedded WAYF code limitations:
+If the embedded WAYF is placed on the right side or at the bottom of a web page,
+it may be that the web browser cannot expand and render the complete drop-down
+list of Identity Providers.
+If placed on a host where no Service Provider is installed, the Embedded WAYF
+might not be able to detect wheter a user is logged in or not. Also, the 
+wayf_use_disco_feed might not be used. 
+
+-------------------------------------------------------------------------------
+
 Kerberos support:
-Your web server needs to support Negotiate/SPNEGO Kerberos protocol. For 
-example by using mod_auth_kerb.
+If this features shall be used the web server needs to support Negotiate/SPNEGO 
+Kerberos protocol. For example by using mod_auth_kerb.
 - Make a symlink of the file 'WAYF' and name it like configured in the variable 
   $kerberosRedirectURL
 - Protect file $kerberosRedirectURL with Kerberos. The Kerberos realm must be
@@ -348,7 +366,8 @@ Credits for this feature go to Josh Howlett from Bristol University.
 -------------------------------------------------------------------------------
 
 Configuration file format:
-Checkout the file 'IDProvider.conf.php' for an example of the file format. It's 
+Have a look at the file 'IDProvider.conf.php' for an example of the file format 
+that is used to configure the list of Identity Provider to display. It's 
 supposed to be mostly self-explanatory. Basically the file format is PHP code 
 that defines an array of arrays called $IDProviders.
 
@@ -379,7 +398,7 @@ $IDProviders[#key#] = #entry#
 the entry stands for an Identity Provider. For entries of Type category, the
 #key# should be an identifier that corresponds to a 'Type' of an IdP.
 
-#entry# is another hash array with the following keys: 
+#entry# is a hash array with the following keys: 
 ['Type']:   Optional        Type that is used for the embedded wayf to hide
                             or show certain categories. Default type will 
                             be 'unknown' if not specified.
@@ -403,16 +422,44 @@ the entry stands for an Identity Provider. For entries of Type category, the
 
 For category entries, only Type, (local) Name and Index are relevant.
 
+The format for the file $metadataSPFile looks very similar:
+
+A general entry for an Identity Provider, a cascaded WAYF/DS or a category is 
+of the following form:
+
+$metadataSProviders[#key#] = #entry#
+
+#key# is a unique value that must correspond to the Service Provider's entityID.
+
+#entry# is a hash array with the following keys: 
+['Name']:       Mandatory   Default name to display in drop-down list. By 
+                            default the MDUI:DisplayName, the ServiceName or
+                            the entityID is used. If there is a display name
+                            available in the WAYF's default language that one
+                            will be used. Otherwise English or the only 
+                            available DisplayName is used.
+['en'|'it'|'fr'|'de'|'pt']['Name']:
+                Optional    Display name in other languages
+['DSURL']:      Optional    List of DiscoveryService endpoints of the SP.
+['ACURL']:      Mandatory   List of Assertion Consumer endpoints of the SP.
+['Protocols']:  Mandatory   Protocols supported by the SP, e.g. :
+                            urn:oasis:names:tc:SAML:2.0:protocol 
+                            urn:oasis:names:tc:SAML:1.1:protocol
+
 -------------------------------------------------------------------------------
 
 Version History:
 
-1.15    Release date: 18. October 2011
+1.15    Release date: 21. October 2011
+          #################################################################
+          Please review the 'Specific Update Instructions' in this document
+          #################################################################
         - A default and custom CSS file can now be used
         - Graphical design now is based new SWITCH harmos elements
-        - Adapted JSON output to be compatible with the supported by Shibboleth 
-        - Renamed some string keys to make them independent from SWITCH. 
-          Please review the 'Specific Update Instructions' in this document
+        - Adapted JSON output to use format used by Shibboleth SP
+        - Renamed some string keys to make them independent from SWITCH
+        - Added support for the Shibboleth SP 2.4 Discovery Feed JSON output
+          in Embedded WAYF
         - Focus on submit button works better with different browsers
         - Invalid values for width and height are now defaulted to auto for
           Embedded WAYF
@@ -458,21 +505,7 @@ corrections and graphical changes whereas releases with a version number X.Y
 usually introduce new functionality.
 
 -------------------------------------------------------------------------------
-Embedded WAYF code snippet:
-To get a valid HTML snippet to embedd in a web page, please access your WAYF 
-with a URL like:
 
-https://#HOSTNAME#/#PATH_TO_WAYF#/WAYF/embedded-wayf.js/snippet.html
-
-The script then should return some HTML code that can be embedded together
-with short descriptions of the available settings.
-
-Embedded WAYF code limitations:
-If the embedded WAYF is placed on the right side or at the bottom of a web page,
-it may be that the web browser cannot expand and render the complete drop-down
-list of Identity Providers.
-
--------------------------------------------------------------------------------
 Path Info parameters and files:
 Modifying the WAYF's URL it is possible to influence its behaviour. This can be
 done by appending certain Path Info extension to the URL. The Path Info 
@@ -485,7 +518,7 @@ components can also be combined. The allowed syntax is:
 [/IDProviders.php]
 [/IDProviders.txt]
 
-Note: Your web server must support the use of Path Info.
+Note: The web server must support the use of Path Info.
 
 Hinted Identity Provider and transparent redirects
 --------------------------------------------------
