@@ -25,6 +25,15 @@ necessary for such releases.
 
 SWITCHwayf Changes and Version History:
 
+1.16    Release date: 
+        - Added an improved version of the drop down list to the WAYF
+        - Added cookieSecurity option to set and transmit cookies securely 
+        - Added additional data protection feature that uses the referer to
+          decide whether or not to preselect an Identity Provider in the
+          Embedded WAYF
+        - If the Discovery Feed feature is activated only those IdPs are shown 
+          that are contained in the feed. Others will be hidden automatically.
+
 1.15    Release date: 21. October 2011
         - A default and custom CSS file can now be used
         - Graphical design now is based new SWITCH harmos elements

@@ -38,12 +38,20 @@ $SAMLDomainCookieName = $cookieNamePrefix.'_saml_idp';
 // selected IdP and SP using $SAMLDomainCookieName and $SPCookieName
 $SPCookieName = $cookieNamePrefix.'_saml_sp';
 
+// If enabled cookies are set/transmitted only via https connections
+$cookieSecurity = false;
+
+// Number of days longterm cookies shall be valid
+$cookieValidity = 100;
 
 // 3. Features and extensions
 //***************************
 
 // Whether to show the checkbox to permanently remember a setting
 $showPermanentSetting = false;
+
+// Whether or not to use the search-as-you-type feature of the drop down list
+$userImprovedDropDownList = true;
 
 // Set to true in order to enable reading the Identity Provider from a SAML2 
 // metadata file defined below in $metadataFile
@@ -97,16 +105,21 @@ $useReverseDNSLookup = false;
 // Therefore, only enable this feature if you know what you are doing!
 $useEmbeddedWAYF = false;
 
-// If activated the Embedded WAYF will prevent releasing information
-// about the user's preselected Identity Provider
+// If enabled the Embedded WAYF will prevent releasing information
+// about the user's preselected Identity Provider 
 // While this is benefical to the data protection of the user, it will also
 // prevent preselecting the user's Identity Provider. Thus, users will have
 // to preselect their IdP each and every time
 $useEmbeddedWAYFPrivacyProtection = false;
 
-// Whether to enable logging of WAYF/DS requests
-// If turned on make sure to also configure $WAYFLogFile
-$useLogging = true; 
+// If enabled, the referer hostname of the request must match tan assertion 
+// consumer URL or a discovery URL of a Service Provider in $metadataSPFile
+// in order to let the Embedded WAYF preselect an Identity Provider.
+// Therefore, this option is a good compromise between data protection and
+// userfriendlyness.
+// This option can only be used if $useEmbeddedWAYFPrivacyProtection is false
+// and $useSAML2Metadata is true
+$useEmbeddedWAYFRefererForPrivacyProtection = false;
 
 // Whether or not to add the entityID of the preselected IdP to the
 // exported JSON/Text/PHP Code
@@ -117,8 +130,12 @@ $useLogging = true;
 // Therefore, only enable this feature if you know what you are doing!
 $exportPreselectedIdP = false;
 
+// Whether to enable logging of WAYF/DS requests
+// If turned on make sure to also configure $WAYFLogFile
+$useLogging = true; 
 
-// 4. Look and feel settings
+
+// 4. Appearance settings
 //**************************
 
 // Name of the federation
@@ -128,12 +145,19 @@ $federationName = 'SWITCHaai Federation';
 $federationURL = 'http://www.switch.ch/aai/';
 
 // Use an absolute URL in case you want to use the embedded WAYF
-$imageURL = 'https://'.$_SERVER['SERVER_NAME'].'/SWITCHaai/images';
+$imageURL = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/images';
 
-// URL to the logo that shall be displayed
+// Absolute URL to point to css directory
+$cssURL = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/css';
+
+// Absolute URL to point to javascript directory
+$javascriptURL = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/js';
+
+// Absolute URL to the logo that shall be displayed in the Embedded WAYF
 $logoURL = $imageURL.'/switch-aai-transparent.png'; 
 
-// URL to the small logo that shall be displayed in the embedded WAYF if dimensions are small
+// Absolute URL to the small logo that shall be displayed in the 
+// embedded WAYF if dimensions must be small
 $smallLogoURL = $imageURL.'/switch-aai-transparent-small.png';
 
 
@@ -143,8 +167,8 @@ $smallLogoURL = $imageURL.'/switch-aai-transparent-small.png';
 // Set both config files to the same value if you don't want to use the 
 // the WAYF to read a (potential) automatically generated file that undergoes
 // some plausability checks before being used
-$IDPConfigFile = 'IDProvider.conf.php'; // Config file
-$backupIDPConfigFile = 'IDProvider.conf.php'; // Backup config file
+$IDPConfigFile = 'IDProvider.conf.php';
+$backupIDPConfigFile = 'IDProvider.conf.php';
 
 // Use $metadataFile as source federation's metadata.
 $metadataFile = '/etc/shibboleth/metadata.switchaai.xml';
@@ -175,6 +199,7 @@ $WAYFLogFile = '/var/log/apache2/wayf.log';
 
 // A Kerboros-protected soft link back to this script!
 $kerberosRedirectURL = '/SWITCHaai/kerberosRedirect.php';
+
 
 // Development mode settings
 //**************************

@@ -4,6 +4,108 @@
 // Commonly used functions for the WAYF
 /******************************************************************************/
 
+// Initilizes default configuration options if they were not set already
+function initConfigOptions(){
+	global $defaultLanguage;
+	global $commonDomain;
+	global $cookieNamePrefix;
+	global $redirectCookieName;
+	global $redirectStateCookieName;
+	global $SAMLDomainCookieName;
+	global $SPCookieName;
+	global $cookieSecurity;
+	global $cookieValidity;
+	global $showPermanentSetting;
+	global $userImprovedDropDownList;
+	global $useSAML2Metadata;
+	global $SAML2MetaOverLocalConf;
+	global $includeLocalConfEntries;
+	global $enableDSReturnParamCheck;
+	global $useACURLsForReturnParamCheck;
+	global $useKerberos;
+	global $useReverseDNSLookup;
+	global $useEmbeddedWAYF;
+	global $useEmbeddedWAYFPrivacyProtection;
+	global $useEmbeddedWAYFRefererForPrivacyProtection;
+	global $useLogging;
+	global $exportPreselectedIdP;
+	global $federationName;
+	global $federationURL;
+	global $imageURL;
+	global $javascriptURL;
+	global $cssURL;
+	global $logoURL;
+	global $smallLogoURL;
+	global $IDPConfigFile;
+	global $backupIDPConfigFile;
+	global $metadataFile;
+	global $metadataIDPFile;
+	global $metadataSPFile;
+	global $metadataLockFile;
+	global $WAYFLogFile;
+	global $kerberosRedirectURL;
+	global $developmentMode;
+	
+	// Set independet default configuration options
+	$defaults = array();
+	$defaults['defaultLanguage'] = 'en'; 
+	$defaults['commonDomain'] = '.switch.ch';
+	$defaults['cookieNamePrefix'] = '';
+	$defaults['cookieSecurity'] = false;
+	$defaults['cookieValidity'] = 100;
+	$defaults['showPermanentSetting'] = false;
+	$defaults['userImprovedDropDownList'] = true;
+	$defaults['useSAML2Metadata'] = true; 
+	$defaults['SAML2MetaOverLocalConf'] = false;
+	$defaults['includeLocalConfEntries'] = true;
+	$defaults['enableDSReturnParamCheck'] = true;
+	$defaults['useACURLsForReturnParamCheck'] = false;
+	$defaults['useKerberos'] = false;
+	$defaults['useReverseDNSLookup'] = false;
+	$defaults['useEmbeddedWAYF'] = false;
+	$defaults['useEmbeddedWAYFPrivacyProtection'] = false;
+	$defaults['useEmbeddedWAYFRefererForPrivacyProtection'] = false;
+	$defaults['useLogging'] = true; 
+	$defaults['exportPreselectedIdP'] = false;
+	$defaults['federationName'] = 'SWITCHaai Federation';
+	$defaults['federationURL'] = 'http://www.switch.ch/aai/';
+	$defaults['imageURL'] = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/images';
+	$defaults['javascriptURL'] = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/js';
+	$defaults['cssURL'] = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/css';
+	$defaults['IDPConfigFile'] = 'IDProvider.conf.php';
+	$defaults['backupIDPConfigFile'] = 'IDProvider.conf.php';
+	$defaults['metadataFile'] = '/etc/shibboleth/metadata.switchaai.xml';
+	$defaults['metadataIDPFile'] = 'IDProvider.metadata.php';
+	$defaults['metadataSPFile'] = 'SProvider.metadata.php';
+	$defaults['metadataLockFile'] = (substr($_SERVER['PATH'],0,1) == '/') ? '/tmp/wayf_metadata.lock' : 'C:\windows\TEMP';
+	$defaults['WAYFLogFile'] = '/var/log/apache2/wayf.log'; 
+	$defaults['kerberosRedirectURL'] = dirname($_SERVER['SCRIPT_NAME']).'kerberosRedirect.php';
+	$defaults['developmentMode'] = false;
+	
+	// Initialize independent defaults
+	foreach($defaults as $key => $value){
+		if (!isset($$key)){
+			$$key = $value;
+		}
+	}
+	
+	// Set dependent default configuration options
+	$defaults = array();
+	$defaults['redirectCookieName'] = $cookieNamePrefix.'_redirect_user_idp';
+	$defaults['redirectStateCookieName'] = $cookieNamePrefix.'_redirection_state';
+	$defaults['SAMLDomainCookieName'] = $cookieNamePrefix.'_saml_idp';
+	$defaults['SPCookieName'] = $cookieNamePrefix.'_saml_sp';
+	$defaults['logoURL'] = $imageURL.'/switch-aai-transparent.png'; 
+	$defaults['smallLogoURL'] = $imageURL.'/switch-aai-transparent-small.png';
+	
+	// Initialize dependent defaults
+	foreach($defaults as $key => $value){
+		if (!isset($$key)){
+			$$key = $value;
+		}
+	}
+}
+
 /******************************************************************************/
 // Generates an array of IDPs using the cookie value
 function getIdPArrayFromValue($value){
@@ -71,31 +173,41 @@ function checkConfig($IDPConfigFile, $backupIDPConfigFile){
 }
 
 /******************************************************************************/
-// Checks if an IDP exists and prints an error if it doesnt
-function checkIDP($IDP, $showError = true){
+// Checks if an IDP exists and returns true if it does, false otherwise
+function checkIDP($IDP){
 	
-	global $IDProviders, $redirectCookieName;
+	global $IDProviders;
 	
 	if (isset($IDProviders[$IDP])){
 		return true;
-	} elseif ($IDP == '-' || $IDP == ''){ 
-		return false;
-	} elseif(!$showError){
-		return false;
 	} else {
-		$message = sprintf(getLocalString('invalid_user_idp'), htmlentities($IDP))."</p><p>\n<tt>";
-		foreach ($IDProviders as $key => $value){
-			if (isset($value['SSO'])){
-				$message .= $key."<br>\n";
-			}
-		}
-		$message .= "</tt>\n";
-		
-		printError($message);
-		exit;
-	}
+		return false;
+	} 
 }
 
+/******************************************************************************/
+// Checks if an IDP exists and returns true if it exists and prints an error 
+// if it doesnt
+function checkIDPAndShowErrors($IDP){
+	
+	global $IDProviders;
+	
+	if (checkIDP($IDP)){
+		return true;
+	}
+	
+	// Otherwise show an error
+	$message = sprintf(getLocalString('invalid_user_idp'), htmlentities($IDP))."</p><p>\n<tt>";
+	foreach ($IDProviders as $key => $value){
+		if (isset($value['SSO'])){
+			$message .= $key."<br>\n";
+		}
+	}
+	$message .= "</tt>\n";
+	
+	printError($message);
+	exit;
+}
 
 
 /******************************************************************************/
@@ -354,6 +466,22 @@ function getIdPPathInfoHint(){
 
 /******************************************************************************/
 // Parses the Kerbores realm out of the string and returns it
+
+function composeOptionTitle($IdPValues){
+	$title = '';
+	foreach($IdPValues as $key => $value){
+		if (is_array($value) && isset($value['Name'])){
+			$title .= ' '.$value['Name'];
+		} elseif ($key != 'SSO') {
+			$title .= ' '.$value;
+		}
+	}
+	
+	return $title;
+}
+
+/******************************************************************************/
+// Parses the Kerbores realm out of the string and returns it
 function getKerberosRealm($string){
 	
 	global $IDProviders;
@@ -471,7 +599,7 @@ function verifyReturnURL($entityID, $returnURL) {
 	}
 	
 	// If fall back check is enabled, check return param
-	if (isset($useACURLsForReturnParamCheck) && $useACURLsForReturnParamCheck){
+	if ($useACURLsForReturnParamCheck){
 		
 		// Return true if no assertion consumer URL is defined to check against
 		// Should never happend
@@ -758,4 +886,52 @@ function sortUsingTypeIndexAndName($a, $b){
 	}
 }
 
+
+/******************************************************************************/
+// Returns true if the referer of the current request is matching an assertion
+// consumer or discovery service URL of a Service Provider
+function isRequestRefererMatchingSPHost(){
+	
+	global $SProviders;
+	
+	// If referer is not available return false
+	if (!isset($_SERVER["HTTP_REFERER"]) || $_SERVER["HTTP_REFERER"] == ''){
+		return false;
+	}
+	
+	if (!isset($SProviders) || !is_array($SProviders)){
+		return false;
+	}
+	
+	$refererHostname = getHostNameFromURI($_SERVER["HTTP_REFERER"]);
+	foreach ($SProviders as $key => $SProvider){
+		// Check referer against entityID
+		$spHostname = getHostNameFromURI($key);
+		if ($refererHostname == $spHostname){
+			return true;
+		}
+		
+		// Check referer against Discovery Response URL(DSURL)
+		if (isset($SProvider['DSURL'])) {
+			foreach ($SProvider['DSURL'] as $url){
+				$spHostname = getHostNameFromURI($url);
+				if ($refererHostname == $spHostname){
+					return true;
+				}
+			}
+		}
+		
+		// Check referer against Assertion Consumer Service URL(ACURL)
+		if (isset($SProvider['ACURL'])) {
+			foreach ($SProvider['ACURL'] as $url){
+				$spHostname = getHostNameFromURI($url);
+				if ($refererHostname == $spHostname){
+					return true;
+				}
+			}
+		}
+	}
+	
+	return false;
+}
 ?>

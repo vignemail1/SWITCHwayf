@@ -6,6 +6,9 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta name="keywords" content="Discovery Service, WAYF, Shibboleth">
 	<meta name="description" content="Choose your home organization to authenticate">
+	<script type="text/javascript" src="<?php echo $javascriptURL ?>/jquery.js"></script>
+	<script type="text/javascript" src="<?php echo $javascriptURL ?>/improvedDropDown.js"></script>
+	<link rel="StyleSheet" href="<?php echo $cssURL ?>/improvedDropdown.css" type="text/css">
 	<script language="JavaScript" type="text/javascript">
 	<!--
 	
@@ -89,7 +92,17 @@
 	// Init WAYF
 	function init(){
 		preventIframeEmbedding();
+		
 		setFocus();
+		
+		if (<?php echo ($userImprovedDropDownList) ? 'true' : 'false' ?>){
+			// Convert select element into improved drop down list
+			$("#userIdPSelection").improveDropDown({
+				iconPath:'<?php echo $imageURL ?>/drop_icon.png',
+				noMatchesText: '<?php echo getLocalString('no_idp_found', 'js') ?>',
+				noItemsText: '<?php echo getLocalString('no_idp_available', 'js') ?>'
+			});
+		}
 	}
 	
 	// Add new DomReady function

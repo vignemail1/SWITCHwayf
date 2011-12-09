@@ -10,18 +10,13 @@ if(!isset($_SERVER['REMOTE_ADDR']) || basename($_SERVER['SCRIPT_NAME']) == 'temp
 	exit('No direct script access allowed');
 }
 
-// Config validation
-if(!isset($smallLogoURL) or empty($smallLogoURL)) $smallLogoURL = $logoURL;
-if(!isset($federationName)) $federationName = '';
-if(!isset($federationURL)) $federationURL = '';
-
 /*------------------------------------------------*/
 // Functions containing HTML code
 /*------------------------------------------------*/
 
 function printHeader(){
 
-	global $langStrings, $language, $imageURL, $logoURL;
+	global $langStrings, $language, $imageURL, $javascriptURL, $cssURL, $logoURL, $userImprovedDropDownList;
 	
 	// Check if custom header template exists
 	if(file_exists('custom-header.php')){
@@ -91,20 +86,23 @@ function printDropDownList($IDProviders, $selectedIDP = ''){
 	
 	$counter = 0;
 	$optgroup = '';
-	foreach ($IDProviders as $key => $value){
+	foreach ($IDProviders as $key => $values){
 		
 		// Get IdP Name
-		if (isset($value[$language]['Name'])){
-			$IdPName = $value[$language]['Name'];
+		if (isset($values[$language]['Name'])){
+			$IdPName = $values[$language]['Name'];
 		} else {
-			$IdPName = $value['Name'];
+			$IdPName = $values['Name'];
 		}
 		
+		// Add additional information as title to the entry
+		$title = composeOptionTitle($values);
+		
 		// Figure out if entry is valid or a category
-		if (!isset($value['SSO'])){
+		if (!isset($values['SSO'])){
 			
 			// Check if entry is a category
-			if (isset($value['Type']) && $value['Type'] == 'category'){
+			if (isset($values['Type']) && $values['Type'] == 'category'){
 				if (!empty($optgroup)){
 					echo '
 	</optgroup>';
@@ -125,8 +123,9 @@ function printDropDownList($IDProviders, $selectedIDP = ''){
 		} else {
 			$selected = '';
 		}
+		
 		echo '
-		<option value="'.$key.'"'.$selected.'>'.$IdPName.'</option>';
+		<option title="'.$title.'" value="'.$key.'"'.$selected.'>'.$IdPName.'</option>';
 		
 		$counter++;
 	}
@@ -151,13 +150,13 @@ function printNotice(){
 	$permanentUserIdPName = '';
 	if (
 			isset($_POST['user_idp']) 
-			&& checkIDP($_POST['user_idp'])
+			&& checkIDPAndShowErrors($_POST['user_idp'])
 		){
 		$hiddenUserIdPInput = '<input type="hidden" name="user_idp" value="'.$_POST['user_idp'].'">';
 		$permanentUserIdPName = $IDProviders[$_POST['user_idp']]['Name'];
 	} elseif (
 			isset($_COOKIE[$redirectCookieName]) 
-			&& checkIDP($_COOKIE[$redirectCookieName])
+			&& checkIDPAndShowErrors($_COOKIE[$redirectCookieName])
 		){
 		$hiddenUserIdPInput = '<input type="hidden" name="user_idp" value="'.$_COOKIE[$redirectCookieName].'">';
 		$permanentUserIdPName = $IDProviders[$_COOKIE[$redirectCookieName]]['Name'];
@@ -406,7 +405,7 @@ function isAllowedCategory(category){
 
 function isAllowedIdP(IdP){
 	
-	for ( var i=0; i<=wayf_hide_idps.length; i++){
+	for ( var i=0; i <= wayf_hide_idps.length; i++){
 		if (wayf_hide_idps[i] == IdP){
 			return false;
 		}
@@ -544,6 +543,34 @@ function loadDiscoFeedIdPs(){
 	// Load JSON
 	var IdPs = eval("(" + xmlhttp.responseText + ")");
 	
+	return IdPs;
+
+} 
+
+// Adds unknown IdPs to wayf_additional_idps and hides IdPs that are not
+// contained in the Discovery Feed
+function processDiscoFeedIdPs(IdPs){
+	
+	if (typeof(IdPs) == "undefined"){
+		return;
+	}
+	
+	// Hide IdPs that are not in the Discovery Feed
+	for (var entityID in wayf_idps){
+		var foundIdP = false;
+		for ( var i = 0; i < IdPs.length; i++) {
+			if (IdPs[i].entityID == entityID){
+				foundIdP = true;
+			}
+		}
+		
+		if (foundIdP == false){
+			wayf_hide_idps.push(entityID);
+		}
+	}
+	
+	
+	// Add unkown IdPs to wayf_additional_idps
 	for ( var i = 0; i < IdPs.length; i++) {
 		// Skip IdPs that are in same federation
 		if (wayf_idps[IdPs[i].entityID]){
@@ -565,7 +592,7 @@ function loadDiscoFeedIdPs(){
 	}
 }
 
-// Sorts Discofeed 
+// Sorts Discovery feed entries 
 function sortEntities(a, b){
 	var nameA = a.name.toLowerCase();
 	var nameB = b.name.toLowerCase();
@@ -995,6 +1022,14 @@ SCRIPT;
 	
 	echo <<<SCRIPT
 		
+		// Load additional IdPs from DiscoFeed if feature is enabled
+		if (wayf_use_disco_feed){
+			discoFeedIdPs = loadDiscoFeedIdPs();
+			
+			// Hide IdPs for which SP doesnt have metadata and add unknown IdPs 
+			processDiscoFeedIdPs(discoFeedIdPs);
+		}
+		
 		writeHTML(form_start);
 		writeHTML('<input name="request_type" type="hidden" value="embedded">');
 		writeHTML('<select id="user_idp" name="user_idp" style="margin-top: 15px;margin-bottom: 10px; width: 100%;">');
@@ -1111,10 +1146,6 @@ SCRIPT;
 	}
 	
 	echo <<<SCRIPT
-		// Load additional IdPs from DiscoFeed if feature is enabled
-		if (wayf_use_disco_feed){
-			loadDiscoFeedIdPs();
-		}
 		
 		if (wayf_additional_idps.length > 0){
 			
@@ -1235,21 +1266,21 @@ function printEmbeddedConfigurationScript(){
 /******************************************************************************/
 // Print sample configuration script used for Embedded WAYF
 function printCSS(){
+	
+	global $imageURL;
+	
+	$defaultCSSFile =  'css/default-styles.css';
+	$cssContent = file_get_contents($defaultCSSFile);
 
-        global $imageURL;
-
-        $defaultCSSFile =  'css/default-styles.css';
-        $cssContent = file_get_contents($defaultCSSFile);
-
-        // Read custom CSS if available
-        if (file_exists('css/custom-styles.css')){
-                $customCSSFile =  'css/custom-styles.css';
-                $cssContent .= file_get_contents($customCSSFile);
-        }
-
-        // Read CSS and substitute content
-        $cssContent = preg_replace('/{?\$imageURL}?/',$imageURL, $cssContent);
-
-        echo $cssContent;
+	// Read custom CSS if available
+	if (file_exists('css/custom-styles.css')){
+		$customCSSFile =  'css/custom-styles.css';
+		$cssContent .= file_get_contents($customCSSFile);
+	}
+	
+	// Read CSS and substitute content
+	$cssContent = preg_replace('/{?\$imageURL}?/',$imageURL, $cssContent);
+	
+	echo $cssContent;
 }
 ?>

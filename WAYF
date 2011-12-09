@@ -3,7 +3,7 @@
 /*
 ******************************************************************************
 SWITCHwayf
-Version: 1.15
+Version: 1.16
 Contact:  aai@switch.ch
 Web site: http://www.switch.ch/aai/wayf
 ******************************************************************************
@@ -18,7 +18,13 @@ require_once('templates.php');
 require_once('functions.php');
 require_once('languages.php');
 
-// Read custom strings
+// Set P3P headers just in case they were not set in Apache already
+header('P3P: CP="NOI CUR DEVa OUR IND COM NAV PRE"');
+
+// Set default config options
+initConfigOptions();
+
+// Read custom locales
 if (file_exists('custom-languages.php')){
 	require_once('custom-languages.php');
 }
@@ -26,7 +32,7 @@ if (file_exists('custom-languages.php')){
 /*------------------------------------------------*/
 // Turn on PHP error reporting
 /*------------------------------------------------*/
-if (isset($developmentMode) && $developmentMode){
+if ($developmentMode){
 	ini_set('error_reporting', E_ALL);
 	ini_set('display_errors', 'On');
 	ini_set('log_erros', 'Off');
@@ -54,7 +60,7 @@ if ($IDPConfigFile == $backupIDPConfigFile){
 }
 
 // Read metadata file if configuration option is set
-if(isset($useSAML2Metadata) && $useSAML2Metadata && function_exists('xml_parser_create')){
+if($useSAML2Metadata && function_exists('xml_parser_create')){
 	require('readMetadata.php');
 }
 
@@ -89,7 +95,7 @@ if(isValidDSRequest()){
 		exit;
 	}
 	
-	if (isset($enableDSReturnParamCheck) && $enableDSReturnParamCheck){
+	if ($enableDSReturnParamCheck){
 		// Check SP
 		if(!isset($SProviders[$_GET['entityID']])){
 			// Show error
@@ -120,7 +126,7 @@ if (isRequestType('deleteSettings')){
 	$cookies = array($redirectCookieName, $redirectStateCookieName, $SAMLDomainCookieName, $SPCookieName);
 	foreach ($cookies as $cookie){ 
 		if (isset($_COOKIE[$cookie])){
-				setcookie($cookie,'',time()-86400, '/', $commonDomain);
+			setcookie($cookie,'',time()-86400, '/', $commonDomain, $cookieSecurity, $cookieSecurity);
 		}
 	}
 	
@@ -135,7 +141,7 @@ if (isRequestType('deleteSettings')){
 
 // Delete permanent cookie
 if (isset($_POST['clear_user_idp'])){
-	setcookie ($redirectCookieName, '', time() - 3600, '/', $commonDomain, false);
+	setcookie ($redirectCookieName, '', time() - 3600, '/', $commonDomain, $cookieSecurity, $cookieSecurity);
 	redirectTo('?'.$_SERVER['QUERY_STRING']);
 	exit;
 }
@@ -155,43 +161,43 @@ if (isset($_COOKIE[$SPCookieName])){
 }
 
 // Set Cookie to remember the selection
-if (isset($_POST['user_idp']) && checkIDP($_POST['user_idp'])){
+if (isset($_POST['user_idp']) && checkIDPAndShowErrors($_POST['user_idp'])){
 	$IDPArray = appendValueToIdPArray($_POST['user_idp'], $IDPArray);
-	setcookie ($SAMLDomainCookieName, getValueFromIdPArray($IDPArray) , time() + (1000*24*3600), '/', $commonDomain, false);
+	setcookie ($SAMLDomainCookieName, getValueFromIdPArray($IDPArray) , time() + ($cookieValidity*24*3600), '/', $commonDomain, $cookieSecurity, $cookieSecurity);
 }
 
 // Set cookie for most recently used Service Provider
 if (isset($_GET['entityID'])){
 	$SPArray = appendValueToIdPArray($_GET['entityID'], array());
-	setcookie ($SPCookieName, getValueFromIdPArray($SPArray), time() + (10*24*3600), '/', $commonDomain, false);
+	setcookie ($SPCookieName, getValueFromIdPArray($SPArray), time() + (10*24*3600), '/', $commonDomain, $cookieSecurity, $cookieSecurity);
 } else if (isset($_GET['providerId'])){
 	$SPArray = appendValueToIdPArray($_GET['providerId'], array());
-	setcookie ($SPCookieName, getValueFromIdPArray($SPArray), time() + (10*24*3600), '/', $commonDomain, false);
+	setcookie ($SPCookieName, getValueFromIdPArray($SPArray), time() + (10*24*3600), '/', $commonDomain, $cookieSecurity, $cookieSecurity);
 }
 
 
 // Set the permanent or session cookie
 if (isset($_POST['permanent']) 
 	&& isset($_POST['user_idp']) 
-	&& checkIDP($_POST['user_idp'])){
+	&& checkIDPAndShowErrors($_POST['user_idp'])){
 	
 	// Set permanent cookie 
 	if (is_numeric($_POST['permanent'])){
-		setcookie ($redirectCookieName, $_POST['user_idp'], time() + ($_POST['permanent']*24*3600), '/', $commonDomain, false);
+		setcookie ($redirectCookieName, $_POST['user_idp'], time() + ($_POST['permanent']*24*3600), '/', $commonDomain, $cookieSecurity, $cookieSecurity);
 	} else {
-		setcookie ($redirectCookieName, $_POST['user_idp'], time() + (100*24*3600), '/', $commonDomain, false);
+		setcookie ($redirectCookieName, $_POST['user_idp'], time() + ($cookieValidity*24*3600), '/', $commonDomain, $cookieSecurity, $cookieSecurity);
 	}
 } elseif (
 	isset($_POST['user_idp']) 
-	&& checkIDP($_POST['user_idp'])
+	&& checkIDPAndShowErrors($_POST['user_idp'])
 	){
 	
 	if (isset($_POST['session'])){
 		// Set redirection cookie and redirection state cookie
-		setcookie ($redirectCookieName, $_POST['user_idp'], null, '/', $commonDomain, false);
-		setcookie ($redirectStateCookieName, 'checked', time() + (100*24*3600), '/', $commonDomain, false);
+		setcookie ($redirectCookieName, $_POST['user_idp'], null, '/', $commonDomain, $cookieSecurity, $cookieSecurity);
+		setcookie ($redirectStateCookieName, 'checked', time() + ($cookieValidity*24*3600), '/', $commonDomain, $cookieSecurity, $cookieSecurity);
 	} else {
-		setcookie ($redirectStateCookieName, 'checked', time() - 3600, '/', $commonDomain, false);
+		setcookie ($redirectStateCookieName, 'checked', time() - 3600, '/', $commonDomain, $cookieSecurity, $cookieSecurity);
 	}
 }
 
@@ -203,7 +209,7 @@ if (isset($_POST['permanent'])
 if (	
 		isValidShibRequest()
 		&& isset($_COOKIE[$redirectCookieName]) 
-		&& checkIDP($_COOKIE[$redirectCookieName], false)
+		&& checkIDP($_COOKIE[$redirectCookieName])
 	){
 	
 	$cookieIdP = $_COOKIE[$redirectCookieName];
@@ -238,7 +244,7 @@ if ($useKerberos && isset($_SERVER['REMOTE_USER'])) {
 	// Bingo - we have a winner!
 	$kerberosRealm = substr($user, 1 + strlen($kerberosPrincipal) - strlen(strrchr($kerberosPrincipal, "@")));
 	
-	if ($kerberosIDP = getKerberosRealm($kerberosRealm) && checkIDP($kerberosIDP, false)){
+	if ($kerberosIDP = getKerberosRealm($kerberosRealm) && checkIDP($kerberosIDP)){
 		
 		// Handle cascaded WAYF
 		if (isset($IDProviders[$kerberosIDP]['Type']) && $IDProviders[$kerberosIDP]['Type'] == 'wayf'){
@@ -290,7 +296,7 @@ if (
 		isset($_GET['shire']) 
 		&& isset($_GET['target'])
 		&& isset($_GET['origin'])
-		&& checkIDP($_GET['origin'])
+		&& checkIDPAndShowErrors($_GET['origin'])
 	){
 	redirectTo($IDProviders[$_GET['origin']]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 	
@@ -311,7 +317,7 @@ if ($hintedPathIDP != '-'){
 		
 	} elseif ( checkPathInfo('redirect') ){
 		// Set redirect cookie for this session
-		setcookie ($redirectCookieName, $hintedPathIDP, null, '/', $commonDomain, false);
+		setcookie ($redirectCookieName, $hintedPathIDP, null, '/', $commonDomain, $cookieSecurity, $cookieSecurity);
 		
 		// Determine if DS or WAYF request
 		if (isValidDSRequest()){
@@ -334,7 +340,7 @@ if ($hintedPathIDP != '-'){
 // Redirect using user selection
 if (
 	isset($_POST['user_idp']) 
-	&& checkIDP($_POST['user_idp'])
+	&& checkIDPAndShowErrors($_POST['user_idp'])
 	&& isValidShibRequest()
 	&& !isset($_POST['permanent'])
 	){
@@ -394,7 +400,7 @@ $hintedIPIDP = getIPAdressHint();
 
 // Reverse DNS lookup hint
 $hintedDomainIDP = '-';
-if (isset($useReverseDNSLookup) && $useReverseDNSLookup){
+if ($useReverseDNSLookup){
 	$hintedDomainIDP = getDomainNameFromURIHint();
 }
 
@@ -425,7 +431,7 @@ if ($hintedCookieIdP != '-'){
 // Sort Identity Providers
 /*------------------------------------------------*/
 
-if (isset($useSAML2Metadata) && $useSAML2Metadata){
+if ($useSAML2Metadata){
 	// Only automatically sort if list of Identity Provider is parsed
 	// from metadata instead of being manualy managed
 	sortIdentityProviders($IDProviders);
@@ -511,7 +517,7 @@ if (
 } elseif(isRequestType('snippet.html')){
 	
 	// Check if this feature is activated at all
-	if (!isset($useEmbeddedWAYF) || !$useEmbeddedWAYF){
+	if (!$useEmbeddedWAYF){
 		echo '// The embedded WAYF feature is deactivated in the configuration';
 		exit;
 	}
@@ -526,7 +532,7 @@ if (
 	header('Content-Type: text/plain');
 	
 	// Check if this feature is activated at all
-	if (!isset($useEmbeddedWAYF) || !$useEmbeddedWAYF){
+	if (!$useEmbeddedWAYF){
 		echo '// The embedded WAYF feature is deactivated in the configuration';
 		exit;
 	}
@@ -539,7 +545,7 @@ if (
 } elseif(isRequestType('embedded-wayf.js')){
 	
 	// Check if this feature is activated at all
-	if (!isset($useEmbeddedWAYF) || !$useEmbeddedWAYF){
+	if (!$useEmbeddedWAYF){
 		echo '// The embedded WAYF feature is deactivated in the configuration';
 		exit;
 	}
@@ -547,10 +553,16 @@ if (
 	// Set JavaScript content type
 	header('Content-type: text/javascript;charset="utf-8"');
 	
-	// Is Embedded WAYF data protection feature enabled?
+	// If the data protection feature is enabled, don't preselect the IdP
+	if ($useEmbeddedWAYFPrivacyProtection){
+		$selectedIDP = '-';
+	}
+	
+	// If the referer check is enabled but fails, don't preselect the IdP
 	if (
-		   isset($useEmbeddedWAYFPrivacyProtection) 
-		&& $useEmbeddedWAYFPrivacyProtection == true
+		   !$useEmbeddedWAYFPrivacyProtection
+		&&  $useEmbeddedWAYFRefererForPrivacyProtection
+		&& !isRequestRefererMatchingSPHost()
 		){
 		$selectedIDP = '-';
 	}
@@ -568,7 +580,7 @@ if (
 	}
 	
 	// Add guessed Identity Provider
-	if (isset($exportPreselectedIdP) && $exportPreselectedIdP){
+	if ($exportPreselectedIdP){
 		$IDProviders['preselectedIDP'] = $selectedIDP;
 	}
 	
@@ -585,7 +597,7 @@ if (
 	header('Content-type: text/javascript;charset="utf-8"');
 	
 	// Add guessed Identity Provider
-	if (isset($exportPreselectedIdP) && $exportPreselectedIdP){
+	if ($exportPreselectedIdP){
 		$IDProviders['preselectedIDP'] = $selectedIDP;
 	}
 	
@@ -604,7 +616,7 @@ if (
 	}
 	
 	// Add guessed Identity Provider
-	if (isset($exportPreselectedIdP) && $exportPreselectedIdP){
+	if ($exportPreselectedIdP){
 		$IDProviders['preselectedIDP'] = $selectedIDP;
 	}
 	
@@ -619,7 +631,7 @@ if (
 	header('Content-Type: text/plain');
 	
 	// Add guessed Identity Provider
-	if (isset($exportPreselectedIdP) && $exportPreselectedIdP){
+	if ($exportPreselectedIdP){
 		$IDProviders['preselectedIDP'] = $selectedIDP;
 	}
 	
@@ -636,7 +648,7 @@ if (
 	header('Content-Type: text/plain');
 	
 	// Add guessed Identity Provider
-	if (isset($exportPreselectedIdP) && $exportPreselectedIdP){
+	if ($exportPreselectedIdP){
 		$IDProviders['preselectedIDP'] = $selectedIDP;
 	}
 	
@@ -648,10 +660,10 @@ if (
 	exit;
 	
 } elseif (
-			(isset($_POST['user_idp']) && checkIDP($_POST['user_idp']))
+			(isset($_POST['user_idp']) && checkIDPAndShowErrors($_POST['user_idp']))
 			|| (
 				   isset($_COOKIE[$redirectCookieName]) 
-				&& checkIDP($_COOKIE[$redirectCookieName], false)
+				&& checkIDP($_COOKIE[$redirectCookieName])
 				)
 		){
 	

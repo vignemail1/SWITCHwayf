@@ -221,10 +221,14 @@ var wayf_show_categories =  true;
 
 
 // Whether to load Identity Providers from the Discovery Feed provided by
-// the Service Provider. The discovery feed feature might have to be activated 
-// on the SP first.
-// The loaded Identity Providers are added to the wayf_additional_idps and the 
-// whole array will be sorted alphabetically
+// the Service Provider. 
+// IdPs that are not listed in the Discovery Feed and that the SP therefore is 
+// not  are able to accept assertions from, are hidden by the Embedded WAYF
+// IdPs that are in the Discovery Feed but are unknown to the SWITCHwayf
+// are added to the wayf_additional_idps. 
+// The list wayf_additional_idps will be sorted alphabetically
+// The SP must have configured the discovery feed handler that generates a 
+// JSON object. Otherwise it won't generate the JSON data containing the IdPs.
 // [Optional, commented out by default]
 // var wayf_use_disco_feed = true;
 

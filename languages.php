@@ -26,7 +26,7 @@ $langStrings['en'] = array (
 'permanently_remember_selection' => 'Remember selection permanently and bypass the WAYF service from now on.',
 'confirm_permanent_selection' => 'Are you sure that you want to set the selected entry as your default Home Organisation? Don\'t proceed if you have user accounts at multiple organisations.',
 'save_button' => 'Save',
-'access_host' => 'In order to access a service on host <tt>\'%s\'</tt> please select the organisation you are affiliated with.',
+'access_host' => 'In order to access a service on host <tt>\'%s\'</tt> please select or search the organisation you are affiliated with.',
 'select_idp' => 'Select the organisation you are affiliated with',
 'remember_selection' => 'Remember selection for this web browser session.',
 'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> provides innovative, unique internet services for the Swiss universities and internet users.',
@@ -46,6 +46,9 @@ $langStrings['en'] = array (
 'invalid_return_url' => 'The return URL <tt>\'%s\'</tt> is not a valid URL.',
 'unverified_return_url' => 'The return URL <tt>\'%s\'</tt> could not be verified for Service Provider <tt>\'%s\'</tt>.',
 'unknown_sp' => 'The Service Provider <tt>\'%s\'</tt> could not be found in metadata and is therefore unknown.',
+'no_idp_found' => 'No Home Organisation found for this search text',
+'no_idp_available' => 'No Home Organisation available',
+
 );
 
 
@@ -69,7 +72,7 @@ $langStrings['de'] = array (
 'permanently_remember_selection' => 'Auswahl permanent speichern und den WAYF Dienst von jetzt an umgehen.',
 'confirm_permanent_selection' => 'Sind Sie sicher, dass Sie die Auswahl als Home Organisation Einstellung speichern wollen? Dies ist nicht empfehlenswert, wenn Sie Benutzerkonten bei mehreren Organisationen besitzen.',
 'save_button' => 'Speichern',
-'access_host' => 'Um auf einen Dienst auf dem Server <tt>\'%s\'</tt> zuzugreifen,  w&auml;hlen Sie bitte die Organisation der Sie angeh&ouml;ren.',
+'access_host' => 'Um auf einen Dienst auf dem Server <tt>\'%s\'</tt> zuzugreifen, w&auml;hlen oder suchen Sie bitte die Organisation der Sie angeh&ouml;ren.',
 'select_idp' => 'W&auml;hlen Sie die Organisation aus der Sie angeh&ouml;ren',
 'remember_selection' => 'Auswahl f&uuml;r die laufende Webbrowser Sitzung speichern.',
 'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> erbringt innovative, einzigartige Internet-Dienstleistungen f&uuml;r die Schweizer Hochschulen und Internetbenutzer.',
@@ -89,6 +92,8 @@ $langStrings['de'] = array (
 'invalid_return_url' => 'Die return URL <tt>\'%s\'</tt> ist keine g&uuml;tige URL.',
 'unverified_return_url' => 'Die return URL <tt>\'%s\'</tt> ist nicht g&uuml;tige f&uuml;r den Service Provider <tt>\'%s\'</tt>.',
 'unknown_sp' => 'Der Service Provider <tt>\'%s\'</tt> konnte nicht in den Metadaten gefunden werden und ist deshalb unbekannt.',
+'no_idp_found' => 'Keine Home Organisation gefunden f&uuml;r diesen Suchtext',
+'no_idp_available' => 'Keine Home Organisation verf&uuml;gbar',
 );
 
 
@@ -112,7 +117,7 @@ $langStrings['fr'] =  array (
 'permanently_remember_selection' => 'Se souvenir de mon choix d&eacute;finitivement et contourner le service WAYF &agrave; partir de maintenant.',
 'confirm_permanent_selection' => '&Ecirc;tes-vous s&ucirc; de vouloir d&eacute;finir votre s&eacute;lection comme votre Home Organisation par d&eacute;faut ? N\'utilisez pas cette fonction si vous avez plusieurs identit&eacute;s AAI.',
 'save_button' => 'Sauver',
-'access_host' => 'Pour acc&eacute;der &agrave; la ressource <tt>\'%s\'</tt> veuillez s&eacute;lectionner l\'organisation &agrave; laquelle vous appartenez.',
+'access_host' => 'Pour acc&eacute;der &agrave; la ressource <tt>\'%s\'</tt> veuillez s&eacute;lectionner ou chercher l\'organisation &agrave; laquelle vous appartenez.',
 'select_idp' => 'Veuillez s&eacute;lectionner l\'organisation &agrave; laquelle vous appartenez.',
 'remember_selection' => 'Se souvenir de mon choix pour cette session.',
 'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> fournit des prestations innovantes et uniques pour les hautes &eacute;coles suisses et les utilisateurs d\'Internet.',
@@ -152,7 +157,7 @@ $langStrings['it'] = array (
 'permanently_remember_selection' => 'Salvare la scelta permanentemente e non passare pi&ugrave; per il WAYF.',
 'confirm_permanent_selection' => 'E\' sicuro di voler impostare la Home Organisation selezionata come sua Home Organisation predefinita? Non &egrave; da impostare se usa regolarmente diversi account AAI.',
 'save_button' => 'Salva',
-'access_host' => 'Per poter accedere alla risorsa sull\' host <tt>\'%s\'</tt> per favore selezioni l\'organizzazione con la quale &egrave; affiliato.',
+'access_host' => 'Per poter accedere alla risorsa sull\' host <tt>\'%s\'</tt> per favore selezioni o cerchi l\'organizzazione con la quale &egrave; affiliato.',
 'select_idp' => 'Selezioni l\'organizzazione con la quale &egrave; affiliato.',
 'remember_selection' => 'Ricorda la selezione per questa sessione.',
 'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> eroga servizi Internet innovativi e unici per le scuole universitarie svizzere e per gli utenti di Internet.',

@@ -11,17 +11,6 @@
 // Init log file
 openlog("SWITCHwayf.readMetadata.php", LOG_PID | LOG_PERROR, LOG_LOCAL0);
 
-// Set configuration defaults
-
-// Set lock file
-if (!isset($metadataLockFile)){
-	if(substr($_SERVER['PATH'],0,1) == '/'){
-		$metadataLockFile = '/tmp/wayf_metadata.lock';
-	} else {
-		$metadataLockFile = 'C:\windows\TEMP';
-	}
-}
-
 
 // Make sure this script is not accessed directly
 if(isRunViaCLI()){
@@ -34,20 +23,18 @@ if(isRunViaCLI()){
 	
 	// Load configuration files
 	require('config.php');
+	require_once('functions.php');
+	
+	// Set default config options
+	initConfigOptions();
+	
+	// Load Identity Providers
 	require($IDPConfigFile);
 	
 	if (
-		!isset($metadataFile) 
-		|| !file_exists($metadataFile) 
+		   !file_exists($metadataFile) 
 		|| trim(@file_get_contents($metadataFile)) == '') {
 	  exit ("Exiting: File ".$metadataFile." is empty or does not exist\n");
-	}
-	
-	// Check configuration
-	if (!isset($metadataSPFile)){
-		$errorMsg = 'Please first define a file $metadataSPFile = \'SProvider.metadata.conf.php\'; in config.php before running this script.';
-		syslog(LOG_ERR, $errorMsg);
-		die($errorMsg);
 	}
 	
 	// Get an exclusive lock to generate our parsed IdP and SP files.
@@ -105,19 +92,6 @@ if(isRunViaCLI()){
 	
 	
 } elseif (isRunViaInclude()) {
-	
-	// Check configuration
-	if (!isset($metadataSPFile)){
-		$errorMsg = 'Please first define a file $metadataSPFile = \'SProvider.metadata.conf.php\'; in config.php before running this script.';
-		syslog(LOG_ERR, $errorMsg);
-		die($errorMsg);
-	}
-	
-	if (!isset($metadataFile)){
-		$errorMsg = 'Please first define a file $metadataFile in config.php before running this script.';
-		syslog(LOG_ERR, $errorMsg);
-		die($errorMsg);
-	}
 	
 	// Open the metadata lock file.
 	if (($lockFp = fopen($metadataLockFile, 'a+')) === false) {
