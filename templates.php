@@ -96,7 +96,8 @@ function printDropDownList($IDProviders, $selectedIDP = ''){
 		}
 		
 		// Add additional information as title to the entry
-		$title = composeOptionTitle($values);
+		$title = getDomainNameFromURI($key);
+		$title .= composeOptionTitle($values);
 		
 		// Figure out if entry is valid or a category
 		if (!isset($values['SSO'])){

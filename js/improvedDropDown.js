@@ -133,7 +133,7 @@ function getTextElement(sourceElement, imgElement) {
                   .css('height', sourceElement.outerHeight() + 'px')
                   .css('font-family', sourceElement.css('font-family'))
                   .css('font-size', sourceElement.css('font-size'))
-                  .css('border-width', '1px')                                    
+                  .css('border-width', '1px')
                   .attr('autocomplete', 'off')
                   .attr('padding','0')
                   .width(controlWidth);
@@ -194,6 +194,7 @@ function getTextElement(sourceElement, imgElement) {
         }
     });
     
+	// Clear text area on click
 	newTextElement.click(function (obj) {
 		obj.target.value = "";
 	});
@@ -508,7 +509,9 @@ function positionList(listControl) {
             var childItems = listControl.children('.idd_listItem:visible,.idd_listItemGroupHeader:visible');
 
             var elementHeightPx = getElementsTotalHeightPx(childItems) + 5;
-            var maxHeightPx = $(window).height() + $(document).scrollTop() - listControl.position().top - 20;
+
+			// Use absolute position of list to calculate list height
+            var maxHeightPx = $(window).height() + $(document).scrollTop() - listControl.offset().top - 20;
             var minListHeigtPx = 12;
             var listhHeight = Math.min(elementHeightPx, maxHeightPx)
             listhHeight = Math.max(listhHeight, minListHeigtPx);
@@ -523,7 +526,9 @@ function positionList(listControl) {
             listWidthPx = Math.min(maxListWidthPx, listWidthPx);
 
             childItems.css('width', listWidthPx + 'px');
-            listControl.css('width', listWidthPx + 'px');
+
+			// Add some margin for compensating scrollbar
+            listControl.css('width', (listWidthPx + 15) + 'px');
 
         } catch  (err)  { /*eat any sizing errors */ }
 }
@@ -573,8 +578,14 @@ function updateListFilter(textControl) {
 }
 
 function doesListItemMach(listItem, compareText) {
+	
+	// Ensure the is not returned
+	if (listItem.attr('savedValue') == '-'){
+		return false;
+	}
+	
     // Compares a listItem (jQuery object representing item in dropdown list) to compareText
-	return (!listItem.hasClass('idd_listItem_Disabled')) && (stringContainsCaseInsensitive(listItem.text(), compareText) || stringContainsCaseInsensitive(listItem.attr('savedValue'), compareText) || stringContainsCaseInsensitive(listItem.attr('savedTitle'), compareText))
+	return (!listItem.hasClass('idd_listItem_Disabled')) && (stringContainsCaseInsensitive(listItem.text(), compareText) || stringContainsCaseInsensitive(listItem.attr('savedTitle'), compareText))
 }
 
 function getIsDirty(textControl) {

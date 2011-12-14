@@ -8,7 +8,6 @@
 	<meta name="description" content="Choose your home organization to authenticate">
 	<script type="text/javascript" src="<?php echo $javascriptURL ?>/jquery.js"></script>
 	<script type="text/javascript" src="<?php echo $javascriptURL ?>/improvedDropDown.js"></script>
-	<link rel="StyleSheet" href="<?php echo $cssURL ?>/improvedDropdown.css" type="text/css">
 	<script language="JavaScript" type="text/javascript">
 	<!--
 	

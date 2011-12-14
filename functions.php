@@ -472,8 +472,8 @@ function composeOptionTitle($IdPValues){
 	foreach($IdPValues as $key => $value){
 		if (is_array($value) && isset($value['Name'])){
 			$title .= ' '.$value['Name'];
-		} elseif ($key != 'SSO') {
-			$title .= ' '.$value;
+		} elseif ($key == 'Locations' && is_array($value)) {
+			$title .= ' '.implode(' ', $value);
 		}
 	}
 	

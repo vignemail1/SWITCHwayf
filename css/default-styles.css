@@ -141,9 +141,13 @@ pre {
 
 /* dropdown arrow control */
 .idd_icon {
-	border-color: #C0C0C0;
-	border-style: solid solid solid none;
-	border-width: 0;	
+	border-width: 0;
+}
+
+.idd_icon:hover {
+	box-shadow: 1px 1px 8px #999999;
+	-webkit-box-shadow: 1px 1px 8px #00247D;
+	-moz-box-shadow: 1px 1px 8px #00247D;
 }
 
 /* Dropdown list */
@@ -178,7 +182,7 @@ div.idd_list {
 
 /* Dropdown list items nested under group headers */
 .idd_listItem_Nested {
-	padding-left: 15px;
+	margin-left: 15px;
 }
 
 /* mouseover on all list items except group headers */
