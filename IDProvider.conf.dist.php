@@ -9,33 +9,8 @@
 // a category. In the case of a category, the key must correspond to the the 
 // Type value of Identity Provider entries.
 // The sequence of IdPs and SPs play a role. No sorting is done.
-
-// A general entry for an IdP can consist of the form:
-// Type:   [Optional]    Type of the entry. Default type will 
-//                       be 'unknown' if not specified.
-//                       Categories should have the type 'category'
-//                       An entry for a cascaded WAYF that the user shall be
-//                        redirected to should have the type 'wayf'
-// Name:   [Mandatory]   Default name to display in drop-down list
-// [en|it|fr||de|pt][Name]: [Optional] Display name in other languages
-// SSO:    [Mandatory]   Should be the SAML1 SSO endpoint of the IdP
-// Realm:  [Optional]    Kerberos Realm
-// IP[]:   [Optional]    IP ranges of that organizations that can be used to guess
-//                       a user's Identity Provider
-// Index:  [Optional]    An alphanumerical value that is used for sorting 
-//                       categories and Identity Provider in ascending order 
-//                       if the Identity Providers are parsed from metadata.
-//                       This is only relevant if 
-//                       $includeLocalConfEntries = true
-
-// A category entry can be used to group multiple IdP entries into a optgroup
-// The category entries should look like:
-// Name:   [Mandatory]   Default name to display in drop-down list
-// [en|it|fr||de|pt][Name]: [Optional] Display name in other languages
-// Type:   'category'    Category type 
-// As stated above, the sequence of entries is important. So, one is completely
-// flexible when it comes to ordering the category and IdP entries.
 // 
+// Please read the file DOC for information on the format of the entries
 
 // Category
 $IDProviders['university'] = array (
@@ -50,6 +25,7 @@ $IDProviders['bristol.ac.uk'] = array (
 		'Name' => 'University of Bristol',
 		'SSO' => 'https://sso.bris.ac.uk/sso/index.jsp',
 		'Realm' => 'ADS.BRIS.AC.UK',
+		'Location' => array ('Bristol','South West England','England'),
 );
 
 // Example with optional network blocks that can be used as an 
@@ -76,6 +52,7 @@ $IDProviders['urn:mace:switch.ch:SWITCHaai:vho-switchaai.ch'] = array (
 		'fr' => array ('Name' => 'Home Organisation Virtuelle'),
 		'it' => array ('Name' => 'Virtuale Home Organisation'),
 		'IP' => array ('130.59.6.0/16','127.0.0.0/24'),
+		'Location' => array ('Zurich','Switzerland'),
 		'SSO' => 'https://aai.vho-switchaai.ch/shibboleth-idp/SSO',
 );
 

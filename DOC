@@ -267,11 +267,15 @@ the entry stands for an Identity Provider. For entries of Type category, the
 ['Realm']:  Optional        Kerberos Realm
 ['IP'][]:   Optional        IP ranges of that organizations that can be used to 
                             guess a user's Identity Provider
+['Location'][]:   Optional  Geographical places associated with the 
+                            Identity Provider. Used for search-as-you-type 
+                            feature of improved drop-down list.
 ['Index']:  Optional        An alphanumerical value that is used for sorting 
                             categories and Identity Provider in ascending order 
                             if the Identity Providers are parsed from metadata.
                             This is only relevant if 
                             $includeLocalConfEntries = true
+
 
 For category entries, only Type, (local) Name and Index are relevant.
 
