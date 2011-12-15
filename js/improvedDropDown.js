@@ -130,7 +130,7 @@ function getTextElement(sourceElement, imgElement) {
     newTextElement.attr('id', newID + idd_text_suffix)
                   .addClass('idd_textbox')
                   .attr('value', sourceElement.find('option:selected').text())
-                  .css('height', sourceElement.outerHeight() + 'px')
+				  .css('height', imgElement.outerHeight() + 'px')
                   .css('font-family', sourceElement.css('font-family'))
                   .css('font-size', sourceElement.css('font-size'))
                   .css('border-width', '1px')
