@@ -157,6 +157,7 @@ div.idd_list {
 	padding-top: 0px;
 	padding-bottom: 0px;
 	z-index: 900;
+	text-align:left;
 }
 
 /* Option Group headers */
