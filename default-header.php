@@ -4,7 +4,7 @@
 <head>
 	<title><?php echo getLocalString('title') ?></title> 
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-	<meta name="keywords" content="Discovery Service, WAYF, Shibboleth">
+	<meta name="keywords" content="Home Organisation, Discovery Service, WAYF, Shibboleth, Login, AAI">
 	<meta name="description" content="Choose your home organization to authenticate">
 	<script type="text/javascript" src="<?php echo $javascriptURL ?>/jquery.js"></script>
 	<script type="text/javascript" src="<?php echo $javascriptURL ?>/improvedDropDown.js"></script>
@@ -69,25 +69,6 @@
 		}
 	}
 	
-	//Setup the dom ready event
-	function DomReady(func){
-		if(document.addEventListener){
-			//W3C
-			document.addEventListener("DOMContentLoaded", func, false);
-		} else {
-			//IE
-			document.onreadystatechange = function(){readyState(func)}
-		}
-	}
-	
-	//IE ready execution function
-	function readyState(func){
-		//dom is ready for interaction
-		if(document.readyState == "interactive"){
-			func();
-		}
-	}
-	
 	// Init WAYF
 	function init(){
 		preventIframeEmbedding();
@@ -104,7 +85,7 @@
 		}
 	}
 	
-	// Attach init function
+	// Call init function when DOM is ready
 	$(document).ready(init);
 	
 	-->
