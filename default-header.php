@@ -49,7 +49,9 @@
 	// Confirm permanent selection
 	function showPermanentConfirmation(){
 		
-		return alert(unescape('<?php echo getLocalString('permanent_cookie_note', 'js') ?>'));
+		var message = unescape('<?php echo getLocalString('permanent_cookie_note', 'js') ?>');
+		message = message.replace('%s', window.location.href.replace(/\?.+/, ''));
+		return alert(message);
 	}
 	
 	// Perform input validation on WAYF form
@@ -77,7 +79,7 @@
 		
 		if (<?php echo ($userImprovedDropDownList) ? 'true' : 'false' ?>){
 			// Convert select element into improved drop down list
-			$("#userIdPSelection").improveDropDown({
+			$("#userIdPSelection:enabled").improveDropDown({
 				iconPath:'<?php echo $imageURL ?>/drop_icon.png',
 				noMatchesText: '<?php echo getLocalString('no_idp_found', 'js') ?>',
 				noItemsText: '<?php echo getLocalString('no_idp_available', 'js') ?>'

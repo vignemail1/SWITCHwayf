@@ -11,6 +11,7 @@
 			</select>
 			<input type="submit" accesskey="c" name="clear_user_idp" value="<?php echo getLocalString('delete_permanent_cookie_button') ?>">
 			<?php if (isValidShibRequest()) : ?>
+			<br /><br />
 			<input type="submit" accesskey="s" name="Select" name="permanent" value="<?php echo getLocalString('goto_sp') ?>" onClick="showPermanentConfirmation()">
 			<?php endif ?>
 		</div>
