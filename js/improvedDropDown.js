@@ -528,7 +528,7 @@ function positionList(listControl) {
             childItems.css('width', listWidthPx + 'px');
 
 			// Add some margin for compensating scrollbar
-            listControl.css('width', (listWidthPx + 15) + 'px');
+            listControl.css('width', (listWidthPx + 20) + 'px');
 
         } catch  (err)  { /*eat any sizing errors */ }
 }
@@ -573,7 +573,26 @@ function updateListFilter(textControl) {
     var anyMatches = Boolean(listItems.filter(':visible').length!=0);        
     listControl.children('.idd_listItemGroupHeader').toggle(anyMatches);
     listControl.children('.grpHdrNoMatches').toggle(!anyMatches);
-    
+
+	// Hide visible but empty categories
+	var previousElement = null;
+	var allListItems = listControl.children().filter(':visible');
+	allListItems.each(
+		function () {
+			if ($(this).hasClass("idd_listItemGroupHeader")){
+				if (previousElement != null && previousElement.hasClass("idd_listItemGroupHeader")){
+					//alert("Hide " + previousElement.text())
+					previousElement.hide();
+				}
+			}
+			previousElement = $(this);
+	});
+	
+	// Hide last visible item if it is a category
+	if (allListItems.last().hasClass("idd_listItemGroupHeader")){
+		allListItems.last().hide();
+	}
+
     positionList(listControl); //resize list to fit new visible elements.
 }
 
@@ -583,7 +602,7 @@ function doesListItemMach(listItem, compareText) {
 	if (listItem.attr('savedValue') == '-'){
 		return false;
 	}
-	
+
     // Compares a listItem (jQuery object representing item in dropdown list) to compareText
 	return (!listItem.hasClass('idd_listItem_Disabled')) && (stringContainsCaseInsensitive(listItem.text(), compareText) || stringContainsCaseInsensitive(listItem.attr('savedTitle'), compareText))
 }
