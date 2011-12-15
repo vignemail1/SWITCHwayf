@@ -196,7 +196,17 @@ function getTextElement(sourceElement, imgElement) {
     
 	// Clear text area on click
 	newTextElement.click(function (obj) {
-		obj.target.value = "";
+		if (obj.target.value != ''){
+			obj.target.savedValue = obj.target.value;
+			obj.target.value = '';
+		}
+	});
+	
+	// Restore text area on focos out
+	newTextElement.focusout(function (obj) {
+		if (obj.target.value == '' && obj.target.savedValue != ''){
+			obj.target.value = obj.target.savedValue;
+		}
 	});
 
     return newTextElement;
