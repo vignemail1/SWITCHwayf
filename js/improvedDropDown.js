@@ -581,7 +581,6 @@ function updateListFilter(textControl) {
 		function () {
 			if ($(this).hasClass("idd_listItemGroupHeader")){
 				if (previousElement != null && previousElement.hasClass("idd_listItemGroupHeader")){
-					//alert("Hide " + previousElement.text())
 					previousElement.hide();
 				}
 			}
@@ -589,7 +588,7 @@ function updateListFilter(textControl) {
 	});
 	
 	// Hide last visible item if it is a category
-	if (allListItems.last().hasClass("idd_listItemGroupHeader")){
+	if (allListItems.last().hasClass("idd_listItemGroupHeader") && !allListItems.last().hasClass("grpHdrNoMatches")){
 		allListItems.last().hide();
 	}
 

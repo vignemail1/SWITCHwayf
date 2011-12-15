@@ -104,11 +104,8 @@
 		}
 	}
 	
-	// Add new DomReady function
-	window.onDomReady = DomReady;
-	
 	// Attach init function
-	window.onDomReady(init);
+	$(document).ready(init);
 	
 	-->
 	</script>
