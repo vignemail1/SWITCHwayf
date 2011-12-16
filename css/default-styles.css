@@ -33,6 +33,7 @@ pre {
 
 input {
 	vertical-align: middle;
+	font-size: 14px;
 }
 
 .box {
@@ -131,6 +132,7 @@ input {
 
 #userIdPSelection {
 	width: 400px;
+	font-size: 14px;
 }
 
 /* Improved Drop Down CSS */
@@ -178,7 +180,7 @@ div.idd_list {
 /* Dropdown list items except group headers */
 .idd_listItem {
 	font-family:Verdana, sans-serif;
-	font-size: 12px;
+	font-size: 14px;
 	height: 1em; 
 	margin: 0;
 	padding-bottom: 2px;
