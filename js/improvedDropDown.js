@@ -1,6 +1,5 @@
 ﻿/* ImprovedDropDown */
 /* Verison 1.0.2 */
-/* Modified by aai@switch.ch */
 
 /*
    Copyright 2011 John Fuex
@@ -16,6 +15,11 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+*/
+
+
+/* 
+   All tab indented lines were modified by aai@switch.ch 
 */
 
 var debugMode = 0; //setting this to 1 will supress hiding the original select controls for debugging purposes.

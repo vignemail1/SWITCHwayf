@@ -27,10 +27,15 @@ SWITCHwayf Changes and Version History:
 
 1.16    Release date: 
         - Added an improved version of the drop down list to the WAYF
+          Inspired by code from Takeshi Nishimura from NII (Japan)
+          Uses modified ImprovedDropdown JQuery library by John Fuex
+          See LICENSE file for further information
         - Added cookieSecurity option to set and transmit cookies securely 
+          Code contributed by Takeshi Nishimura from NII (Japan)
         - Added additional data protection feature that uses the referer to
           decide whether or not to preselect an Identity Provider in the
           Embedded WAYF
+          Code contributed by Takeshi Nishimura from NII (Japan)
         - If the Discovery Feed feature is activated only those IdPs are shown 
           that are contained in the feed. Others will be hidden automatically.
         - Added Location property to format of IDP entries to allow users to
@@ -129,6 +134,7 @@ alphabetically.
 - Lourival Pereira Vieira Neto from RNP (BR)
 - Martins Purins from Latvijas Universitates (LV)
 - Olivier Salaün from RENATER (FR)
+- Takeshi Nishimura (JP)
 - Tom Scavo from Internet2 (US)
 - Mika Suvanto from CSC (FI)
 - Huân Thebault from Centre de Calcul de l'IN2P3 (FR)
