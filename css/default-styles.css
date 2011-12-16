@@ -28,7 +28,11 @@ a:focus, a:hover, a:active {
 }
 
 pre {
-        text-align: left;
+	text-align: left;
+}
+
+input {
+	vertical-align: middle;
 }
 
 .box {
