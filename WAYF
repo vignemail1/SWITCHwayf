@@ -95,7 +95,7 @@ if(isValidDSRequest()){
 		exit;
 	}
 	
-	if ($enableDSReturnParamCheck){
+	if ($useSAML2Metadata && $enableDSReturnParamCheck){
 		// Check SP
 		if(!isset($SProviders[$_GET['entityID']])){
 			// Show error
