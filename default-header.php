@@ -78,6 +78,10 @@
 		setFocus();
 		
 		if (<?php echo ($userImprovedDropDownList) ? 'true' : 'false' ?>){
+			
+			var searchText = '<?php echo getLocalString('search_idp', 'js') ?>';
+			$("#userIdPSelection:enabled option[value='-']").text(searchText);
+			
 			// Convert select element into improved drop down list
 			$("#userIdPSelection:enabled").improveDropDown({
 				iconPath:'<?php echo $imageURL ?>/drop_icon.png',
