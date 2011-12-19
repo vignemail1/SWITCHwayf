@@ -141,13 +141,25 @@ input {
 	vertical-align: middle;
 }
 
+.idd_textbox:hover {
+	border-color: black;
+	box-shadow: 1px 1px 8px #999999;
+	-webkit-box-shadow: 1px 1px 8px #999999;
+	-moz-box-shadow: 1px 1px 8px #999999;
+}
+
 /* dropdown arrow control */
-.idd_icon {
-	border-width: 0;
+.idd_icon
+{
+	border-top: 1px #999999 solid;
+	border-right: 1px #999999 solid;
+	border-bottom: 1px #999999 solid;
+	border-left: 0;
 }
 
 .idd_icon:hover
 {
+	border-color: black;
 	box-shadow: 1px 1px 8px #999999;
 	-webkit-box-shadow: 1px 1px 8px #999999;
 	-moz-box-shadow: 1px 1px 8px #999999;
