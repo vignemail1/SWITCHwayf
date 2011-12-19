@@ -261,15 +261,17 @@ the entry stands for an Identity Provider. For entries of Type category, the
                             words that are not allowed to be assigned to 
                             entries for Identity Providers.
 ['Name']:   Mandatory       Default name to display in drop-down list
-['en'|'it'|'fr'|'de'|'pt']['Name']:
-            Optional        Display name in other languages
+
+['en'|'it'|'fr'|'de'|...]   Language dependent:
+   ['Name']:     Optional   Display name
+   ['Keywords']: Optional   Keywords associated with the Identity Provider. 
+                            Used for search-as-you-type feature of improved 
+                            drop-down list. Space delimited.
+
 ['SSO']:    Mandatory       Should be the SAML1 SSO endpoint of the IdP
 ['Realm']:  Optional        Kerberos Realm
 ['IP'][]:   Optional        IP ranges of that organizations that can be used to 
                             guess a user's Identity Provider
-['Location'][]:   Optional  Geographical places associated with the 
-                            Identity Provider. Used for search-as-you-type 
-                            feature of improved drop-down list.
 ['Index']:  Optional        An alphanumerical value that is used for sorting 
                             categories and Identity Provider in ascending order 
                             if the Identity Providers are parsed from metadata.

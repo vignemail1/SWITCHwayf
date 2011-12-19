@@ -38,8 +38,8 @@ SWITCHwayf Changes and Version History:
           Code contributed by Takeshi Nishimura from NII (Japan)
         - If the Discovery Feed feature is activated only those IdPs are shown 
           that are contained in the feed. Others will be hidden automatically.
-        - Added Location property to format of IDP entries to allow users to
-          search Identity Providers using a geographical hint.
+        - Added Keywords property to format of IDP entries to allow users to
+          search Identity Providers using a keyword.
 
 1.15    Release date: 21. October 2011
         - A default and custom CSS file can now be used

@@ -57,37 +57,36 @@ $userImprovedDropDownList = true;
 // metadata file defined below in $metadataFile
 $useSAML2Metadata = true; 
 
-// If ture parsed metadata shall have precedence if there are entries defined 
-// in metadata as well as the local IDProviders configuration file.
-// Only relevant if $useSAML2Metadata is true
-$SAML2MetaOverLocalConf = false;
+  // If true parsed metadata shall have precedence if there are entries defined 
+  // in metadata as well as the local IDProviders configuration file.
+  // Requires $useSAML2Metadata to be true
+  $SAML2MetaOverLocalConf = false;
 
-// If includeLocalConfEntries parameter is set to true, Identity Providers
-// not listed in metadata but defined in the local IDProviders file will also
-// be displayed in the drop down list. This is required if you need to add 
-// local exceptions over the federation metadata
-// Only relevant if $useSAML2Metadata is true
-$includeLocalConfEntries = true;
+  // If includeLocalConfEntries parameter is set to true, Identity Providers
+  // not listed in metadata but defined in the local IDProviders file will also
+  // be displayed in the drop down list. This is required if you need to add 
+  // local exceptions over the federation metadata
+  // Requires $useSAML2Metadata to be true
+  $includeLocalConfEntries = true;
 
-// Whether the return parameter is checked against SAML2 metadata or not
-// The Discovery Service specification says the DS SHOULD check this in order
-// to mitigate phising problems.
-// You must have $useSAML2Metadata = true in order to activate this check.
-// The return parameter will only be checked if the Service Provider's metadata 
-// contains an <idpdisc:DiscoveryResponse> or if the assertion consumer url 
-// check below is enabled
-$enableDSReturnParamCheck = true;
+  // Whether the return parameter is checked against SAML2 metadata or not
+  // The Discovery Service specification says the DS SHOULD check this in order
+  // to mitigate phising problems.
+  // The return parameter will only be checked if the Service Provider's metadata 
+  // contains an <idpdisc:DiscoveryResponse> or if the assertion consumer url 
+  // check below is enabled
+  // Requires $useSAML2Metadata to be true
+  $enableDSReturnParamCheck = true;
 
-// If true, the return parameter is checked for Service Providers that
-// don't have and <idpdisc:DiscoveryResponse> extension set. Instead of this
-// extension, the hostnames of the assertion consumer URLs are used to check 
-// the return parameter against. 
-// This feature is useful in case the Service Provider's metadata doesn't contain 
-// a <idpdisc:DiscoveryResponse> extension. It increases security for Service 
-// Provider's that don't have an <idpdisc:DiscoveryResponse> extensions.
-// This feature only is active if $enableDSReturnParamCheck = true 
-// and if  $useSAML2Metadata = true 
-$useACURLsForReturnParamCheck = false;
+    // If true, the return parameter is checked for Service Providers that
+    // don't have and <idpdisc:DiscoveryResponse> extension set. Instead of this
+    // extension, the hostnames of the assertion consumer URLs are used to check 
+    // the return parameter against. 
+    // This feature is useful in case the Service Provider's metadata doesn't contain 
+    // a <idpdisc:DiscoveryResponse> extension. It increases security for Service 
+    // Provider's that don't have an <idpdisc:DiscoveryResponse> extensions.
+    // Requires $useSAML2Metadata and $enableDSReturnParamCheck to be true
+    $useACURLsForReturnParamCheck = false;
 
 // Whether to turn on Kerberos support for Identity Provider preselection
 $useKerberos = false;
@@ -105,21 +104,22 @@ $useReverseDNSLookup = false;
 // Therefore, only enable this feature if you know what you are doing!
 $useEmbeddedWAYF = false;
 
-// If enabled the Embedded WAYF will prevent releasing information
-// about the user's preselected Identity Provider 
-// While this is benefical to the data protection of the user, it will also
-// prevent preselecting the user's Identity Provider. Thus, users will have
-// to preselect their IdP each and every time
-$useEmbeddedWAYFPrivacyProtection = false;
+  // If enabled the Embedded WAYF will prevent releasing information
+  // about the user's preselected Identity Provider 
+  // While this is benefical to the data protection of the user, it will also
+  // prevent preselecting the user's Identity Provider. Thus, users will have
+  // to preselect their IdP each and every time
+  // Requires $useEmbeddedWAYF to be true
+  $useEmbeddedWAYFPrivacyProtection = false;
 
-// If enabled, the referer hostname of the request must match tan assertion 
-// consumer URL or a discovery URL of a Service Provider in $metadataSPFile
-// in order to let the Embedded WAYF preselect an Identity Provider.
-// Therefore, this option is a good compromise between data protection and
-// userfriendlyness.
-// This option can only be used if $useEmbeddedWAYFPrivacyProtection is false
-// and $useSAML2Metadata is true
-$useEmbeddedWAYFRefererForPrivacyProtection = false;
+  // If enabled, the referer hostname of the request must match tan assertion 
+  // consumer URL or a discovery URL of a Service Provider in $metadataSPFile
+  // in order to let the Embedded WAYF preselect an Identity Provider.
+  // Therefore, this option is a good compromise between data protection and
+  // userfriendlyness.
+  // Requires $useSAML2Metadata to be true and $useEmbeddedWAYFPrivacyProtection
+  // to be false
+  $useEmbeddedWAYFRefererForPrivacyProtection = false;
 
 // Whether or not to add the entityID of the preselected IdP to the
 // exported JSON/Text/PHP Code

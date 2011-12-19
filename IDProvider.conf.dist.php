@@ -25,7 +25,7 @@ $IDProviders['bristol.ac.uk'] = array (
 		'Name' => 'University of Bristol',
 		'SSO' => 'https://sso.bris.ac.uk/sso/index.jsp',
 		'Realm' => 'ADS.BRIS.AC.UK',
-		'Location' => array ('Bristol','South West England','England'),
+		'en' => array ('Keywords' => 'Bristol South+West+England'),
 );
 
 // Example with optional network blocks that can be used as an 
@@ -48,11 +48,17 @@ $IDProviders['vho'] = array (
 $IDProviders['urn:mace:switch.ch:SWITCHaai:vho-switchaai.ch'] = array (
 		'Type' => 'vho',
 		'Name' => 'Virtual Home Organisation',
-		'de' => array ('Name' => 'Virtuelle Home Organisation'),
+		'en' => array (
+			'Name' => 'Virtual Home Organisation',
+			'Keywords','Zurich Switzerland',
+			),
+		'de' => array (
+			'Name' => 'Virtuelle Home Organisation',
+			'Keywords','Zürich Schweiz',
+			),
 		'fr' => array ('Name' => 'Home Organisation Virtuelle'),
 		'it' => array ('Name' => 'Virtuale Home Organisation'),
 		'IP' => array ('130.59.6.0/16','127.0.0.0/24'),
-		'Location' => array ('Zurich','Switzerland'),
 		'SSO' => 'https://aai.vho-switchaai.ch/shibboleth-idp/SSO',
 );
 
