@@ -326,6 +326,12 @@ function processIDPRoleDescriptor($IDPRoleDescriptorNode){
 	$protocols = $IDPRoleDescriptorNode->getAttribute('protocolSupportEnumeration');
 	$IDP['Protocols'] = $protocols;
 	
+	// Get keywords
+	$MDUIKeywords = getMDUIKeywords($IDPRoleDescriptorNode);
+	foreach ($MDUIKeywords as $lang => $keywords){
+		$IDP[$lang]['Keywords'] = $keywords;
+	}
+	
 	return $IDP;
 }
 
@@ -385,6 +391,12 @@ function processSPRoleDescriptor($SPRoleDescriptorNode){
 	// Get supported protocols
 	$protocols = $SPRoleDescriptorNode->getAttribute('protocolSupportEnumeration');
 	$SP['Protocols'] = $protocols;
+	
+	// Get keywords
+	$MDUIKeywords = getMDUIKeywords($SPRoleDescriptorNode);
+	foreach ($MDUIKeywords as $lang => $keywords){
+		$SP[$lang]['Keywords'] = $keywords;
+	}
 	
 	return $SP;
 }
@@ -479,6 +491,20 @@ function getMDUIDisplayNames($RoleDescriptorNode){
 	return $Entity;
 }
 
+/******************************************************************************/
+// Get MD Keywords from RoleDescriptor
+function getMDUIKeywords($RoleDescriptorNode){
+	
+	$Entity = Array();
+	
+	$MDUIKeywords = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:metadata:ui', 'Keywords');
+	foreach( $MDUIKeywords as $MDUIKeywordEntry ){
+		$lang = $MDUIKeywordEntry->getAttributeNodeNS('http://www.w3.org/XML/1998/namespace', 'lang')->nodeValue;
+		$Entity[$lang] = $MDUIKeywordEntry->nodeValue;
+	}
+	
+	return $Entity;
+}
 /******************************************************************************/
 // Get Organization Names from RoleDescriptor
 function getOrganizationNames($RoleDescriptorNode){
