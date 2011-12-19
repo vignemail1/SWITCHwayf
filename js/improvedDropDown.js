@@ -204,6 +204,8 @@ function getTextElement(sourceElement, imgElement) {
 			obj.target.savedValue = obj.target.value;
 			obj.target.value = '';
 		}
+		
+		 $('#' + newID + idd_icon_suffix).click();
 	});
 	
 	// Restore text area on focos out
