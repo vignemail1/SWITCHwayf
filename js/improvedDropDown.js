@@ -250,7 +250,15 @@ function getImageElement(sourceElement,iconPath) {
             showList(listControl)
             textControl.focus().select(); 
         }
-               
+
+		// Highlight selected item
+		var selectElement = getSelectControlFromOtherControl(listControl);
+		var selectedListElement = $("[savedValue='" + selectElement.val() + "']");
+		selectedListElement.addClass("idd_listItem_Hover");
+		
+		// Scroll to proper list entry
+		listControl.scrollTop(selectedListElement.position().top + listControl.scrollTop() - 30);
+
         event.stopPropagation();
         return false;
     });
@@ -307,7 +315,7 @@ function populateList(existingSelectControl, newListControl,noMatchesText,noItem
         var noItemsHeader = getListGroupItem(noItemsText,true).addClass('idd_message');
         newListControl.append(noItemsHeader);
     }
-
+    
     sourceListItems.each(
          function () {
              if (isOptGroup($(this))) { 
@@ -317,6 +325,7 @@ function populateList(existingSelectControl, newListControl,noMatchesText,noItem
                 populateListItem(newListControl, $(this)); 
              }
          });
+
 }
 
 function populateListGroupItem(newListControl, optionGroupItem) {
