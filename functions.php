@@ -442,7 +442,7 @@ function getIdPPathInfoHint(){
 				isset($value['SSO']) 
 				&& !empty($value['SSO'])
 				&& $value['Type'] != 'wayf'
-				&& checkPathInfo(getHostNameFromURI($key))
+				&& isPartOfPathInfo(getHostNameFromURI($key))
 				){
 			return $key;
 		}
@@ -455,7 +455,7 @@ function getIdPPathInfoHint(){
 				isset($value['SSO']) 
 				&& !empty($value['SSO'])
 				&& $value['Type'] != 'wayf'
-				&& checkPathInfo(getDomainNameFromURI($key))
+				&& isPartOfPathInfo(getDomainNameFromURI($key))
 				){
 			return $key;
 		}
@@ -522,7 +522,7 @@ function getIPAdressHint() {
 function isIPinCIDRBlock($cidr, $ip) {
 	
 	// Split CIDR notation
-	list ($net, $mask) = split ("/", $cidr);
+	list ($net, $mask) = preg_split ("|/|", $cidr);
 	
 	// Convert to binary string value of 1s and 0s
 	$netAsBinary = convertIPtoBinaryForm($net);
@@ -735,12 +735,12 @@ function logAccessEntry($protocol, $type, $sp, $idp){
 // Returns true if PATH info indicates a request of type $type
 function isRequestType($type){
 	// Make sure the type is checked at end of path info
-	return checkPathInfo($type.'$');
+	return isPartOfPathInfo($type.'$');
 }
 
 /******************************************************************************/
 // Checks for substrings in Path Info and returns true if match was found
-function checkPathInfo($needle){
+function isPartOfPathInfo($needle){
 	if (
 		isset($_SERVER['PATH_INFO']) 
 		&& !empty($_SERVER['PATH_INFO'])
