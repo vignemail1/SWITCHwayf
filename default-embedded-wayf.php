@@ -78,8 +78,8 @@ var wayf_font_size = 12;
 var wayf_font_color = '#000000';
 
 // Border color
-// [Optional, default: #969696]
-var wayf_border_color = '#969696';
+// [Optional, default: #848484]
+var wayf_border_color = '#848484';
 
 // Background color
 // [Optional, default: #F0F0F0]

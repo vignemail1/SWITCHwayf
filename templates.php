@@ -767,7 +767,7 @@ function decodeBase64(input) {
 		typeof(wayf_border_color) == "undefined"
 		|| typeof(wayf_border_color) != "string"
 		){
-		wayf_border_color = '#969696';
+		wayf_border_color = '#848484';
 	}
 	
 	if(
