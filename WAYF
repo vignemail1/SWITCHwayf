@@ -315,7 +315,7 @@ if ($hintedPathIDP != '-'){
 		redirectTo($IDProviders[$hintedPathIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 		exit;
 		
-	} elseif ( checkPathInfo('redirect') ){
+	} elseif (isPartOfPathInfo('redirect') ){
 		// Set redirect cookie for this session
 		setcookie ($redirectCookieName, $hintedPathIDP, null, '/', $commonDomain, $cookieSecurity, $cookieSecurity);
 		
