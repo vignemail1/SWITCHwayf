@@ -121,7 +121,7 @@ $langStrings['fr'] =  array (
 'save_button' => 'Sauver',
 'access_host' => 'Pour acc&eacute;der &agrave; la ressource <tt>\'%s\'</tt> veuillez s&eacute;lectionner ou chercher l\'organisation &agrave; laquelle vous appartenez.',
 'select_idp' => 'Veuillez s&eacute;lectionner l\'organisation &agrave; laquelle vous appartenez.',
-'search_idp' => 'Veuillez tapper le nom de l\'organisation &agrave; laquelle vous appartenez.',
+'search_idp' => 'Veuillez taper le nom de l\'organisation &agrave; laquelle vous appartenez.',
 'remember_selection' => 'Se souvenir de mon choix pour cette session.',
 'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> fournit des prestations innovantes et uniques pour les hautes &eacute;coles suisses et les utilisateurs d\'Internet.',
 'invalid_user_idp' => 'Une erreur s\'est produite.<br>La valeur de votre donn&eacute;e <tt>\'%s\'</tt> n\'est pas valide.<br>Seules ces valeurs sont admises :',
