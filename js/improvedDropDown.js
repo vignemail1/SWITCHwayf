@@ -182,7 +182,10 @@ function getTextElement(sourceElement, imgElement) {
         switch (e.which) {
             case KEY_ESCAPE: closeListUndoTyping(thisTextElement); break;
             case KEY_TAB: break;
-            case KEY_ENTER: break;
+            case KEY_ENTER:
+				// Move focus on submit button 
+				$('[type="submit"]').focus();
+				break;
             case KEY_DOWNARROW: break;
             case KEY_UPARROW: break;
             case KEY_LEFTARROW: break;
