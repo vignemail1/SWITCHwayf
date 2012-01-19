@@ -39,6 +39,8 @@ $SAMLDomainCookieName = $cookieNamePrefix.'_saml_idp';
 $SPCookieName = $cookieNamePrefix.'_saml_sp';
 
 // If enabled cookies are set/transmitted only via https connections
+// and the http only option is set to prevent javascripts from reading the
+// cookies
 $cookieSecurity = false;
 
 // Number of days longterm cookies shall be valid

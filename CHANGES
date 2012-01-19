@@ -25,7 +25,7 @@ necessary for such releases.
 
 SWITCHwayf Changes and Version History:
 
-1.16    Release date: 
+1.16    Release date: 19. January 2012
         - Added an improved version of the drop down list to the WAYF
           Inspired by code from Takeshi Nishimura from NII (Japan)
           Uses modified ImprovedDropdown JQuery library by John Fuex
@@ -34,7 +34,7 @@ SWITCHwayf Changes and Version History:
           Code contributed by Takeshi Nishimura from NII (Japan)
         - Added additional data protection feature that uses the referer to
           decide whether or not to preselect an Identity Provider in the
-          Embedded WAYF
+          Embedded WAYF.
           Code contributed by Takeshi Nishimura from NII (Japan)
         - If the Discovery Feed feature is activated only those IdPs are shown 
           that are contained in the feed. Others will be hidden automatically.
