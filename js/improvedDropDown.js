@@ -375,7 +375,10 @@ function populateListItem(newListControl, optionItem) {
             $(this).addClass('idd_listItem_Hover');
         });
         newListItem.mouseout(function () { $(this).removeClass('idd_listItem_Hover'); });
-        newListItem.click(function () { selectItem($(this),true,true,false);  });
+        newListItem.click(function () {
+        	selectItem($(this),true,true,false); 
+        	$('[type="submit"]').focus(); 
+        });
     }
     else {
         newListItem.addClass('idd_listItem_Disabled');
