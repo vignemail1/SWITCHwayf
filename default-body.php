@@ -4,7 +4,7 @@
 <h1><?php echo getLocalString('header'); ?></h1> 
 <form id="IdPList" name="IdPList" method="post" onSubmit="return checkForm()" action="<?php echo $actionURL ?>">
 	<div id="userInputArea">
-		<p><?php echo $promptMessage ?></p>
+		<p class="promptMessage"><?php echo $promptMessage ?></p>
 		<div align="center">
 			<select name="user_idp" id="userIdPSelection"> 
 				<option value="-" <?php echo $defaultSelected ?>><?php echo getLocalString('select_idp') ?> ...</option>
@@ -13,7 +13,7 @@
 			<input type="submit" name="Select" accesskey="s" value="<?php echo getLocalString('select_button') ?>"> 
 		</div>
 		<div align="left">
-			<p>
+			<p class="selectOptions">
 				<input type="checkbox" <?php echo $rememberSelectionChecked ?> name="session" id="rememberForSession" value="true">
 				<label for="rememberForSession"><?php echo getLocalString('remember_selection') ?></label><br>
 				<?php if ($showPermanentSetting) : ?>

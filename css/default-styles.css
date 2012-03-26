@@ -35,6 +35,14 @@ input {
 	vertical-align: middle;
 }
 
+.promptMessage {
+	margin-top: 0;
+}
+
+.selectOptions {
+	margin-bottom: 0;
+}
+
 .box {
 	width:600px;
 	text-align: center;
