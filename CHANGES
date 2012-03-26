@@ -25,6 +25,10 @@ necessary for such releases.
 
 SWITCHwayf Changes and Version History:
 
+
+1.17    Release date:  2012
+        - Added CSS styles for mobile view
+
 1.16    Release date: 19. January 2012
         - Added an improved version of the drop down list to the WAYF
           Inspired by code from Takeshi Nishimura from NII (Japan)

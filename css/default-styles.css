@@ -141,38 +141,6 @@ input {
 	width: 400px;
 }
 
-/* Improved Drop Down CSS */
-
-/* textbox part of the dropdown list */
-.idd_textbox {
-	border: 1px #848484 solid;
-	vertical-align: middle;
-}
-
-.idd_textbox:hover {
-	border-color: black;
-	box-shadow: 1px 1px 8px #999999;
-	-webkit-box-shadow: 1px 1px 8px #999999;
-	-moz-box-shadow: 1px 1px 8px #999999;
-}
-
-/* dropdown arrow control */
-.idd_icon
-{
-	border-top: 1px #999999 solid;
-	border-right: 1px #999999 solid;
-	border-bottom: 1px #999999 solid;
-	border-left: 0;
-}
-
-.idd_icon:hover
-{
-	border-color: black;
-	box-shadow: 1px 1px 8px #999999;
-	-webkit-box-shadow: 1px 1px 8px #999999;
-	-moz-box-shadow: 1px 1px 8px #999999;
-}
-
 /* Device specific styles */
 @media only screen and (max-device-width: 480px){
 	.box {
@@ -206,6 +174,38 @@ input {
 
 html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6 {
     -webkit-text-size-adjust:none;
+}
+
+/* Improved Drop Down CSS */
+
+/* textbox part of the dropdown list */
+.idd_textbox {
+	border: 1px #848484 solid;
+	vertical-align: middle;
+}
+
+.idd_textbox:hover {
+	border-color: black;
+	box-shadow: 1px 1px 8px #999999;
+	-webkit-box-shadow: 1px 1px 8px #999999;
+	-moz-box-shadow: 1px 1px 8px #999999;
+}
+
+/* dropdown arrow control */
+.idd_icon
+{
+	border-top: 1px #999999 solid;
+	border-right: 1px #999999 solid;
+	border-bottom: 1px #999999 solid;
+	border-left: 0;
+}
+
+.idd_icon:hover
+{
+	border-color: black;
+	box-shadow: 1px 1px 8px #999999;
+	-webkit-box-shadow: 1px 1px 8px #999999;
+	-moz-box-shadow: 1px 1px 8px #999999;
 }
 
 /* Dropdown list */
