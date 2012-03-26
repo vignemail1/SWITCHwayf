@@ -142,7 +142,7 @@ input {
 }
 
 /* Device specific styles */
-@media only screen and (max-device-width: 480px){
+@media only screen and (max-device-width: 700px){
 	.box {
 		width: auto;
 		box-shadow: none;
