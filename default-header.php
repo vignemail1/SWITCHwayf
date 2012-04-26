@@ -99,7 +99,7 @@
 	</script>
 	<style type="text/css">
 	<!--
-	<? printCSS() ?>
+	<?php printCSS() ?>
 	-->
 	</style>
 </head>
