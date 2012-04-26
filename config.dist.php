@@ -57,7 +57,7 @@ $userImprovedDropDownList = true;
 
 // Set to true in order to enable reading the Identity Provider from a SAML2 
 // metadata file defined below in $metadataFile
-$useSAML2Metadata = true; 
+$useSAML2Metadata = false; 
 
   // If true parsed metadata shall have precedence if there are entries defined 
   // in metadata as well as the local IDProviders configuration file.
