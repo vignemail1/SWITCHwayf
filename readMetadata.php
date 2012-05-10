@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2011, SWITCH - Serving Swiss Universities
+<?php // Copyright (c) 2012, SWITCH - Serving Swiss Universities
 
 // This file is used to dynamically create the list of IdPs to be 
 // displayed for the WAYF/DS service based on the federation metadata.
