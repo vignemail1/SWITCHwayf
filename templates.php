@@ -313,8 +313,6 @@ function submitForm(){
 	}
 	
 	// User chose non-federation IdP
-	// TODO: FIX windows error
-	// 4 >= (8 - 3/4)
 	if (
 		wayf_additional_idps.length > 0 
 		&& document.IdPList.user_idp
@@ -328,11 +326,20 @@ function submitForm(){
 		
 		// Redirect user to SP handler
 		if (wayf_use_discovery_service){
-			redirect_url = wayf_sp_samlDSURL + '?entityID=' 
-			+ encodeURIComponent(NonFedEntityID)
-			+ '&target=' + encodeURIComponent(wayf_return_url);
 			
-			// Make sure the redirect always is being done in parent window
+			var entityIDGETParam = getGETArgument("entityID");
+			var returnGETParam = getGETArgument("return");
+			if (entityIDGETParam != "" && returnGETParam != ""){
+				redirect_url = returnGETParam;
+			} else {
+				redirect_url = wayf_sp_samlDSURL ;
+				redirect_url += '?target=' + encodeURIComponent(wayf_return_url);
+			}
+			
+			// Append selected Identity Provider
+			redirect_url += '&entityID=' + encodeURIComponent(NonFedEntityID);
+			
+			// Make sure the redirect always is being executed in parent window
 			if (window.parent){
 				window.parent.location = redirect_url;
 			} else {
@@ -690,9 +697,26 @@ function decodeBase64(input) {
 	return output;
 }
 
+function getGETArgument(name){
+	name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+	var regexString = "[\\?&]"+name+"=([^&#]*)";
+	var regex = new RegExp(regexString);
+	var results = regex.exec(window.location.href);
+	
+	if( results == null ){
+		return "";
+	} else {
+		return decodeURIComponent(results[1]);
+	}
+}
+
 (function() {
 	
 	var config_ok = true; 
+	
+	// Get GET parameters that maybe are set by Shibboleth
+	var returnGETParam = getGETArgument("return");
+	var entityIDGETParam = getGETArgument("entityID");
 	
 	// First lets make sure properties are available
 	if(
@@ -700,6 +724,12 @@ function decodeBase64(input) {
 		|| typeof(wayf_use_discovery_service) != "boolean"
 	){
 		wayf_use_discovery_service = true;
+	}
+	
+	// Overwrite entityID with GET argument if present
+	var entityIDGETParam = getGETArgument("entityID");
+	if (entityIDGETParam != ""){
+		wayf_sp_entityID = entityIDGETParam;
 	}
 	
 	if(
@@ -841,7 +871,7 @@ function decodeBase64(input) {
 		typeof(wayf_logged_in_messsage) == "undefined"
 		|| typeof(wayf_logged_in_messsage) != "string"
 		){
-		wayf_logged_in_messsage = "{$loggedInString}";
+		wayf_logged_in_messsage = "{$loggedInString}".replace(/%s/, wayf_return_url);
 	}
 	
 	if(
@@ -975,23 +1005,29 @@ function decodeBase64(input) {
 		var form_start = '';
 		
 		if (wayf_use_discovery_service == true){
-			var return_url = wayf_sp_samlDSURL + '?SAMLDS=1&target=' + encodeURIComponent(wayf_return_url);
+			// New SAML Discovery Service protocol
 			
-			wayf_authReq_URL = wayf_URL 
-			+ '?entityID=' + encodeURIComponent(wayf_sp_entityID)
-			+ '&amp;return=' + encodeURIComponent(return_url);
+			wayf_authReq_URL = wayf_URL;
 			
-			form_start = '<form id="IdPList" name="IdPList" method="post" target="_parent" action="' + wayf_authReq_URL + '">';
+			// Use GET arguments or use configuration parameters
+			if (entityIDGETParam != "" && returnGETParam != ""){
+				wayf_authReq_URL += '?entityID=' + encodeURIComponent(entityIDGETParam);
+				wayf_authReq_URL += '&amp;return=' + encodeURIComponent(returnGETParam);
+			} else {
+				var return_url = wayf_sp_samlDSURL + '?SAMLDS=1&target=' + encodeURIComponent(wayf_return_url);
+				wayf_authReq_URL += '?entityID=' + encodeURIComponent(wayf_sp_entityID);
+				wayf_authReq_URL += '&amp;return=' + encodeURIComponent(return_url);
+			}
 		} else {
-			
-			wayf_authReq_URL = wayf_URL 
-			+ '?providerId=' + encodeURIComponent(wayf_sp_entityID)
-			+ '&amp;shire=' + encodeURIComponent(wayf_sp_samlACURL)
-			+ '&amp;target=' + encodeURIComponent(wayf_return_url);
-			
-			form_start = '<form id="IdPList" name="IdPList" method="post" target="_parent" action="' + wayf_authReq_URL + '&amp;time={$utcTime}'
-			+ '">';
+			// Old Shibboleth WAYF protocol
+			wayf_authReq_URL = wayf_URL;
+			wayf_authReq_URL += '?providerId=' + encodeURIComponent(wayf_sp_entityID);
+			wayf_authReq_URL += '&amp;shire=' + encodeURIComponent(wayf_sp_samlACURL);
+			wayf_authReq_URL += '&amp;time={$utcTime}';
 		}
+		
+		// Add form element
+		form_start = '<form id="IdPList" name="IdPList" method="post" target="_parent" action="' + wayf_authReq_URL + '">';
 		
 SCRIPT;
 	

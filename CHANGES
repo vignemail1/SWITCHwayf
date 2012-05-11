@@ -26,8 +26,11 @@ necessary for such releases.
 SWITCHwayf Changes and Version History:
 
 
-1.17    Release date:  2012
+1.17    Release date:  Mai 2012
         - Added CSS styles for mobile view
+        - Embedded WAYF now reads 'entityID' and 'return' GET arguments.
+          They get precedence over the values configured for the Embedded WAYF.
+        - Embedded WAYF logged in message now contains a link to target URL
 
 1.16    Release date: 19. January 2012
         - Added an improved version of the drop down list to the WAYF

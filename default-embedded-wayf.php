@@ -16,6 +16,8 @@
 var wayf_URL = "https://<?php echo $host ?><?php echo $path ?>";
 
 // EntityID of the Service Provider that protects this Resource
+// Value will be overwritten automatically if the page where the Embedded WAYF
+// is displayed is called with a GET argument 'entityID' as automatically set by Shibboleth
 // Examples: "https://econf.switch.ch/shibboleth", "https://dokeos.unige.ch/shibboleth"
 // [Mandatory]
 var wayf_sp_entityID = "https://my-app.switch.ch/shibboleth";
@@ -143,6 +145,8 @@ var wayf_show_categories =  true;
 // Session Initiator URL of the Service Provider
 // Examples: "https://econf.switch.ch/Shibboleth.sso/DS", "https://dokeos.unige.ch/Shibboleth.sso/DS"
 // This will implicitely be set to wayf_sp_samlDSURL = wayf_sp_handlerURL + "/DS";
+// or will be set automatically if the page where the Embedded WAYF is placed is called
+// with a 'return' and an 'entityID' GET Arguments
 // [Optional, if wayf_use_discovery_service = true 
 //  or if wayf_additional_idps is not empty, default: commented out]
 // var wayf_sp_samlDSURL = wayf_sp_handlerURL + "/Login";

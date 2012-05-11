@@ -42,7 +42,7 @@ $langStrings['en'] = array (
 'login' => 'Login',
 'login_with' => 'Login with:',
 'other_federation' => 'From other federations',
-'logged_in' => 'You are already authenticated.',
+'logged_in' => 'You are already authenticated. <a href=\"%s\">Proceed</a>.',
 'most_used' => 'Most often used Home Organisations',
 'invalid_return_url' => 'The return URL <tt>\'%s\'</tt> is not a valid URL.',
 'unverified_return_url' => 'The return URL <tt>\'%s\'</tt> could not be verified for Service Provider <tt>\'%s\'</tt>.',
@@ -89,7 +89,7 @@ $langStrings['de'] = array (
 'login' => 'Anmelden',
 'login_with' => 'Anmelden &uuml;ber:',
 'other_federation' => 'Von anderen F&ouml;derationen',
-'logged_in' => 'Sie sind bereits angemeldet.',
+'logged_in' => 'Sie sind bereits angemeldet. <a href=\"%s\">Weiter</a>.',
 'most_used' => 'Meist genutzte Home Organisationen',
 'invalid_return_url' => 'Die return URL <tt>\'%s\'</tt> ist keine g&uuml;tige URL.',
 'unverified_return_url' => 'Die return URL <tt>\'%s\'</tt> ist nicht g&uuml;tige f&uuml;r den Service Provider <tt>\'%s\'</tt>.',
@@ -135,7 +135,7 @@ $langStrings['fr'] =  array (
 'login' => 'Connexion',
 'login_with' => 'Se connecter avec:',
 'other_federation' => 'D\'autres f&eacute;derations',
-'logged_in' => 'Vous &ecirc;tes d&eacute;j&agrave; authentifi&eacute;.',
+'logged_in' => 'Vous &ecirc;tes d&eacute;j&agrave; authentifi&eacute;. <a href=\"%s\">Continuez</a>.',
 'most_used' => 'Home Organisations les plus utilis&eacute;es',
 );
 
@@ -176,7 +176,7 @@ $langStrings['it'] = array (
 'login' => 'Login',
 'login_with' => 'Login con:',
 'other_federation' => 'Di altra federaziones',
-'logged_in' => 'Lei &egrave; gi&agrave; autenticato.',
+'logged_in' => 'Lei &egrave; gi&agrave; autenticato. <a href=\"%s\">Proseguire</a>.',
 'most_used' => 'Home Organisations utilizzate pi&ugrave; spesso',
 );
 
@@ -216,7 +216,7 @@ $langStrings['pt'] = array (
 'login' => 'Autenticar',
 'login_with' => 'Autenticar em:',
 'other_federation' => 'Outra Federa&ccedil;Atilde;o',
-'logged_in' => 'J&aacute; se encontra autenticado',
+'logged_in' => 'J&aacute; se encontra autenticado. <a href=\"%s\">Continue</a>.',
 'most_used' => 'Institui&ccedil;&atilde;o de Origem mais utilizada',
 );
 
