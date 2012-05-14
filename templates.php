@@ -301,6 +301,8 @@ var wayf_force_remember_for_session;
 var wayf_additional_idps;
 var wayf_sp_samlDSURL;
 var wayf_sp_samlACURL;
+var wayf_use_disco_feed;
+var wayf_discofeed_url;
 var wayf_html = "";
 var wayf_idps = { {$JSONIdPList} };
 
