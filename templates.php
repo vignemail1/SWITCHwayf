@@ -1024,7 +1024,7 @@ function getGETArgument(name){
 			// Old Shibboleth WAYF protocol
 			wayf_authReq_URL = wayf_URL;
 			wayf_authReq_URL += '?providerId=' + encodeURIComponent(wayf_sp_entityID);
-			wayf_authReq_URL += '&amp;target=' + encodeURIComponent(return_url);
+			wayf_authReq_URL += '&amp;target=' + encodeURIComponent(wayf_return_url);
 			wayf_authReq_URL += '&amp;shire=' + encodeURIComponent(wayf_sp_samlACURL);
 			wayf_authReq_URL += '&amp;time={$utcTime}';
 		}
