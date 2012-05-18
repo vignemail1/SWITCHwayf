@@ -1,4 +1,4 @@
-Copyright 2011 SWITCH - Serving Swiss Universities. 
+Copyright 2012 SWITCH - Serving Swiss Universities. 
 See LICENSE file for details.
 
 -------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ necessary for such releases.
 SWITCHwayf Changes and Version History:
 
 
-1.17    Release date:  Mai 2012
+1.17    Release date:  18. Mai 2012
         - Added CSS styles for mobile view
         - Embedded WAYF now reads 'entityID' and 'return' GET arguments.
           They get precedence over the values configured for the Embedded WAYF.
