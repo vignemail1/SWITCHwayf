@@ -25,8 +25,12 @@ necessary for such releases.
 
 SWITCHwayf Changes and Version History:
 
+1.17.1    Release date:  14. June 2012
+        - Fixed a bug occuring when wayf_sp_samlDSURL contains GET arguments
+          Bug reported with a patch by Takeshi Nishimura from NII (Japan)
+        - Fixed typo in configuration otpion useImprovedDropDownList
 
-1.17    Release date:  18. Mai 2012
+1.17    Release date:  18. May 2012
         - Added CSS styles for mobile view
         - Embedded WAYF now reads 'entityID' and 'return' GET arguments.
           They get precedence over the values configured for the Embedded WAYF.
