@@ -334,8 +334,8 @@ function submitForm(){
 			if (entityIDGETParam != "" && returnGETParam != ""){
 				redirect_url = returnGETParam;
 			} else {
-				redirect_url = wayf_sp_samlDSURL ;
-				redirect_url += '?target=' + encodeURIComponent(wayf_return_url);
+				redirect_url = wayf_sp_samlDSURL;
+				redirect_url += getGETArgumentSeparator(redirect_url) + 'target=' + encodeURIComponent(wayf_return_url);
 			}
 			
 			// Append selected Identity Provider
@@ -712,6 +712,14 @@ function getGETArgument(name){
 	}
 }
 
+function getGETArgumentSeparator(url){
+	if (url.indexOf('?') >=0 ){
+		return '&';
+	} else {
+		return '?';
+	}
+}
+
 (function() {
 	
 	var config_ok = true; 
@@ -1016,7 +1024,8 @@ function getGETArgument(name){
 				wayf_authReq_URL += '?entityID=' + encodeURIComponent(entityIDGETParam);
 				wayf_authReq_URL += '&amp;return=' + encodeURIComponent(returnGETParam);
 			} else {
-				var return_url = wayf_sp_samlDSURL + '?SAMLDS=1&target=' + encodeURIComponent(wayf_return_url);
+				var return_url = wayf_sp_samlDSURL + getGETArgumentSeparator(wayf_sp_samlDSURL);
+				return_url += 'SAMLDS=1&target=' + encodeURIComponent(wayf_return_url);
 				wayf_authReq_URL += '?entityID=' + encodeURIComponent(wayf_sp_entityID);
 				wayf_authReq_URL += '&amp;return=' + encodeURIComponent(return_url);
 			}
