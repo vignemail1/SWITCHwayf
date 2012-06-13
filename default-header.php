@@ -78,7 +78,7 @@
 		
 		setFocus();
 		
-		if (<?php echo ($userImprovedDropDownList) ? 'true' : 'false' ?>){
+		if (<?php echo ($useImprovedDropDownList) ? 'true' : 'false' ?>){
 			
 			var searchText = '<?php echo getLocalString('search_idp', 'js') ?>';
 			$("#userIdPSelection:enabled option[value='-']").text(searchText);

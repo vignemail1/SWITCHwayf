@@ -53,7 +53,7 @@ $cookieValidity = 100;
 $showPermanentSetting = false;
 
 // Whether or not to use the search-as-you-type feature of the drop down list
-$userImprovedDropDownList = true;
+$useImprovedDropDownList = true;
 
 // Set to true in order to enable reading the Identity Provider from a SAML2 
 // metadata file defined below in $metadataFile

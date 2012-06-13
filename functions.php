@@ -16,7 +16,7 @@ function initConfigOptions(){
 	global $cookieSecurity;
 	global $cookieValidity;
 	global $showPermanentSetting;
-	global $userImprovedDropDownList;
+	global $useImprovedDropDownList;
 	global $useSAML2Metadata;
 	global $SAML2MetaOverLocalConf;
 	global $includeLocalConfEntries;
@@ -54,7 +54,7 @@ function initConfigOptions(){
 	$defaults['cookieSecurity'] = false;
 	$defaults['cookieValidity'] = 100;
 	$defaults['showPermanentSetting'] = false;
-	$defaults['userImprovedDropDownList'] = true;
+	$defaults['useImprovedDropDownList'] = true;
 	$defaults['useSAML2Metadata'] = true; 
 	$defaults['SAML2MetaOverLocalConf'] = false;
 	$defaults['includeLocalConfEntries'] = true;
