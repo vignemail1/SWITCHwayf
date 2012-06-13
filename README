@@ -95,15 +95,22 @@ a2enmod headers
 
 General Update Instructions:
 1. Make a backup of the directory where the currently active version of the 
-   SWITCHwayf is installed
-2. Get the compressed archive of the new version and move it into the directory
-   of the currently deployed version
-3. Unpack the archive with zip or tar
+   SWITCHwayf is installed, e.g. with 'cp -a SWITCHwayf SWITCHwayf.bak'
+2. Get the ZIP archive of the new version and move it into the same 
+   parent directory where the current version is deployed.
+3. Unzip the archive in the current deployment directory #DD#, 
+   e.g. with the command 'unzip -d #DD# SWITCHwayf_x.y_YYYYMMDD.zip '
    This step will overwrite some existing files. Files whose name starts 
    with 'custom-' will not be overwritten.
+   Alternatively, create a new directory, move the ZIP archive in that directory,
+   unzip it and then copy the config.php and all custom-.* files from the 
+   current SWITCHwayf installation over to the new directory.
 4. Have a look at config.dist.php and compare this file with your current
    config.php in order to identify new configuration options.
-
+   Also compare your custom-.* files to the default-.* files that might have
+   changed. Some features like the improved drop-down list require the WAYF
+   to load additional javascripts. If your custom header file is missing these,
+   the feature will not work.
 
 -------------------------------------------------------------------------------
 

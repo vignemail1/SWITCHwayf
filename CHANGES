@@ -29,6 +29,7 @@ SWITCHwayf Changes and Version History:
         - Fixed a bug occuring when wayf_sp_samlDSURL contains GET arguments
           Bug reported with a patch by Takeshi Nishimura from NII (Japan)
         - Fixed typo in configuration otpion useImprovedDropDownList
+        - Added Javascripts required for improved drop down list
 
 1.17    Release date:  18. May 2012
         - Added CSS styles for mobile view
