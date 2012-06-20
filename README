@@ -15,16 +15,19 @@ information.
 -------------------------------------------------------------------------------
 
 Requirements:
-- The web server must support PHP5
-- If the configuration and the backup configuration differ, you have to make 
-  sure the user that runs the php script has write access for the configuration
-  files.
-- PHP XML Parser extension for parsing SAML2 metadata
+- PHP 5.3 or newer
+- PHP XML Parser extension is required for parsing SAML2 metadata
+- The web server users must have write permissions to some files including: 
+  * $backupIDPConfigFile (default 'IDProvider.conf.php')
+  * $metadataIDPFile (default 'IDProvider.metadata.conf.php')
+  * $metadataSPFile (default 'SProvider.metadata.conf.php')
+  * $metadataLockFile (default '/tmp/wayf_metadata.lock')
+  * $WAYFLogFile (default '/var/log/apache2/wayf.log')
 -------------------------------------------------------------------------------
 
 Installation:
-1. Unpack the Zip archive into a directory on a host where Apache 
-  (IIS also should work) is deployed. 
+1. Unpack the SWITCHwayf_binary ${VERSION}_${DATE}.zip ZIP archive into a 
+   directory on a host where Apache or IIS is installed. 
 
 2. Make a copy of the *.dist.php files
    - Copy the file config.dist.php and name it config.php 
