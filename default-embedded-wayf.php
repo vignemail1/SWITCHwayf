@@ -143,8 +143,8 @@ var wayf_show_categories =  true;
 // var wayf_use_discovery_service = false;
 
 // Session Initiator URL of the Service Provider
-// Examples: "https://econf.switch.ch/Shibboleth.sso/DS", "https://dokeos.unige.ch/Shibboleth.sso/DS"
-// This will implicitely be set to wayf_sp_samlDSURL = wayf_sp_handlerURL + "/DS";
+// Examples: "https://econf.switch.ch/Shibboleth.sso/Login", "https://dokeos.unige.ch/Shibboleth.sso/DS"
+// This will implicitely be set to wayf_sp_samlDSURL = wayf_sp_handlerURL + "/Login";
 // or will be set automatically if the page where the Embedded WAYF is placed is called
 // with a 'return' and an 'entityID' GET Arguments
 // [Optional, if wayf_use_discovery_service = true 
@@ -275,7 +275,7 @@ var wayf_show_categories =  true;
   is logged in into your application.
   -->
   <p>
-    <strong>Login:</strong> Javascript is not available for your web browser. Therefore, please <a href="/Shibboleth.sso/DS?target=">proceed manually</a>.
+    <strong>Login:</strong> Javascript is not available for your web browser. Therefore, please <a href="/Shibboleth.sso/Login?target=">proceed manually</a>.
   </p>
 </noscript>
 

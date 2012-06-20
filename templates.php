@@ -779,7 +779,7 @@ function getGETArgumentSeparator(url){
 		&& typeof(wayf_sp_samlDSURL) == "undefined"
 		){
 		// Set to default DS handler
-		wayf_sp_samlDSURL = wayf_sp_handlerURL + "/DS";
+		wayf_sp_samlDSURL = wayf_sp_handlerURL + "/Login";
 	}
 	
 	if (

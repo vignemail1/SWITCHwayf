@@ -24,8 +24,11 @@ necessary for such releases.
 
 
 SWITCHwayf Changes and Version History:
+1.17.2    
+        - Changed default SessionInitiator to /Login because this has been
+          the default SessionInitiator in Shibboleth for quite some time now.
 
-1.17.1    Release date:  14. June 2012
+1.17.1  Release date:  14. June 2012
         - Fixed a bug occuring when wayf_sp_samlDSURL contains GET arguments
           Bug reported with a patch by Takeshi Nishimura from NII (Japan)
         - Fixed typo in configuration otpion useImprovedDropDownList
