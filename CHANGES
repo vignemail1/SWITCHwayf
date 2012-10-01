@@ -27,6 +27,9 @@ SWITCHwayf Changes and Version History:
 1.17.2    
         - Changed default SessionInitiator to /Login because this has been
           the default SessionInitiator in Shibboleth for quite some time now.
+        - Corrected viewport meta tag separator of default header as suggested
+          by Andrew Sokolov from Saint Petersburg State University 
+
 
 1.17.1  Release date:  14. June 2012
         - Fixed a bug occuring when wayf_sp_samlDSURL contains GET arguments
@@ -151,6 +154,7 @@ alphabetically.
 - Martins Purins from Latvijas Universitates (LV)
 - Olivier Salaün from RENATER (FR)
 - Tom Scavo from Internet2 (US)
+- Andrew Sokolov, Saint Petersburg State University (RU)
 - Mika Suvanto from CSC (FI)
 - Huân Thebault from Centre de Calcul de l'IN2P3 (FR)
 - Prof. Kazutsuna Yamaji from NII National Institute of Informatics (JP)
