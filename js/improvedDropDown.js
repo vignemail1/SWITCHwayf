@@ -42,6 +42,9 @@ var KEY_PRESS_FILTER_DELAY_MS = 120;
 var resizeHandlerSet = false;
 var suspendTextBoxExitHandler = false;
 
+	// Stores number of entries that matched for text
+	var matchedEntries = 0;
+
 (function ($) {
     $.fn.improveDropDown = function (value) {
                                          if (!resizeHandlerSet) {
@@ -183,8 +186,10 @@ function getTextElement(sourceElement, imgElement) {
             case KEY_ESCAPE: closeListUndoTyping(thisTextElement); break;
             case KEY_TAB: break;
             case KEY_ENTER:
-				// Move focus on submit button 
-				$('[type="submit"]').focus();
+				// Submit if only one entry matches
+				if (matchedEntries == 1) {
+					$('[type="submit"]').click();
+				}
 				break;
             case KEY_DOWNARROW: break;
             case KEY_UPARROW: break;
@@ -377,7 +382,7 @@ function populateListItem(newListControl, optionItem) {
         newListItem.mouseout(function () { $(this).removeClass('idd_listItem_Hover'); });
         newListItem.click(function () {
         	selectItem($(this),true,true,false); 
-        	$('[type="submit"]').focus(); 
+        	$('[type="submit"]').click(); 
         });
     }
     else {
@@ -443,6 +448,9 @@ function getBestMatch(value, listControl) {
     });
 
     var bestMatchElement;
+
+	// Store matched entries
+	matchedEntries = filterMatches.length;
 
     switch (filterMatches.length) {
         case 0: bestMatchElement = null; break;
