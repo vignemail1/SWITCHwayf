@@ -629,14 +629,8 @@ function isUserLoggedIn(){
 		return wayf_check_login_state_function();
 	
 	} else {
-		// Check if Shibboleth session cookie exists
-		var shibSessionCookieExists = isCookie('shibsession');
-		
-		// Check if Shibboleth session handler 
-		var shibSessionHandlerShowsSession = isShibbolethSession(wayf_sp_handlerURL + '/Session');
-		
-		// Return true if one of these checks is succsesful
-		return (shibSessionCookieExists || shibSessionHandlerShowsSession);
+		// Check Shibboleth session handler
+		return isShibbolethSession(wayf_sp_handlerURL + '/Session');
 	}
 }
 
