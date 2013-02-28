@@ -969,13 +969,13 @@ function getGETArgumentSeparator(url){
 		writeHTML('<div id="wayf_div" style="background:' + wayf_background_color + ';border-style: solid;border-color: ' + wayf_border_color + ';border-width: 1px;padding: 10px; height: ' + wayf_height + ';width: ' + wayf_width + ';text-align: left;overflow: hidden;">');
 	}
 	
-	// Shall we display the logo
+	// Should we display the logo
 	if (wayf_hide_logo != true){
 		
 		// Write header of logo div
 		writeHTML('<div id="wayf_logo_div" style="float: right;"><a href="$federationURL" target="_blank" style="border:0px">');
 		
-		// Which size of the logo shall we display
+		// Which size of the logo should we display
 		if (wayf_use_small_logo){
 			writeHTML('<img id="wayf_logo" src="{$smallLogoURL}" alt="Federation Logo" style="border:0px">')
 		} else {

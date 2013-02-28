@@ -17,7 +17,7 @@
 				<input type="checkbox" <?php echo $rememberSelectionChecked ?> name="session" id="rememberForSession" value="true">
 				<label for="rememberForSession"><?php echo getLocalString('remember_selection') ?></label><br>
 				<?php if ($showPermanentSetting) : ?>
-				<!-- Value permanent must be a number which is equivalent to the days the cookie shall be valid -->
+				<!-- Value permanent must be a number which is equivalent to the days the cookie should be valid -->
 				<input type="checkbox" name="permanent" id="rememberPermanent" value="100">
 				<label for="rememberPermanent" /><?php echo getLocalString('permanently_remember_selection') ?></label>
 				<?php endif ?>

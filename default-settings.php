@@ -12,7 +12,7 @@
 			</select>
 			<input type="submit" name="Select" accesskey="s" value="<?php echo getLocalString('save_button') ?>" >
 		</div>
-		<!-- Value permanent must be a number which is equivalent to the days the cookie shall be valid -->
+		<!-- Value permanent must be a number which is equivalent to the days the cookie should be valid -->
 		<input name="permanent" type="hidden" value="100">
 	</div>
 </form>

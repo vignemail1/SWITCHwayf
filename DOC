@@ -120,11 +120,11 @@ XCache is less than 1% because the TLS hand-shake is what consumes most CPU time
 -------------------------------------------------------------------------------
 
 SAML2 Metadata support:
-In case the WAYF/DS shall display the list of IdPs by parsing them from a
+In case the WAYF/DS should display the list of IdPs by parsing them from a
 SAML2 Medatadata file that is used by Shibboleth:
 
 - Set $useSAML2Metadata in config.php to true
-- Specify the path to the metadata file that shall be read in $metadataFile
+- Specify the path to the metadata file that should be read in $metadataFile
   and make sure this file is updated regularely by Shibboleth or a cron job
 - Make sure the files specified in $metadataIDPFile and $metadataSPFile can be 
   written by the userthat executes the PHP script (the web server user, 
@@ -137,7 +137,7 @@ general. However, for large numbers of entities an opcode cacher might speed up
 execution time considerably (see chapter "Optimization" above) thanks to 
 this format. 
 
-If an entry shall be changed, removed or extended in this automatically 
+If an entry should changed, removed or extended in this automatically 
 generated file, one can extend the IDP definitions by modifying them in 
 the $IDPConfigFile. To overwrite IDP values with entries in the $IDPConfigFile, 
 make sure the entry $SAML2MetaOverLocalConf is set to 'false';
@@ -205,7 +205,7 @@ wayf_use_disco_feed might not be used.
 -------------------------------------------------------------------------------
 
 Kerberos support:
-If this features shall be used the web server needs to support Negotiate/SPNEGO 
+If this features is used, the web server needs to support Negotiate/SPNEGO 
 Kerberos protocol. For example by using mod_auth_kerb.
 - Make a symlink of the file 'WAYF' and name it like configured in the variable 
   $kerberosRedirectURL
@@ -255,7 +255,7 @@ the entry stands for an Identity Provider. For entries of Type category, the
 ['Type']:   Optional        Type that is used for the embedded wayf to hide
                             or show certain categories. Default type will 
                             be 'unknown' if not specified.
-                            An entry for another WAYF/DS that the user shall be 
+                            An entry for another WAYF/DS that the user should be 
                             redirected to should have ['Type'] ='wayf
                             The Type values 'category' and 'wayf' are reserved 
                             words that are not allowed to be assigned to 

@@ -27,7 +27,7 @@ var wayf_sp_entityID = "https://my-app.switch.ch/shibboleth";
 // [Mandatory, if wayf_use_discovery_service = false]
 var wayf_sp_handlerURL = "https://my-app.switch.ch/Shibboleth.sso";
 
-// URL on this resource that the user shall be returned to after authentication
+// URL on this resource that the user should be returned to after authentication
 // Examples: "https://econf.switch.ch/aai/home", "https://olat.uzh.ch/my/courses"
 // [Mandatory]
 var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome";
@@ -67,7 +67,7 @@ var wayf_show_remember_checkbox = true;
 var wayf_force_remember_for_session = false;
 
 // Logo size
-// Choose whether the small or large logo shall be used
+// Choose whether the small or large logo should be used
 // [Optional, default: true]
 var wayf_use_small_logo = true;
 
@@ -110,14 +110,14 @@ var wayf_show_categories =  true;
 // [Optional, commented out by default]
 // var wayf_most_used_idps =  new Array("https://aai-logon.unibas.ch/idp/shibboleth", "https://aai.unil.ch/idp/shibboleth");
 
-// Categories of Identity Provider that shall not be shown
+// Categories of Identity Provider that should not be shown
 // Possible values are: <?php echo $types ?>, "all"
 // Example of how to hide categories
 // var wayf_hide_categories =  new Array("other", "library");
 // [Optional, commented out by default]
 // var wayf_hide_categories =  new Array();
 
-// EntityIDs of Identity Provider whose category is hidden but that shall be shown anyway
+// EntityIDs of Identity Provider whose category is hidden but that should be shown anyway
 // If this array is not empty, wayf_show_categories will be disabled because
 // otherwise, unhidden IdPs may be displayed in the wrong category
 // Example of how to unhide certain Identity Providers
@@ -125,7 +125,7 @@ var wayf_show_categories =  true;
 // [Optional, commented out by default]
 // var wayf_unhide_idps = new Array();
 
-// EntityIDs of Identity Provider that shall not be shown at all
+// EntityIDs of Identity Provider that should not be shown at all
 // Example of how to hide certain Identity Provider
 // var wayf_hide_idps = new Array("https://idp.unige.ch/idp/shibboleth", "https://lewotolo.switch.ch/idp/shibboleth");
 // [Optional, commented out by default]
@@ -206,7 +206,7 @@ var wayf_show_categories =  true;
 // }
 
 // EntityIDs, Names and SSO URLs of Identity Providers from other federations 
-// that shall be added to the drop-down list
+// that should be added to the drop-down list
 // The IdPs will be displayed in the sequence they are defined
 // [Optional, commented out by default]
 // var wayf_additional_idps = [ ];

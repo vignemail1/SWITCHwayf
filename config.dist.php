@@ -12,7 +12,7 @@ $defaultLanguage = 'en';
 // 2. Cookie settings
 //*******************
 
-// Domain within the WAYF cookei shall be readable. Must start with a .
+// Domain within the WAYF cookie should be readable. Must start with a .
 $commonDomain = '.switch.ch';
 
 // Optionnal cookie name prefix in case you run several 
@@ -43,7 +43,7 @@ $SPCookieName = $cookieNamePrefix.'_saml_sp';
 // cookies
 $cookieSecurity = false;
 
-// Number of days longterm cookies shall be valid
+// Number of days longterm cookies should be valid
 $cookieValidity = 100;
 
 // 3. Features and extensions
@@ -59,7 +59,7 @@ $useImprovedDropDownList = true;
 // metadata file defined below in $metadataFile
 $useSAML2Metadata = false; 
 
-  // If true parsed metadata shall have precedence if there are entries defined 
+  // If true parsed metadata should have precedence if there are entries defined 
   // in metadata as well as the local IDProviders configuration file.
   // Requires $useSAML2Metadata to be true
   $SAML2MetaOverLocalConf = false;
@@ -98,7 +98,7 @@ $useKerberos = false;
 $useReverseDNSLookup = false;
 
 // Whether the JavaScript required for embedding the WAYF
-// on a remote site shall be generated or not
+// on a remote site should be generated or not
 // Lowers security against phising!
 // If this value is set to true, any web page in the world can 
 // (with some efforts) find out with a high probability from which 
@@ -155,10 +155,10 @@ $cssURL = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/
 // Absolute URL to point to javascript directory
 $javascriptURL = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/js';
 
-// Absolute URL to the logo that shall be displayed in the Embedded WAYF
+// Absolute URL to the logo that should be displayed in the Embedded WAYF
 $logoURL = $imageURL.'/switch-aai-transparent.png'; 
 
-// Absolute URL to the small logo that shall be displayed in the 
+// Absolute URL to the small logo that should be displayed in the 
 // embedded WAYF if dimensions must be small
 $smallLogoURL = $imageURL.'/switch-aai-transparent-small.png';
 
