@@ -43,7 +43,7 @@ $langStrings['en'] = array (
 'login_with' => 'Login with:',
 'other_federation' => 'From other federations',
 'logged_in' => 'You are already authenticated. <a href=\"%s\">Proceed</a>.',
-'most_used' => 'Most often used Home Organisations',
+'most_used' => 'Most frequently used Home Organisations',
 'invalid_return_url' => 'The return URL <tt>\'%s\'</tt> is not a valid URL.',
 'unverified_return_url' => 'The return URL <tt>\'%s\'</tt> could not be verified for Service Provider <tt>\'%s\'</tt>.',
 'unknown_sp' => 'The Service Provider <tt>\'%s\'</tt> could not be found in metadata and is therefore unknown.',
