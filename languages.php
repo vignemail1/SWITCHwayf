@@ -54,7 +54,7 @@ $langStrings['en'] = array (
 
 
 // Deutsch
-$langStrings['ja'] = array (
+$langStrings['de'] = array (
 'title' => 'Auswahl der Home Organisation',
 'header' => 'Home Organisation ausw&auml;hlen',
 'about_federation' => '&Uuml;ber AAI',
