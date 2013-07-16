@@ -50,22 +50,21 @@ Installation:
 5. If Apache 2 is used, add the following statement to the Apache configugration:
 
 --
-<Location /path/to/WAYF>
-  SetHandler php5-script
-</Location>
---
 
-   In some clustered environments with FastCGI it may be necessary to use 
-   something like:
+Alias /SWITCHaai /#YOUR-PATH-TO#/SWITCHwayf
+<Directory /#YOUR-PATH-TO#/SWITCHwayf>
+    Options Indexes MultiViews
+    AllowOverride None
+    Order allow,deny
+    Allow from all
 
---
-Options +FollowSymLinks
+    <Files WAYF>
+      SetHandler php5-script
+      AcceptPathInfo On
+    </Files>
 
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteRule ^WAYF/(.*)$ WAYF.php/$1 [QSA,L]
-  RewriteRule ^WAYF$ WAYF.php [QSA,L]
-</IfModule>
+</Directory>
+
 --
 
    Alternatively, one also could rename the file 'WAYF' to 'WAYF.php'.
