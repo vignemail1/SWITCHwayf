@@ -269,13 +269,13 @@ var wayf_show_categories =  true;
 
 <noscript>
   <!-- 
-  Fallback to Shibboleth DS session initiator for non-JavaScript users 
-  You should set the value of the target GET parameter to an URL-encoded 
+  Fallback to Shibboleth DS Session Initiator for non-JavaScript users 
+  Value of the target GET parameter should be set to an URL-encoded 
   absolute URL that points to a Shibboleth protected web page where the user 
   is logged in into your application.
   -->
   <p>
-    <strong>Login:</strong> Javascript is not available for your web browser. Therefore, please <a href="/Shibboleth.sso/Login?target=">proceed manually</a>.
+    <strong>Login:</strong> Javascript is not enabled for your web browser. Please use the <a href="/Shibboleth.sso/Login?target=">non-Javascript Login</a>.
   </p>
 </noscript>
 
