@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2012, SWITCH - Serving Swiss Universities
+<?php // Copyright (c) 2013, SWITCH - Serving Swiss Universities
 
 /******************************************************************************/
 // Commonly used functions for the WAYF
