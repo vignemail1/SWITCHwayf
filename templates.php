@@ -189,7 +189,7 @@ function printFooter(){
 // Prints an error message
 function printError($message){
 	
-	global $langStrings, $language;
+	global $langStrings, $language, $supportContactEmail;
 	
 	// Show Header
 	printHeader();

@@ -118,6 +118,13 @@ General Update Instructions:
 
 Specific Update Instructions:
 
+Updates from versions before 1.17.2
+  A new configuration option $supportContactEmail was introduced to provide
+  the user a support contact address in case of errors. Please add a line
+  like the following to the SWITCHwayf configuration file config.php:
+  $supportContactEmail = 'your-support-contact@your.organisation.org'
+
+
 Updates from versions before 1.15
   The keys of the following languages strings were renamed and should be  
   adapted in the custom-languages.php file if it exists.
@@ -125,10 +132,12 @@ Updates from versions before 1.15
   - 'about_switch' was renamed to 'about_organisation'
   - 'switch_description' was renamed to 'additional_info'
 
+
 Update from versions before 1.14.3:
   The new setting '$metadataLockFile' was introduced in config.php. It allows
   configuring the location of the lock file. When the SWITCHwayf is used in a 
   Windows environment, the path to this file probably has to be adapted.
+
 
 Update from versions before 1.8:
   This version has a slightly different structure than previous versions. 

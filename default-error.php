@@ -6,6 +6,6 @@
 	<?php echo $message ?>
 </p>
 <p>
-	<?php echo getLocalString('contact_assistance') ?>
+	<?php echo sprintf(getLocalString('contact_assistance'), $supportContactEmail, $supportContactEmail) ?>
 </p>
 <!-- Error Message: End-->

@@ -30,6 +30,7 @@ function initConfigOptions(){
 	global $useLogging;
 	global $exportPreselectedIdP;
 	global $federationName;
+	global $supportContactEmail;
 	global $federationURL;
 	global $imageURL;
 	global $javascriptURL;
@@ -69,6 +70,7 @@ function initConfigOptions(){
 	$defaults['exportPreselectedIdP'] = false;
 	$defaults['federationName'] = 'SWITCHaai Federation';
 	$defaults['federationURL'] = 'http://www.switch.ch/aai/';
+	$defaults['supportContactEmail'] = 'support-contact@example.org';
 	$defaults['imageURL'] = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/images';
 	$defaults['javascriptURL'] = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/js';
 	$defaults['cssURL'] = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/css';

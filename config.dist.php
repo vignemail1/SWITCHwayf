@@ -146,6 +146,9 @@ $federationName = 'SWITCHaai Federation';
 // URL to send user to when clicking on federation logo
 $federationURL = 'http://www.switch.ch/aai/';
 
+// Support contact email address
+$supportContactEmail = 'helpdesk@example.org';
+
 // Use an absolute URL in case you want to use the embedded WAYF
 $imageURL = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/images';
 
