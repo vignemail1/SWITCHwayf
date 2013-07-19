@@ -977,11 +977,16 @@ function getGETArgumentSeparator(url){
 		writeHTML('<div id="wayf_logo_div" style="float: right;"><a href="$federationURL" target="_blank" style="border:0px">');
 		
 		// Which size of the logo should we display
+		var embeddedLogoURL = '';
 		if (wayf_use_small_logo){
-			writeHTML('<img id="wayf_logo" src="{$smallLogoURL}" alt="Federation Logo" style="border:0px">')
-			
+			embeddedLogoURL = "{$smallLogoURL}";
 		} else {
-			writeHTML('<img id="wayf_logo" src="{$logoURL}" alt="Federation Logo" style="border:0px">')
+			embeddedLogoURL = "{$logoURL}";
+		}
+		
+		// Only show logo if it is not empty
+		if (embeddedLogoURL != ''){
+			writeHTML('<img id="wayf_logo" src="' + embeddedLogoURL +  '" alt="Federation Logo" style="border:0px">');
 		}
 		
 		// Write footer of logo div
