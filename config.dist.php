@@ -7,6 +7,7 @@
 // Unless specifically set, default values will be used for all options.
 //******************************************************************************
 
+
 // 1. Language settings
 //*********************
 // Language that is used by default if the language of the user's web browser
@@ -14,6 +15,7 @@
 // If string in local language is not available, english ('en') will be used
 // as last resort.
 //$defaultLanguage = 'en'; 
+
 
 
 // 2. Cookie settings
@@ -51,6 +53,7 @@
 
 // Number of days longterm cookies should be valid
 //$cookieValidity = 100;
+
 
 
 // 3. Features and extensions
@@ -151,6 +154,7 @@
   //$WAYFLogFile = '/var/log/apache2/wayf.log'; 
 
 
+
 // 4. Appearance settings
 //**************************
 
@@ -197,6 +201,7 @@
 // Insert %s as macro to be substituted by the language (e.g. 'en', 'de', 'fr', ...) the WAYF uses
 // Set to an empty string to hide the logo
 //$privacyURL = 'http://www.example.org/%s/myFed/privacy/';
+
 
 
 // 5. Files and path settings
