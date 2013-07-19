@@ -816,7 +816,7 @@ function getGETArgumentSeparator(url){
 		typeof(wayf_use_small_logo) == "undefined" 
 		|| typeof(wayf_use_small_logo) != "boolean"
 		){
-		wayf_use_small_logo = false;
+		wayf_use_small_logo = true;
 	}
 	
 	if(
@@ -979,6 +979,7 @@ function getGETArgumentSeparator(url){
 		// Which size of the logo should we display
 		if (wayf_use_small_logo){
 			writeHTML('<img id="wayf_logo" src="{$smallLogoURL}" alt="Federation Logo" style="border:0px">')
+			
 		} else {
 			writeHTML('<img id="wayf_logo" src="{$logoURL}" alt="Federation Logo" style="border:0px">')
 		}
