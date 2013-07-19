@@ -40,9 +40,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // Add 2 x (10px + 1px) = 22px for padding and border to get the actual 
 // width of everything that is drawn.
 // [Optional, default: "auto"]
-// Example for fixed size: 
 // var wayf_width  = 250;
-var wayf_width = "auto";
 
 // Height of the embedded WAYF in pixels or "auto"
 // This is the height of the content only (without padding and border). 
@@ -51,46 +49,36 @@ var wayf_width = "auto";
 // [Optional, default: "auto"]
 // Example for fixed size: 
 // var wayf_height = 150;
-var wayf_height = "auto";
 
 // Whether to show the checkbox to remember settings for this session
 // [Optional, default: true]
-var wayf_show_remember_checkbox = true;
-
-// Force the user's Home Organisation selection to be remembered for the
-// current browser session. If wayf_show_remember_checkbox is true
-// the checkbox will be shown but will be read only.
-// WARNING: Only use this feature if you know exactly what you are doing
-//          This option will cause problems that are difficult to find 
-//          in case they accidentially select a wrong Home Organisation
-// [Optional, false]
-var wayf_force_remember_for_session = false;
+//var wayf_show_remember_checkbox = true;
 
 // Logo size
 // Choose whether the small or large logo should be used
 // [Optional, default: true]
-var wayf_use_small_logo = true;
+//var wayf_use_small_logo = true;
 
 // Font size
 // [Optional, default: 12]
-var wayf_font_size = 12;
+//var wayf_font_size = 12;
 
-// Font color
+// Font color as CSS color value, e.g. 'black' or '#000000'
 // [Optional, default: #000000]
-var wayf_font_color = '#000000';
+//var wayf_font_color = '#000000';
 
-// Border color
+// Border color as CSS color value, e.g. 'black' or '#000000'
 // [Optional, default: #848484]
-var wayf_border_color = '#848484';
+//var wayf_border_color = '#848484';
 
-// Background color
+// Background color as CSS color value, e.g. 'black' or '#000000'
 // [Optional, default: #F0F0F0]
-var wayf_background_color = '#F0F0F0';
+//var wayf_background_color = '#F0F0F0';
 
 // Whether to automatically log in user if he has a session/permanent redirect
 // cookie set at central wayf
 // [Optional, default: true]
-var wayf_auto_login = true;
+//var wayf_auto_login = true;
 
 // Whether to hide the WAYF after the user was logged in
 // This requires that the _shib_session_* cookie is set when a user 
@@ -98,12 +86,12 @@ var wayf_auto_login = true;
 // For other Service Provider implementations have a look at the setting
 // wayf_check_login_state_function that allows you to customize this
 // [Optional, default: true]
-var wayf_hide_after_login = true;
+// var wayf_hide_after_login = true;
 
 // Whether or not to show the categories in the drop-down list
 // Possible values are: true or false
 // [Optional, default: true]
-var wayf_show_categories =  true;
+// var wayf_show_categories =  true;
 
 // Most used Identity Providers will be shown as top category in the drop down
 // list if this feature is used.
@@ -141,6 +129,15 @@ var wayf_show_categories =  true;
 // protocol instead.
 // [Optional, default: commented out]
 // var wayf_use_discovery_service = false;
+
+// Force the user's Home Organisation selection to be remembered for the
+// current browser session. If wayf_show_remember_checkbox is true
+// the checkbox will be shown but will be read only.
+// WARNING: Only use this feature if you know exactly what you are doing
+//          This option will cause problems that are difficult to find 
+//          in case they accidentially select a wrong Home Organisation
+// [Optional, false]
+//var wayf_force_remember_for_session = false;
 
 // Session Initiator URL of the Service Provider
 // Examples: "https://interact.switch.ch/Shibboleth.sso/Login", "https://dokeos.unige.ch/Shibboleth.sso/DS"

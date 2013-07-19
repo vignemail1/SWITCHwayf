@@ -15,6 +15,7 @@
 // as last resort.
 //$defaultLanguage = 'en'; 
 
+
 // 2. Cookie settings
 //*******************
 
@@ -50,6 +51,7 @@
 
 // Number of days longterm cookies should be valid
 //$cookieValidity = 100;
+
 
 // 3. Features and extensions
 //***************************
@@ -157,19 +159,23 @@
 
 // URL to send user to when clicking on federation logo
 // Insert %s as macro to be substituted by the language (e.g. 'en', 'de', 'fr', ...) the WAYF uses
+// Set to an empty string to hide the logo
 //$federationURL = 'http://www.example.org/myFed/';
 
 // Absolute URL to the federation logo that should be displayed in the Embedded WAYF
-//$logoURL = 'http://ds.example.org/SWITCHwayf/images/federation-logo.png'; 
+// Set to an empty string to hide the logo
+//$logoURL = 'http://ds.example.org/SWITCHwayf/images/federation-logo.png';
 
 // Absolute URL to the small federation logo that should be displayed in the 
-// embedded WAYF if dimensions must be small
+// embedded WAYF. Make sure the dimensions (in particular the height of the logo)
+// is small, ideally not larger than 120x30 pixel
 //$smallLogoURL = 'http://ds.example.org/SWITCHwayf/images/small-federation-logo.png';
 
 // Support contact email address
 //$supportContactEmail = 'helpdesk@example.org';
 
 // Absolute URL to the logo of the organization operating this Discovery Service
+// Set to an empty string to hide the logo
 //$organizationLogoURL = 'https://ds.example.org/SWITCHwayf/images/organization-logo.png'; 
 
 // Absolute URL to the organization's web page
@@ -179,14 +185,17 @@
 // Absolute URL to an FAQ page
 // This entries local string is 'faq' in languages.php
 // Insert %s as macro to be substituted by the language (e.g. 'en', 'de', 'fr', ...) the WAYF uses
+// Set to an empty string to hide the logo
 //$faqURL = 'http://www.example.org/%s/myFed/faq/';
 
 // Absolute URL to a help/support page
 // Insert %s as macro to be substituted by the language (e.g. 'en', 'de', 'fr', ...) the WAYF uses
+// Set to an empty string to hide the logo
 //$helpURL = 'http://www.example.org/%s/myFed/help/';
 
 // Absolute URL to a privacy policy page
 // Insert %s as macro to be substituted by the language (e.g. 'en', 'de', 'fr', ...) the WAYF uses
+// Set to an empty string to hide the logo
 //$privacyURL = 'http://www.example.org/%s/myFed/privacy/';
 
 

@@ -101,7 +101,9 @@ a2enmod headers
 Subversion access:
 Check out the latest SWITHCHwayf code with:
 svn co https://subversion.switch.ch/svn/general/aai/SWITCHwayf/
-Although the code in the Subversion should be always executable, it should be considered unstable and not be used for production environments without prior testing. 
+Although the code in the Subversion should be always executable, it should be 
+considered unstable and not be used for production environments without prior 
+testing. 
 
 
 -------------------------------------------------------------------------------
@@ -143,6 +145,13 @@ Updates from versions before 1.18
   description on these settings. The make sure to configure them to config.php
   which should contain your own configuration. Otherwise, default values
   will be set.
+  Also the default behaviour for the Embedded WAYF setting
+  wayf_use_small_logo was changed from false to true as most instances
+  of the Embedded WAYF seem to prefer the small logo. All non-mandatory
+  settings of the Embedded WAYF are now commented out in the default 
+  templated generated for the Embedded WAYF. This implies that
+  if there are Service Providers using your Embedded WAYF feature, they might
+  have to review their Embedded WAYF settings.
 
 
 Updates from versions before 1.15
