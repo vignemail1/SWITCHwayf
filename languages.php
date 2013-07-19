@@ -1,6 +1,6 @@
 <?php // Copyright (c) 2013, SWITCH - Serving Swiss Universities
 
-// WAYF localized language strings
+// Localized language strings for SWITCHwayf
 // Make sure to use HTML entities instead of plain UTF-8 characters for 
 // non-ASCII characters if you are using the Embedded WAYF. It could be that the
 // Embedded WAYF is used on non-UTF8 web pages, which then could cause 
@@ -8,13 +8,27 @@
 
 // English, default
 $langStrings['en'] = array (
+
+// You should customize the folowing three strings
+// Create a file custom-languages.php and override the following values with:
+// 
+// $langStrings['en']['about_federation'] = 'About Example Federation';
+// $langStrings['en']['additional_info'] = 'My <b>sample HTML content</b>';
+// 
+//
+// Set a string to '' in order to hide it
+// Note that any string in custom-languages.php will survive updates
+
+'about_federation' => 'About AAI',  // This string can be hidden by setting it to ''
+'about_organisation' => 'About SWITCH', // This string can be hidden by setting it to ''
+'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> provides innovative, unique internet services for the Swiss universities and internet users.', // This string can be hidden by setting it to ''
+
+// Generic strings
+'faq' => 'FAQ', // This string can be hidden by setting it to ''
+'help' => 'Help',// This string can be hidden by setting it to ''
+'privacy' => 'Privacy', // This string can be hidden by setting it to ''
 'title' => 'Home Organisation Selection',
-'header' => 'Select your Home Organisation',
-'about_federation' => 'About AAI',
-'about_organisation' => 'About SWITCH',
-'faq' => 'FAQ',
-'help' => 'Help',
-'privacy' => 'Privacy',
+'header' => 'Select your Home Organisation', 
 'make_selection' => 'You must select a valid Home Organisation.',
 'settings' => 'Default Home Organisation for this web browser',
 'permanent_select_header' => 'Permanently set your Home Organisation',
@@ -30,7 +44,6 @@ $langStrings['en'] = array (
 'select_idp' => 'Select the organisation you are affiliated with',
 'search_idp' => 'Type the name of the organisation you are affiliated with',
 'remember_selection' => 'Remember selection for this web browser session.',
-'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> provides innovative, unique internet services for the Swiss universities and internet users.',
 'invalid_user_idp' => 'There may be an error in the data you just submitted.<br>The value of your input <tt>\'%s\'</tt> is invalid.<br>Only the following values are allowed:',
 'contact_assistance' => 'Please contact <a href="mailto:%s">%s</a> for assistance.',
 'no_arguments' => 'No arguments received!',
@@ -55,13 +68,17 @@ $langStrings['en'] = array (
 
 // Deutsch
 $langStrings['de'] = array (
+// Read note on line 12
+'about_federation' => '&Uuml;ber AAI',  // This string can be hidden by setting it to ''
+'about_organisation' => '&Uuml;ber SWITCH',  // This string can be hidden by setting it to ''
+'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> erbringt innovative, einzigartige Internet-Dienstleistungen f&uuml;r die Schweizer Hochschulen und Internetbenutzer.',  // This string can be hidden by setting it to ''
+
+// Generic strings
+'faq' => 'FAQ',  // This string can be hidden by setting it to ''
+'help' => 'Hilfe', // This string can be hidden by setting it to ''
+'privacy' => 'Datenschutz', // This string can be hidden by setting it to ''
 'title' => 'Auswahl der Home Organisation',
 'header' => 'Home Organisation ausw&auml;hlen',
-'about_federation' => '&Uuml;ber AAI',
-'about_organisation' => '&Uuml;ber SWITCH',
-'faq' => 'FAQ',
-'help' => 'Hilfe',
-'privacy' => 'Datenschutz',
 'make_selection' => 'Sie m&uuml;ssen eine g&uuml;ltige Home Organisation ausw&auml;hlen',
 'settings' => 'Standard Home Organisation f&uuml;r diesen Webbrowser',
 'permanent_select_header' => 'Home Organisation speichern',
@@ -77,7 +94,6 @@ $langStrings['de'] = array (
 'select_idp' => 'W&auml;hlen Sie die Organisation aus, der Sie angeh&ouml;ren',
 'search_idp' => 'Tippen Sie den Namen der Organisation, der Sie angeh&ouml;ren',
 'remember_selection' => 'Auswahl f&uuml;r die laufende Webbrowser Sitzung speichern.',
-'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> erbringt innovative, einzigartige Internet-Dienstleistungen f&uuml;r die Schweizer Hochschulen und Internetbenutzer.',
 'invalid_user_idp' => 'M&ouml;glicherweise sind die &uuml;bermittelten Daten fehlerhaft.<br>Der Wert der Eingabe <tt>\'%s\'</tt> ist ung&uuml;ltig.<br>Es sind ausschliesslich die folgenden Wert erlaubt:',
 'contact_assistance' => 'F&uuml;r Unterst&uuml;tzung und Hilfe, kontaktieren Sie bitte <a href="mailto:%s">%s</a>.',
 'no_arguments' => 'Keine Argumente erhalten!',
@@ -101,13 +117,18 @@ $langStrings['de'] = array (
 
 // Francais
 $langStrings['fr'] =  array (
+
+// Read note on line 12
+'about_federation' => '&Agrave; propos de l\'AAI', // This string can be hidden by setting it to ''
+'about_organisation' => '&Agrave; propos de SWITCH', // This string can be hidden by setting it to ''
+'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> fournit des prestations innovantes et uniques pour les hautes &eacute;coles suisses et les utilisateurs d\'Internet.', // This string can be hidden by setting it to ''
+
+// Generic strings
+'faq' => 'FAQ', // This string can be hidden by setting it to ''
+'help' => 'Aide',// This string can be hidden by setting it to ''
+'privacy' => 'Protection des donn&eacute;es',// This string can be hidden by setting it to ''
 'title' => 'S&eacute;lection de votre Home Organisation',
 'header' => 'S&eacute;lectionnez votre Home Organisation',
-'about_federation' => '&Agrave; propos de l\'AAI',
-'about_organisation' => '&Agrave; propos de SWITCH',
-'faq' => 'FAQ',
-'help' => 'Aide',
-'privacy' => 'Protection des donn&eacute;es',
 'make_selection' => 'Vous devez s&eacute;lectionner une Home Organisation valide.',
 'settings' => 'Home Organisation par d&eacute;faut pour ce navigateur',
 'permanent_select_header' => 'D&eacute;finir une Home Organisation de fa&ccedil;on permanente',
@@ -123,7 +144,6 @@ $langStrings['fr'] =  array (
 'select_idp' => 'Veuillez s&eacute;lectionner l\'organisation &agrave; laquelle vous appartenez.',
 'search_idp' => 'Veuillez taper le nom de l\'organisation &agrave; laquelle vous appartenez.',
 'remember_selection' => 'Se souvenir de mon choix pour cette session.',
-'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> fournit des prestations innovantes et uniques pour les hautes &eacute;coles suisses et les utilisateurs d\'Internet.',
 'invalid_user_idp' => 'Une erreur s\'est produite.<br>La valeur de votre donn&eacute;e <tt>\'%s\'</tt> n\'est pas valide.<br>Seules ces valeurs sont admises :',
 'contact_assistance' => 'Contactez le support <a href="mailto:%s">%s</a> si l\'erreur persiste.',
 'no_arguments' => 'Pas de param&egrave;tre re&ccedil;u !',
@@ -142,13 +162,17 @@ $langStrings['fr'] =  array (
 
 // Italian
 $langStrings['it'] = array (
+// Read note on line 12
+'about_federation' => 'Informazioni su AAI', // This string can be hidden by setting it to ''
+'about_organisation' => 'Informazioni su SWITCH', // This string can be hidden by setting it to ''
+'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> eroga servizi Internet innovativi e unici per le scuole universitarie svizzere e per gli utenti di Internet.', // This string can be hidden by setting it to ''
+
+// Generic strings
+'faq' => 'FAQ', // This string can be hidden by setting it to ''
+'help' => 'Aiuto', // This string can be hidden by setting it to ''
+'privacy' => 'Protezione dei dati', // This string can be hidden by setting it to ''
 'title' => 'Selezione della vostra Home Organisation',
 'header' => 'Selezioni la sua Home Organisation',
-'about_federation' => 'Informazioni su AAI',
-'about_organisation' => 'Informazioni su SWITCH',
-'faq' => 'FAQ',
-'help' => 'Aiuto',
-'privacy' => 'Protezione dei dati',
 'make_selection' => 'Per favore, scelga una valida Home Organisation.',
 'settings' => 'Home Organisation predefinita per questo web browser.',
 'permanent_select_header' => 'Salvare la Home Organisation.',
@@ -164,7 +188,6 @@ $langStrings['it'] = array (
 'select_idp' => 'Selezioni l\'organizzazione con la quale &egrave; affiliato.',
 'search_idp' => 'Digitare il nome dell\'organizzazione con cui e\' affiliato.',
 'remember_selection' => 'Ricorda la selezione per questa sessione.',
-'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> eroga servizi Internet innovativi e unici per le scuole universitarie svizzere e per gli utenti di Internet.',
 'invalid_user_idp' => 'Errore nei parametri pervenuti.<br>Il valore del parametro <tt>\'%s\'</tt> non &#143; valido.<br>Solo i seguenti valori sono ammessi:',
 'contact_assistance' => 'Se l\' errore persiste, si prega di contattare <a href="mailto:%s">%s</a>.',
 'no_arguments' => 'Parametri non pervenuti!',
@@ -182,19 +205,23 @@ $langStrings['it'] = array (
 
 // Portuguese
 $langStrings['pt'] = array (
-'title' => 'SWITCHaai: Selec&ccedil;&atilde;o de Institui&ccedil;&atilde;o de Origem',
+// Read note on line 12
+'about_federation' => 'Sobre AAI', // This string can be hidden by setting it to ''
+'about_organisation' => 'Sobre a SWITCH', // This string can be hidden by setting it to ''
+'additional_info' => 'A SWITCH foundation &eacute; uma institui&ccedil;&atilde;o gere e opera a rede de investiga&ccedil;&atilde;o e ensino sui&ccedil;a por forma a garantir conectividade de alto desempenho &agrave; Internet e a redes de I&amp;D globais para o beneficio de uma educa&ccedil;&atilde;o superior na sui&ccedil;a', // This string can be hidden by setting it to ''
+
+// Generic strings
+'faq' => 'FAQ', // This string can be hidden by setting it to ''
+'help' => 'Ajuda', // This string can be hidden by setting it to ''
+'privacy' => 'Privacidade', // This string can be hidden by setting it to ''
+'title' => 'Selec&ccedil;&atilde;o de Institui&ccedil;&atilde;o de Origem',
 'header' => 'Seleccione a sua Institui&ccedil;&atilde;o de Origem',
-'about_federation' => 'Sobre AAI',
-'about_organisation' => 'Sobre a Switch',
-'faq' => 'FAQ',
-'help' => 'Ajuda',
-'privacy' => 'Privacidade',
 'make_selection' => 'Dever&aacute; seleccionar uma Institui&ccedil;&atilde;o de Origem V&aacute;lida',
 'settings' => 'Institui&ccedil;&atilde;o de Origem por defeito para este web browser',
 'permanent_select_header' => 'Defina permanentemente a sua Institui&ccedil;&atilde;o de Origem',
 'permanent_cookie' => 'Nesta p&aacute;gina poder&aacute; definir a sua <strong>Institui&ccedil;&atilde;o de Origem</strong> para este web browser. Defenir uma Institui&ccedil;&atilde;o de Origem levar&aacute; a que seja redireccionado directamente para a sua Institui&ccedil;&atilde;o de Origem aquando do acesso de recursos-AAI. N&atilde;o use esta funcionalidade se possuir v&aacute;rias contas de AAI.',
 'permanent_cookie_notice' => 'Por omiss&atilde;o a configura&ccedil;&atilde;o da sua institui&ccedil;&atilde;o de origem ter&acute; a funcionalidade de n&atilde;o ser necess&acute;rio seleccionar novamente recursos federados. A configura&ccedil;&atilde;o &ecute;:',
-'permanent_cookie_note' => 'Poder&aacute; efectuar um reset &agrave;s configura&ccedil;&otilde;es no url wayf.switch.ch/SWITCHaai/WAYF',
+'permanent_cookie_note' => 'Poder&aacute; efectuar um reset &agrave;s configura&ccedil;&otilde;es no url %s',
 'delete_permanent_cookie_button' => 'Reset',
 'goto_sp' => 'Salve e continue para a sua Institui&ccedil;&atilde;o de Origem',
 'permanently_remember_selection' => 'Memorize a sua selec&ccedil;&atilde;o permanentemente e passe o mecanismo WAYF apartir de agora.',
@@ -204,8 +231,6 @@ $langStrings['pt'] = array (
 'select_idp' => 'Seleccione a sua Institui&ccedil;&atilde;o de Origem',
 'no_idp' => 'N&atilde;o existem Organiza&ccedil;&otilde;es de Origem na federa&ccedil;&atilde;o \'<i>%s</i>\'',
 'remember_selection' => 'Memorize a selec&ccedil;&atilde;o para esta sess&atilde;o.',
-'import_swisssign' => 'A SWITCH recomenda <a href="http://www.switch.ch/pki/import.html" target="_blank">a importa&ccedil;&atilde;o do\'SwissSign Root CA Certificate\'</a> no seu browser. Desta forma, o seu browser estabelecer&acute; uma liga&ccedil;&atilde;o segura com os servidores AAI.',
-'additional_info' => 'A SWITCH foundation &eacute; uma institui&ccedil;&atilde;o gere e opera a rede de investiga&ccedil;&atilde;o e ensino sui&ccedil;a por forma a garantir conectividade de alto desempenho &agrave; Internet e a redes de I&amp;D globais para o beneficio de uma educa&ccedil;&atilde;o superior na sui&ccedil;a',
 'invalid_user_idp' => 'Poder&aacute; existir um erro nos dados que enviou.<br>Os valores enviados <tt>\'%s\'</tt> s&atilde;o inv&aacute;lidos.<br>Apenas os valores seguintes s&atilde;o permitidos:',
 'contact_assistance' => 'Contacte <a href="mailto:%s">%s</a> para assistencia.',
 'no_arguments' => 'Nenhum argumento recebido!',

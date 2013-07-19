@@ -16,7 +16,8 @@ if(!isset($_SERVER['REMOTE_ADDR']) || basename($_SERVER['SCRIPT_NAME']) == 'temp
 
 function printHeader(){
 
-	global $langStrings, $language, $imageURL, $javascriptURL, $cssURL, $logoURL, $useImprovedDropDownList;
+	global $langStrings, $language, $imageURL, $javascriptURL, $cssURL, $logoURL, $useImprovedDropDownList, $organizationLogoURL;
+	global $federationURL, $organizationURL, $faqURL, $helpURL, $privacyURL;
 	
 	// Check if custom header template exists
 	if(file_exists('custom-header.php')){

@@ -109,14 +109,14 @@
 <div id="container">
 	<div class="box">
 		<div id="header">
-			<a href="http://www.switch.ch/aai"><img src="<?php echo $logoURL ?>" alt="SWITCHaai" id="federationLogo"></a>
-			<a href="http://www.switch.ch/"><img src="<?php echo $imageURL ?>/switch-logo.png" alt="SWITCH" id="organisationLogo"></a>
+			<a href="<?php echo sprintf($federationURL, $language) ?>"><img src="<?php echo $logoURL ?>" alt="Federation Logo" id="federationLogo"></a>
+			<a href="<?php echo sprintf($organizationURL, $language) ?>"><img src="<?php echo $organizationLogoURL ?>" alt="Organization Logo" id="organisationLogo"></a>
 		</div>
 			<div id="content">
 				<ul class="menu">
-				  <li><a href="http://www.switch.ch/<?php echo $language ?>/aai/about/"><?php echo getLocalString('about_federation'); ?></a></li>
-				  <li class="last"><a href="http://www.switch.ch/<?php echo $language ?>/aai/faq/"><?php echo getLocalString('faq') ?></a></li>
-				  <li class="last"><a href="http://www.switch.ch/<?php echo $language ?>/aai/help/"><?php echo getLocalString('help') ?></a></li>
-				  <li class="last"><a href="http://www.switch.ch/<?php echo $language ?>/aai/privacy/"><?php echo getLocalString('privacy') ?></a></li>
+				  <li><a href="<?php echo sprintf($federationURL, $language) ?>"><?php echo getLocalString('about_federation'); ?></a></li>
+				  <li class="last"><a href="<?php echo sprintf($faqURL, $language) ?>"><?php echo getLocalString('faq') ?></a></li>
+				  <li class="last"><a href="<?php echo sprintf($helpURL, $language) ?>"><?php echo getLocalString('help') ?></a></li>
+				  <li class="last"><a href="<?php echo sprintf($privacyURL, $language) ?>"><?php echo getLocalString('privacy') ?></a></li>
 				</ul>
 <!-- Body: Start -->

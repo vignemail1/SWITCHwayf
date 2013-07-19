@@ -32,11 +32,16 @@ function initConfigOptions(){
 	global $federationName;
 	global $supportContactEmail;
 	global $federationURL;
+	global $organizationURL;
+	global $faqURL;
+	global $helpURL;
+	global $privacyURL;
 	global $imageURL;
 	global $javascriptURL;
 	global $cssURL;
 	global $logoURL;
 	global $smallLogoURL;
+	global $organizationLogoURL;
 	global $IDPConfigFile;
 	global $backupIDPConfigFile;
 	global $metadataFile;
@@ -50,13 +55,13 @@ function initConfigOptions(){
 	// Set independet default configuration options
 	$defaults = array();
 	$defaults['defaultLanguage'] = 'en'; 
-	$defaults['commonDomain'] = '.switch.ch';
+	$defaults['commonDomain'] = getTopLevelDomain($_SERVER['SERVER_NAME']);
 	$defaults['cookieNamePrefix'] = '';
 	$defaults['cookieSecurity'] = false;
 	$defaults['cookieValidity'] = 100;
 	$defaults['showPermanentSetting'] = false;
 	$defaults['useImprovedDropDownList'] = true;
-	$defaults['useSAML2Metadata'] = true; 
+	$defaults['useSAML2Metadata'] = false; 
 	$defaults['SAML2MetaOverLocalConf'] = false;
 	$defaults['includeLocalConfEntries'] = true;
 	$defaults['enableDSReturnParamCheck'] = true;
@@ -68,9 +73,13 @@ function initConfigOptions(){
 	$defaults['useEmbeddedWAYFRefererForPrivacyProtection'] = false;
 	$defaults['useLogging'] = true; 
 	$defaults['exportPreselectedIdP'] = false;
-	$defaults['federationName'] = 'SWITCHaai Federation';
-	$defaults['federationURL'] = 'http://www.switch.ch/aai/';
-	$defaults['supportContactEmail'] = 'support-contact@example.org';
+	$defaults['federationName'] = 'Identity Federation';
+	$defaults['organizationURL'] = 'http://www.'.$defaults['commonDomain'];
+	$defaults['federationURL'] = $defaults['organizationURL'].'/aai';
+	$defaults['faqURL'] = $defaults['federationURL'].'/faq';
+	$defaults['helpURL'] = $defaults['federationURL'].'/help';
+	$defaults['privacyURL'] = $defaults['federationURL'].'/privacy';
+	$defaults['supportContactEmail'] = 'support-contact@'.$defaults['commonDomain'];
 	$defaults['imageURL'] = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/images';
 	$defaults['javascriptURL'] = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/js';
 	$defaults['cssURL'] = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/css';
@@ -97,8 +106,9 @@ function initConfigOptions(){
 	$defaults['redirectStateCookieName'] = $cookieNamePrefix.'_redirection_state';
 	$defaults['SAMLDomainCookieName'] = $cookieNamePrefix.'_saml_idp';
 	$defaults['SPCookieName'] = $cookieNamePrefix.'_saml_sp';
-	$defaults['logoURL'] = $imageURL.'/switch-aai-transparent.png'; 
-	$defaults['smallLogoURL'] = $imageURL.'/switch-aai-transparent-small.png';
+	$defaults['logoURL'] = $imageURL.'/federation-logo.png'; 
+	$defaults['smallLogoURL'] = $imageURL.'/small-federation-logo.png';
+	$defaults['organizationLogoURL'] = $imageURL.'/organization-logo.png';
 	
 	// Initialize dependent defaults
 	foreach($defaults as $key => $value){

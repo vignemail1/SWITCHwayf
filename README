@@ -129,12 +129,20 @@ General Update Instructions:
 
 Specific Update Instructions:
 
-Updates from versions before 1.17.2
-  A new configuration option $supportContactEmail was introduced to provide
-  the user a support contact address in case of errors. Please add a line
-  like the following to the SWITCHwayf configuration file config.php:
-  $supportContactEmail = 'your-support-contact@your.organisation.org';
-  If not set, the default address support-contact@example.org will be used.
+Updates from versions before 1.18
+  The following new configuration options were introduced:
+  
+  - $supportContactEmail
+  - $organizationLogoURL
+  - $organizationURL
+  - $faqURL
+  - $helpURL
+  - $privacyURL
+  
+  Have a look at config.dist.php in section 4. Appearance settings for a 
+  description on these settings. The make sure to configure them to config.php
+  which should contain your own configuration. Otherwise, default values
+  will be set.
 
 
 Updates from versions before 1.15

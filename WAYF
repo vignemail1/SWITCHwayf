@@ -3,7 +3,7 @@
 /*
 ******************************************************************************
 SWITCHwayf
-Version: 1.17.2
+Version: 1.18
 Contact:  aai@switch.ch
 Web site: http://www.switch.ch/aai/wayf
 ******************************************************************************
@@ -13,10 +13,10 @@ Web site: http://www.switch.ch/aai/wayf
 // Load general configuration and template file
 /*------------------------------------------------*/
 
-require_once('config.php');
 require_once('templates.php');
 require_once('functions.php');
 require_once('languages.php');
+require_once('config.php');
 
 // Set P3P headers just in case they were not set in Apache already
 header('P3P: CP="NOI CUR DEVa OUR IND COM NAV PRE"');

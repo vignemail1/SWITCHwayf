@@ -11,7 +11,7 @@
 //////////////////// ESSENTIAL SETTINGS ////////////////////
 
 // URL of the WAYF to use
-// Examples: "https://wayf.switch.ch/SWITCHaai/WAYF", "https://wayf-test.switch.ch/aaitest/WAYF";
+// Examples: "https://wayf.example.org/SWITCHwayf/WAYF"
 // [Mandatory]
 var wayf_URL = "https://<?php echo $host ?><?php echo $path ?>";
 
@@ -127,7 +127,7 @@ var wayf_show_categories =  true;
 
 // EntityIDs of Identity Provider that should not be shown at all
 // Example of how to hide certain Identity Provider
-// var wayf_hide_idps = new Array("https://idp.unige.ch/idp/shibboleth", "https://lewotolo.switch.ch/idp/shibboleth");
+// var wayf_hide_idps = new Array("https://idp.unige.ch/idp/shibboleth", "https://aai-logon.switch.ch/idp/shibboleth");
 // [Optional, commented out by default]
 // var wayf_hide_idps = new Array();
 
@@ -143,7 +143,7 @@ var wayf_show_categories =  true;
 // var wayf_use_discovery_service = false;
 
 // Session Initiator URL of the Service Provider
-// Examples: "https://econf.switch.ch/Shibboleth.sso/Login", "https://dokeos.unige.ch/Shibboleth.sso/DS"
+// Examples: "https://interact.switch.ch/Shibboleth.sso/Login", "https://dokeos.unige.ch/Shibboleth.sso/DS"
 // This will implicitely be set to wayf_sp_samlDSURL = wayf_sp_handlerURL + "/Login";
 // or will be set automatically if the page where the Embedded WAYF is placed is called
 // with a 'return' and an 'entityID' GET Arguments
@@ -154,16 +154,15 @@ var wayf_show_categories =  true;
 // Default IdP to preselect when central WAYF couldn't guess IdP either
 // This is usually the case the first time ever a user accesses a resource
 // [Optional, default: commented out]
-// var wayf_default_idp = "https://aai.switch.ch/idp/shibboleth";
+// var wayf_default_idp = "https://aai-logon.switch.ch/idp/shibboleth";
 
 // Set a custom Assertion Consumer URL instead of
 // the default wayf_sp_handlerURL + '/SAML/POST'
 // Only relevant if wayf_use_discovery_service is false
-// Examples: "https://olat.uzh.ch/shib/samlaa", 
+// Examples: "https://my-app.switch.ch/custom/saml-implementation/samlaa"
 // This will implicitely be set to wayf_sp_samlACURL = wayf_sp_handlerURL + "/SAML/POST";
-// "https://foodle.feide.no/simplesaml/shib13/sp/AssertionConsumerService.php"
 // [Optional, commented out by default]
-// var wayf_sp_samlACURL = "https://maclh.switch.ch/foo/bar";
+// var wayf_sp_samlACURL = "https://my-app.switch.ch/custom/saml-implementation/samlaa";
 
 // Overwites the text of the checkbox if
 // wayf_show_remember_checkbox is set to true
@@ -215,7 +214,7 @@ var wayf_show_categories =  true;
 // var wayf_additional_idps = [ 
 //        
 //        {name:"International University X",
-//        entityID:"urn:mace:switch.ch:SWITCHaai:example.university.org",
+//        entityID:"urn:mace:example.org:example.university.org",
 //        SAML1SSOurl:"https://int.univ.org/shibboleth-idp/SSO"},
 //
 //        {name:"Some Other University",
