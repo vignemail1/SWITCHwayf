@@ -37,8 +37,8 @@ Installation:
    - Copy the file config.dist.php and name it config.php 
      This is the main configuration file of the SWITCHwayf
    - Copy the file IDProvider.conf.dist.php and name it IDProvider.conf.php
-     This file contains the list of Identity Providers that you configure 
-     by hand
+     This file contains the list of Identity Providers that that can be  
+     configured by hand
 
 3. Make sure that permissions for the files:
      - SProvider.metadata.php
@@ -122,9 +122,18 @@ General Update Instructions:
    current SWITCHwayf installation over to the new directory.
 4. Have a look at config.dist.php and compare this file with your current
    config.php in order to identify new configuration options.
-   Also compare your custom-.* files to the default-.* files that might have
+   
+   ## Since version 1.18 the script 'update-config.php' can be used to 
+   ## merge an existing configuration (from config.php) with the default
+   ## configuration (config.dist.php) into a new configuration file 
+   ## (config.new.php). This allows easily getting a clean configuration file
+   ## while keeping the current settings. Run the script with:
+   ## php update-config.php
+   ## Ensure that the user has the necessary write privileges to create 
+   
+   Also compare the custom-.* files to the default-.* files that might have
    changed. Some features like the improved drop-down list require the WAYF
-   to load additional javascripts. If your custom header file is missing these,
+   to load additional javascripts. If a custom header file is missing these,
    the feature will not work.
 
 -------------------------------------------------------------------------------
@@ -141,7 +150,7 @@ Updates from versions before 1.18
   - $helpURL
   - $privacyURL
   
-  Have a look at config.dist.php in section "4. Appearance Settings" for a 
+  Have a look at config.dist.php in section "5. Appearance Settings" for a 
   description on these settings. Then make sure to add them to config.php
   with your own values (or empty strings to ignore them). Otherwise, default 
   values will be set.

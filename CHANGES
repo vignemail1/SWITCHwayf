@@ -24,32 +24,37 @@ necessary for such releases.
 
 
 SWITCHwayf Changes and Version History:
-1.18    - Removed as many SWITCH-specific graphics and texts as possible.
+1.18    - Changed default SessionInitiator of the Embedded WAYF to 
+          /Login because this has been the default SessionInitiator in 
+          Shibboleth for quite some time now.
+        - Corrected viewport meta tag separator of default header as suggested
+          by Andrew Sokolov from Saint Petersburg State University 
+        - Removed as many SWITCH-specific graphics and texts as possible.
         - Introduced configuration options to allow easier customization.
         - Fixed a few small bugs
         - Added some optimizations to the drop-down list search-as-you type 
           feature
-        Complete list: https://forge.switch.ch/redmine/projects/wayf/versions/62
+        - Some small styling changes/CSS improvements
+        
+        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/62
         Please read the specific update instructions in the README file, as some
         new configuration options were introduced that should be revised.
-
-1.17.2    
-        - Changed default SessionInitiator to /Login because this has been
-          the default SessionInitiator in Shibboleth for quite some time now.
-        - Corrected viewport meta tag separator of default header as suggested
-          by Andrew Sokolov from Saint Petersburg State University 
 
 1.17.1  Release date:  14. June 2012
         - Fixed a bug occuring when wayf_sp_samlDSURL contains GET arguments
           Bug reported with a patch by Takeshi Nishimura from NII (Japan)
         - Fixed typo in configuration otpion useImprovedDropDownList
         - Added Javascripts required for improved drop down list
+        
+        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/55
 
 1.17    Release date:  18. May 2012
         - Added CSS styles for mobile view
         - Embedded WAYF now reads 'entityID' and 'return' GET arguments.
           They get precedence over the values configured for the Embedded WAYF.
         - Embedded WAYF logged in message now contains a link to target URL
+        
+        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/45
 
 1.16    Release date: 19. January 2012
         - Added an improved version of the drop down list to the WAYF
@@ -66,6 +71,8 @@ SWITCHwayf Changes and Version History:
           that are contained in the feed. Others will be hidden automatically.
         - Added Keywords property to format of IDP entries to allow users to
           search Identity Providers using a keyword.
+
+        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/40
 
 1.15    Release date: 21. October 2011
         - A default and custom CSS file can now be used
@@ -87,10 +94,14 @@ SWITCHwayf Changes and Version History:
           specification when it comes to the return parameter. This parameter
           is optional in case the DS knows the SP Discovery URL.
           Reported by Tom Scavo.
+
+        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/26
           
 1.14.3  Release date: 4. March 2011
         - Fixed a race condition. Thanks go to Robert Basch from MIT for 
           reporting the issue and providing a patch.
+
+        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/32
 
 1.14.2  Release date: 15. December 2010
         - IDProvider.conf.php and config.php are not overwritten anymore by upgrades
@@ -101,6 +112,8 @@ SWITCHwayf Changes and Version History:
           metadata. Thanks go to Olivier Salaün for reporting this issue and
           submitting a patch.
         - Improved installation instructions
+
+        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/25
 
 1.14.1  Release date: 12. November 2010
         - Fixed an encoding bug that affected non-ASCII characters in 
@@ -113,6 +126,9 @@ SWITCHwayf Changes and Version History:
         - Changed the default configuration option to generate the Embedded WAYF
           to false due to some concerns regarding phishing attacks
         - Added proper copyright statements to all source code files
+
+        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/21
+
 
 1.14   Release date: 9. November 2010
         - Added the configuration option wayf_force_remember_for_session to
@@ -136,6 +152,9 @@ SWITCHwayf Changes and Version History:
          Thanks to Robert Basch for reporting these bugs and for 
          submitting patches.
        - Fixed a bug where hidden IdPs would still be shown in Embedded WAYF
+
+        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/17
+
 
 The revision history of older versions, can be found on the SWITCHwayf web page:
 https://forge.switch.ch/redmine/projects/wayf/wiki/Changes
