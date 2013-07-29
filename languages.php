@@ -229,7 +229,6 @@ $langStrings['pt'] = array (
 'save_button' => 'Guarde',
 'access_host' => 'No sentido de aceder ao recurso em <tt>\'%s\'</tt> dever&aacute; autenticar-se.',
 'select_idp' => 'Seleccione a sua Institui&ccedil;&atilde;o de Origem',
-'no_idp' => 'N&atilde;o existem Organiza&ccedil;&otilde;es de Origem na federa&ccedil;&atilde;o \'<i>%s</i>\'',
 'remember_selection' => 'Memorize a selec&ccedil;&atilde;o para esta sess&atilde;o.',
 'invalid_user_idp' => 'Poder&aacute; existir um erro nos dados que enviou.<br>Os valores enviados <tt>\'%s\'</tt> s&atilde;o inv&aacute;lidos.<br>Apenas os valores seguintes s&atilde;o permitidos:',
 'contact_assistance' => 'Contacte <a href="mailto:%s">%s</a> para assistencia.',
