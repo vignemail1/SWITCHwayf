@@ -137,7 +137,8 @@ input {
 }
 
 #userIdPSelection {
-	width: 400px;
+	width: 480px;
+	font-size: 12px;
 }
 
 /* Device specific styles */
