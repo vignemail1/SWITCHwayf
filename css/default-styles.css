@@ -237,7 +237,7 @@ div.idd_list {
 {
 	font-family: Verdana, sans-serif;
 	font-size: 12px;
-	height: 1em;
+	height: 16px;
 	margin: 0;
 	padding-bottom: 2px;
 	text-align: left;
@@ -252,8 +252,8 @@ div.idd_list {
 /* mouseover on all list items except group headers */
 .idd_listItem_Hover
 {
-	color: #FFFFFF;
-	background-color: #00247D;
+	color: black;
+	background-color: #B5D5FF;
 }
 
 /* List items that are disabled */
