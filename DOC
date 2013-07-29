@@ -4,7 +4,7 @@ See LICENSE file for details.
 -------------------------------------------------------------------------------
 SWITCHwayf
 Contact: aai@switch.ch or go to http://www.switch.ch/aai/wayf
-Version: See head of file 'WAYF' in the same directory
+Version: See top of file 'WAYF' in the same directory as this file
 Project web site: https://forge.switch.ch/redmine/projects/wayf
 Bug reports/feature requests: https://forge.switch.ch/redmine/projects/wayf/issues
 -------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ Some of the Features:
   - IP range preselection
   - IP reverse DNS lookup preselection
 - Transparent redirection mode, e.g. /WAYF/unige.ch/redirect?shire=https://...
-- Can read SAML2 metadata files
+- Supports processing SAML2 metadata files
 - Supports Discovery Service and the Shibboleth authentication request protocol 
 - Various customizations options for header, footer, language strings etc.
 - HTML code generation for embedding the WAYF directly into a web page
@@ -34,47 +34,49 @@ Some of the Features:
 -------------------------------------------------------------------------------
 
 Customization Options:
-Since version 1.12 any graphical aspects of this WAYF/DS implementation can be 
-customized such that these changes survive a minor version upgrade. 
+Since version 1.12 any graphical aspects can be customized such that these 
+changes normally should survive bug-fix and minor version upgrades. 
 Files whose names start with 'default-' can be copied and renamed to start with 
 'custom-' in order to  customize the file's behaviour.
 
 In particular, the following customizations can be applied:
 
-HTML header:   custom-header.php
-Customize page header
+* HTML Header:   custom-header.php
+  Customize page header
 
-HTML Footer:   custom-footer.php
+* HTML Footer:   custom-footer.php
 Customize page footer 
 
-HTML Body:     custom-body.php
-Customize WAYF/DS body
+* HTML Body:     custom-body.php
+  Customize WAYF/DS body
 
-HTML Body:     custom-settings.php
-Customize WAYF/DS permanent settings body
+* HTML Body:     custom-settings.php
+  Customize WAYF/DS permanent settings body
 
-HTML Body:     custom-notice.php
-Customize WAYF/DS permanent settings notice body
+* HTML Body:     custom-notice.php
+  Customize WAYF/DS permanent settings notice body
 
-HTML Body:     custom-embedded-wayf.php
-Customize WAYF/DS body
+* HTML Body:     custom-embedded-wayf.php
+  Customize WAYF/DS body
 
-HTML Error:    custom-error.php
-Customize error messages
+* HTML Error:    custom-error.php
+  Customize error messages
 
-CSS Styles:    css/custom-styles.css
-Customize CSS styles that are printed inline in header. The custom styles are
-loaded in addition to the default styles. Therefore, they can be used to 
-overwrite the default CSS styles.
+* CSS Styles:    css/custom-styles.css
+  Customize CSS styles that are printed inline in header. The custom styles are
+  loaded in addition to the default styles. Therefore, they can be used to 
+  overwrite the default CSS styles.
 
-Languages:     custom-languages.php
-Can be used to change default or add new language strings. The custom languages
-strings in addition to the default styles. Therefore, they can be used to 
-overwrite the default CSS styles.
+*  Languages:     custom-languages.php
+  Can be used to change default or add new language strings. The custom 
+  languages strings in addition to the default styles. Therefore, they can be 
+  used to overwrite the default CSS styles.
 
-If the above files don't exist, the default templates and settings 
-will be used. To create a custom template, copy of the default files with 
-cp default-{$template}.php custom-{$template}.php 
+If the above files don't exist yet, the default templates and settings 
+will be used. To create a custom template, copy the default files with:
+
+$ cp default-{$template}.php custom-{$template}.php 
+
 where {$template} stands for the file you want to customize.
 
 -------------------------------------------------------------------------------
@@ -112,7 +114,7 @@ the PHP processing but the TLS handshake, which has nothing to do with PHP
 or the SWITCHwayf itself. 
 
 Benchmark tests conducted by SWITCH demonstrated that generating the 
-Javascript WAYF/embedded-wayf.js can be speed up usign XCache by 100% if the 
+Javascript WAYF/embedded-wayf.js can be speed up using XCache by 100% if the 
 script is accessed via HTTP (without TLS). However, if the script is 
 accessed via HTTPS (default in SWITCHaai), the overall speed gain by using 
 XCache is less than 1% because the TLS hand-shake is what consumes most CPU time.
@@ -173,11 +175,12 @@ snippet.
 
 Note:
 When activating the Embedded WAYF, carefully protect the host where the WAYF is 
-operated on. If your WAYF host gets compromised, an attacker could modify the 
-JavaScript that is embedded on the remote site in a malicous wayf (e.g. phish 
-the user's password, redirect users to malicous pages, steal their sessions etc). 
-You also have to make sure that your central WAYF has a very high availability 
-because a lot of third-party services will depend on it.
+operated on. If an instance of SWITCHwayf gets compromised, an attacker could 
+modify the JavaScript that is embedded on the remote site in a malicous wayf 
+(e.g. phish the user's password, redirect users to malicous pages, steal their 
+sessions etc). 
+One also has to ensure that a centrally operated WAYF has a very high availability 
+because many services will depend on it.
 
 Also, please be aware that using the Embedded WAYF allows anybody to guess a 
 user's Home Organisation without much effort. This information then could be 
@@ -186,7 +189,7 @@ used for phising attacks for example!
 -------------------------------------------------------------------------------
 
 Embedded WAYF code snippet:
-To get a valid HTML snippet to embedd in a web page, please access the WAYF 
+To get a sample HTML snippet to embedd in a web page, please access the WAYF 
 with a URL like:
 
 https://#HOSTNAME#/#PATH_TO_WAYF#/WAYF/embedded-wayf.js/snippet.html
@@ -195,12 +198,12 @@ The script should return HTML code that can be embedded together with short
 descriptions of the available settings.
 
 Embedded WAYF code limitations:
-If the embedded WAYF is placed on the right side or at the bottom of a web page,
-it may be that the web browser cannot expand and render the complete drop-down
-list of Identity Providers.
-If placed on a host where no Service Provider is installed, the Embedded WAYF
-might not be able to detect wheter a user is logged in or not. Also, the 
-wayf_use_disco_feed might not be used. 
+* If the embedded WAYF is placed on the right side or at the bottom of a web page,
+  it may be that the web browser cannot expand and render the complete drop-down
+  list of Identity Providers.
+* If placed on a host where no Service Provider is installed, the Embedded WAYF
+  might not be able to detect whether a user is logged in or not. Also, the 
+  wayf_use_disco_feed might not be used. 
 
 -------------------------------------------------------------------------------
 
@@ -222,7 +225,7 @@ Configuration file format:
 Have a look at the file 'IDProvider.conf.php' for an example of the file format 
 that is used to configure the list of Identity Provider to display. It's 
 supposed to be mostly self-explanatory. Basically the file format is PHP code 
-that defines an array of arrays called $IDProviders.
+that defines an array of arrays called $IDProviders. 
 
 The keys of the array $IDProviders must correspond to the entityIDs of the 
 Identity Providers or a unique value in case of a cascaded WAYF/DS or 
@@ -370,12 +373,15 @@ Path Info Extensions:
                                    page.
 [/embedded-wayf.js]                Generates the JavaScript for the Embedded WAYF
 [/embedded-wayf.js/snippet.html]   Generates HTML snippet for the Embedded WAYF
-[/idps-and-state.json]             Returns JSON data structure that contains
-                                   the content of the IDProviders array. The last
+[/ShibbolethDS-IDProviders.js]     Returns JavaScript consisting of only a 
+                                   variable called myJSONObject. It contains the 
+                                   IDProviders array. 
+                                   If $exportPreselectedIdP = true, the last
                                    element of that array will be a key called 
                                    'preselectedIDP', which contains the 
                                    Identity Provider that would be preselected
                                    in the drop-down list for that user.
+[/ShibbolethDS-IDProviders.json]   Same as above but as a JSON data array.
 [/IDProviders.txt]                 Same as above but in human readable form.
 [/IDProviders.php]                 Same as above but as PHP code
 
