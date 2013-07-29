@@ -8,7 +8,7 @@
 //******************************************************************************
 
 
-// 1. Language settings
+// 1. Language Settings
 //*********************
 // Language that is used by default if the language of the user's web browser
 // is not available in languages.php or custom-languages.php.
@@ -18,7 +18,7 @@
 
 
 
-// 2. Cookie settings
+// 2. Cookie Settings
 //*******************
 
 // Domain within the WAYF cookie should be readable. Must start with a .
@@ -56,7 +56,7 @@
 
 
 
-// 3. Features and extensions
+// 3. Features and Extensions
 //***************************
 
 // Whether to show the checkbox to permanently remember a setting
@@ -155,7 +155,46 @@
 
 
 
-// 4. Appearance settings
+// 4. Files and path Settings
+//***************************
+
+// Set both config files to the same value if you don't want to use the 
+// the WAYF to read a (potential) automatically generated file that undergoes
+// some plausability checks before being used
+//$IDPConfigFile = 'IDProvider.conf.php';
+//$backupIDPConfigFile = 'IDProvider.conf.php';
+
+// Use $metadataFile as source federation's metadata.
+//$metadataFile = '/etc/shibboleth/metadata.myFederation.xml';
+
+// File to store the parsed IdP list
+// Will be updated automatically if the metadataFile modification time
+// is more recent than this file's
+// The user running the script must have permission to create $metadataIdpFile
+//$metadataIDPFile = 'IDProvider.metadata.php';
+
+// File to store the parsed SP list.
+// Will be updated automatically if the metadataFile modification time
+// is more recent than this file's
+// The user running the script must have permission to create $metadataIdpFile
+//$metadataSPFile = 'SProvider.metadata.php';
+
+// File to use as the lock file for writing the parsed IdP and SP lists.
+// The user running the script must have permission to write $metadataLockFile
+//$metadataLockFile = '/tmp/wayf_metadata.lock';
+
+// Use an absolute URL in case you want to use the embedded WAYF
+//$imageURL = 'https://ds.example.org/SWITCHwayf/images';
+
+// Absolute URL to point to css directory
+//$cssURL = 'https://ds.example.org/SWITCHwayf/css';
+
+// Absolute URL to point to javascript directory
+//$javascriptURL = 'https://ds.example.org/SWITCHwayf/js';
+
+
+
+// 5. Appearance Settings
 //**************************
 
 // Name of the federation
@@ -201,45 +240,6 @@
 // Insert %s as macro to be substituted by the language (e.g. 'en', 'de', 'fr', ...) the WAYF uses
 // Set to an empty string to hide the logo
 //$privacyURL = 'http://www.example.org/%s/myFed/privacy/';
-
-
-
-// 5. Files and path settings
-//***************************
-
-// Set both config files to the same value if you don't want to use the 
-// the WAYF to read a (potential) automatically generated file that undergoes
-// some plausability checks before being used
-//$IDPConfigFile = 'IDProvider.conf.php';
-//$backupIDPConfigFile = 'IDProvider.conf.php';
-
-// Use $metadataFile as source federation's metadata.
-//$metadataFile = '/etc/shibboleth/metadata.myFederation.xml';
-
-// File to store the parsed IdP list
-// Will be updated automatically if the metadataFile modification time
-// is more recent than this file's
-// The user running the script must have permission to create $metadataIdpFile
-//$metadataIDPFile = 'IDProvider.metadata.php';
-
-// File to store the parsed SP list.
-// Will be updated automatically if the metadataFile modification time
-// is more recent than this file's
-// The user running the script must have permission to create $metadataIdpFile
-//$metadataSPFile = 'SProvider.metadata.php';
-
-// File to use as the lock file for writing the parsed IdP and SP lists.
-// The user running the script must have permission to write $metadataLockFile
-//$metadataLockFile = '/tmp/wayf_metadata.lock';
-
-// Use an absolute URL in case you want to use the embedded WAYF
-//$imageURL = 'https://ds.example.org/SWITCHwayf/images';
-
-// Absolute URL to point to css directory
-//$cssURL = 'https://ds.example.org/SWITCHwayf/css';
-
-// Absolute URL to point to javascript directory
-//$javascriptURL = 'https://ds.example.org/SWITCHwayf/js';
 
 
 
