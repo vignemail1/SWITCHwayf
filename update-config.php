@@ -17,7 +17,7 @@ if (!file_exists('config.php')) {
 require_once('config.php');
 
 echo "Parsing current configuration and default configuration...\n";
-$fp = fopen('config.new.php', 'w');
+$fp = fopen('config.new.php', 'w') or die("Cannot open file 'config.new.php' for writing!") ;
 $distConfigFile = file('config.dist.php');
 $currentConfigFile = file('config.php');
 
@@ -47,5 +47,12 @@ foreach ($distConfigFile as $line){
 }
 
 fclose($fp);
+
+echo <<<NOTE
+
+A new configuration file 'config.new.php' was created. Please replace the
+current configuration file 'config.php' with this new file after reviewing it.
+
+NOTE;
 
 ?>

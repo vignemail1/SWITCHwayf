@@ -136,6 +136,10 @@ General Update Instructions:
    to load additional javascripts. If a custom header file is missing these,
    the feature will not work.
 
+5. If SAML2 metadata is used by SWITCHwayf, you might have to run the following
+   command to bootstrap the metadata reading process again.
+   $ php readMetadata.php
+
 -------------------------------------------------------------------------------
 
 Specific Update Instructions:

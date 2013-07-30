@@ -100,6 +100,7 @@ Log entries are only created if the user was forwarded to an Identity Provider.
 #REQUEST_TYPE#    Type of request: DS, WAYF, Embedded-DS, Embedded-WAYF
 #IDP_ENTITYID#    EntityID of the IdP the user was forwarded to.
 #FORWARDING_URL#  URL the user was redirected to
+#SP_ENTITYID#     EntityID of the SP the user was coming from.
 
 -------------------------------------------------------------------------------
 
