@@ -5,7 +5,7 @@
 <form id="IdPList" name="IdPList" method="post" onSubmit="return checkForm()" action="<?php echo $actionURL ?>">
 	<div id="userInputArea">
 		<p class="promptMessage"><?php echo getLocalString('permanently_remember_selection') ?></p>
-		<div align="center">
+		<div style="text-align: center">
 			<select name="user_idp" id="userIdPSelection"> 
 				<option value="-" <?php echo $defaultSelected ?>><?php echo getLocalString('select_idp') ?> ...</option>
 			<?php printDropDownList($IDProviders, $selectedIDP) ?>

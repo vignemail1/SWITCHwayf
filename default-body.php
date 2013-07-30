@@ -5,14 +5,14 @@
 <form id="IdPList" name="IdPList" method="post" onSubmit="return checkForm()" action="<?php echo $actionURL ?>">
 	<div id="userInputArea">
 		<p class="promptMessage"><?php echo $promptMessage ?></p>
-		<div align="center">
+		<div style="text-align: center">
 			<select name="user_idp" id="userIdPSelection"> 
 				<option value="-" <?php echo $defaultSelected ?>><?php echo getLocalString('select_idp') ?> ...</option>
 			<?php printDropDownList($IDProviders, $selectedIDP) ?>
 			</select>
 			<input type="submit" name="Select" accesskey="s" value="<?php echo getLocalString('select_button') ?>"> 
 		</div>
-		<div align="left">
+		<div  style="text-align: left">
 			<p class="selectOptions">
 				<input type="checkbox" <?php echo $rememberSelectionChecked ?> name="session" id="rememberForSession" value="true">
 				<label for="rememberForSession"><?php echo getLocalString('remember_selection') ?></label><br>

@@ -209,13 +209,13 @@ function checkIDPAndShowErrors($IDP){
 	}
 	
 	// Otherwise show an error
-	$message = sprintf(getLocalString('invalid_user_idp'), htmlentities($IDP))."</p><p>\n<tt>";
+	$message = sprintf(getLocalString('invalid_user_idp'), htmlentities($IDP))."</p><p>\n<code>";
 	foreach ($IDProviders as $key => $value){
 		if (isset($value['SSO'])){
 			$message .= $key."<br>\n";
 		}
 	}
-	$message .= "</tt>\n";
+	$message .= "</code>\n";
 	
 	printError($message);
 	exit;

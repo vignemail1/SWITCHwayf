@@ -5,7 +5,7 @@
 <form id="IdPList" name="IdPList" method="post" onSubmit="return checkForm()" action="<?php echo $actionURL ?>">
 	<div id="userInputArea">
 		<p class="promptMessage"><?php echo getLocalString('permanent_cookie_notice'); ?></p>
-		<div align="center">
+		<div style="text-align: center">
 			<select name="permanent_user_idp" id="userIdPSelection" disabled="disabled"> 
 				<option value="-"><?php echo $permanentUserIdPName ?></option>
 			</select>

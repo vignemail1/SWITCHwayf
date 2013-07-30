@@ -1,5 +1,5 @@
 <?php // Copyright (c) 2013, SWITCH - Serving Swiss Universities ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
 	<title><?php echo getLocalString('title') ?></title> 
@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 	<script type="text/javascript" src="<?php echo $javascriptURL ?>/jquery.js"></script>
 	<script type="text/javascript" src="<?php echo $javascriptURL ?>/improvedDropDown.js"></script>
-	<script language="JavaScript" type="text/javascript">
+	<script type="text/javascript">
 	<!--
 	
 	// Prevent that WAYF is loaded in an IFRAME
