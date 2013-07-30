@@ -224,13 +224,13 @@ if (
 		redirectToSP($_GET['return'], $cookieIdP);
 		
 		// Create log entry
-		logAccessEntry('DS', 'Cookie', $_GET['return'], $cookieIdP);
+		logAccessEntry('DS', 'Cookie', $_GET['entityID'], $cookieIdP, $_GET['return']);
 		
 	} else {
 		redirectTo($IDProviders[$cookieIdP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 		
 		// Create log entry
-		logAccessEntry('WAYF', 'Cookie', $_GET['shire'], $cookieIdP);
+		logAccessEntry('WAYF', 'Cookie', (isset($_GET['providerId'])) ? $_GET['providerId'] : '-', $cookieIdP, $_GET['shire']);
 		
 	}
 		
@@ -256,12 +256,12 @@ if ($useKerberos && isset($_SERVER['REMOTE_USER'])) {
 			redirectToSP($_GET['return'], $kerberosIDP);
 			
 			// Create log entry
-			logAccessEntry('DS', 'Kerberos', $_GET['return'], $kerberosIDP);
+			logAccessEntry('DS', 'Kerberos', $_GET['entityID'], $kerberosIDP, $_GET['return']);
 		} else {
 			redirectTo($IDProviders[$kerberosIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 			
 			// Create log entry
-			logAccessEntry('WAYF', 'Kerberos', $_GET['shire'], $kerberosIDP);
+			logAccessEntry('WAYF', 'Kerberos', (isset($_GET['providerId'])) ? $_GET['providerId'] : '-', $kerberosIDP, $_GET['shire']);
 		}
 		exit;
 	}
@@ -301,7 +301,7 @@ if (
 	redirectTo($IDProviders[$_GET['origin']]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 	
 	// Create log entry
-	logAccessEntry('WAYF', 'Old-Request', $_GET['shire'], $_GET['origin']);
+	logAccessEntry('WAYF', 'Old-Request', (isset($_GET['providerId'])) ? $_GET['providerId'] : '-', $_GET['origin'], $_GET['shire']);
 	exit;
 } 
 
@@ -324,13 +324,13 @@ if ($hintedPathIDP != '-'){
 			redirectToSP($_GET['return'], $hintedPathIDP);
 			
 			// Create log entry
-			logAccessEntry('DS', 'Path', $_GET['return'], $hintedPathIDP);
+			logAccessEntry('DS', 'Path', $_GET['entityID'], $hintedPathIDP, $_GET['return']);
 			
 		} else {
 			redirectTo($IDProviders[$hintedPathIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 			
 			// Create log entry
-			logAccessEntry('WAYF', 'Path', $_GET['shire'], $hintedPathIDP);
+			logAccessEntry('WAYF', 'Path', (isset($_GET['providerId'])) ? $_GET['providerId'] : '-', $hintedPathIDP, $_GET['shire']);
 		}
 		
 		exit;
@@ -358,20 +358,22 @@ if (
 		
 		// Create log entry
 		if (isset($_POST['request_type']) && $_POST['request_type'] == 'embedded'){
-			logAccessEntry('Embedded-DS', 'Request', $_GET['return'], $selectedIDP);
+			$dsType = 'Embedded-DS';
 		} else {
-			logAccessEntry('DS', 'Request', $_GET['return'], $selectedIDP);
+			$dsType = 'DS';
 		}
+		logAccessEntry($dsType, 'Request', $_GET['entityID'], $selectedIDP, $_GET['return']);
 		
 	} else {
 		redirectTo($IDProviders[$selectedIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
 		
 		// Create log entry
 		if (isset($_POST['request_type']) && $_POST['request_type'] == 'embedded'){
-			logAccessEntry('Embedded-WAYF', 'Request', $_GET['shire'], $selectedIDP);
+			$dsType = 'Embedded-WAYF';
 		} else {
-			logAccessEntry('WAYF', 'Request', $_GET['shire'], $selectedIDP);
+			$dsType = 'WAYF';
 		}
+		logAccessEntry($dsType, 'Request', (isset($_GET['providerId'])) ? $_GET['providerId'] : '-', $selectedIDP, $_GET['shire']);
 	}
 	exit;
 }
@@ -459,14 +461,14 @@ if (
 			redirectTo($_GET['return']);
 			
 			// Create log entry
-			logAccessEntry('DS', 'Passive', $_GET['return'], '-');
+			logAccessEntry('DS', 'Passive', $_GET['entityID'], '-', $_GET['return']);
 			
 			
 		} else {
 			redirectToSP($_GET['return'], $selectedIDP);
 			
 			// Create log entry
-			logAccessEntry('DS', 'Passive', $_GET['return'], $selectedIDP);
+			logAccessEntry('DS', 'Passive', $_GET['entityID'], $selectedIDP, $_GET['return']);
 		}
 		exit;
 	}

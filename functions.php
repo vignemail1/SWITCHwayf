@@ -709,8 +709,10 @@ function redirectToSP($url, $IdP){
 	}
 }
 /******************************************************************************/
-// Returns true if valid Directory Service request
-function logAccessEntry($protocol, $type, $sp, $idp){
+// Logs all events where users were redirected to their IdP or back to an SP
+// The log then can be used to approximately detect how many users were served
+// by the SWITCHwayf
+function logAccessEntry($protocol, $type, $sp, $idp, $return){
 	global $WAYFLogFile, $useLogging;
 	
 	// Return if logging deactivated
@@ -730,7 +732,7 @@ function logAccessEntry($protocol, $type, $sp, $idp){
 	}
 	
 	// Compose log entry
-	$entry = date('Y-m-d H:i:s').' '.$_SERVER['REMOTE_ADDR'].' '.$protocol.' '.$type.' '.$idp.' '.$sp."\n";
+	$entry = date('Y-m-d H:i:s').' '.$_SERVER['REMOTE_ADDR'].' '.$protocol.' '.$type.' '.$idp.' '.$return.' '.$sp."\n";
 	
 	// Open file in append mode
 	if (!$handle = fopen($WAYFLogFile, 'a')) {

@@ -34,6 +34,7 @@ SWITCHwayf Changes and Version History:
         - Fixed a few small bugs
         - Added some optimizations to the drop-down list search-as-you type 
           feature
+        - The log file now logs - if possible - also the SP entityID/providerId
         - Some small styling changes/CSS improvements
         
         Issues: https://forge.switch.ch/redmine/projects/wayf/versions/62
