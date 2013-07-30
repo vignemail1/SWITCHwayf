@@ -131,13 +131,15 @@ function getTextElement(sourceElement, imgElement) {
 
     var newID = sourceElement.attr('id');
     var newTextElement = $('<input type="text" />');
+	// For some reason we have to substract 2px from the height when using <!DOCTYPE HTML>
+	var quirksModeOffset = 2;
 
     var controlWidth = Math.max(sourceElement.innerWidth() - imgElement.outerWidth(),40);
 
     newTextElement.attr('id', newID + idd_text_suffix)
                   .addClass('idd_textbox')
                   .attr('value', sourceElement.find('option:selected').text())
-				  .css('height', imgElement.outerHeight() + 'px')
+				  .css('height', (imgElement.innerHeight() - quirksModeOffset) + 'px')
                   .css('font-family', sourceElement.css('font-family'))
                   .css('font-size', sourceElement.css('font-size'))
                   .css('border-width', '1px')

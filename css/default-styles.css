@@ -96,7 +96,7 @@ input {
 	list-style:none;
 }
 
-#container {
+#container, .container {
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -104,7 +104,7 @@ input {
 	margin-top: -200px;
 }
 
-#content {
+#content, .content {
 	width: 98%;
 }
 
@@ -125,7 +125,7 @@ input {
 	float: right;
 }
 
-#userInputArea {
+#userInputArea, .userInputArea {
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
@@ -136,7 +136,7 @@ input {
 	padding: 6px;
 }
 
-#userIdPSelection {
+#userIdPSelection, .userIdPSelection {
 	width: 480px;
 	font-size: 12px;
 }
@@ -154,11 +154,11 @@ input {
 		padding: 0;
 	}
 	
-	#content {
+	#content, .content {
 		width: 96%;
 	}
 	
-	#container {
+	#container, .container {
 		width: 96%;
 		position: auto;
 		left: auto;
@@ -167,7 +167,7 @@ input {
 		margin-top: 0;
 	}
 	
-	#userIdPSelection {
+	#userIdPSelection, .userIdPSelection {
 		width: 60%;
 	}
 }
