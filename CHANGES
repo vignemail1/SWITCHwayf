@@ -29,6 +29,8 @@ SWITCHwayf Changes and Version History:
           Shibboleth for quite some time now.
         - Corrected viewport meta tag separator of default header as suggested
           by Andrew Sokolov from Saint Petersburg State University 
+        - Fixed a bug in the IdP preselection of the embedded wayf when
+          additional IdPs where added
         - Removed as many SWITCH-specific graphics and texts as possible.
         - Introduced configuration options to allow easier customization.
         - Fixed a few small bugs

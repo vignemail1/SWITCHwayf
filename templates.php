@@ -212,7 +212,7 @@ function printError($message){
 function printEmbeddedWAYFScript(){
 
 	global $langStrings, $language, $imageURL, $logoURL, $smallLogoURL, $federationURL;
-	global $selectedIDP, $IDProviders, $redirectCookieName, $redirectStateCookieName, $federationName;
+	global $selectedIDP, $IDProviders, $SAMLDomainCookieName, $redirectCookieName, $redirectStateCookieName, $federationName;
 	
 	// Get some values that are used in the script
 	$loginWithString = getLocalString('login_with');
@@ -315,19 +315,21 @@ function submitForm(){
 		return false;
 	}
 	
+	// Set local cookie
+	var selectedIdP = document.IdPList.user_idp[document.IdPList.user_idp.selectedIndex].value;
+	
 	// User chose non-federation IdP
 	if (
 		wayf_additional_idps.length > 0 
 		&& document.IdPList.user_idp
 		&& document.IdPList.user_idp.selectedIndex >= (document.IdPList.user_idp.options.length - wayf_additional_idps.length)){
 		
-		var NonFedEntityID = wayf_additional_idps[document.IdPList.user_idp[document.IdPList.user_idp.selectedIndex].value].entityID;
+		var NonFedEntityID = wayf_additional_idps[selectedIdP].entityID;
+		setDomainSAMLDomainCookie(NonFedEntityID);
+		
 		var redirect_url;
-		
-		// Store SAML domain cookie for this foreign IdP
-		setCookie('_saml_idp', encodeBase64(NonFedEntityID) , 100);
-		
 		// Redirect user to SP handler
+		var redirect_url;
 		if (wayf_use_discovery_service){
 			
 			var entityIDGETParam = getGETArgument("entityID");
@@ -360,12 +362,14 @@ function submitForm(){
 			} else {
 				window.location = redirect_url;
 			}
-			
 		}
 		
 		// If input type button is used for submit, we must return false
 		return false;
 	} else {
+		var FedEntityID = selectedIdP;
+		setDomainSAMLDomainCookie(FedEntityID);
+		
 		// User chose federation IdP entry
 		document.IdPList.submit();
 	}
@@ -423,6 +427,26 @@ function isAllowedIdP(IdP){
 	}
 	// IdP was not hidden
 	return true;
+}
+
+function setDomainSAMLDomainCookie(entityID){
+	// Create and store SAML domain cookie on host where WAYF is embedded
+	var currentDomainCookie = getCookie('_saml_idp');
+	var encodedEntityID = encodeBase64(entityID);
+	
+	if (currentDomainCookie == null){
+		currentDomainCookie = '';
+	}
+	
+	var oldIdPs = currentDomainCookie.split(' ');
+	var newCookie = '';
+	for (var i = 0; i < oldIdPs.length; i++) {
+		if (oldIdPs[i] != encodedEntityID && oldIdPs[i] != ''){
+			newCookie += oldIdPs[i] + ' ';
+		}
+	}
+	newCookie += encodedEntityID;
+	setCookie('{$SAMLDomainCookieName}', newCookie , 100);
 }
 
 function setCookie(c_name, value, expiredays){
@@ -1085,14 +1109,18 @@ SCRIPT;
 		writeHTML('<select id="user_idp" name="user_idp" style="margin-top: 15px;margin-bottom: 10px; width: 100%;">');
 		
 		// Get local cookie
-		var saml_idp = getCookie('_saml_idp');
+		var saml_idp_cookie = getCookie('_saml_idp');
 		var last_idp = '';
 		var last_idps = new Array();
 		
-		if (saml_idp && saml_idp.length > 0){
-			last_idps = saml_idp.split('+')
-			if (last_idps[0] && last_idps[0].length > 0){
-				last_idp = decodeBase64(last_idps[0]);
+		// Get last used IdP from local host cookie
+		if (saml_idp_cookie && saml_idp_cookie.length > 0){
+			last_idps = saml_idp_cookie.split(' ');
+			if (last_idps.length > 0){
+				last_idp = last_idps[(last_idps.length - 1)];
+				if (last_idp.length > 0){
+					last_idp = decodeBase64(last_idp);
+				}
 			}
 		}
 		
