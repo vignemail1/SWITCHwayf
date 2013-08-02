@@ -38,6 +38,7 @@ SWITCHwayf Changes and Version History:
           feature
         - The log file now logs - if possible - also the SP entityID/providerId
         - Some small styling changes/CSS improvements
+        - Added Japanese locales from the GakuNin version of the WAYF
         
         Issues: https://forge.switch.ch/redmine/projects/wayf/versions/62
         Please read the specific update instructions in the README file, as some

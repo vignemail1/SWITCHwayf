@@ -6,19 +6,26 @@
 // Embedded WAYF is used on non-UTF8 web pages, which then could cause 
 // encoding issues
 
+// *********************************************************************************
+// If you want locales in your own language here, please send them to aai@switch.ch
+// *********************************************************************************
+
 // English, default
 $langStrings['en'] = array (
 
-// You should customize the folowing three strings
-// Create a file custom-languages.php and override the following values with:
+// To permanently customize locales such that they are not overwritten by updates
+// of the SWITCHwayf, create a file 'custom-languages.php' and override any 
+// individual locale in the $langStrings array. For example like this:
 // 
 // $langStrings['en']['about_federation'] = 'About Example Federation';
 // $langStrings['en']['additional_info'] = 'My <b>sample HTML content</b>';
 // 
 //
-// Set a string to '' in order to hide it
+// Set a locale to an empty string ('') in order to hide it
 // Note that any string in custom-languages.php will survive updates
 
+// In particular you might want to override these three locales or set the
+// to an empty string in order to hide them if they are not needed.
 'about_federation' => 'About AAI',  // This string can be hidden by setting it to ''
 'about_organisation' => 'About SWITCH', // This string can be hidden by setting it to ''
 'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> provides innovative, unique internet services for the Swiss universities and internet users.', // This string can be hidden by setting it to ''
@@ -68,7 +75,7 @@ $langStrings['en'] = array (
 
 // Deutsch
 $langStrings['de'] = array (
-// Read note on line 12
+// Read note on line 16 how to properly customize locales so that they survive updates
 'about_federation' => '&Uuml;ber AAI',  // This string can be hidden by setting it to ''
 'about_organisation' => '&Uuml;ber SWITCH',  // This string can be hidden by setting it to ''
 'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> erbringt innovative, einzigartige Internet-Dienstleistungen f&uuml;r die Schweizer Hochschulen und Internetbenutzer.',  // This string can be hidden by setting it to ''
@@ -117,8 +124,7 @@ $langStrings['de'] = array (
 
 // Francais
 $langStrings['fr'] =  array (
-
-// Read note on line 12
+// Read note on line 16 how to properly customize locales so that they survive updates
 'about_federation' => '&Agrave; propos de l\'AAI', // This string can be hidden by setting it to ''
 'about_organisation' => '&Agrave; propos de SWITCH', // This string can be hidden by setting it to ''
 'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> fournit des prestations innovantes et uniques pour les hautes &eacute;coles suisses et les utilisateurs d\'Internet.', // This string can be hidden by setting it to ''
@@ -162,7 +168,7 @@ $langStrings['fr'] =  array (
 
 // Italian
 $langStrings['it'] = array (
-// Read note on line 12
+// Read note on line 16 how to properly customize locales so that they survive updates
 'about_federation' => 'Informazioni su AAI', // This string can be hidden by setting it to ''
 'about_organisation' => 'Informazioni su SWITCH', // This string can be hidden by setting it to ''
 'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> eroga servizi Internet innovativi e unici per le scuole universitarie svizzere e per gli utenti di Internet.', // This string can be hidden by setting it to ''
@@ -203,9 +209,10 @@ $langStrings['it'] = array (
 'most_used' => 'Home Organisations utilizzate pi&ugrave; spesso',
 );
 
+
 // Portuguese
 $langStrings['pt'] = array (
-// Read note on line 12
+// Read note on line 16 how to properly customize locales so that they survive updates
 'about_federation' => 'Sobre AAI', // This string can be hidden by setting it to ''
 'about_organisation' => 'Sobre a SWITCH', // This string can be hidden by setting it to ''
 'additional_info' => 'A SWITCH foundation &eacute; uma institui&ccedil;&atilde;o gere e opera a rede de investiga&ccedil;&atilde;o e ensino sui&ccedil;a por forma a garantir conectividade de alto desempenho &agrave; Internet e a redes de I&amp;D globais para o beneficio de uma educa&ccedil;&atilde;o superior na sui&ccedil;a', // This string can be hidden by setting it to ''
@@ -244,4 +251,48 @@ $langStrings['pt'] = array (
 'most_used' => 'Institui&ccedil;&atilde;o de Origem mais utilizada',
 );
 
+
+// Japanese
+$langStrings['ja'] = array (
+// Read note on line 16 how to properly customize locales so that they survive updates
+'about_federation' => 'フェデレーションとは', // This string can be hidden by setting it to ''
+'about_organisation' => '学認とは', // This string can be hidden by setting it to ''
+'additional_info' => '<a href="http://www.gakunin.jp/" target="_blank">GakuNin</a>は，学術認証フェデレーションの略です．', // This string can be hidden by setting it to ''
+
+// Generic strings
+'faq' => 'FAQ', // This string can be hidden by setting it to ''
+'help' => 'ヘルプ', // This string can be hidden by setting it to ''
+'privacy' => 'プライバシー', // This string can be hidden by setting it to ''
+'title' => '所属機関選択',
+'header' => '所属機関の選択',
+'make_selection' => '正しい所属機関を選んで下さい',
+'settings' => 'このブラウザで利用するデフォルト所属機関',
+'permanent_select_header' => '所属機関情報の保存',
+'permanent_cookie' => 'このブラウザで利用する<strong>デフォルト所属機関</strong>を保存できます．この設定により，サービスで機関認証を選択した場合に，再び所属機関のIdPを選択することなく，直接機関のIdPにリダイレクトされます．いくつかのアカウントを使い分けている場合には，この機能を利用しないで下さい．',
+'permanent_cookie_notice' => 'デフォルトの所属機関を選択することで，このブラウザで他のサービスにアクセスした場合に，IdPの選択画面をスキップすることができます．<br>現在セット中のデフォルト所属機関は:',
+'permanent_cookie_note' => '次のURLにアクセスすることで，デフォルトセッティングをリセットできます: %s',
+'delete_permanent_cookie_button' => 'リセット',
+'goto_sp' => '所属機関を保存して次へ',
+'permanently_remember_selection' => '選択した所属機関を保存して今後IdPの選択画面をスキップする',
+'confirm_permanent_selection' => '選択した機関をデフォルト所属機関として保存してもよいですか？　いくつかのアカウントを使い分けている場合にはこの機能を利用しないで下さい．',
+'save_button' => '保存',
+'access_host' => 'サービス<tt>\'%s\'</tt>を利用するために認証が必要です',
+'select_idp' => '所属している機関を選択',
+'search_idp' => '所属している機関を入力',
+'remember_selection' => 'ブラウザ起動中は自動ログイン',
+'invalid_user_idp' => '入力したIdPの情報（<tt>\'%s\'</tt>）に誤りがあります<br>以下の値のみが入力可能です:',
+'contact_assistance' => '問い合わせ先：<a href="mailto:%s">%s</a>',
+'no_arguments' => '引数が送られてきませんでした',
+'arguments_missing' => 'ブラウザが無効なクエリを受付ました．いくつかの必要な引数が不足しています．<br>以下の引数を受けつけました．:',
+'valid_request_description' => '有効なリクエストでは少なくとも，<tt>shire</tt>と<tt>target</tt>の適正な値を必要とします．オプショナルな引数である<tt>providerID</tt>，<tt>origin</tt>や<tt>redirect</tt>を送信することにより，ウェブブラウザを所属機関にIdPに自動的にリダイレクトさせることができます．',
+'valid_saml2_request_description' => '有効なSAML2のリクエストでは少なくとも，<tt>entityID</tt>と<tt>return</tt>の適正な値を必要とします．オプショナルな引数である<tt>isPassive</tt>, <tt>policy</tt>や<tt>returnIDParam</tt>を送信することにより，ウェブブラウザを所属機関にIdPに自動的にリダイレクトさせることができます．',
+'invalid_query' => 'エラー: 無効なクエリです',
+'select_button' => '選択',
+'login' => '選択',
+'login_with' => '所属機関:',
+'other_federation' => '他のフェデレーションから',
+'logged_in' => '認証済 <a href=\"%s\">進む</a>.',
+'no_idp_found' => 'この検索キーでは機関が見つかりません',
+'no_idp_available' => '使用できる機関がありません',
+);
 ?>
