@@ -2,170 +2,176 @@ Copyright (c) 2013, SWITCH - Serving Swiss Universities
 See LICENSE file for details.
 
 -------------------------------------------------------------------------------
-SWITCHwayf
-Contact: aai@switch.ch or go to http://www.switch.ch/aai/wayf
-Version: See head of file 'WAYF' in the same directory
-Project web site: https://forge.switch.ch/redmine/projects/wayf
-Bug reports/feature requests: https://forge.switch.ch/redmine/projects/wayf/issues
+
+SWITCHwayf Changes
+==================
+
+Find below the changes for past releases of the SWITCHwayf and in the credits
+sections the people who contributed to the SWITCHwayf.
+
 -------------------------------------------------------------------------------
 
-Version Number Policy:
+**This document is written in the markdown syntax**
 
-Releases with a 0version number X.Y.Z usually are bug fix releases, typo 
-corrections and graphical changes.
-Releases with a version number X.Y usually are minor releases that introduce 
-new functionality. Few adapations in the configuration might be necessary to
-upgrade to minor releases.
+-------------------------------------------------------------------------------
+
+Version Number Policy
+---------------------
+
+Releases with a version number 'X.Y.Z' are bug fix releases correcting
+small bugs, typos and graphical issues.
+Releases with a version number 'X.Y' are minor releases that introduce 
+new functionality of fix non-trivial bugs. Few adaptions in the configuration 
+might be necessary to upgrade to minor releases.
 Releases with a version number X are major releases that will require major 
 changes in the configuration files. Therefore, a clean instalation might be 
 necessary for such releases.
 
 -------------------------------------------------------------------------------
 
+SWITCHwayf Version History
+--------------------------
+* Version 1.18 - Release date:  5. August 2013
+  - Changed default SessionInitiator of the Embedded WAYF to 
+    /Login because this has been the default SessionInitiator in 
+    Shibboleth for quite some time now.
+  - Corrected viewport meta tag separator of default header as suggested
+    by Andrew Sokolov from Saint Petersburg State University 
+  - Fixed a bug in the IdP preselection of the embedded wayf when
+    additional IdPs where added
+  - Removed as many SWITCH-specific graphics and texts as possible.
+  - Introduced configuration options to allow easier customization.
+  - Fixed a few small bugs
+  - Added some optimizations to the drop-down list search-as-you type 
+    feature
+  - The log file now logs - if possible - also the SP entityID/providerId
+  - Some small styling changes/CSS improvements
+  - Added Japanese locales from the GakuNin version of the WAYF
+  
+  Issues: <https://forge.switch.ch/redmine/projects/wayf/versions/62>
+  Please read the specific update instructions in the README file, as some
+  new configuration options were introduced that should be revised.
 
-SWITCHwayf Changes and Version History:
-1.18    - Changed default SessionInitiator of the Embedded WAYF to 
-          /Login because this has been the default SessionInitiator in 
-          Shibboleth for quite some time now.
-        - Corrected viewport meta tag separator of default header as suggested
-          by Andrew Sokolov from Saint Petersburg State University 
-        - Fixed a bug in the IdP preselection of the embedded wayf when
-          additional IdPs where added
-        - Removed as many SWITCH-specific graphics and texts as possible.
-        - Introduced configuration options to allow easier customization.
-        - Fixed a few small bugs
-        - Added some optimizations to the drop-down list search-as-you type 
-          feature
-        - The log file now logs - if possible - also the SP entityID/providerId
-        - Some small styling changes/CSS improvements
-        - Added Japanese locales from the GakuNin version of the WAYF
-        
-        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/62
-        Please read the specific update instructions in the README file, as some
-        new configuration options were introduced that should be revised.
+* Version 1.17.1 -  Release date:  14. June 2012
+  - Fixed a bug occuring when wayf_sp_samlDSURL contains GET arguments  
+    Bug reported with a patch by Takeshi Nishimura
+  - Fixed typo in configuration otpion useImprovedDropDownList
+  - Added Javascripts required for improved drop down list
+  
+  Issues: <https://forge.switch.ch/redmine/projects/wayf/versions/55>
 
-1.17.1  Release date:  14. June 2012
-        - Fixed a bug occuring when wayf_sp_samlDSURL contains GET arguments
-          Bug reported with a patch by Takeshi Nishimura from NII (Japan)
-        - Fixed typo in configuration otpion useImprovedDropDownList
-        - Added Javascripts required for improved drop down list
-        
-        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/55
+* Version 1.17    Release date:  18. May 2012
+  - Added CSS styles for mobile view
+  - Embedded WAYF now reads 'entityID' and 'return' GET arguments.  
+    They get precedence over the values configured for the Embedded WAYF.
+  - Embedded WAYF logged in message now contains a link to target URL
+  
+  Issues: <https://forge.switch.ch/redmine/projects/wayf/versions/45>
 
-1.17    Release date:  18. May 2012
-        - Added CSS styles for mobile view
-        - Embedded WAYF now reads 'entityID' and 'return' GET arguments.
-          They get precedence over the values configured for the Embedded WAYF.
-        - Embedded WAYF logged in message now contains a link to target URL
-        
-        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/45
+* Version 1.16 - Release date: 19. January 2012
+  - Added an improved version of the drop down list to the WAYF  
+    Inspired by code from Takeshi Nishimura from NII (Japan)  
+    Uses modified ImprovedDropdown JQuery library by John Fuex  
+    See LICENSE file for further information
+  - Added cookieSecurity option to set and transmit cookies securely  
+    Code contributed by Takeshi Nishimura from NII (Japan)
+  - Added additional data protection feature that uses the referer to
+    decide whether or not to preselect an Identity Provider in the
+    Embedded WAYF.  
+    Code contributed by Takeshi Nishimura from NII (Japan)
+  - If the Discovery Feed feature is activated only those IdPs are shown 
+    that are contained in the feed. Others will be hidden automatically.
+  - Added Keywords property to format of IDP entries to allow users to
+    search Identity Providers using a keyword.
 
-1.16    Release date: 19. January 2012
-        - Added an improved version of the drop down list to the WAYF
-          Inspired by code from Takeshi Nishimura from NII (Japan)
-          Uses modified ImprovedDropdown JQuery library by John Fuex
-          See LICENSE file for further information
-        - Added cookieSecurity option to set and transmit cookies securely 
-          Code contributed by Takeshi Nishimura from NII (Japan)
-        - Added additional data protection feature that uses the referer to
-          decide whether or not to preselect an Identity Provider in the
-          Embedded WAYF.
-          Code contributed by Takeshi Nishimura from NII (Japan)
-        - If the Discovery Feed feature is activated only those IdPs are shown 
-          that are contained in the feed. Others will be hidden automatically.
-        - Added Keywords property to format of IDP entries to allow users to
-          search Identity Providers using a keyword.
+  Issues: <https://forge.switch.ch/redmine/projects/wayf/versions/40>
 
-        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/40
+* Version 1.15 - Release date: 21. October 2011
+  - A default and custom CSS file can now be used
+  - Graphical design now is based new SWITCH harmos elements
+  - Adapted JSON output to use format used by Shibboleth SP
+  - Renamed some string keys to make them independent from SWITCH
+    **Please review the 'Specific Update Instructions' in the README file**
+  - Added support for the Shibboleth SP 2.4 Discovery Feed JSON output
+    in Embedded WAYF
+  - Focus on submit button works better with different browsers
+  - Invalid values for width and height are now defaulted to auto for
+    Embedded WAYF
+  - Fixed a URL composing bug that resulted in a wrong return URL to 
+    the Service Provider if the return parameter did not contain any GET
+    arguments. Reported by Tom Scavo
+  - Made implementation behave according to the Discovery Service protocol
+    specification when it comes to the return parameter. This parameter
+    is optional in case the DS knows the SP Discovery URL.  
+    Reported by Tom Scavo.
 
-1.15    Release date: 21. October 2011
-        - A default and custom CSS file can now be used
-        - Graphical design now is based new SWITCH harmos elements
-        - Adapted JSON output to use format used by Shibboleth SP
-        - Renamed some string keys to make them independent from SWITCH
-          ###################################################################
-          Please review the 'Specific Update Instructions' in the README file
-          ###################################################################
-        - Added support for the Shibboleth SP 2.4 Discovery Feed JSON output
-          in Embedded WAYF
-        - Focus on submit button works better with different browsers
-        - Invalid values for width and height are now defaulted to auto for
-          Embedded WAYF
-        - Fixed a URL composing bug that resulted in a wrong return URL to 
-          the Service Provider if the return parameter did not contain any GET
-          arguments. Reported by Tom Scavo
-        - Made implementation behave according to the Discovery Service protocol
-          specification when it comes to the return parameter. This parameter
-          is optional in case the DS knows the SP Discovery URL.
-          Reported by Tom Scavo.
+  Issues: <https://forge.switch.ch/redmine/projects/wayf/versions/26>
+    
+* Version 1.14.3 - Release date: 4. March 2011
+  - Fixed a race condition.  
+    Thanks go to Robert Basch for reporting the issue and providing a patch.
 
-        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/26
-          
-1.14.3  Release date: 4. March 2011
-        - Fixed a race condition. Thanks go to Robert Basch from MIT for 
-          reporting the issue and providing a patch.
+  Issues: <https://forge.switch.ch/redmine/projects/wayf/versions/32>
 
-        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/32
+* Version 1.14.2 - Release date: 15. December 2010
+  - IDProvider.conf.php and config.php are not overwritten anymore by upgrades
+  - Logging to syslog now works properly and is more consistent
+  - Access log now properly locks file
+  - Unknown category is not shown anymore when there is no other category
+  - Namespaces are now taken properly into account when parsing SAML2 
+    metadata. Thanks go to Olivier Salaün for reporting this issue and
+    submitting a patch.
+  - Improved installation instructions
 
-1.14.2  Release date: 15. December 2010
-        - IDProvider.conf.php and config.php are not overwritten anymore by upgrades
-        - Logging to syslog now works properly and is more consistent
-        - Access log now properly locks file
-        - Unknown category is not shown anymore when there is no other category
-        - Namespaces are now taken properly into account when parsing SAML2 
-          metadata. Thanks go to Olivier Salaün for reporting this issue and
-          submitting a patch.
-        - Improved installation instructions
+  Issues: <https://forge.switch.ch/redmine/projects/wayf/versions/25>
 
-        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/25
+* Version 1.14.1 - Release date: 12. November 2010
+  - Fixed an encoding bug that affected non-ASCII characters in JavaScripts.  
+    Thanks to Prof. Kazutsuna Yamaji for reporting this issue.
+  - Corrected behaviour of $enableDSReturnParamCheck and 
+    $useACURLsForReturnParamCheck. There won't be an error anymore if an SP 
+    has no <idpdisc:DiscoveryResponse> extension defined. In such a case
+    there will only be a check if $useACURLsForReturnParamCheck is enabled.
+  - Fixed a bug in readMetadata.php that prevented CLI execution
+  - Changed the default configuration option to generate the Embedded WAYF
+    to false due to some concerns regarding phishing attacks
+  - Added proper copyright statements to all source code files
 
-1.14.1  Release date: 12. November 2010
-        - Fixed an encoding bug that affected non-ASCII characters in 
-          JavaScripts. Thanks to Prof. Kazutsuna Yamaji for reporting this issue.
-        - Corrected behaviour of $enableDSReturnParamCheck and 
-          $useACURLsForReturnParamCheck. There won't be an error anymore if an SP 
-          has no <idpdisc:DiscoveryResponse> extension defined. In such a case
-          there will only be a check if $useACURLsForReturnParamCheck is enabled.
-        - Fixed a bug in readMetadata.php that prevented CLI execution
-        - Changed the default configuration option to generate the Embedded WAYF
-          to false due to some concerns regarding phishing attacks
-        - Added proper copyright statements to all source code files
-
-        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/21
+  Issues: <https://forge.switch.ch/redmine/projects/wayf/versions/21>
 
 
-1.14   Release date: 9. November 2010
-        - Added the configuration option wayf_force_remember_for_session to
-         the Embedded WAYF on request of Wolgang Lierz. This
-         option allows setting the remember for session checkbox to true
-       - The 'return' parameter of a Discovery Service request can now be 
-         checked using the idp-discovery-protocol extension or using the FQDN 
-         of all the Service Provider's assertion consumer URLs. The latter 
-         alternative is less secure but still offers better security against 
-         phising attacks. Have a look at config.dist.php and the README for 
-         more detailed explanations on these feature.
-       - Metadata parsing now uses DOM XML for PHP5 instead of Simple XML
-       - Fixed a minor HTML error in template for Embedded WAYF
-       - Sorting within categories works now correctly if SAML2 metadata is 
-         used to generate Identity Provider drop-down list. 
-         Thanks to Prof. Kazutsuna Yamaji
-         Informatics (NII) for reporting this issue.
-       - Fixed a minor bug in templates.php that cause PHP warnings to show up
-         in case an invalid IdP was stored in the cookie.
-       - Fixed a bug affecting the Kerberos authentication.
-         Thanks to Robert Basch for reporting these bugs and for 
-         submitting patches.
-       - Fixed a bug where hidden IdPs would still be shown in Embedded WAYF
+* Version 1.14 - Release date: 9. November 2010
+  - Added the configuration option wayf_force_remember_for_session to
+    the Embedded WAYF on request of Wolgang Lierz. This
+    option allows setting the remember for session checkbox to true
+  - The 'return' parameter of a Discovery Service request can now be 
+    checked using the idp-discovery-protocol extension or using the FQDN 
+    of all the Service Provider's assertion consumer URLs. The latter 
+    alternative is less secure but still offers better security against 
+    phising attacks. Have a look at config.dist.php and the README for 
+    more detailed explanations on these feature.
+  - Metadata parsing now uses DOM XML for PHP5 instead of Simple XML
+  - Fixed a minor HTML error in template for Embedded WAYF
+  - Sorting within categories works now correctly if SAML2 metadata is 
+    used to generate Identity Provider drop-down list.  
+    Thanks to Prof. Kazutsuna Yamaji for reporting this issue.
+  - Fixed a minor bug in templates.php that cause PHP warnings to show up
+    in case an invalid IdP was stored in the cookie.
+  - Fixed a bug affecting the Kerberos authentication.  
+    Thanks to Robert Basch for reporting these bugs and for 
+    submitting patches.
+  - Fixed a bug where hidden IdPs would still be shown in Embedded WAYF
 
-        Issues: https://forge.switch.ch/redmine/projects/wayf/versions/17
+  Issues: <https://forge.switch.ch/redmine/projects/wayf/versions/17>
 
 
 The revision history of older versions, can be found on the SWITCHwayf web page:
-https://forge.switch.ch/redmine/projects/wayf/wiki/Changes
+<https://forge.switch.ch/redmine/projects/wayf/wiki/Changes>
 
 -------------------------------------------------------------------------------
 
-Credits:
+Credits
+-------
 Find below the list of people who have contributed to code, either because they 
 found bugs, suggested improvements or contributed code. Have a look at the 
 version history in order to see the individual contributions. The list is sorted 
