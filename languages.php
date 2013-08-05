@@ -255,9 +255,9 @@ $langStrings['pt'] = array (
 // Japanese
 $langStrings['ja'] = array (
 // Read note on line 16 how to properly customize locales so that they survive updates
-'about_federation' => 'フェデレーションとは', // This string can be hidden by setting it to ''
-'about_organisation' => '学認とは', // This string can be hidden by setting it to ''
-'additional_info' => '<a href="http://www.gakunin.jp/" target="_blank">GakuNin</a>は，学術認証フェデレーションの略です．', // This string can be hidden by setting it to ''
+//'about_federation' => 'About AAI',  // This string can be hidden by setting it to ''
+//'about_organisation' => 'About SWITCH', // This string can be hidden by setting it to ''
+//'additional_info' => '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> provides innovative, unique internet services for the Swiss universities and internet users.', // This string can be hidden by setting it to ''
 
 // Generic strings
 'faq' => 'FAQ', // This string can be hidden by setting it to ''
