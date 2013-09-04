@@ -65,8 +65,9 @@
 // Whether or not to use the search-as-you-type feature of the drop down list
 //$useImprovedDropDownList = true;
 
-// Set to true in order to enable reading the Identity Provider from a SAML2 
-// metadata file defined below in $metadataFile
+// Set to true in order to enable reading the Identity Providers and Service 
+// Providers from a SAML2 metadata file defined below in $metadataFile
+// The parsed data will be available in $metadataIDPFile and $metadataSPFile
 //$useSAML2Metadata = false; 
 
   // If true parsed metadata should have precedence if there are entries defined 

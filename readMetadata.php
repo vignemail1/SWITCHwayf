@@ -1,12 +1,15 @@
 <?php // Copyright (c) 2013, SWITCH - Serving Swiss Universities
 
-// This file is used to dynamically create the list of IdPs to be 
+// This file is used to dynamically create the list of IdPs and SP to be 
 // displayed for the WAYF/DS service based on the federation metadata.
 // Configuration parameters are specified in config.php.
 //
 // The list of Identity Providers can also be updated by running the script
 // readMetadata.php periodically as web server user, e.g. with a cron entry like:
 // 5 * * * * /usr/bin/php readMetadata.php > /dev/null
+
+require_once('functions.php');
+require_once('config.php');
 
 // Init log file
 openlog("SWITCHwayf.readMetadata.php", LOG_PID | LOG_PERROR, LOG_LOCAL0);
@@ -20,10 +23,6 @@ if(isRunViaCLI()){
 	
 	// Set dummy server name
 	$_SERVER['SERVER_NAME'] = 'localhost';
-	
-	// Load configuration files
-	require('config.php');
-	require_once('functions.php');
 	
 	// Set default config options
 	initConfigOptions();
@@ -96,18 +95,20 @@ if(isRunViaCLI()){
 	// Open the metadata lock file.
 	if (($lockFp = fopen($metadataLockFile, 'a+')) === false) {
 		$errorMsg = 'Could not open lock file '.$metadataLockFile;
-		syslog(LOG_ERR, $errorMsg);
+		logError($errorMsg);
 	}
 
 	// Run as included file
 	if(!file_exists($metadataIDPFile) or filemtime($metadataFile) > filemtime($metadataIDPFile)){
+	
 		// Get an exclusive lock to regenerate the parsed files.
 		if ($lockFp !== false) {
 			if (flock($lockFp, LOCK_EX) === false) { 
 				$errorMsg = 'Could not get exclusive lock on '.$metadataLockFile;
-				syslog(LOG_ERR, $errorMsg);
+				logError($errorMsg);
 			}
 		}
+		
 		// Regenerate $metadataIDPFile.
 		list($metadataIDProviders, $metadataSProviders) = parseMetadata($metadataFile, $defaultLanguage);
 		
@@ -127,8 +128,8 @@ if(isRunViaCLI()){
 		if ($lockFp !== false) {
 			flock($lockFp, LOCK_UN);
 		}
-
-				// Now merge IDPs from metadata and static file
+		
+		// Now merge IDPs from metadata and static file
 		$IDProviders = mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries);
 		
 		// Fow now copy the array by reference
@@ -141,7 +142,7 @@ if(isRunViaCLI()){
 		if ($lockFp !== false) {
 			if (flock($lockFp, LOCK_SH) === false) { 
 				$errorMsg = 'Could not lock file '.$metadataLockFile;
-				syslog(LOG_ERR, $errorMsg);
+				logError($errorMsg);
 			}
 		}
 
@@ -182,7 +183,7 @@ function parseMetadata($metadataFile, $defaultLanguage){
 		if (isRunViaCLI()){
 			echo $errorMsg."\n";
 		} else {
-			syslog(LOG_ERR, $errorMsg);
+			logError($errorMsg);
 		}
 		return Array(false, false);
 	}
@@ -192,7 +193,7 @@ function parseMetadata($metadataFile, $defaultLanguage){
 		if (isRunViaCLI()){
 			echo $errorMsg."\n";
 		} else {
-			syslog(LOG_ERR, $errorMsg);
+			logError($errorMsg);
 		}
 		return Array(false, false);
 	}
@@ -203,7 +204,7 @@ function parseMetadata($metadataFile, $defaultLanguage){
 		if (isRunViaCLI()){
 			echo $errorMsg."\n";
 		} else {
-			syslog(LOG_ERR, $errorMsg);
+			logError($errorMsg);
 		}
 		return Array(false, false);
 	}
@@ -233,7 +234,7 @@ function parseMetadata($metadataFile, $defaultLanguage){
 						if (isRunViaCLI()){
 							echo $errorMsg."\n";
 						} else {
-							syslog(LOG_WARNING, $errorMsg);
+							logWarning($errorMsg);
 						}
 					}
 					break;
@@ -248,7 +249,7 @@ function parseMetadata($metadataFile, $defaultLanguage){
 	if (isRunViaCLI()){
 		echo $infoMsg."\n";
 	} else {
-		syslog(LOG_INFO, $infoMsg);
+		logInfo($infoMsg);
 	}
 	
 	
@@ -332,6 +333,48 @@ function processIDPRoleDescriptor($IDPRoleDescriptorNode){
 		$IDP[$lang]['Keywords'] = $keywords;
 	}
 	
+	// Get Logos
+	$MDUILogos = getMDUILogos($IDPRoleDescriptorNode);
+	foreach ($MDUILogos as $Logo){
+		// Skip non-favicon logos
+		if ($Logo['height'] != 16 || $Logo['width'] != 16 ){
+			continue;
+		}
+		
+		if ($Logo['lang'] == ''){
+			unset($Logo['lang']);
+			$IDP['Logo'] = $Logo;
+		} else {
+			$lang = $Logo['lang'];
+			unset($Logo['lang']);
+			$IDP[$lang]['Logo'] = $Logo;
+		}
+	}
+	
+	// Get AttributeValue 
+	$SAMLAttributeValues = getSAMLAttributeValues($IDPRoleDescriptorNode);
+	if ($SAMLAttributeValues){
+		$IDP['AttributeValue'] = $SAMLAttributeValues;
+	}
+	
+	// Get IPHints 
+	$MDUIIPHints = getMDUIIPHints($IDPRoleDescriptorNode);
+	if ($MDUIIPHints){
+		$IDP['IPHint'] = $MDUIIPHints;
+	}
+	
+	// Get DomainHints 
+	$MDUIDomainHints = getMDUIDomainHints($IDPRoleDescriptorNode);
+	if ($MDUIDomainHints){
+		$IDP['DomainHint'] = $MDUIDomainHints;
+	}
+	
+	// Get GeolocationHints 
+	$MDUIGeolocationHints = getMDUIGeolocationHints($IDPRoleDescriptorNode);
+	if ($MDUIGeolocationHints){
+		$IDP['GeolocationHint'] = $MDUIGeolocationHints;
+	}
+	
 	return $IDP;
 }
 
@@ -406,7 +449,6 @@ function processSPRoleDescriptor($SPRoleDescriptorNode){
 function dumpFile($dumpFile, $providers, $variableName){
 	 
 	if(($fp = fopen($dumpFile, 'w')) !== false){
-		
 		fwrite($fp, "<?php\n\n");
 		fwrite($fp, "// This file was automatically generated by readMetadata.php\n");
 		fwrite($fp, "// Don't edit!\n\n");
@@ -422,7 +464,7 @@ function dumpFile($dumpFile, $providers, $variableName){
 		if (isRunViaCLI()){
 			echo $errorMsg."\n";
 		} else {
-			syslog(LOG_ERR, $errorMsg);
+			logInfo($errorMsg);
 		}
 	}
 }
@@ -505,6 +547,90 @@ function getMDUIKeywords($RoleDescriptorNode){
 	
 	return $Entity;
 }
+
+/******************************************************************************/
+// Get MD Logos from RoleDescriptor. Prefer the favicon logos
+function getMDUILogos($RoleDescriptorNode){
+	
+	$Logos = Array();
+	$MDUILogos = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:metadata:ui', 'Logo');
+	foreach( $MDUILogos as $MDUILogoEntry ){
+		$Logo = Array();
+		$Logo['url'] = trim($MDUILogoEntry->nodeValue);
+		$Logo['height'] = ($MDUILogoEntry->getAttribute('height') != '') ? trim($MDUILogoEntry->getAttribute('height')) : '16';
+		$Logo['width'] = ($MDUILogoEntry->getAttribute('width') != '') ? trim($MDUILogoEntry->getAttribute('width')) : '16';
+		$Logo['lang'] = ($MDUILogoEntry->getAttribute('lang') != '') ? trim($MDUILogoEntry->getAttribute('lang')) : '';
+		$Logos[] = $Logo;
+	}
+	
+	return $Logos;
+}
+
+
+/******************************************************************************/
+// Get MD Attribute Value(kind) from RoleDescriptor
+function getSAMLAttributeValues($RoleDescriptorNode){
+	
+	$Entity = Array();
+	
+	$SAMLAttributeValues = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:assertion', 'AttributeValue');
+	foreach( $SAMLAttributeValues as $SAMLAttributeValuesEntry ){
+		$Entity[] = trim($SAMLAttributeValuesEntry->nodeValue);
+	}
+	
+	return $Entity;
+}
+
+
+/******************************************************************************/
+// Get MD IP Address Hints from RoleDescriptor
+function getMDUIIPHints($RoleDescriptorNode){
+	
+	$Entity = Array();
+	
+	$MDUIIPHints = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:metadata:ui', 'IPHint');
+	foreach( $MDUIIPHints as $MDUIIPHintEntry ){
+		if (preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\/[0-9]{1,2}$/", trim($MDUIIPHintEntry->nodeValue), $splitIP)){
+			$Entity[] = $splitIP[0];
+		} elseif (preg_match("/^.*\:.*\/[0-9]{1,2}$/", trim($MDUIIPHintEntry->nodeValue), $splitIP)){ 
+			$Entity[] = $splitIP[0];
+		}
+	}
+	
+	return $Entity;
+}
+
+/******************************************************************************/
+// Get MD Domain Hints from RoleDescriptor
+function getMDUIDomainHints($RoleDescriptorNode){
+	
+	$Entity = Array();
+	
+	$MDUIDomainHints = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:metadata:ui', 'DomainHint');
+	foreach( $MDUIDomainHints as $MDUIDomainHintEntry ){
+		$Entity[] = trim($MDUIDomainHintEntry->nodeValue);
+	}
+	
+	return $Entity;
+}
+
+/******************************************************************************/
+// Get MD Geolocation Hints from RoleDescriptor
+function getMDUIGeolocationHints($RoleDescriptorNode){
+	
+	$Entity = Array();
+	
+	$MDUIGeolocationHints = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:metadata:ui', 'GeolocationHint');
+	foreach( $MDUIGeolocationHints as $MDUIGeolocationHintEntry ){
+		if (preg_match("/^geo:([0-9]+\.{0,1}[0-9]*,[0-9]+\.{0,1}[0-9]*)$/", trim($MDUIGeolocationHintEntry->nodeValue), $splitGeo)){
+			$Entity[] = $splitGeo[1];
+
+		}
+	}
+	
+	return $Entity;
+}
+
 /******************************************************************************/
 // Get Organization Names from RoleDescriptor
 function getOrganizationNames($RoleDescriptorNode){

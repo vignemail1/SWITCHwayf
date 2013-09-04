@@ -33,25 +33,51 @@ function printHeader(){
 // Presents the user the drop-down list with available IDPs
 function printWAYF(){
 	
-	global $selectedIDP, $language, $IDProviders, $redirectCookieName, $imageURL, $redirectStateCookieName, $showPermanentSetting;
+	global $selectedIDP, $language, $IDProviders, $SProviders, $redirectCookieName, $imageURL, $redirectStateCookieName, $showPermanentSetting;
 	
 	if (!isset($showPermanentSetting)){
 		$showPermanentSetting = false;
 	}
-	$promptMessage =  '<strong>'.getLocalString('make_selection').'</strong>';
-	if (isset($_GET['return'])){
-		$promptMessage =  sprintf(getLocalString('access_host'), getHostNameFromURI($_GET['return']));
-	} else if (isset($_GET['entityID'])){
-		$promptMessage =  sprintf(getLocalString('access_host'), getHostNameFromURI($_GET['entityID']));
-	} else if (isset($_GET['shire'])){
-		$promptMessage =  sprintf(getLocalString('access_host'), getHostNameFromURI($_GET['shire']));
-	} else {
-		$promptMessage =  sprintf(getLocalString('access_host'), 'unknown');
+	
+	$promptMessage =  getLocalString('make_selection');
+	$serviceName = '';
+	$entityID = '';
+	
+	// Check if entityID is available
+	if (isset($_GET['entityID'])){
+		$entityID = $_GET['entityID'];
+	} else if (isset($_GET['providerId'])){
+		$entityID = $_GET['providerId'];
 	}
+	
+	// Set service name if entityID has a description
+	if (!empty($entityID) && isset($SProviders[$entityID]) ){
+		$SP = $SProviders[$entityID];
+		$serviceName = $SP['Name'];
+		if (isset($SP[$language]['Name'])){
+			$serviceName = $SP[$language]['Name'];
+		}
+	}
+	
+	// Fallback to hostname if no name was available
+	if (empty($serviceName)){
+		if (isset($_GET['return'])){
+			$serviceName = getHostNameFromURI($_GET['return']);
+		} else if (isset($_GET['shire'])){
+			$serviceName = getHostNameFromURI($_GET['shire']);
+		} else {
+			$serviceName = 'unknown';
+		}
+		$serviceName = '<span class="hostName">'.$serviceName.'</span>';
+	} else {
+		$serviceName = '<span class="serviceName">'.$serviceName.'</span>';
+	}
+	
+	// Compose strings
+	$promptMessage =  sprintf(getLocalString('access_host'), $serviceName);
 	$actionURL = $_SERVER['SCRIPT_NAME'].'?'.htmlentities($_SERVER['QUERY_STRING']);
 	$defaultSelected = ($selectedIDP == '-') ? 'selected="selected"' : '';
 	$rememberSelectionChecked = (isset($_COOKIE[$redirectStateCookieName])) ? 'checked="checked"' : '' ;
-	
 	
 	// Check if custom header template exists
 	if(file_exists('custom-body.php')){

@@ -96,6 +96,15 @@ input {
 	list-style:none;
 }
 
+.serviceName {
+	font-weight: bold;
+}
+
+.hostName {
+	font-weight: bold;
+}
+
+
 #container, .container {
 	position: absolute;
 	left: 50%;

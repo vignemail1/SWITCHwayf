@@ -756,9 +756,39 @@ function logAccessEntry($protocol, $type, $sp, $idp, $return){
 }
 
 /******************************************************************************/
+// Logs an info message
+function logInfo($errorMsg){
+	syslog(LOG_INFO, $errorMsg);
+	
+	if ($developmentMode){
+		echo $errorMsg;
+	}
+}
+
+/******************************************************************************/
+// Logs an warnimg message
+function logWarning($errorMsg){
+	syslog(LOG_WARNING, $errorMsg);
+	
+	if ($developmentMode){
+		echo $errorMsg;
+	}
+}
+
+/******************************************************************************/
+// Logs an error message
+function logError($errorMsg){
+	syslog(LOG_ERR, $errorMsg);
+	
+	if ($developmentMode){
+		echo $errorMsg;
+	}
+}
+
+/******************************************************************************/
 // Logs an fatal error message
 function logFatalErrorAndExit($errorMsg){
-	syslog(LOG_ERR, $errorMsg);
+	logError($errorMsg);
 	exit;
 }
 
