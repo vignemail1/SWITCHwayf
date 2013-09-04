@@ -190,7 +190,7 @@ function getTextElement(sourceElement, imgElement) {
             case KEY_ENTER:
 				// Submit if only one entry matches
 				if (matchedEntries == 1) {
-					$('[type="submit"]').click();
+					$('[name="Select"]').click();
 				}
 				break;
             case KEY_DOWNARROW: break;
@@ -383,8 +383,8 @@ function populateListItem(newListControl, optionItem) {
         });
         newListItem.mouseout(function () { $(this).removeClass('idd_listItem_Hover'); });
         newListItem.click(function () {
-        	selectItem($(this),true,true,false); 
-        	$('[type="submit"]').click(); 
+			selectItem($(this),true,true,false); 
+			$('[name="Select"]').click();
         });
     }
     else {
