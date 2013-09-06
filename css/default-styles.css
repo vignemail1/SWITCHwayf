@@ -249,7 +249,7 @@ div.idd_list {
 	font-size: 12px;
 	height: 16px;
 	margin: 0;
-	padding-bottom: 2px;
+	margin-bottom: 4px;
 	text-align: left;
 }
 
@@ -270,5 +270,15 @@ div.idd_list {
 .idd_listItem_Disabled {
 	color: #C0C0C0;
 	cursor: default;
+}
+
+.idd_listItemText {
+	margin-bottom: 2px;
+	margin-left: 20px;
+}
+
+.idd_listItemLogo {
+	margin-right: 4px;
+	vertical-align:top;
 }
 

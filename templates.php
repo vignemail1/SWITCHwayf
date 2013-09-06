@@ -152,8 +152,15 @@ function printDropDownList($IDProviders, $selectedIDP = ''){
 			$selected = '';
 		}
 		
+		// Add logo to extension string
+		if (isset($values['Logo'])){
+			if ($values['Logo']['height'] == 16 && $values['Logo']['width'] == 16){
+				$extension = 'logo="'.$values['Logo']['url']. '"';
+			}
+		}
+		
 		echo '
-		<option title="'.$title.'" value="'.$key.'"'.$selected.'>'.$IdPName.'</option>';
+		<option title="'.$title.'" value="'.$key.'"'.$selected.' '.$extension.'>'.$IdPName.'</option>';
 		
 		$counter++;
 	}

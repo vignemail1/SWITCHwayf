@@ -44,69 +44,70 @@ var suspendTextBoxExitHandler = false;
 
 	// Stores number of entries that matched for text
 	var matchedEntries = 0;
+	var displayLogos = false;
 
 (function ($) {
     $.fn.improveDropDown = function (value) {
-                                         if (!resizeHandlerSet) {
-                                            $(window).resize(function() {delayCall('windowResize', function() { idd_windowResize(); }, 20 );} );
-                                            $(document).click(windowDismissOpenLists);
-                                            resizeHandlerSet = true;
-                                          }
+             if (!resizeHandlerSet) {
+                $(window).resize(function() {delayCall('windowResize', function() { idd_windowResize(); }, 20 );} );
+                $(document).click(windowDismissOpenLists);
+                resizeHandlerSet = true;
+              }
+    
+            if ((arguments.length==0)||typeof(value)=='object') { 
+                    //init
+    
+                    var iconPath='./img/dropIcon.png';
+                    var noMatchesText='No Matches';
+                    var noItemsText='No Items Available';
+                
+                    if (arguments.length==1) {
+                      if ('iconPath' in value) {iconPath = value.iconPath.toString();}
+                      if ('noMatchesText' in value) {noMatchesText = value.noMatchesText.toString();}
+                      if ('noItemsText' in value) {noItemsText = value.noItemsText.toString();}
+                    }
+    
+                this.each(function () {
+                    var thisElement = $(this);
 
-                                        if ((arguments.length==0)||typeof(value)=='object') { 
-                                                //init
-
-                                                var iconPath='./img/dropIcon.png';
-                                                var noMatchesText='No Matches';
-                                                var noItemsText='No Items Available';
-                                            
-                                                if (arguments.length==1) {
-                                                  if ('iconPath' in value) {iconPath = value.iconPath.toString();}
-                                                  if ('noMatchesText' in value) {noMatchesText = value.noMatchesText.toString();}
-                                                  if ('noItemsText' in value) {noItemsText = value.noItemsText.toString();}
-                                                }
-
-                                            this.each(function () {
-                                                var thisElement = $(this);
-
-                                                var wrapperControl = getWrapperElement(thisElement);
-                                                
-                                                thisElement.after(wrapperControl);
-
-                                                var newImgElement = getImageElement(thisElement,iconPath);
-                                                wrapperControl.append(newImgElement);
-
-                                                var newTextElement = getTextElement(thisElement, newImgElement);
-                                                wrapperControl.prepend(newTextElement); 
-
-                                                var newListControl = getListElement(thisElement);
-                                                wrapperControl.append(newListControl); 
-
-                                                populateList(thisElement, newListControl,noMatchesText,noItemsText);
-
-                                                if (document.activeElement == thisElement[0]) {
-                                                    //if replaced element had focus, move it to new control.
-                                                    newTextElement.focus().select(); 
-                                                }
-
-                                                if (debugMode != 1) { 
-                                                    thisElement.hide();                                                
-                                                }
-                                             });
-                                         }
-                                         else {  
-                                                //setvalue                                               
-                                                this.each(function () {
-                                                    var listControl = getListControlFromOtherControl($(this));
-                                                        if (listControl!=null) {
-                                                            var item = findItemByValue(listControl, value);
-                                                            if (item != null) { selectItem(item,true,true,false); }
-                                                        }
-                                                });
-                                         }
-
-                                         return this; //preserve chaining.
-                                    };
+                    var wrapperControl = getWrapperElement(thisElement);
+                    
+                    thisElement.after(wrapperControl);
+    
+                    var newImgElement = getImageElement(thisElement,iconPath);
+                    wrapperControl.append(newImgElement);
+    
+                    var newTextElement = getTextElement(thisElement, newImgElement);
+                    wrapperControl.prepend(newTextElement); 
+    
+                    var newListControl = getListElement(thisElement);
+                    wrapperControl.append(newListControl); 
+    
+                    populateList(thisElement, newListControl,noMatchesText,noItemsText);
+    
+                    if (document.activeElement == thisElement[0]) {
+                        //if replaced element had focus, move it to new control.
+                        newTextElement.focus().select(); 
+                    }
+    
+                    if (debugMode != 1) { 
+                        thisElement.hide();                                                
+                    }
+                 });
+             }
+             else {  
+                    //setvalue                                               
+                    this.each(function () {
+                        var listControl = getListControlFromOtherControl($(this));
+                            if (listControl!=null) {
+                                var item = findItemByValue(listControl, value);
+                                if (item != null) { selectItem(item,true,true,false); }
+                            }
+                    });
+             }
+    
+             return this; //preserve chaining.
+        };
     })(jQuery);
 
 
@@ -115,7 +116,12 @@ var suspendTextBoxExitHandler = false;
 function getWrapperElement(sourceElement) {
     var newID = sourceElement.attr('id');
     var newWrapperElement = $('<span></span>');
-    
+
+	// Activate logo usage if there is at least one logo present
+	if ($('#' + newID ).find('option[logo]').length > 0){
+		displayLogos = true;
+	}
+
     newWrapperElement.attr('id', newID + idd_wrap_suffix)
                      .css('border-style','none')
                      .css('white-space', 'nowrap')
@@ -124,6 +130,24 @@ function getWrapperElement(sourceElement) {
                      .click(function () {return false;});
 
     return newWrapperElement;
+}
+
+function addLogoToTextElement(newTextElement, url){
+	
+	if (!displayLogos){
+		return;
+	}
+	
+	if (url){
+		newTextElement.css('text-indent' , '20px');
+		newTextElement.css('background-color' , '#fff');
+		newTextElement.css('background-repeat' , 'no-repeat');
+		newTextElement.css('background-position' , '1px 1px');
+		newTextElement.css('background-image' , 'url(' + url + ')');
+	} else {
+		newTextElement.css('text-indent' , '0');
+		newTextElement.css('background' , '#fff');
+	}
 }
 
 function getTextElement(sourceElement, imgElement) {
@@ -146,6 +170,10 @@ function getTextElement(sourceElement, imgElement) {
                   .attr('autocomplete', 'off')
                   .attr('padding','0')
                   .width(controlWidth);
+    
+	if (displayLogos){
+		addLogoToTextElement(newTextElement, sourceElement.find('option:selected').attr('logo'));
+	}
     
     setIsDirty(newTextElement, false);
 
@@ -213,6 +241,7 @@ function getTextElement(sourceElement, imgElement) {
 		if (obj.target.value != ''){
 			obj.target.savedValue = obj.target.value;
 			obj.target.value = '';
+			addLogoToTextElement($(obj.target), null);
 		}
 		
 		 $('#' + newID + idd_icon_suffix).click();
@@ -357,8 +386,20 @@ function getListGroupItem(label,visible) {
 
 function populateListItem(newListControl, optionItem) {
     var title = '';
-    var newListItem = $('<div>' + optionItem.text() + '</div>');
+
+	// Add logo if there is at least one logo
+	var logo = '';
+	if (displayLogos){
+		if (optionItem.attr('logo')){
+			logo = '<img src="' + optionItem.attr('logo') + '" width="16" height="16" class="idd_listItemLogo" />';
+		} else if (optionItem.attr('title')){
+			// Add an invisible 1px gif inline
+			logo = '<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="16" height="16" class="idd_listItemLogo" />';
+		}
+	}
     
+    var newListItem = $('<div>' + logo + optionItem.text() + '</div>');
+
     newListItem.addClass('idd_listItem');
     
     if (isOptGroup(optionItem.parent())) {
@@ -374,6 +415,12 @@ function populateListItem(newListControl, optionItem) {
                .css('white-space','nowrap')
                .css('cursor','pointer');
 
+	// Move logo from source element to list
+	if (optionItem.attr('logo')){
+		newListItem.attr('logo', optionItem.attr('logo'));
+		optionItem.removeAttr('logo');
+	}
+
     newListControl.append(newListItem);
 
     if((optionItem.attr("disabled")||'')=='') {
@@ -383,7 +430,12 @@ function populateListItem(newListControl, optionItem) {
         });
         newListItem.mouseout(function () { $(this).removeClass('idd_listItem_Hover'); });
         newListItem.click(function () {
-			selectItem($(this),true,true,false); 
+			selectItem($(this),true,true,false);
+			if (optionItem.attr('logo')){
+				var textControl = getTextControlFromOtherControl(newListControl);
+				addLogoToTextElement($(textControl), optionItem.attr('logo'));
+			}
+			
 			$('[name="Select"]').click();
         });
     }
@@ -404,7 +456,7 @@ function selectItem(selectedItem,forceDirty,closeList, supressChangeEvent) {
 
     // update visible textbox 
     textControl.val(selectedItem.text());
-  
+    
    //update underlying control value
    var sourceControl = getSelectControlFromOtherControl(textControl); 
    sourceControl.val(getItemValue(selectedItem));
@@ -418,10 +470,13 @@ function selectItem(selectedItem,forceDirty,closeList, supressChangeEvent) {
 
    if (closeList) {
        listControl.hide();
-   }
-   else {              
+   } else {              
        makeListItemVisible(listControl, selectedItem);
    }
+
+	// show logo
+	addLogoToTextElement($(textControl), $(selectedItem).attr('logo'));
+
 }
 
 function resetValue(textControl) {
@@ -678,7 +733,7 @@ function navItem(textControl, navDirection) {
         showList(listControl);
         currentItem = getBestMatch(currentValue, listControl);
     }
-    
+
     var selectedItem;
     if ((currentItem != null) && (currentItem.length > 0)) {
         if (isItemSelected) {
@@ -704,7 +759,7 @@ function navItem(textControl, navDirection) {
         selectItem(selectedItem, Boolean(currentValue!=selectedItem.text()) ,false,true);
         if (isItemSelected) { listControl.find('.idd_listItem_Hover').removeClass('idd_listItem_Hover'); }
         selectedItem.addClass("idd_listItem_Hover");         
-    }    
+    }
 }
 
 function makeListItemVisible(listControl, item) {
