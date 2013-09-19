@@ -6,8 +6,8 @@
 	<div id="userInputArea">
 		<p class="promptMessage"><?php echo getLocalString('permanent_cookie_notice'); ?></p>
 		<div style="text-align: center">
-			<select name="permanent_user_idp" id="userIdPSelection" disabled="disabled"> 
-				<option value="-"><?php echo $permanentUserIdPName ?></option>
+			<select name="permanent_user_idp" id="userIdPSelection">
+				<option value="<?php echo $permanentUserIdP ?>" logo="<?php echo $permanentUserIdPLogo ?>"><?php echo $permanentUserIdPName ?></option>
 			</select>
 			<input type="submit" accesskey="c" name="clear_user_idp" value="<?php echo getLocalString('delete_permanent_cookie_button') ?>">
 			<?php if (isValidShibRequest()) : ?>

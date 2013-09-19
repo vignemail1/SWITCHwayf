@@ -481,17 +481,17 @@ function getIdPPathInfoHint(){
 /******************************************************************************/
 // Parses the Kerbores realm out of the string and returns it
 
-function composeOptionTitle($IdPValues){
-	$title = '';
+function composeOptionData($IdPValues){
+	$data = '';
 	foreach($IdPValues as $key => $value){
 		if (is_array($value) && isset($value['Name'])){
-			$title .= ' '.$value['Name'];
+			$data .= ' '.$value['Name'];
 		} elseif (is_array($value) && isset($value['Keywords'])) {
-			$title .= ' '.$value['Keywords'];
+			$data .= ' '.$value['Keywords'];
 		}
 	}
 	
-	return $title;
+	return $data;
 }
 
 /******************************************************************************/

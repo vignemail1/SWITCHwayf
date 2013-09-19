@@ -516,6 +516,22 @@ if (
 	printError($message);
 	exit;
 	
+} elseif(isRequestType('styles.css')){
+	
+	header('Content-Type: text/css');
+	
+	printCSS('styles.css');
+	
+	exit;
+
+} elseif(isRequestType('ImprovedDropDown.css')){
+
+	header('Content-Type: text/css');
+	
+	printCSS('ImprovedDropDown.css');
+	
+	exit;
+
 } elseif(isRequestType('snippet.html')){
 	
 	// Check if this feature is activated at all

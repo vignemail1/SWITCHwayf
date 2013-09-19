@@ -125,7 +125,6 @@ function getWrapperElement(sourceElement) {
     newWrapperElement.attr('id', newID + idd_wrap_suffix)
                      .css('border-style','none')
                      .css('white-space', 'nowrap')
-                     .css('margin', '0')
                      .css('padding', '0')                     
                      .click(function () {return false;});
 
@@ -138,15 +137,24 @@ function addLogoToTextElement(newTextElement, url){
 		return;
 	}
 	
-	if (url){
-		newTextElement.css('text-indent' , '20px');
-		newTextElement.css('background-color' , '#fff');
-		newTextElement.css('background-repeat' , 'no-repeat');
-		newTextElement.css('background-position' , '1px 1px');
-		newTextElement.css('background-image' , 'url(' + url + ')');
-	} else {
+	if (!url){
 		newTextElement.css('text-indent' , '0');
 		newTextElement.css('background' , '#fff');
+		return;
+	}
+	
+	newTextElement.css('text-indent' , '20px');
+	// IE Fix
+	newTextElement.css('line-height' , '18px');
+	
+	// Add logo as background
+	newTextElement.css('background-color' , '#fff');
+	newTextElement.css('background-repeat' , 'no-repeat');
+	newTextElement.css('background-position' , '1px 1px');
+	if (url.match(/^url\(/)){
+		newTextElement.css('background-image' , url);
+	} else {
+		newTextElement.css('background-image' , 'url(' + url + ')');
 	}
 }
 
@@ -157,13 +165,13 @@ function getTextElement(sourceElement, imgElement) {
     var newTextElement = $('<input type="text" />');
 	// For some reason we have to substract 2px from the height when using <!DOCTYPE HTML>
 	var quirksModeOffset = 2;
-
-    var controlWidth = Math.max(sourceElement.innerWidth() - imgElement.outerWidth(),40);
+	
+	var controlWidth = Math.max(sourceElement.outerWidth() - imgElement.outerWidth(),40);
 
     newTextElement.attr('id', newID + idd_text_suffix)
                   .addClass('idd_textbox')
                   .attr('value', sourceElement.find('option:selected').text())
-				  .css('height', (imgElement.innerHeight() - quirksModeOffset) + 'px')
+				  .css('height', Math.max((imgElement.innerHeight() - quirksModeOffset), 18) + 'px')
                   .css('font-family', sourceElement.css('font-family'))
                   .css('font-size', sourceElement.css('font-size'))
                   .css('border-width', '1px')
@@ -241,6 +249,7 @@ function getTextElement(sourceElement, imgElement) {
 		if (obj.target.value != ''){
 			obj.target.savedValue = obj.target.value;
 			obj.target.value = '';
+			obj.target.savedLogo = $(obj.target).css('background-image');
 			addLogoToTextElement($(obj.target), null);
 		}
 		
@@ -251,6 +260,7 @@ function getTextElement(sourceElement, imgElement) {
 	newTextElement.focusout(function (obj) {
 		if (obj.target.value == '' && obj.target.savedValue != ''){
 			obj.target.value = obj.target.savedValue;
+			addLogoToTextElement($(obj.target), obj.target.savedLogo);
 		}
 	});
 
@@ -261,12 +271,14 @@ function getImageElement(sourceElement,iconPath) {
     var newID = sourceElement.attr('id');
     var newImgElement = $('<img />');
     var quirksModeOffset = jQuery.support.boxModel ? 0 : 2;
+	var imageSize = sourceElement.outerHeight() + quirksModeOffset;
 
     newImgElement.attr('id', newID + idd_icon_suffix)
                  .attr('src',iconPath)
                  .addClass('idd_icon')
                  .css('cursor', 'pointer')
-                 .css('height', (sourceElement.outerHeight() - quirksModeOffset) + 'px')
+                 .css('height', imageSize + 'px')
+				.css('width', imageSize + 'px')
                  .css('vertical-align','middle')
                  .css('overflow','hidden')
                  .css('display','inline-block')
@@ -316,6 +328,7 @@ function getListElement(sourceElement) {
                   .css('overflow-y','auto')
                   .css('overflow-x', 'hidden') 
                   .css('padding-right','20px')
+				  .css('background-color','white')
                   .addClass('idd_list')
                   .mouseenter(function () { suspendTextBoxExitHandler = true; })
                   .mouseleave(function () { suspendTextBoxExitHandler = false; });
@@ -392,7 +405,7 @@ function populateListItem(newListControl, optionItem) {
 	if (displayLogos){
 		if (optionItem.attr('logo')){
 			logo = '<img src="' + optionItem.attr('logo') + '" width="16" height="16" class="idd_listItemLogo" />';
-		} else if (optionItem.attr('title')){
+		} else if (optionItem.attr('data')){
 			// Add an invisible 1px gif inline
 			logo = '<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="16" height="16" class="idd_listItemLogo" />';
 		}
@@ -411,10 +424,17 @@ function populateListItem(newListControl, optionItem) {
     
     newListItem.attr('savedValue', optionItem.val())
                .attr('title', title)    
-				.attr('savedTitle', optionItem.attr('title'))
                .css('white-space','nowrap')
                .css('cursor','pointer');
 
+	// Move data element to list element
+	if (optionItem.attr('data')){
+		newListItem.attr('data', optionItem.attr('data'))
+		optionItem.removeAttr('data');
+	} else {
+		newListItem.attr('data', optionItem.text())
+	}
+	
 	// Move logo from source element to list
 	if (optionItem.attr('logo')){
 		newListItem.attr('logo', optionItem.attr('logo'));
@@ -699,7 +719,7 @@ function doesListItemMach(listItem, compareText) {
 	}
 
     // Compares a listItem (jQuery object representing item in dropdown list) to compareText
-	return (!listItem.hasClass('idd_listItem_Disabled')) && (stringContainsCaseInsensitive(listItem.text(), compareText) || stringContainsCaseInsensitive(listItem.attr('savedTitle'), compareText))
+	return (!listItem.hasClass('idd_listItem_Disabled')) && (stringContainsCaseInsensitive(listItem.text(), compareText) || stringContainsCaseInsensitive(listItem.attr('data'), compareText))
 }
 
 function getIsDirty(textControl) {

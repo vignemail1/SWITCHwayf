@@ -130,6 +130,13 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // [Optional, default: commented out]
 // var wayf_use_discovery_service = false;
 
+// If enabled, the Embedded WAYF uses the improved drop down list feature
+// will transform the list of organisations into a search-field while keeping
+// its original list character.
+// [Optional, default: false]
+// var wayf_use_improved_drop_down_list = false
+
+
 // Force the user's Home Organisation selection to be remembered for the
 // current browser session. If wayf_show_remember_checkbox is true
 // the checkbox will be shown but will be read only.
@@ -202,8 +209,19 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // }
 
 // EntityIDs, Names and SSO URLs of Identity Providers from other federations 
-// that should be added to the drop-down list
-// The IdPs will be displayed in the sequence they are defined
+// that should be added to the drop-down list. 
+// name: Name of the Identity Provider to display
+// entityID: SAML entityID/providerID of this Identity Provider
+// SAML1SSOurl: Endpoint for the SAML1 SSO handler
+// logoURL: URL or inline image data of that IdP. Image must be a 16x16 pixel image
+//          and it should be loaded from an HTTPS URL. Otherwise IE and other
+//          browsers complain
+// data: Non-visible data that may be used to find this Identity Provider when the
+//       improve drop-down feature is enabled. This string for example can  include 
+//       the domain names, abbreviations, localities or alternative names of the 
+//       organisation. Basically, anything the user could use to search his institution.
+//       
+// The IdPs will be displayed in the order they are defined
 // [Optional, commented out by default]
 // var wayf_additional_idps = [ ];
 
@@ -212,11 +230,15 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 //        
 //        {name:"International University X",
 //        entityID:"urn:mace:example.org:example.university.org",
-//        SAML1SSOurl:"https://int.univ.org/shibboleth-idp/SSO"},
+//        SAML1SSOurl:"https://int.univ.org/shibboleth-idp/SSO",
+//        logoURL:"https://int.univ.org/favicon.ico",
+//        data:"univ.org université intérnationale X"},
 //
 //        {name:"Some Other University",
 //        entityID:"https://other.univ.edu/idp/shibboleth",
-//        SAML1SSOurl:"https://other.univ.edu/shibboleth-idp/SSO"},
+//        SAML1SSOurl:"https://other.univ.edu/shibboleth-idp/SSO",
+//        logoURL:"https://other.univ.edu/favicon.ico",
+//        data:"other.univ.org autre université intérnationale X"},
 // ];
 
 

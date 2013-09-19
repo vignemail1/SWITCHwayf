@@ -7,6 +7,8 @@
 	<meta name="keywords" content="Home Organisation, Discovery Service, WAYF, Shibboleth, Login, AAI">
 	<meta name="description" content="Choose your home organisation to authenticate">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+	<link rel="stylesheet" href="<?php echo $_SERVER['SCRIPT_NAME'] ?>/styles.css" type="text/css">
+	<link rel="stylesheet" href="<?php echo $_SERVER['SCRIPT_NAME'] ?>/ImprovedDropDown.css" type="text/css">
 	<script type="text/javascript" src="<?php echo $javascriptURL ?>/jquery.js"></script>
 	<script type="text/javascript" src="<?php echo $javascriptURL ?>/improvedDropDown.js"></script>
 	<script type="text/javascript">
@@ -97,11 +99,6 @@
 	
 	-->
 	</script>
-	<style type="text/css">
-	<!--
-	<?php printCSS() ?>
-	-->
-	</style>
 </head>
 
 <body>

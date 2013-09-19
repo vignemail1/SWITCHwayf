@@ -6,7 +6,7 @@
 	<div id="userInputArea">
 		<p class="promptMessage"><?php echo getLocalString('permanently_remember_selection') ?></p>
 		<div style="text-align: center">
-			<select name="user_idp" id="userIdPSelection"> 
+			<select name="user_idp" id="userIdPSelection">
 				<option value="-" <?php echo $defaultSelected ?>><?php echo getLocalString('select_idp') ?> ...</option>
 			<?php printDropDownList($IDProviders, $selectedIDP) ?>
 			</select>

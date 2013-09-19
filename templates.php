@@ -122,9 +122,9 @@ function printDropDownList($IDProviders, $selectedIDP = ''){
 			$IdPName = $values['Name'];
 		}
 		
-		// Add additional information as title to the entry
-		$title = getDomainNameFromURI($key);
-		$title .= composeOptionTitle($values);
+		// Add additional information as data attribute to the entry
+		$data = getDomainNameFromURI($key);
+		$data .= composeOptionData($values);
 		
 		// Figure out if entry is valid or a category
 		if (!isset($values['SSO'])){
@@ -160,7 +160,7 @@ function printDropDownList($IDProviders, $selectedIDP = ''){
 		}
 		
 		echo '
-		<option title="'.$title.'" value="'.$key.'"'.$selected.' '.$extension.'>'.$IdPName.'</option>';
+		<option value="'.$key.'"'.$selected.' data="'.$data.'" '.$extension.'>'.$IdPName.'</option>';
 		
 		$counter++;
 	}
@@ -182,19 +182,27 @@ function printNotice(){
 	$actionURL = $_SERVER['SCRIPT_NAME'].'?'.htmlentities($_SERVER['QUERY_STRING']);
 	
 	$hiddenUserIdPInput = '';
+	$permanentUserIdP = '';
 	$permanentUserIdPName = '';
+	$permanentUserIdPLogo = '';
+	
+	
 	if (
 			isset($_POST['user_idp']) 
 			&& checkIDPAndShowErrors($_POST['user_idp'])
 		){
-		$hiddenUserIdPInput = '<input type="hidden" name="user_idp" value="'.$_POST['user_idp'].'">';
-		$permanentUserIdPName = $IDProviders[$_POST['user_idp']]['Name'];
+		$permanentUserIdP = $_POST['user_idp'];
 	} elseif (
 			isset($_COOKIE[$redirectCookieName]) 
 			&& checkIDPAndShowErrors($_COOKIE[$redirectCookieName])
 		){
-		$hiddenUserIdPInput = '<input type="hidden" name="user_idp" value="'.$_COOKIE[$redirectCookieName].'">';
-		$permanentUserIdPName = $IDProviders[$_COOKIE[$redirectCookieName]]['Name'];
+		$permanentUserIdP = $_COOKIE[$redirectCookieName];
+	}
+	
+	if ($permanentUserIdP != ''){
+		$hiddenUserIdPInput = '<input type="hidden" name="user_idp" value="'.$permanentUserIdP.'">';
+		$permanentUserIdPName = $IDProviders[$permanentUserIdP]['Name'];
+		$permanentUserIdPLogo = $IDProviders[$permanentUserIdP]['Logo']['url'];
 	}
 	
 	// Check if footer template exists
@@ -244,7 +252,7 @@ function printError($message){
 // Prints the JavaScript that renders the Embedded WAYF
 function printEmbeddedWAYFScript(){
 
-	global $langStrings, $language, $imageURL, $logoURL, $smallLogoURL, $federationURL;
+	global $langStrings, $language, $imageURL, $javascriptURL, $cssURL, $logoURL, $smallLogoURL, $federationURL;
 	global $selectedIDP, $IDProviders, $SAMLDomainCookieName, $redirectCookieName, $redirectStateCookieName, $federationName;
 	
 	// Get some values that are used in the script
@@ -282,6 +290,17 @@ function printEmbeddedWAYFScript(){
 			$IdPSSO = '';
 		}
 		
+		// Logo URL
+		if (isset($IDProvider['Logo']['url'])){
+			$IdPLogoURL = $IDProvider['Logo']['url'];
+		} else {
+			$IdPLogoURL = '';
+		}
+		
+		// Add other information to find IdP
+		$IdPData = getDomainNameFromURI($key);
+		$IdPData .= composeOptionData($IDProvider);
+		
 		// Skip non-IdP entries
 		if ($IdPType == '' || $IdPType == 'category'){
 			continue;
@@ -292,11 +311,18 @@ function printEmbeddedWAYFScript(){
 	"{$key}":{
 		type:"{$IdPType}",
 		name:"{$IdPName}",
-		SAML1SSOurl:"{$IdPSSO}"
+		SAML1SSOurl:"{$IdPSSO}",
+		logoURL:"{$IdPLogoURL}",
+		data:"{$IdPData}"
 		}
 ENTRY;
 	}
 	$JSONIdPList = join(',', $JSONIdPArray);
+	
+	// Text for javascript
+	$searchText = getLocalString('search_idp', 'js');
+	$noIdPFoundText =  getLocalString('no_idp_found', 'js');
+	$noIdPAvailableText = getLocalString('no_idp_available', 'js');
 	
 	echo <<<SCRIPT
 
@@ -314,6 +340,7 @@ var wayf_return_url;
 var wayf_sp_handlerURL;
 
 var wayf_use_discovery_service;
+var wayf_use_improved_drop_down_list;
 var wayf_use_small_logo;
 var wayf_width;
 var wayf_height;
@@ -772,6 +799,54 @@ function getGETArgumentSeparator(url){
 	}
 }
 
+function ieLoadBugFix(scriptElement, callback){
+	if (scriptElement.readyState=='loaded' || scriptElement.readyState=='completed'){
+		callback();
+	 } else {
+		setTimeout(function() {
+			ieLoadBugFix(scriptElement, callback); 
+		}, 100);
+	 }
+}
+
+function loadJQuery() {
+	
+	var head = document.getElementsByTagName('head')[0];
+	var script = document.createElement('script');
+	script.src = '{$javascriptURL}/jquery.js';
+	script.type = 'text/javascript';
+	script.onload = function() {
+		loadImprovedDropDown();
+	};
+	
+	// Fix for IE Browsers
+	ieLoadBugFix(script, function(){
+		loadImprovedDropDown();
+	});
+	
+	head.appendChild(script);
+}
+
+function loadImprovedDropDown(){
+	
+	// Load CSS
+	$('head').append('<link rel="stylesheet" type="text/css" href="{$cssURL}/default-ImprovedDropDown.css">');
+	
+	// Load Improved Drop Down Javascript
+	$.getScript( '{$javascriptURL}/improvedDropDown.js', function( ) {
+		var searchText = '{$searchText}';
+		$("#user_idp:enabled option[value='-']").text(searchText);
+		
+		// Convert select element into improved drop down list
+		$("#user_idp:enabled").improveDropDown({
+			iconPath:'{$imageURL}/drop_icon.png',
+			noMatchesText: '{$noIdPFoundText}',
+			noItemsText: '{$noIdPAvailableText}'
+		});
+	 
+	});
+}
+
 (function() {
 	
 	var config_ok = true; 
@@ -786,6 +861,13 @@ function getGETArgumentSeparator(url){
 		|| typeof(wayf_use_discovery_service) != "boolean"
 	){
 		wayf_use_discovery_service = true;
+	}
+	
+	if(
+		typeof(wayf_use_improved_drop_down_list)  == "undefined"  
+		|| typeof(wayf_use_improved_drop_down_list) != "boolean"
+	){
+		wayf_use_improved_drop_down_list = false;
 	}
 	
 	// Overwrite entityID with GET argument if present
@@ -1031,7 +1113,7 @@ function getGETArgumentSeparator(url){
 	if (wayf_hide_logo != true){
 		
 		// Write header of logo div
-		writeHTML('<div id="wayf_logo_div" style="float: right;"><a href="$federationURL" target="_blank" style="border:0px">');
+		writeHTML('<div id="wayf_logo_div" style="float: right;"><a href="$federationURL" target="_blank" style="border:0px; margin-bottom: 4px;">');
 		
 		// Which size of the logo should we display
 		var embeddedLogoURL = '';
@@ -1171,7 +1253,7 @@ SCRIPT;
 			// Show additional IdPs in the order they are defined
 			for ( var i=0; i < wayf_most_used_idps.length; i++){
 				if (wayf_idps[wayf_most_used_idps[i]]){
-					writeHTML('<option value="' + wayf_most_used_idps[i] + '">' + wayf_idps[wayf_most_used_idps[i]].name + '</option>');
+					writeHTML('<option value="' + wayf_most_used_idps[i] + '" logo="' + wayf_idps[wayf_most_used_idps[i]].logoURL + '" logo="' + wayf_idps[wayf_most_used_idps[i]].data + '">' + wayf_idps[wayf_most_used_idps[i]].name + '</option>');
 				}
 			}
 			
@@ -1228,20 +1310,27 @@ SCRIPT;
 		// Set selected attribute
 		$selected = ($selectedIDP == $key) ? ' selected="selected"' : '' ;
 		$IdPType = isset($IDProviders[$key]['Type']) ? $IDProviders[$key]['Type'] : '';
+		$IdPLogo = ' logo="'.$IDProviders[$key]['Logo']['url']. '" ';
+		$IdPData = getDomainNameFromURI($key);
+		$IdPData .= composeOptionData($IDProviders[$key]);
 		
 		echo <<<SCRIPT
 
 		if (isAllowedType('{$key}','{$IdPType}') && isAllowedIdP('{$key}')){
+			writeHTML('<option value="{$key}" ');
 			if (
 				"{$selectedIDP}" == "-" 
 				&& typeof(wayf_default_idp) != "undefined"
 				&& wayf_default_idp == "{$key}"
 				){
-				writeHTML('<option value="{$key}" selected="selected">{$IdPName}</option>');
+				writeHTML('selected="selected"');
 			} else {
 				// Let central WAYF choose
-				writeHTML('<option value="{$key}" {$selected}>{$IdPName}</option>');
+				writeHTML('{$selected}');
 			}
+			
+			writeHTML('data="$IdPData" {$IdPLogo}');
+			writeHTML('>{$IdPName}</option>');
 		}
 SCRIPT;
 	}
@@ -1269,25 +1358,37 @@ SCRIPT;
 			
 			// Show additional IdPs
 			for ( var i=0; i < wayf_additional_idps.length ; i++){
-				if (wayf_additional_idps[i]){
-					// Last used IdP is known because of local _saml_idp cookie
-					if (
-						wayf_additional_idps[i].name
-						&& wayf_additional_idps[i].entityID == last_idp
-						){
-						writeHTML('<option value="' + i + '" selected="selected">' + wayf_additional_idps[i].name  + '</option>');
-					} 
-					// If no IdP is known but the default IdP matches, use this entry
-					else if (
-						wayf_additional_idps[i].name
-						&& typeof(wayf_default_idp) != "undefined" 
-						&& wayf_additional_idps[i].entityID == wayf_default_idp
-						){
-						writeHTML('<option value="' + i + '" selected="selected">' + wayf_additional_idps[i].name  + '</option>');
-					} else if (wayf_additional_idps[i].name) {
-						writeHTML('<option value="' + i + '">' + wayf_additional_idps[i].name  + '</option>');
-					}
+				
+				if (!wayf_additional_idps[i]){
+					continue;
 				}
+				
+				writeHTML('<option ');
+				
+				// Last used IdP is known because of local _saml_idp cookie
+				if (
+					wayf_additional_idps[i].name
+					&& wayf_additional_idps[i].entityID == last_idp
+					){
+					writeHTML(' selected="selected" ');
+				} 
+				// If no IdP is known but the default IdP matches, use this entry
+				else if (
+					wayf_additional_idps[i].name
+					&& typeof(wayf_default_idp) != "undefined" 
+					&& wayf_additional_idps[i].entityID == wayf_default_idp
+					){
+					writeHTML(' selected="selected" ');
+				}
+				
+				writeHTML(' value="' + i + '" data="' + wayf_additional_idps[i].name + '"');
+				
+				// Add logo if available
+				if (wayf_additional_idps[i].logoURL){
+					writeHTML(' logo="' + wayf_additional_idps[i].logoURL + '"');
+				}
+				
+				writeHTML('>' + wayf_additional_idps[i].name  + '</option>');
 			}
 			
 			if (wayf_show_categories == true){
@@ -1343,6 +1444,16 @@ SCRIPT;
 	
 	// Now output HTML all at once
 	document.write(wayf_html);
+	
+	if (wayf_use_improved_drop_down_list){
+		// Check if jQuery is alread loaded
+		if (typeof jQuery == 'undefined') {
+			loadJQuery();
+		} else {
+			loadImprovedDropDown();
+		}
+	}
+	
 })()
 
 SCRIPT;
@@ -1376,16 +1487,20 @@ function printEmbeddedConfigurationScript(){
 
 /******************************************************************************/
 // Print sample configuration script used for Embedded WAYF
-function printCSS(){
+function printCSS($file){
 	
 	global $imageURL;
 	
-	$defaultCSSFile =  'css/default-styles.css';
+	if ($file != 'ImprovedDropDown.css'){
+		$file= 'styles.css';
+	}
+	
+	$defaultCSSFile =  'css/default-'.$file;
 	$cssContent = file_get_contents($defaultCSSFile);
 
 	// Read custom CSS if available
-	if (file_exists('css/custom-styles.css')){
-		$customCSSFile =  'css/custom-styles.css';
+	if (file_exists('css/custom-'.$file)){
+		$customCSSFile =  'css/custom-'.$file;
 		$cssContent .= file_get_contents($customCSSFile);
 	}
 	
