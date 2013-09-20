@@ -866,68 +866,67 @@ function convertToShibDSStructure($IDProviders){
 // Sorts the IDProviders array
 function sortIdentityProviders(&$IDProviders){
 	$sortedIDProviders = Array();
-	$sortedCategories = Array();
+	$orderedCategories = Array();
 	
+	// Create array with categories and IdPs in categories
+	$unknownCategory = array();
 	foreach ($IDProviders as $entityId => $IDProvider){
+		
+		// Skip incomplete descriptions
 		if (!is_array($IDProvider) || !isset($IDProvider['Name'])){
-			// Remove any entries that are not arrays
-			unset($IDProviders[$entityId]);
-		} elseif ($IDProvider['Type'] == 'category'){
-			$sortedCategories[$entityId] = $IDProvider;
-		} else {
-			$sortedIDProviders[$entityId] = $IDProvider;
+			continue;
+		} 
+		
+		// Add categories
+		if ($IDProvider['Type'] == 'category'){
+			$orderedCategories[$entityId]['data'] = $IDProvider;
+			continue;
+		} 
+		
+		// Sanitize category
+		if (!isset($IDProvider['Type'])){
+			$IDProvider['Type'] = 'unknown';
 		}
-	}
-	
-	// Sort categories and IdPs
-	if (count($sortedCategories) > 1){
-		// Sort using index
-		uasort($sortedCategories, 'sortUsingTypeIndexAndName');
-	} else {
-		// Sort alphabetically using the key of a category
-		ksort($sortedCategories);
+		
+		if ($IDProvider['Type'] == 'unknown'){
+			$unknownCategory[] = $IDProvider;
+		} else {
+			$orderedCategories[$IDProvider['Type']]['IdPs'][$entityId] = $IDProvider;
+		}
 	}
 	
 	// Add category 'unknown' if not present
-	if (!isset($IDProviders['unknown'])){
-		$sortedCategories['unknown'] = array (
-		'Name' => 'Unknown',
-		'Type' => 'category',
+	if (!isset($orderedCategories['unknown'])){
+		$orderedCategories['unknown']['data'] = array (
+			'Name' => 'Unknown',
+			'Type' => 'category',
 		);
 	}
 	
-	// Sort Identity Providers
-	uasort($sortedIDProviders, 'sortUsingTypeIndexAndName');
+	// Push unknown category to the end
+	$orderedCategories['unknown']['IdPs'] = $unknownCategory;
+	
+	// Recompose $IDProviders
 	$IDProviders = Array();
-	
-	// Compose array
-	$unknownCategoryIsEmpty = true;
-	while(list($categoryKey, $categoryValue) = each($sortedCategories)){
-		$IDProviders[$categoryKey] = $categoryValue;
+	foreach ($orderedCategories as $category => $object){
 		
-		// Loop through all IdPs
-		foreach ($sortedIDProviders as $IDProvidersPKey => $IDProvidersValue){
-			// Add IdP if its type matches the current category
-			if ($IDProvidersValue['Type'] == $categoryKey){
-				$IDProviders[$IDProvidersPKey] = $IDProvidersValue;
-				unset($sortedIDProviders[$IDProvidersPKey]);
-			}
-			
-			// Add IdP if its type is 'unknown' or if there doesnt exist a category for its type
-			if ($categoryKey == 'unknown' || !isset($sortedCategories[$IDProvidersValue['Type']])){
-				$IDProviders[$IDProvidersPKey] = $IDProvidersValue;
-				unset($sortedIDProviders[$IDProvidersPKey]);
-				$unknownCategoryIsEmpty = false;
-			}
-			
+		// Skip category if it contains no IdPs
+		if (count($object['IdPs']) < 1 ){
+			continue;
 		}
+		
+		// Add category
+		$IDProviders[$category] = $object['data'];
+		
+		// Sort IdPs in category
+		uasort($object['IdPs'], 'sortUsingTypeIndexAndName');
+		
+		// Add IdPs
+		foreach ($object['IdPs'] as $entityId => $IDProvider){
+			$IDProviders[$entityId] = $IDProvider;
+		}
+		
 	}
-	
-	// Check if unkown category is needed
-	if ($unknownCategoryIsEmpty || (count($sortedCategories) == 1)){
-		unset($IDProviders['unknown']);
-	}
-	
 }
 
 /******************************************************************************/
