@@ -411,7 +411,7 @@ function populateListItem(newListControl, optionItem) {
 		}
 	}
     
-    var newListItem = $('<div>' + logo + optionItem.text() + '</div>');
+	var newListItem = $('<div>' + logo + optionItem.text() + '</div>');
 
     newListItem.addClass('idd_listItem');
     

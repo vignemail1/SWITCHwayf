@@ -260,15 +260,14 @@ If metadata is not parsed from SAML2 metadta (using the setting
 $useSAML2Metadata = false), the IdPs and category entries will be displayed 
 in order as defined in the configuration file and no sorting is done.
 
-If metadata is used ($useSAML2Metadata = true) to generate the list of Identity 
-Providers, the Identity Providers will first be sorted according to their 
-type/category, their Index value (see below) and then alphabetically after their 
-(local) Name within the same type category. 
-If an IdP does not have a type, its category is 'unknown'.
-If there exists a type for an IdP that does not have a corresponding category 
-it will be displayed in the category 'unknown' at the end of the drop down list 
-but will keep its type value (this is important for the Embedded Discovery 
-Service).
+If SAML2 metadata is used ($useSAML2Metadata = true) to generate the list of 
+Identity Providers, they are sorted within the category/type according to their 
+Index value (see below) and then alphabetically after their (local) Name. 
+If an IdP has no type, it will be in the category 'unknown', which will be added
+at the end of the drop down list.
+If an IdP has a type for which no category was defined, it will also be added 
+to the category unknown but  will keep its type value, which is used for sorting
+and for the categories of the Embedded Discovery Service.
 
 A general entry for an Identity Provider, a cascaded WAYF/DS or a category is 
 of the following form:
