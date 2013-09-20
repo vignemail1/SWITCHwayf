@@ -314,7 +314,7 @@ function printEmbeddedWAYFScript(){
 
 "{$key}":{
 	type:"{$IdPType}",
-	name:"{$IdPName}",
+	name:"{$IdPName}"
 }
 
 ENTRY;
