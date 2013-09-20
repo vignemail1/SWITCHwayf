@@ -153,14 +153,15 @@ function printDropDownList($IDProviders, $selectedIDP = ''){
 		}
 		
 		// Add logo to extension string
+		$logo = '';
 		if (isset($values['Logo'])){
 			if ($values['Logo']['height'] == 16 && $values['Logo']['width'] == 16){
-				$extension = 'logo="'.$values['Logo']['url']. '"';
+				$logo = 'logo="'.$values['Logo']['url']. '"';
 			}
 		}
 		
 		echo '
-		<option value="'.$key.'"'.$selected.' data="'.$data.'" '.$extension.'>'.$IdPName.'</option>';
+		<option value="'.$key.'"'.$selected.' data="'.$data.'" '.$logo.'>'.$IdPName.'</option>';
 		
 		$counter++;
 	}
@@ -270,6 +271,7 @@ function printEmbeddedWAYFScript(){
 	
 	// Generate list of Identity Providers
 	$JSONIdPArray = array();
+	$JSONCategoryArray = array();
 	foreach ($IDProviders as $key => $IDProvider){
 		
 		// Get IdP Name
@@ -280,7 +282,7 @@ function printEmbeddedWAYFScript(){
 		}
 		
 		// Set selected attribute
-		$selected = ($selectedIDP == $key) ? ' selected="selected"' : '' ;
+		$selected = ($selectedIDP == $key) ? ' selected:"true",' : '' ;
 		$IdPType = isset($IDProviders[$key]['Type']) ? $IDProviders[$key]['Type'] : '';
 		
 		// SSO
@@ -302,22 +304,34 @@ function printEmbeddedWAYFScript(){
 		$IdPData .= composeOptionData($IDProvider);
 		
 		// Skip non-IdP entries
-		if ($IdPType == '' || $IdPType == 'category'){
+		if ($IdPType == ''){
 			continue;
 		}
 		
-		$JSONIdPArray[] = <<<ENTRY
+		// Fill category and IdP buckets
+		if ($IdPType == 'category'){
+			$JSONCategoryArray[] = <<<ENTRY
 
-	"{$key}":{
-		type:"{$IdPType}",
-		name:"{$IdPName}",
-		SAML1SSOurl:"{$IdPSSO}",
-		logoURL:"{$IdPLogoURL}",
-		data:"{$IdPData}"
-		}
+"{$key}":{
+	type:"{$IdPType}",
+	name:"{$IdPName}",
+}
+
 ENTRY;
+		} else {
+			$JSONIdPArray[] = <<<ENTRY
+
+"{$key}":{ {$selected}
+	type:"{$IdPType}",
+	name:"{$IdPName}",
+	logoURL:"{$IdPLogoURL}",
+	data:"{$IdPData}"
+}
+ENTRY;
+		}
 	}
 	$JSONIdPList = join(',', $JSONIdPArray);
+	$JSONCategoryList = join(',', $JSONCategoryArray);
 	
 	// Text for javascript
 	$searchText = getLocalString('search_idp', 'js');
@@ -365,6 +379,7 @@ var wayf_sp_samlACURL;
 var wayf_use_disco_feed;
 var wayf_discofeed_url;
 var wayf_html = "";
+var wayf_categories = { {$JSONCategoryList}};
 var wayf_idps = { {$JSONIdPList} };
 
 // Define functions
@@ -489,6 +504,26 @@ function isAllowedIdP(IdP){
 	return true;
 }
 
+function createEntry(entityID, IdP){
+	var data = '';
+	var logo = '';
+	var selected = '';
+	
+	if (IdP.data){
+		data = ' data="' + IdP.data + '"';
+	}
+	
+	if (IdP.logoURL){
+		logo = ' logo="' + IdP.logoURL + '"';
+	}
+	
+	if (IdP.selected){
+		selected = ' selected="selected"';
+	}
+	
+	writeHTML('<option value="' + entityID + '"' + data + logo + selected + '>' + IdP.name + '</option>');
+}
+
 function setDomainSAMLDomainCookie(entityID){
 	// Create and store SAML domain cookie on host where WAYF is embedded
 	var currentDomainCookie = getCookie('_saml_idp');
@@ -549,32 +584,6 @@ function getCookie(check_name){
 	}
 	
 	return null;
-}
-
-// Checks if there exists a cookie containing check_name in its name
-function isCookie(check_name){
-	// First we split the cookie up into name/value pairs
-	// Note: document.cookie only returns name=value, not the other components
-	var a_all_cookies = document.cookie.split( ';' );
-	var a_temp_cookie = '';
-	var cookie_name = '';
-	
-	for ( var i = 0; i < a_all_cookies.length; i++ ){
-		// now we'll split apart each name=value pair
-		a_temp_cookie = a_all_cookies[i].split( '=' );
-		
-		// and trim left/right whitespace while we're at it
-		cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, '');
-		
-		// if the extracted name matches passed check_name
-		
-		if ( cookie_name.search(check_name) >= 0){
-			return true;
-		}
-	}
-	
-	// Shibboleth session cookie has not been found
-	return false;
 }
 
 // Query Shibboleth Session handler and process response afterwards
@@ -1109,11 +1118,11 @@ function loadImprovedDropDown(){
 		writeHTML('<div id="wayf_div" style="background:' + wayf_background_color + ';border-style: solid;border-color: ' + wayf_border_color + ';border-width: 1px;padding: 10px; height: ' + wayf_height + ';width: ' + wayf_width + ';text-align: left;overflow: hidden;">');
 	}
 	
-	// Should we display the logo
+	// Do we have to display the logo
 	if (wayf_hide_logo != true){
 		
 		// Write header of logo div
-		writeHTML('<div id="wayf_logo_div" style="float: right;"><a href="$federationURL" target="_blank" style="border:0px; margin-bottom: 4px;">');
+		writeHTML('<div id="wayf_logo_div" style="float: right;"><a href="{$federationURL}" target="_blank" style="border:0px; margin-bottom: 4px;">');
 		
 		// Which size of the logo should we display
 		var embeddedLogoURL = '';
@@ -1125,7 +1134,7 @@ function loadImprovedDropDown(){
 		
 		// Only show logo if it is not empty
 		if (embeddedLogoURL != ''){
-			writeHTML('<img id="wayf_logo" src="' + embeddedLogoURL +  '" alt="Federation Logo" style="border:0px">');
+			writeHTML('<img id="wayf_logo" src="' + embeddedLogoURL +  '" alt="Federation Logo" style="border:0px; margin-bottom: 4px;">');
 		}
 		
 		// Write footer of logo div
@@ -1133,8 +1142,7 @@ function loadImprovedDropDown(){
 	}
 	
 	// Start login check
-	// Search for login state cookie
-	// If one exists, we only draw the logged_in_message
+	// If session exists, we only draw the logged_in_message
 	if(
 		wayf_hide_after_login 
 		&& user_logged_in
@@ -1250,7 +1258,7 @@ SCRIPT;
 				writeHTML('<optgroup label="' + wayf_overwrite_most_used_idps_text + '">');
 			}
 			
-			// Show additional IdPs in the order they are defined
+			// Show most used IdPs in the order they are defined
 			for ( var i=0; i < wayf_most_used_idps.length; i++){
 				if (wayf_idps[wayf_most_used_idps[i]]){
 					writeHTML('<option value="' + wayf_most_used_idps[i] + '" logo="' + wayf_idps[wayf_most_used_idps[i]].logoURL + '" logo="' + wayf_idps[wayf_most_used_idps[i]].data + '">' + wayf_idps[wayf_most_used_idps[i]].name + '</option>');
@@ -1260,92 +1268,39 @@ SCRIPT;
 			writeHTML('</optgroup>');
 		}
 		
-SCRIPT;
-	
-	// Generate drop-down list
-	$optgroup = '';
-	foreach ($IDProviders as $key => $IDProvider){
-		
-		// Get IdP Name
-		if (isset($IDProvider[$language]['Name'])){
-			$IdPName = addslashes($IDProvider[$language]['Name']);
-		} else {
-			$IdPName = addslashes($IDProvider['Name']);
-		}
-		
-		// Figure out if entry is valid or a category
-		if (!isset($IDProvider['SSO'])){
+		// Draw drop down list
+		var category = '';
+		for(var entityID in wayf_idps){
 			
-			// Check if entry is a category
-			if (isset($IDProvider['Type']) && $IDProvider['Type'] == 'category'){
+			var idp_type = wayf_idps[entityID].type;
 			
-				echo <<<SCRIPT
-
-		if (isAllowedCategory('{$key}')){
-SCRIPT;
-			
-				if (!empty($optgroup)){
-					echo <<<SCRIPT
-
-			if (wayf_show_categories == true){
-				writeHTML('</optgroup>');
-			}
-SCRIPT;
+			if (wayf_show_categories == true && category != idp_type){
+				
+				// Finish category if a new one starts that exists
+				if (category != '' && wayf_categories[idp_type]){
+					writeHTML('</optgroup>');
 				}
 				
-				// Add another category
-				echo <<<SCRIPT
-
-			if (wayf_show_categories == true){
-				writeHTML('<optgroup label="{$IdPName}">');
-			}
-		}
-SCRIPT;
-				$optgroup = $key;
+				// Skip category if it is not allowed
+				if (!isAllowedCategory(idp_type)){
+					continue;
+				} else if (wayf_categories[idp_type]) {
+					// Start new category if there exists a description
+					writeHTML('<optgroup label="' + wayf_categories[idp_type].name + '">');
+				}
 			}
 			
-			continue;
-		}
-		
-		// Set selected attribute
-		$selected = ($selectedIDP == $key) ? ' selected="selected"' : '' ;
-		$IdPType = isset($IDProviders[$key]['Type']) ? $IDProviders[$key]['Type'] : '';
-		$IdPLogo = ' logo="'.$IDProviders[$key]['Logo']['url']. '" ';
-		$IdPData = getDomainNameFromURI($key);
-		$IdPData .= composeOptionData($IDProviders[$key]);
-		
-		echo <<<SCRIPT
-
-		if (isAllowedType('{$key}','{$IdPType}') && isAllowedIdP('{$key}')){
-			writeHTML('<option value="{$key}" ');
-			if (
-				"{$selectedIDP}" == "-" 
-				&& typeof(wayf_default_idp) != "undefined"
-				&& wayf_default_idp == "{$key}"
-				){
-				writeHTML('selected="selected"');
-			} else {
-				// Let central WAYF choose
-				writeHTML('{$selected}');
+			if (isAllowedType(entityID, idp_type) && isAllowedIdP(entityID)){
+				createEntry(entityID, wayf_idps[entityID]);
 			}
 			
-			writeHTML('data="$IdPData" {$IdPLogo}');
-			writeHTML('>{$IdPName}</option>');
+			category =  idp_type;
 		}
-SCRIPT;
-	}
-	
-	// Add last optgroup if that was used
-	if (!empty($optgroup)){
-		echo <<<SCRIPT
-
+		
+		// Close category if categories are enabled
 		if (wayf_show_categories == true){
 			writeHTML('</optgroup>');
 		}
-SCRIPT;
-	}
-	
-	echo <<<SCRIPT
 		
 		if (wayf_additional_idps.length > 0){
 			
@@ -1453,7 +1408,6 @@ SCRIPT;
 			loadImprovedDropDown();
 		}
 	}
-	
 })()
 
 SCRIPT;
