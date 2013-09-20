@@ -889,10 +889,26 @@ function sortIdentityProviders(&$IDProviders){
 		}
 		
 		if ($IDProvider['Type'] == 'unknown'){
-			$unknownCategory[] = $IDProvider;
+			$unknownCategory[$entityId] = $IDProvider;
 		} else {
 			$orderedCategories[$IDProvider['Type']]['IdPs'][$entityId] = $IDProvider;
 		}
+	}
+	
+	// Relocate all IdPs for which no category with a name was defined
+	$toremoveCategories = array();
+	foreach ($orderedCategories as $category => $object){
+		if (!isset($object['data'])){
+			foreach ($object['IdPs'] as $entityId => $IDProvider){
+				$unknownCategory[$entityId] = $IDProvider;
+			}
+			$toremoveCategories[] = $category;
+		}
+	}
+	
+	// Remove categories without descriptions
+	foreach ($toremoveCategories as $category){
+		unset($orderedCategories[$category]);
 	}
 	
 	// Add category 'unknown' if not present
@@ -925,8 +941,8 @@ function sortIdentityProviders(&$IDProviders){
 		foreach ($object['IdPs'] as $entityId => $IDProvider){
 			$IDProviders[$entityId] = $IDProvider;
 		}
-		
 	}
+	
 }
 
 /******************************************************************************/
@@ -935,7 +951,7 @@ function sortUsingTypeIndexAndName($a, $b){
 	global $language;
 	
 	if ($a['Type'] != $b['Type']){
-		return strcmp($b['Type'], $a['Type']);
+		return strcmp($a['Type'], $b['Type']);
 	} elseif (isset($a['Index']) && isset($b['Index']) && $a['Index'] != $b['Index']){
 		return strcmp($a['Index'], $b['Index']);
 	} else {
