@@ -150,7 +150,7 @@ function addLogoToTextElement(newTextElement, url){
 	// Add logo as background
 	newTextElement.css('background-color' , '#fff');
 	newTextElement.css('background-repeat' , 'no-repeat');
-	newTextElement.css('background-position' , '1px 1px');
+	newTextElement.css('background-position' , '2px 2px');
 	if (url.match(/^url\(/)){
 		newTextElement.css('background-image' , url);
 	} else {
