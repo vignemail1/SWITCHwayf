@@ -617,10 +617,8 @@ function positionList(listControl) {
             var imgElement = getImageControlFromOtherControl(listControl);
 
             var listTop = textElement.position().top + textElement.outerHeight();
-            var listLeft = textElement.position().left;
 
             listControl.css('top', listTop + 'px');
-            listControl.css('left', listLeft + 'px');         
 
             var childItems = listControl.children('.idd_listItem:visible,.idd_listItemGroupHeader:visible');
 
@@ -630,6 +628,7 @@ function positionList(listControl) {
             var maxHeightPx = $(window).height() + $(document).scrollTop() - listControl.offset().top - 20;
             var minListHeigtPx = 12;
             var listhHeight = Math.min(elementHeightPx, maxHeightPx)
+
             listhHeight = Math.max(listhHeight, minListHeigtPx);
             listControl.css('height', listhHeight + 'px');
 
@@ -637,14 +636,24 @@ function positionList(listControl) {
 
             var minListWidthPx = textElement.outerWidth() + imgElement.outerWidth()
             var listWidthPx = Math.max(minListWidthPx, widestListItemPx);
-
-            var maxListWidthPx = $(window).width() - listControl.position().left - 30;
-            listWidthPx = Math.min(maxListWidthPx, listWidthPx);
-
-            childItems.css('width', listWidthPx + 'px');
+            
+            // List width shall be at max page width - 100px
+			listWidthPx = Math.min(($(window).width() - 100), listWidthPx);
 
 			// Add some margin for compensating scrollbar
-            listControl.css('width', (listWidthPx + 20) + 'px');
+			var effectiveListWidth = (listWidthPx + 20);
+			listControl.css('width', effectiveListWidth + 'px');
+            
+            // Determine on which side to expand list
+			var listLeft = textElement.position().left;
+			if ((listLeft + effectiveListWidth + 20)  >= $(window).width()){
+				// Expand list to the left
+				var newLeft = (listLeft - (effectiveListWidth + (listControl.outerWidth() - listControl.innerWidth()) - textElement.width()));
+				listControl.css('left', newLeft + 'px');
+			} else {
+				// Expand list to the right
+				listControl.css('left', listLeft + 'px');
+			}
 
         } catch  (err)  { /*eat any sizing errors */ }
 }
