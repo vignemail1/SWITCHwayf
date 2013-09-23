@@ -31,6 +31,21 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
+* Version 1.19 - Release date: ??? 2013
+  - Added search-as-you-type support to Embedded WAYF. This feature is off by
+    default as it is currently experimental. Can be activated with:  
+    var wayf_use_improved_drop_down_list = true
+  - Added MDUI logo support. Only favicon logos (16x16 px) will be used.
+  - Various Javascript improvements to offload computation from WAYF to client
+  - Replaced the term 'Home Organisation' in the language strings to more
+    generic terms that probably are better understood by users.
+  - SP names from MDUI metadata elements are now used if available
+  - Added JQuery library
+  - Some small styling changes/CSS improvements
+  
+  Issues: <https://forge.switch.ch/redmine/projects/wayf/versions/???>
+  Please read the specific update instructions in the README file.
+  
 * Version 1.18 - Release date:  5. August 2013
   - Changed default SessionInitiator of the Embedded WAYF to 
     /Login because this has been the default SessionInitiator in 
@@ -140,31 +155,6 @@ SWITCHwayf Version History
   Issues: <https://forge.switch.ch/redmine/projects/wayf/versions/21>
 
 
-* Version 1.14 - Release date: 9. November 2010
-  - Added the configuration option wayf_force_remember_for_session to
-    the Embedded WAYF on request of Wolgang Lierz. This
-    option allows setting the remember for session checkbox to true
-  - The 'return' parameter of a Discovery Service request can now be 
-    checked using the idp-discovery-protocol extension or using the FQDN 
-    of all the Service Provider's assertion consumer URLs. The latter 
-    alternative is less secure but still offers better security against 
-    phising attacks. Have a look at config.dist.php and the README for 
-    more detailed explanations on these feature.
-  - Metadata parsing now uses DOM XML for PHP5 instead of Simple XML
-  - Fixed a minor HTML error in template for Embedded WAYF
-  - Sorting within categories works now correctly if SAML2 metadata is 
-    used to generate Identity Provider drop-down list.  
-    Thanks to Prof. Kazutsuna Yamaji for reporting this issue.
-  - Fixed a minor bug in templates.php that cause PHP warnings to show up
-    in case an invalid IdP was stored in the cookie.
-  - Fixed a bug affecting the Kerberos authentication.  
-    Thanks to Robert Basch for reporting these bugs and for 
-    submitting patches.
-  - Fixed a bug where hidden IdPs would still be shown in Embedded WAYF
-
-  Issues: <https://forge.switch.ch/redmine/projects/wayf/versions/17>
-
-
 The revision history of older versions, can be found on the SWITCHwayf web page:
 <https://forge.switch.ch/redmine/projects/wayf/wiki/Changes>
 
@@ -197,3 +187,8 @@ alphabetically.
 - Prof. Kazutsuna Yamaji from NII National Institute of Informatics (JP)
 - And of course all SWITCH staff members who have contributed suggestions,
   bug fixes and translation to this code.
+
+Special also go to RENATER, the French Research & Education Network. The main 
+developer (Lukas Hämmerle) has been a guest at REANTER for 6 months in 2013, 
+during which he worked - among other things - also on the versions 1.18 and 1.19
+of the SWITCHwayf.
