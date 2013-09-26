@@ -838,6 +838,7 @@ function loadJQuery() {
 
 function loadImprovedDropDown(){
 	
+	
 	// Load CSS
 	$('head').append('<link rel="stylesheet" type="text/css" href="{$cssURL}/default-ImprovedDropDown.css">');
 	
@@ -1401,11 +1402,19 @@ SCRIPT;
 	document.write(wayf_html);
 	
 	if (wayf_use_improved_drop_down_list){
-		// Check if jQuery is alread loaded
-		if (typeof jQuery == 'undefined') {
+		// Check if jQuery is alread loaded or version is older that this version's
+		if (typeof jQuery == 'undefined'){
 			loadJQuery();
 		} else {
-			loadImprovedDropDown();
+			// Check JQuery version and load our version if it is newer
+			var version = jQuery.fn.jquery.split('.');
+			var versionMajor = parseFloat(version[0]);
+			var versionMinor = parseFloat(version[1]);
+			if (versionMajor <= 1 && versionMinor < 10){
+				loadJQuery();
+			} else {
+				loadImprovedDropDown();
+			}
 		}
 	}
 })()
