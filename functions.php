@@ -868,34 +868,44 @@ function convertToShibDSStructure($IDProviders){
 /******************************************************************************/
 // Sorts the IDProviders array
 function sortIdentityProviders(&$IDProviders){
-	$sortedIDProviders = Array();
 	$orderedCategories = Array();
 	
 	// Create array with categories and IdPs in categories
 	$unknownCategory = array();
 	foreach ($IDProviders as $entityId => $IDProvider){
+		// Add categories
+		if ($IDProvider['Type'] == 'category'){
+			$orderedCategories[$entityId]['data'] = $IDProvider;
+		}
+	}
+	
+	// Add category 'unknown' if not present
+	if (!isset($orderedCategories['unknown'])){
+		$orderedCategories['unknown']['data'] = array (
+			'Name' => 'Unknown',
+			'Type' => 'category',
+		);
+	}
+	
+	foreach ($IDProviders as $entityId => $IDProvider){
+	
+		// Skip categories
+		if ($IDProvider['Type'] == 'category'){
+			continue;
+		}
 		
 		// Skip incomplete descriptions
 		if (!is_array($IDProvider) || !isset($IDProvider['Name'])){
 			continue;
-		} 
-		
-		// Add categories
-		if ($IDProvider['Type'] == 'category'){
-			$orderedCategories[$entityId]['data'] = $IDProvider;
-			continue;
-		} 
+		}
 		
 		// Sanitize category
 		if (!isset($IDProvider['Type'])){
 			$IDProvider['Type'] = 'unknown';
 		}
 		
-		if ($IDProvider['Type'] == 'unknown'){
-			$unknownCategory[$entityId] = $IDProvider;
-		} else {
-			$orderedCategories[$IDProvider['Type']]['IdPs'][$entityId] = $IDProvider;
-		}
+		// Add IdP
+		$orderedCategories[$IDProvider['Type']]['IdPs'][$entityId] = $IDProvider;
 	}
 	
 	// Relocate all IdPs for which no category with a name was defined
@@ -914,23 +924,12 @@ function sortIdentityProviders(&$IDProviders){
 		unset($orderedCategories[$category]);
 	}
 	
-	// Add category 'unknown' if not present
-	if (!isset($orderedCategories['unknown'])){
-		$orderedCategories['unknown']['data'] = array (
-			'Name' => 'Unknown',
-			'Type' => 'category',
-		);
-	}
-	
-	// Push unknown category to the end
-	$orderedCategories['unknown']['IdPs'] = $unknownCategory;
-	
 	// Recompose $IDProviders
 	$IDProviders = Array();
 	foreach ($orderedCategories as $category => $object){
 		
 		// Skip category if it contains no IdPs
-		if (count($object['IdPs']) < 1 ){
+		if (!isset($object['IdPs']) || count($object['IdPs']) < 1 ){
 			continue;
 		}
 		
@@ -945,7 +944,6 @@ function sortIdentityProviders(&$IDProviders){
 			$IDProviders[$entityId] = $IDProvider;
 		}
 	}
-	
 }
 
 /******************************************************************************/
