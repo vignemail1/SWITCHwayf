@@ -136,10 +136,12 @@ function printDropDownList($IDProviders, $selectedIDP = ''){
 	</optgroup>';
 				}
 				
-				// Add another category
-				echo '
-	<optgroup label="'.$IdPName.'">';
+				// Add another category unless first (and  probably only) category is unknown
+				if (!empty($optgroup) && $key != 'unknown'){
+						echo '
+<optgroup label="'.$IdPName.'">';
 				$optgroup = $key;
+				}
 			}
 			
 			continue;
@@ -152,12 +154,10 @@ function printDropDownList($IDProviders, $selectedIDP = ''){
 			$selected = '';
 		}
 		
-		// Add logo to extension string
+		// Add logo (which is assumed to be 16x16px) to extension string
 		$logo = '';
 		if (isset($values['Logo'])){
-			if ($values['Logo']['height'] == 16 && $values['Logo']['width'] == 16){
-				$logo = 'logo="'.$values['Logo']['url']. '"';
-			}
+			$logo = 'logo="'.$values['Logo']['URL']. '"';
 		}
 		
 		echo '
@@ -203,7 +203,7 @@ function printNotice(){
 	if ($permanentUserIdP != ''){
 		$hiddenUserIdPInput = '<input type="hidden" name="user_idp" value="'.$permanentUserIdP.'">';
 		$permanentUserIdPName = $IDProviders[$permanentUserIdP]['Name'];
-		$permanentUserIdPLogo = $IDProviders[$permanentUserIdP]['Logo']['url'];
+		$permanentUserIdPLogo = $IDProviders[$permanentUserIdP]['Logo']['URL'];
 	}
 	
 	// Check if footer template exists
@@ -293,8 +293,8 @@ function printEmbeddedWAYFScript(){
 		}
 		
 		// Logo URL
-		if (isset($IDProvider['Logo']['url'])){
-			$IdPLogoURL = $IDProvider['Logo']['url'];
+		if (isset($IDProvider['Logo']['URL'])){
+			$IdPLogoURL = $IDProvider['Logo']['URL'];
 		} else {
 			$IdPLogoURL = '';
 		}

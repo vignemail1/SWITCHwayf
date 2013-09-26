@@ -337,16 +337,20 @@ function processIDPRoleDescriptor($IDPRoleDescriptorNode){
 	$MDUILogos = getMDUILogos($IDPRoleDescriptorNode);
 	foreach ($MDUILogos as $Logo){
 		// Skip non-favicon logos
-		if ($Logo['height'] != 16 || $Logo['width'] != 16 ){
+		if ($Logo['Height'] != 16 || $Logo['Width'] != 16 ){
 			continue;
 		}
 		
-		if ($Logo['lang'] == ''){
-			unset($Logo['lang']);
+		// Strip height and width
+		unset($Logo['Height']);
+		unset($Logo['Width']);
+		
+		if ($Logo['Lang'] == ''){
+			unset($Logo['Lang']);
 			$IDP['Logo'] = $Logo;
 		} else {
-			$lang = $Logo['lang'];
-			unset($Logo['lang']);
+			$lang = $Logo['Lang'];
+			unset($Logo['Lang']);
 			$IDP[$lang]['Logo'] = $Logo;
 		}
 	}
@@ -556,10 +560,10 @@ function getMDUILogos($RoleDescriptorNode){
 	$MDUILogos = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:metadata:ui', 'Logo');
 	foreach( $MDUILogos as $MDUILogoEntry ){
 		$Logo = Array();
-		$Logo['url'] = trim($MDUILogoEntry->nodeValue);
-		$Logo['height'] = ($MDUILogoEntry->getAttribute('height') != '') ? trim($MDUILogoEntry->getAttribute('height')) : '16';
-		$Logo['width'] = ($MDUILogoEntry->getAttribute('width') != '') ? trim($MDUILogoEntry->getAttribute('width')) : '16';
-		$Logo['lang'] = ($MDUILogoEntry->getAttribute('lang') != '') ? trim($MDUILogoEntry->getAttribute('lang')) : '';
+		$Logo['URL'] = trim($MDUILogoEntry->nodeValue);
+		$Logo['Height'] = ($MDUILogoEntry->getAttribute('height') != '') ? trim($MDUILogoEntry->getAttribute('height')) : '16';
+		$Logo['Width'] = ($MDUILogoEntry->getAttribute('width') != '') ? trim($MDUILogoEntry->getAttribute('width')) : '16';
+		$Logo['Lang'] = ($MDUILogoEntry->getAttribute('lang') != '') ? trim($MDUILogoEntry->getAttribute('lang')) : '';
 		$Logos[] = $Logo;
 	}
 	
