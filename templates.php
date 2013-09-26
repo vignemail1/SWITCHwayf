@@ -137,7 +137,7 @@ function printDropDownList($IDProviders, $selectedIDP = ''){
 				}
 				
 				// Add another category unless first (and  probably only) category is unknown
-				if (!empty($optgroup) && $key != 'unknown'){
+				if (!empty($optgroup) || $key != 'unknown'){
 						echo '
 <optgroup label="'.$IdPName.'">';
 				$optgroup = $key;
