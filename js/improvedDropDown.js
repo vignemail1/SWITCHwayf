@@ -332,9 +332,10 @@ function getListElement(sourceElement) {
 				  .scroll(function() {
 						// Loop through list and check which elements are visible
 						$(this).children('.idd_listItem[logo]').each(function () {
-							if ($(this).visible()){
+							if ($(this).visible() && $(this).attr("logo")){
 								// Load logo
-								$(this).children("img").attr("src", $(this).attr("logo"));
+								var imgObj = $(this).children("img:first-child")[0];
+								imgObj.src = $(this).attr("logo");
 							}
 						});
 				  })
@@ -417,7 +418,6 @@ function populateListItem(newListControl, optionItem) {
 	var logo = '';
 	if (displayLogos){
 		if (optionItem.attr('logo')){
-			//logo = '<img src="' + optionItem.attr('logo') + '" width="16" height="16" class="idd_listItemLogo" />';
 			logo = '<img src="' + loadingImage + '" width="16" height="16" class="idd_listItemLogo" />';
 		} else if (optionItem.attr('data')){
 			// Add an invisible 1px gif inline
