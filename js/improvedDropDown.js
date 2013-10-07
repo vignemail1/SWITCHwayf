@@ -304,7 +304,7 @@ function getImageElement(sourceElement,iconPath) {
 
 		// Highlight selected item
 		var selectElement = getSelectControlFromOtherControl(listControl);
-		var selectedListElement = $("[savedValue='" + selectElement.val() + "']");
+		var selectedListElement = $("[savedValue='" + selectElement.val() + "']").first();
 		selectedListElement.addClass("idd_listItem_Hover");
 		
 		// Scroll to proper list entry
@@ -329,9 +329,19 @@ function getListElement(sourceElement) {
                   .css('overflow-x', 'hidden') 
                   .css('padding-right','20px')
 				  .css('background-color','white')
+				  .scroll(function() {
+						// Loop through list and check which elements are visible
+						$(this).children('.idd_listItem[logo]').each(function () {
+							if ($(this).visible()){
+								// Load logo
+								$(this).children("img").attr("src", $(this).attr("logo"));
+							}
+						});
+				  })
                   .addClass('idd_list')
                   .mouseenter(function () { suspendTextBoxExitHandler = true; })
                   .mouseleave(function () { suspendTextBoxExitHandler = false; });
+                  
 
     newListControl.keydown(function (e) {
 
@@ -399,15 +409,19 @@ function getListGroupItem(label,visible) {
 
 function populateListItem(newListControl, optionItem) {
     var title = '';
-
+	
+	var noImage = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+	var loadingImage = 'data:image/gif;base64,R0lGODlhEAAQAPIAAM7a5wAAAJ2msDU4PAAAAE9UWWlvdnZ9hCH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==';
+	
 	// Add logo if there is at least one logo
 	var logo = '';
 	if (displayLogos){
 		if (optionItem.attr('logo')){
-			logo = '<img src="' + optionItem.attr('logo') + '" width="16" height="16" class="idd_listItemLogo" />';
+			//logo = '<img src="' + optionItem.attr('logo') + '" width="16" height="16" class="idd_listItemLogo" />';
+			logo = '<img src="' + loadingImage + '" width="16" height="16" class="idd_listItemLogo" />';
 		} else if (optionItem.attr('data')){
 			// Add an invisible 1px gif inline
-			logo = '<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="16" height="16" class="idd_listItemLogo" />';
+			logo = '<img src="' + noImage + '" width="16" height="16" class="idd_listItemLogo" />';
 		}
 	}
     
@@ -607,6 +621,12 @@ function clearFilter(textControl) {
 function showList(listControl) {
    if (!listControl.is(':visible')) {
         listControl.show();
+		// Add scroll event handler to list div
+		listControl.children('.idd_listItem[logo]').each(function () {
+			if ($(this).visible()){
+				$(this).children("img").attr("src", $(this).attr("logo"));
+			}
+		});
         positionList(listControl);
    }
 }
@@ -847,3 +867,35 @@ function processDelayedCall(key, func) {
  }
 
 /* end: Delayed calls methods  */
+
+
+(function($){
+
+/* ------------------------------------------------------------------------- */
+
+/**
+* Copyright 2012, Digital Fusion
+* Licensed under the MIT license.
+* http://teamdf.com/jquery-plugins/license/
+*
+* @author Sam Sehnert
+* @desc A small plugin that checks whether elements are within
+* the user visible viewport of a web browser.
+* only accounts for vertical position, not horizontal.
+*/
+$.fn.visible = function(partial,hidden){
+var $t	= $(this).eq(0),
+t	= $t.get(0),
+$w	= $(window),
+viewTop	= $w.scrollTop(),
+viewBottom	= viewTop + $w.height(),
+_top	= $t.offset().top,
+_bottom	= _top + $t.height(),
+compareTop	= partial === true ? _bottom : _top,
+compareBottom	= partial === true ? _top : _bottom,
+clientSize	= hidden === true ? t.offsetWidth * t.offsetHeight : true;
+
+return !!clientSize && ((compareBottom <= viewBottom) && (compareTop >= viewTop));
+    };
+    
+})(jQuery);

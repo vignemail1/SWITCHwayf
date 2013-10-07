@@ -40,7 +40,7 @@ SWITCHwayf Version History
   - Replaced the term 'Home Organisation' in the language strings to more
     generic terms that probably are better understood by users.
   - SP names from MDUI metadata elements are now used if available
-  - Added JQuery library
+  - Added new version of JQuery library
   - Some small styling changes/CSS improvements
   
   Issues: <https://forge.switch.ch/redmine/projects/wayf/versions/???>
@@ -162,7 +162,19 @@ The revision history of older versions, can be found on the SWITCHwayf web page:
 
 Credits
 -------
-Find below the list of people who have contributed to code, either because they 
+
+The SWITCHwayf uses code from the following libraries:
+
+* jQuery by the jQuery Foundation and other contributors, 
+  http://jquery.com/
+* Improved Dropdown by John Fuex
+  https://bitbucket.org/Johnfx/improveddropdown-jquery-plugin/src
+* jQuery Plug-in "Basic Visibility Detection" by Digital Fusion
+  http://teamdf.com/
+
+Please consult the LICENSE file for the individual licenses of these components.
+
+Find below a list of people who have contributed to the code, either because they 
 found bugs, suggested improvements or contributed code. Have a look at the 
 version history in order to see the individual contributions. The list is sorted 
 alphabetically.
