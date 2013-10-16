@@ -47,6 +47,7 @@ var wayf_disco_feed_idps;
 var wayf_html = "";
 var wayf_categories = { <?php echo $JSONCategoryList ?>};
 var wayf_idps = { <?php echo $JSONIdPList ?> };
+var wayf_other_fed_idps = {};
 
 // Functions
 function submitForm(){
@@ -58,68 +59,67 @@ function submitForm(){
 	
 	// Set local cookie
 	var selectedIdP = document.IdPList.user_idp[document.IdPList.user_idp.selectedIndex].value;
+	setDomainSAMLDomainCookie(selectedIdP);
 	
-	// User chose non-federation IdP
-	if (
-		wayf_additional_idps.length > 0 
-		&& document.IdPList.user_idp
-		&& document.IdPList.user_idp.selectedIndex >= (document.IdPList.user_idp.options.length - wayf_additional_idps.length)){
+	// User chose federation IdP entry
+	if( wayf_idps[selectedIdP]) {
+		return true;
+	} 
+	
+	// User chose IdP from other federation
+	var redirect_url;
+	var redirect_url;
+	
+	// Redirect user to SP handler
+	if (wayf_use_discovery_service){
 		
-		var NonFedEntityID = wayf_additional_idps[selectedIdP].entityID;
-		setDomainSAMLDomainCookie(NonFedEntityID);
-		
-		var redirect_url;
-		// Redirect user to SP handler
-		var redirect_url;
-		if (wayf_use_discovery_service){
-			
-			var entityIDGETParam = getGETArgument("entityID");
-			var returnGETParam = getGETArgument("return");
-			if (entityIDGETParam != "" && returnGETParam != ""){
-				redirect_url = returnGETParam;
-			} else {
-				redirect_url = wayf_sp_samlDSURL;
-				redirect_url += getGETArgumentSeparator(redirect_url) + 'target=' + encodeURIComponent(wayf_return_url);
-			}
-			
-			// Append selected Identity Provider
-			redirect_url += '&entityID=' + encodeURIComponent(NonFedEntityID);
-			
-			// Make sure the redirect always is being executed in parent window
-			if (window.parent){
-				window.parent.location = redirect_url;
-			} else {
-				window.location = redirect_url;
-			}
-			
+		var entityIDGETParam = getGETArgument("entityID");
+		var returnGETParam = getGETArgument("return");
+		if (entityIDGETParam != "" && returnGETParam != ""){
+			redirect_url = returnGETParam;
 		} else {
-			redirect_url = wayf_sp_handlerURL + '?providerId=' 
-			+ encodeURIComponent(NonFedEntityID)
-			+ '&target=' + encodeURIComponent(wayf_return_url);
-			
-			// Make sure the redirect always is being done in parent window
-			if (window.parent){
-				window.parent.location = redirect_url;
-			} else {
-				window.location = redirect_url;
-			}
+			redirect_url = wayf_sp_samlDSURL;
+			redirect_url += getGETArgumentSeparator(redirect_url) + 'target=' + encodeURIComponent(wayf_return_url);
 		}
 		
-		// If input type button is used for submit, we must return false
-		return false;
-	} else {
-		var FedEntityID = selectedIdP;
-		setDomainSAMLDomainCookie(FedEntityID);
+		// Append selected Identity Provider
+		redirect_url += '&entityID=' + encodeURIComponent(selectedIdP);
 		
-		// User chose federation IdP entry
-		document.IdPList.submit();
+		// Make sure the redirect always is being executed in parent window
+		if (window.parent){
+			window.parent.location = redirect_url;
+		} else {
+			window.location = redirect_url;
+		}
+		
+	} else {
+		redirect_url = wayf_sp_handlerURL + '?providerId=' 
+		+ encodeURIComponent(selectedIdP)
+		+ '&target=' + encodeURIComponent(wayf_return_url);
+		
+		// Make sure the redirect always is being done in parent window
+		if (window.parent){
+			window.parent.location = redirect_url;
+		} else {
+			window.location = redirect_url;
+		}
 	}
 	
+	// If input type button is used for submit, we must return false
 	return false;
 }
 
 function writeHTML(a){
 	wayf_html += a;
+}
+
+function isEmptyObject(obj){
+	
+	for (index in obj){
+		return false;
+	}
+	
+	return true;
 }
 
 function isAllowedType(IdP, type){
@@ -240,8 +240,7 @@ function isShibbolethSession(url){
 	var result = queryGetURL(url);
 	
 	// Return true if session handler shows valid session
-	if (
-		result.search(/Authentication Time/i) > 0){
+	if (result && result.search(/Authentication Time/i) > 0){
 		return true;
 	}
 	
@@ -276,7 +275,7 @@ function queryGetURL(url){
 		xmlhttp.send();
 	} catch (e) {
 		// Something went wrong, send back false
-		return e;
+		return false;
 	} 
 	
 	// Check response code
@@ -376,8 +375,7 @@ function getIdPFromDiscoFeedEntry(IdPData){
 		"name": name, 
 		"SAML1SSOurl":"https://this.url.does.not.exist/test", 
 		"data": data, 
-		"logoURL":logo, 
-		"type":"unknown"
+		"logoURL":logo
 	};
 	
 	return newIdP;
@@ -508,12 +506,16 @@ function ieLoadBugFix(scriptElement, callback){
 
 function getOptionHTML(entityID){
 	
-	if (!wayf_idps[entityID]){
+	var IdPData;
+	if (wayf_idps[entityID]){
+		IdPData = wayf_idps[entityID];
+	} else if (wayf_other_fed_idps[entityID]){
+		IdPData = wayf_other_fed_idps[entityID];
+	} else {
 		return '';
 	}
 	
 	var content = '';
-	var IdPData = wayf_idps[entityID];
 	var data = '';
 	var logo = '';
 	var selected = '';
@@ -531,6 +533,7 @@ function getOptionHTML(entityID){
 	}
 	
 	content = '<option value="' + entityID + '"' + data + logo + selected + '>' + IdPData.name + '</option>';
+	
 	return content;
 }
 
@@ -930,16 +933,6 @@ function loadImprovedDropDown(){
 			return;
 		}
 		
-		// Load additional IdPs from DiscoFeed if feature is enabled
-		if (wayf_use_disco_feed){
-			wayf_disco_feed_idps = loadDiscoFeedIdPs();
-			// Hide IdPs for which SP doesnt have metadata and add unknown IdPs 
-			processDiscoFeedIdPs(wayf_disco_feed_idps);
-		}
-		
-		writeHTML(form_start);
-		writeHTML('<input name="request_type" type="hidden" value="embedded">');
-		writeHTML('<select id="user_idp" name="user_idp" style="margin-top: 15px;margin-bottom: 10px; width: 100%;">');
 		
 		// Get local cookie
 		var saml_idp_cookie = getCookie('_saml_idp');
@@ -956,6 +949,43 @@ function loadImprovedDropDown(){
 				}
 			}
 		}
+		
+		// Load additional IdPs from DiscoFeed if feature is enabled
+		if (wayf_use_disco_feed){
+			wayf_disco_feed_idps = loadDiscoFeedIdPs();
+			
+			// Hide IdPs for which SP doesnt have metadata and add unknown IdPs 
+			// Add to additional IdPs
+			processDiscoFeedIdPs(wayf_disco_feed_idps);
+		}
+		
+		// Sort additional IdPs and add IdPs to sorted associative array of other federation IdPs
+		if (wayf_additional_idps.length > 0){
+			wayf_additional_idps.sort(sortEntities);
+			
+			for ( var i = 0; i < wayf_additional_idps.length; i++){
+				var IdP = wayf_additional_idps[i];
+				
+				if (!IdP){
+					continue;
+				}
+				
+				if (IdP.entityID && IdP.entityID == last_idp){
+					IdP.selected = true;
+				}
+				
+				if (!IdP.data){
+					IdP.data = IdP.name;
+				}
+				
+				wayf_other_fed_idps[IdP.entityID] = IdP;
+			}
+		}
+		
+		
+		writeHTML(form_start);
+		writeHTML('<input name="request_type" type="hidden" value="embedded">');
+		writeHTML('<select id="user_idp" name="user_idp" style="margin-top: 15px;margin-bottom: 10px; width: 100%;">');
 		
 		// Add first entry: "Select your IdP..."
 		writeHTML('<option value="-"><?php echo $selectIdPString ?> ...</option>');
@@ -1030,7 +1060,7 @@ function loadImprovedDropDown(){
 			}
 			
 			if (isAllowedType(entityID, idp_type) && isAllowedIdP(entityID)){
-				writeHTML(getOptionHTML(entityID, wayf_idps[entityID]));
+				writeHTML(getOptionHTML(entityID));
 			}
 			
 			category =  idp_type;
@@ -1041,48 +1071,18 @@ function loadImprovedDropDown(){
 			writeHTML('</optgroup>');
 		}
 		
-		if (wayf_additional_idps.length > 0){
+		// Show IdPs from other federations
+		if ( ! isEmptyObject(wayf_other_fed_idps)){
 			
 			if (wayf_show_categories == true){
 				writeHTML('<optgroup label="<?php echo $otherFederationString ?>">');
 			}
 			
-			// Sort Array
-			wayf_additional_idps.sort(sortEntities)
-			
 			// Show additional IdPs
-			for ( var i=0; i < wayf_additional_idps.length ; i++){
-				
-				if (!wayf_additional_idps[i]){
-					continue;
-				}
-				
-				writeHTML('<option ');
-				
-				// Last used IdP is known because of local _saml_idp cookie
-				if (
-					wayf_additional_idps[i].name
-					&& wayf_additional_idps[i].entityID == last_idp
-					){
-					writeHTML(' selected="selected" ');
-				} 
-				// If no IdP is known but the default IdP matches, use this entry
-				else if (
-					wayf_additional_idps[i].name
-					&& typeof(wayf_default_idp) != "undefined" 
-					&& wayf_additional_idps[i].entityID == wayf_default_idp
-					){
-					writeHTML(' selected="selected" ');
-				}
-				
-				writeHTML(' value="' + i + '" data="' + wayf_additional_idps[i].name + '"');
-				
-				// Add logo if available
-				if (wayf_additional_idps[i].logoURL){
-					writeHTML(' logo="' + wayf_additional_idps[i].logoURL + '"');
-				}
-				
-				writeHTML('>' + wayf_additional_idps[i].name  + '</option>');
+			for (entityID in wayf_other_fed_idps){
+			
+				var content = getOptionHTML(entityID)
+				writeHTML(content);
 			}
 			
 			if (wayf_show_categories == true){
