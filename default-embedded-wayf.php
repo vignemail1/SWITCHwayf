@@ -139,7 +139,6 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // [Optional, default: false]
 // var wayf_use_improved_drop_down_list = false;
 
-
 // Force the user's Home Organisation selection to be remembered for the
 // current browser session. If wayf_show_remember_checkbox is true
 // the checkbox will be shown but will be read only.
@@ -162,6 +161,11 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // This is usually the case the first time ever a user accesses a resource
 // [Optional, default: none]
 // var wayf_default_idp = "https://aai-logon.switch.ch/idp/shibboleth";
+
+// Number of last used IdPs to show
+// Set to 0 to deactivate
+// [Optional, default: 3]
+// var wayf_num_last_used_idps = 3;
 
 // Set a custom Assertion Consumer URL instead of
 // the default wayf_sp_handlerURL + '/SAML/POST'
@@ -188,6 +192,9 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // [Optional, default: none]
 // var wayf_overwrite_most_used_idps_text = 'Most popular';
 
+// Overwrites the category name of the last used IdP category in the drop-down list
+// [Optional, default: none]
+// var wayf_overwrite_last_used_idps_text = 'Previously used';
 
 // Whether to hide the WAYF after the user was logged in
 // This requires that the _shib_session_* cookie is set when a user 

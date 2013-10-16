@@ -65,6 +65,10 @@
 // Whether or not to use the search-as-you-type feature of the drop down list
 //$useImprovedDropDownList = true;
 
+// Number of previously used Identity Providers to show at top of drop-down list
+// Default is 3, set to 0 to disable
+//$showNumOfPreviouslyUsedIdPs = 3;
+
 // Set to true in order to enable reading the Identity Providers and Service 
 // Providers from a SAML2 metadata file defined below in $metadataFile
 // The parsed data will be available in $metadataIDPFile and $metadataSPFile
