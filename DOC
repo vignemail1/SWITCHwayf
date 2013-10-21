@@ -168,8 +168,13 @@ the file $IDPConfigFile like:
 
 $IDProviders["https://sso.example.org/idp/shibboleth"]["Name"] = "Foobar";
 
-It is also possible to manually force the IdP list being upgraded by running the 
-readMetadata.php in command line mode, e.g. by executing a cron script like:
+If an entry is in the SAML metadata file but should not be shown in the drop 
+down list, it can be hidden/removed with:
+
+$IDProviders["https://sso.example.org/idp/shibboleth"] = '';
+
+To force a periodic refresh of the IdP, run readMetadata.php in command line 
+mode, i.e. by executing a cron script like:
 
 5 * * * * /usr/bin/php readMetadata.php > /dev/null
 

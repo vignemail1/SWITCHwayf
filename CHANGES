@@ -36,6 +36,7 @@ SWITCHwayf Version History
     default as it is currently experimental. Can be activated with:  
     var wayf_use_improved_drop_down_list = true
   - Added MDUI logo support. Only favicon logos (16x16 px) will be used.
+    The logos will be dynamically loaded and only if they are visible
   - Added new setting $showNumOfPreviouslyUsedIdPs to standalone and embedded  
     WAYF to show last n used IdPs at top of drop down list. Default is 3.
   - Various Javascript improvements to offload computation from WAYF to client
