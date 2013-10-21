@@ -487,7 +487,7 @@ function mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, 
 	$allIDPS = $metadataIDProviders;
 	$mergedArray = Array();
 	if ($includeLocalConfEntries) {
-		  $allIDPS = array_merge($metadataIDProviders, $IDProviders);
+		$allIDPS = array_merge($metadataIDProviders, $IDProviders);
 	}
 	
 	foreach ($allIDPS as $allIDPsKey => $allIDPsEntry){
@@ -509,10 +509,10 @@ function mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, 
 					// Local conf overwrites metada entry
 					$mergedArray[$allIDPsKey] = array_merge($metadataIDProviders[$allIDPsKey], $IDProviders[$allIDPsKey]);
 				}
-			  } else {
+			} else {
 					// Entry only exists in local IDProviders file
 					$mergedArray[$allIDPsKey] = $IDProviders[$allIDPsKey];
-			  }
+			}
 		} else {
 			// Entry doesnt exist in in local IDProviders.conf.php
 			$mergedArray[$allIDPsKey] = $metadataIDProviders[$allIDPsKey];
