@@ -107,8 +107,6 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // var wayf_hide_categories =  new Array();
 
 // EntityIDs of Identity Provider whose category is hidden but that should be shown anyway
-// If this array is not empty, wayf_show_categories will be disabled because
-// otherwise, unhidden IdPs may be displayed in the wrong category
 // Example of how to unhide certain Identity Providers
 // var wayf_unhide_idps = new Array("https://aai-login.uzh.ch/idp/shibboleth");
 // [Optional, default: none]

@@ -109,6 +109,26 @@ function submitForm(){
 	return false;
 }
 
+function writeOptGroup(IdPElements, category){
+	
+	if (!wayf_categories[category]){
+		writeHTML(IdPElements);
+		return;
+	}
+	
+	var categoryName = wayf_categories[category].name;
+	
+	if (wayf_show_categories){
+		writeHTML('<optgroup label="' + categoryName + '">');
+	}
+	
+	writeHTML(IdPElements);
+	
+	if (wayf_show_categories){
+		writeHTML('</optgroup>');
+	}
+}
+
 function writeHTML(a){
 	wayf_html += a;
 }
@@ -122,10 +142,27 @@ function isEmptyObject(obj){
 	return true;
 }
 
-function isAllowedType(IdP, type){
+function isAllowedIdP(IdP){
+	
+	var type = '';
+	if (wayf_idps[IdP]){
+		type = wayf_idps[IdP].type;
+	} else if (wayf_other_fed_idps[IdP]){
+		type = wayf_other_fed_idps[IdP].type;
+	}
+	
+	// Check if IdP shall be hidden 
+	for ( var i = 0; i < wayf_hide_idps.length; i++){
+		if (wayf_hide_idps[i] == IdP){
+			return false;
+		}
+	}
+	
+	// Check if category is hidden
+		// Check if IdP is unhidden in this category
 	for ( var i = 0; i < wayf_hide_categories.length; i++){
 		
-		if (wayf_hide_categories[i] == type || wayf_hide_categories[i] == "all" ){
+		if (wayf_hide_categories[i] == "all" || wayf_hide_categories[i] == type){
 			
 			for ( var i=0; i <= wayf_unhide_idps.length; i++){
 				// Show IdP if it has to be unhidden
@@ -133,40 +170,13 @@ function isAllowedType(IdP, type){
 					return true;
 				}
 			}
+			
 			// If IdP is not unhidden, the default applies
 			return false;
 		}
 	}
 	
-	// Category was not hidden
-	return true;
-}
-
-function isAllowedCategory(category){
-	
-	if (!category || category == ''){
-		return true;
-	}
-	
-	for ( var i=0; i < wayf_hide_categories.length; i++){
-		
-		if (wayf_hide_categories[i] == category || wayf_hide_categories[i] == "all" ){
-			return false;
-		}
-	}
-	
-	// Category was not hidden
-	return true;
-}
-
-function isAllowedIdP(IdP){
-	
-	for ( var i = 0; i < wayf_hide_idps.length; i++){
-		if (wayf_hide_idps[i] == IdP){
-			return false;
-		}
-	}
-	// IdP was not hidden
+	// Default
 	return true;
 }
 
@@ -311,13 +321,9 @@ function processDiscoFeedIdPs(IdPs){
 	
 	// Add unkown IdPs to wayf_additional_idps
 	for ( var i = 0; i < IdPs.length; i++) {
+		
 		// Skip IdPs that are already known
 		if (wayf_idps[IdPs[i].entityID]){
-			continue;
-		}
-		
-		// Skip hidden IdPs
-		if (!isAllowedIdP(IdPs[i].entityID)){
 			continue;
 		}
 		
@@ -373,6 +379,7 @@ function getIdPFromDiscoFeedEntry(IdPData){
 	var newIdP = {
 		"entityID":IdPData.entityID, 
 		"name": name, 
+		"type": "unknown", 
 		"SAML1SSOurl":"https://this.url.does.not.exist/test", 
 		"data": data, 
 		"logoURL":logo
@@ -782,11 +789,6 @@ function loadImprovedDropDown(){
 		wayf_unhide_idps = new Array();
 	}
 	
-	// Disable categories if IdPs are unhidden from hidden categories
-	if (wayf_unhide_idps.length > 0){
-		wayf_show_categories = false;
-	}
-	
 	if(
 		typeof(wayf_hide_idps) == "undefined"
 		|| typeof(wayf_hide_idps) != "object"
@@ -974,6 +976,10 @@ function loadImprovedDropDown(){
 					IdP.selected = true;
 				}
 				
+				if (!IdP.type){
+					IdP.type = "unknown";
+				}
+				
 				if (!IdP.data){
 					IdP.data = IdP.name;
 				}
@@ -1039,37 +1045,34 @@ function loadImprovedDropDown(){
 		
 		// Draw drop down list
 		var category = '';
+		var IdPElements = '';
 		for(var entityID in wayf_idps){
 			
 			var idp_type = wayf_idps[entityID].type;
 			
-			if (wayf_show_categories == true && category != idp_type){
+			// Draw category
+			if (category != idp_type){
 				
 				// Finish category if a new one starts that exists
-				if (category != '' && wayf_categories[idp_type]){
-					writeHTML('</optgroup>');
+				if (IdPElements != ''){
+					writeOptGroup(IdPElements, category);
 				}
 				
-				// Skip category if it is not allowed
-				if (!isAllowedCategory(idp_type)){
-					continue;
-				} else if (wayf_categories[idp_type]) {
-					// Start new category if there exists a description
-					writeHTML('<optgroup label="' + wayf_categories[idp_type].name + '">');
-				}
+				// Reset content
+				IdPElements = '';
 			}
 			
-			if (isAllowedType(entityID, idp_type) && isAllowedIdP(entityID)){
-				writeHTML(getOptionHTML(entityID));
+			// Add IdP if it is allowed
+			if (isAllowedIdP(entityID)){
+				IdPElements += getOptionHTML(entityID);
 			}
 			
-			category =  idp_type;
+			// Set current category/type
+			category = idp_type;
 		}
 		
-		// Close category if categories are enabled
-		if (wayf_show_categories == true){
-			writeHTML('</optgroup>');
-		}
+		// Output last remaining elements
+		writeOptGroup(IdPElements, category);
 		
 		// Show IdPs from other federations
 		if ( ! isEmptyObject(wayf_other_fed_idps)){
@@ -1080,9 +1083,10 @@ function loadImprovedDropDown(){
 			
 			// Show additional IdPs
 			for (entityID in wayf_other_fed_idps){
-			
-				var content = getOptionHTML(entityID)
-				writeHTML(content);
+				if (isAllowedIdP(entityID)){
+					var content = getOptionHTML(entityID)
+					writeHTML(content);
+				}
 			}
 			
 			if (wayf_show_categories == true){
