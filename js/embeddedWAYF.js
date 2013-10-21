@@ -991,7 +991,7 @@ function loadImprovedDropDown(){
 		writeHTML('<option value="-"><?php echo $selectIdPString ?> ...</option>');
 		
 		// Last used
-		if (wayf_num_last_used_idps > 0 && last_idps.length > 0){
+		if (wayf_show_categories == true && wayf_num_last_used_idps > 0 && last_idps.length > 0){
 			if(typeof(wayf_overwrite_most_used_idps_text) == "undefined"){
 				writeHTML('<optgroup label="<?php echo $lastUsedIdPsString ?>">');
 			} else {
@@ -1019,7 +1019,7 @@ function loadImprovedDropDown(){
 		}
 		
 		// Favourites
-		if (wayf_most_used_idps.length > 0){
+		if (wayf_show_categories == true && wayf_most_used_idps.length > 0){
 			if(typeof(wayf_overwrite_most_used_idps_text) == "undefined"){
 				writeHTML('<optgroup label="<?php echo $mostUsedIdPsString ?>">');
 			} else {

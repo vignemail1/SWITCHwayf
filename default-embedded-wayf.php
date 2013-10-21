@@ -95,6 +95,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 
 // Most used Identity Providers will be shown as top category in the drop down
 // list if this feature is used.
+// Will not be shown if wayf_show_categories is false
 // [Optional, default: none]
 // var wayf_most_used_idps =  new Array("https://aai-logon.unibas.ch/idp/shibboleth", "https://aai.unil.ch/idp/shibboleth");
 
@@ -163,6 +164,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // var wayf_default_idp = "https://aai-logon.switch.ch/idp/shibboleth";
 
 // Number of last used IdPs to show
+// Will not be shown if wayf_show_categories is false 
 // Set to 0 to deactivate
 // [Optional, default: 3]
 // var wayf_num_last_used_idps = 3;
