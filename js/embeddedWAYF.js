@@ -207,7 +207,7 @@ function getCookie(check_name){
 	
 	for ( var i = 0; i < a_all_cookies.length; i++ ){
 		// now we'll split apart each name=value pair
-		a_temp_cookie = a_all_cookies[i].split( '=' );
+		a_temp_cookie = a_all_cookies[i].split('=');
 		
 		
 		// and trim left/right whitespace while we're at it
@@ -941,7 +941,7 @@ function loadImprovedDropDown(){
 		
 		// Get last used IdP from local host cookie
 		if (saml_idp_cookie && saml_idp_cookie.length > 0){
-			last_idps = saml_idp_cookie.split(' ');
+			last_idps = saml_idp_cookie.split(/[ \+]/);
 			if (last_idps.length > 0){
 				last_idp = last_idps[(last_idps.length - 1)];
 				if (last_idp.length > 0){
