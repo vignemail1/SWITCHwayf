@@ -120,7 +120,7 @@ $langStrings['de']['unverified_return_url'] = 'Die return URL <code>\'%s\'</code
 $langStrings['de']['unknown_sp'] = 'Der Service Provider <code>\'%s\'</code> konnte nicht in den Metadaten gefunden werden und ist deshalb unbekannt.';
 $langStrings['de']['no_idp_found'] = 'Keine Organisation gefunden f&uuml;r diesen Suchtext';
 $langStrings['de']['no_idp_available'] = 'Keine Organisation verf&uuml;gbar';
-$langStrings['en']['last_used'] = 'Zuletzt benutzt';
+$langStrings['de']['last_used'] = 'Zuletzt benutzt';
 
 
 // ****************************
@@ -166,7 +166,7 @@ $langStrings['fr']['login_with'] = 'Se connecter avec:';
 $langStrings['fr']['other_federation'] = 'D\'autres f&eacute;derations';
 $langStrings['fr']['logged_in'] = 'Vous &ecirc;tes d&eacute;j&agrave; authentifi&eacute;. <a href=\"%s\">Continuez</a>.';
 $langStrings['fr']['most_used'] = '&Eacute;tablissements les plus utilis&eacute;es';
-$langStrings['en']['last_used'] = 'Dernièrement utilisées';
+$langStrings['fr']['last_used'] = 'Dernièrement utilisées';
 
 
 // ****************************
