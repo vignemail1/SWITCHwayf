@@ -29,6 +29,12 @@ var wayf_auto_login;
 var wayf_logged_in_messsage;
 var wayf_hide_after_login;
 var wayf_most_used_idps;
+var wayf_overwrite_last_used_idps_text;
+var wayf_overwrite_most_used_idps_text;
+var wayf_overwrite_checkbox_label_text;
+var wayf_overwrite_submit_button_text;
+var wayf_overwrite_intro_text;
+var wayf_overwrite_from_other_federations_text;
 var wayf_num_last_used_idps;
 var wayf_show_categories;
 var wayf_hide_categories;
@@ -113,6 +119,10 @@ function writeOptGroup(IdPElements, category){
 	
 	if (!wayf_categories[category]){
 		writeHTML(IdPElements);
+		return;
+	}
+	
+	if (IdPElements == ''){
 		return;
 	}
 	
@@ -261,9 +271,12 @@ function isShibbolethSession(url){
 function loadDiscoFeedIdPs(){
 	
 	var result = queryGetURL(wayf_discofeed_url);
+	var IdPs = {};
 	
 	// Load JSON
-	var IdPs = eval("(" +result + ")");
+	if (result != ''){
+		IdPs = eval("(" +result + ")");
+	}
 	
 	return IdPs;
 }
@@ -767,6 +780,55 @@ function loadImprovedDropDown(){
 		){
 		wayf_most_used_idps = new Array();
 	}
+
+	if(
+		typeof(wayf_logged_in_messsage) == "undefined"
+		|| typeof(wayf_logged_in_messsage) != "string"
+		){
+		wayf_logged_in_messsage = "<?php echo $loggedInString ?>".replace(/%s/, wayf_return_url);
+	}
+
+	if(
+		typeof(wayf_overwrite_last_used_idps_text) == "undefined"
+		|| typeof(wayf_overwrite_last_used_idps_text) != "string"
+		){
+		wayf_overwrite_last_used_idps_text = "<?php echo $lastUsedIdPsString ?>";
+	}
+
+	if(
+		typeof(wayf_overwrite_most_used_idps_text) == "undefined"
+		|| typeof(wayf_overwrite_most_used_idps_text) != "string"
+		){
+		wayf_overwrite_most_used_idps_text = "<?php echo $mostUsedIdPsString ?>";
+	}
+
+	if(
+		typeof(wayf_overwrite_checkbox_label_text) == "undefined"
+		|| typeof(wayf_overwrite_checkbox_label_text) != "string"
+		){
+		wayf_overwrite_checkbox_label_text = "<?php echo $rememberSelectionText ?>";
+	}
+
+	if(
+		typeof(wayf_overwrite_submit_button_text) == "undefined"
+		|| typeof(wayf_overwrite_submit_button_text) != "string"
+		){
+		wayf_overwrite_submit_button_text = "<?php echo $loginString ?>";
+	}
+
+	if(
+		typeof(wayf_overwrite_intro_text) == "undefined"
+		|| typeof(wayf_overwrite_intro_text) != "string"
+		){
+		wayf_overwrite_intro_text = "<?php echo $loginWithString ?>";
+	}
+	
+	if(
+		typeof(wayf_overwrite_from_other_federations_text) == "undefined"
+		|| typeof(wayf_overwrite_from_other_federations_text) != "string"
+		){
+		wayf_overwrite_from_other_federations_text = "<?php echo $otherFederationString ?>";
+	}
 	
 	if(
 		typeof(wayf_show_categories) == "undefined"
@@ -881,12 +943,8 @@ function loadImprovedDropDown(){
 	} else {
 	// Else draw embedded WAYF
 		
-		// Do we have to draw custom text? or any text at all?
-		if(typeof(wayf_overwrite_intro_text) == "undefined"){
-			writeHTML('<label for="user_idp" id="wayf_intro_label" style="float:left; min-width:80px; font-size:' + wayf_font_size + 'px;color:' + wayf_font_color + ';"><?php echo $loginWithString ?></label>');
-		} else if (wayf_overwrite_intro_text != "") {
-			writeHTML('<label for="user_idp" id="wayf_intro_label" style="float:left; min-width:80px; font-size:' + wayf_font_size + 'px;color:' + wayf_font_color + ';">' + wayf_overwrite_intro_text + '</label>');
-		}
+		// Draw intro text
+		writeHTML('<label for="user_idp" id="wayf_intro_label" style="float:left; min-width:80px; font-size:' + wayf_font_size + 'px;color:' + wayf_font_color + ';">' + wayf_overwrite_intro_text + '</label>');
 		
 		var wayf_authReq_URL = '';
 		var form_start = '';
@@ -998,12 +1056,15 @@ function loadImprovedDropDown(){
 		
 		// Last used
 		if (wayf_show_categories == true && wayf_num_last_used_idps > 0 && last_idps.length > 0){
-			if(typeof(wayf_overwrite_most_used_idps_text) == "undefined"){
-				writeHTML('<optgroup label="<?php echo $lastUsedIdPsString ?>">');
-			} else {
-				writeHTML('<optgroup label="' + wayf_overwrite_last_used_idps_text + '">');
+			
+			// Add new category
+			var category = "wayf_last_used_idps";
+			wayf_categories.wayf_last_used_idps = {
+				"type": category, 
+				"name": wayf_overwrite_last_used_idps_text
 			}
 			
+			var IdPElements = '';
 			var counter = wayf_num_last_used_idps;
 			for ( var i= (last_idps.length - 1); i >= 0; i--){
 				
@@ -1016,31 +1077,33 @@ function loadImprovedDropDown(){
 				
 				if (content != ''){
 					counter--;
-					writeHTML(content)
+					IdPElements += content;
 				}
 				
 			}
 			
-			writeHTML('</optgroup>');
+			writeOptGroup(IdPElements, category);
 		}
 		
-		// Favourites
+		// Most used and Favourites
 		if (wayf_show_categories == true && wayf_most_used_idps.length > 0){
-			if(typeof(wayf_overwrite_most_used_idps_text) == "undefined"){
-				writeHTML('<optgroup label="<?php echo $mostUsedIdPsString ?>">');
-			} else {
-				writeHTML('<optgroup label="' + wayf_overwrite_most_used_idps_text + '">');
+			
+			// Add new category
+			var category = "wayf_most_used_idps";
+			wayf_categories.wayf_most_used_idps = {
+				"type": category, 
+				"name": wayf_overwrite_most_used_idps_text
 			}
 			
 			// Show most used IdPs in the order they are defined
+			var IdPElements = '';
 			for ( var i=0; i < wayf_most_used_idps.length; i++){
 				if (wayf_idps[wayf_most_used_idps[i]]){
-					var content = getOptionHTML(wayf_most_used_idps[i]);
-					writeHTML(content);
+					IdPElements += getOptionHTML(wayf_most_used_idps[i]);
 				}
 			}
 			
-			writeHTML('</optgroup>');
+			writeOptGroup(IdPElements, category);
 		}
 		
 		// Draw drop down list
@@ -1071,27 +1134,28 @@ function loadImprovedDropDown(){
 			category = idp_type;
 		}
 		
-		// Output last remaining elements
+		// Output last remaining element
 		writeOptGroup(IdPElements, category);
 		
 		// Show IdPs from other federations
 		if ( ! isEmptyObject(wayf_other_fed_idps)){
 			
-			if (wayf_show_categories == true){
-				writeHTML('<optgroup label="<?php echo $otherFederationString ?>">');
+			// Add new category
+			var category = "wayf_other_federations_idps";
+			wayf_categories.wayf_other_federations_idps = {
+				"type": category, 
+				"name": wayf_overwrite_from_other_federations_text
 			}
 			
 			// Show additional IdPs
+			var IdPElements = '';
 			for (entityID in wayf_other_fed_idps){
 				if (isAllowedIdP(entityID)){
-					var content = getOptionHTML(entityID)
-					writeHTML(content);
+					IdPElements += getOptionHTML(entityID)
 				}
 			}
 			
-			if (wayf_show_categories == true){
-				writeHTML('</optgroup>');
-			}
+			writeOptGroup(IdPElements, category);
 		}
 		
 		writeHTML('</select>');
@@ -1111,13 +1175,8 @@ function loadImprovedDropDown(){
 				writeHTML('<input id="wayf_remember_checkbox" type="checkbox" name="session" value="true" <?php echo $checkedBool ?>>&nbsp;');
 			}
 			
-			// Do we have to display custom text?
-			if(typeof(wayf_overwrite_checkbox_label_text) == "undefined"){
-				writeHTML('<label for="wayf_remember_checkbox" id="wayf_remember_checkbox_label" style="min-width:80px; font-size:' + wayf_font_size + 'px;color:' + wayf_font_color + ';"><?php echo $rememberSelectionText ?></label>');
-				
-			} else if (wayf_overwrite_checkbox_label_text != "")  {
-				writeHTML('<label for="wayf_remember_checkbox" id="wayf_remember_checkbox_label" style="min-width:80px; font-size:' + wayf_font_size + 'px;color:' + wayf_font_color + ';">' + wayf_overwrite_checkbox_label_text + '</label>');
-			}
+			// Draw label
+			writeHTML('<label for="wayf_remember_checkbox" id="wayf_remember_checkbox_label" style="min-width:80px; font-size:' + wayf_font_size + 'px;color:' + wayf_font_color + ';">' + wayf_overwrite_checkbox_label_text + '</label>');
 		} else if (wayf_force_remember_for_session){
 			// Is the checkbox forced to be checked but hidden
 			writeHTML('<input id="wayf_remember_checkbox" type="hidden" name="session" value="true">&nbsp;');
@@ -1125,12 +1184,8 @@ function loadImprovedDropDown(){
 		
 		writeHTML('</div>');
 		
-		// Do we have to display custom text?
-		if(typeof(wayf_overwrite_submit_button_text) == "undefined"){
-			writeHTML('<input id="wayf_submit_button" type="submit" name="Login" accesskey="s" value="<?php echo $loginString ?>" style="float: right;" onClick="javascript:return submitForm();">');
-		} else {
-			writeHTML('<input id="wayf_submit_button" type="submit" name="Login" accesskey="s" value="' + wayf_overwrite_submit_button_text + '" style="float: right;" onClick="javascript:return submitForm();">');
-		}
+		// Draw submit button
+		writeHTML('<input id="wayf_submit_button" type="submit" name="Login" accesskey="s" value="' + wayf_overwrite_submit_button_text + '" style="float: right;" onClick="javascript:return submitForm();">');
 		
 		// Close form
 		writeHTML('</form>');

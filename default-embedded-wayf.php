@@ -196,6 +196,10 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // [Optional, default: none]
 // var wayf_overwrite_last_used_idps_text = 'Previously used';
 
+// Overwrites the category name of IdPs from other federations in the drop-down list
+// [Optional, default: none]
+// var wayf_overwrite_from_other_federations_text = 'Other organisations';
+
 // Whether to hide the WAYF after the user was logged in
 // This requires that the _shib_session_* cookie is set when a user 
 // could be authenticated
