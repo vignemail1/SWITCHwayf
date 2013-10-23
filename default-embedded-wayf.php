@@ -54,6 +54,11 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // [Optional, default: true]
 //var wayf_show_remember_checkbox = true;
 
+// Hide the Logo
+// If true, no logo is shown
+// [Optional, default: false]
+// var wayf_hide_logo = false;
+
 // Logo size
 // Choose whether the small or large logo should be used
 // [Optional, default: true]
