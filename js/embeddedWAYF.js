@@ -144,8 +144,12 @@ function writeHTML(a){
 }
 
 function isEmptyObject(obj){
+
+	if (typeof(obj) != "object"){
+		return true;
+	}
 	
-	for (index in obj){
+	for (var index in obj){
 		return false;
 	}
 	
@@ -174,7 +178,7 @@ function isAllowedIdP(IdP){
 		
 		if (wayf_hide_categories[i] == "all" || wayf_hide_categories[i] == type){
 			
-			for ( var i=0; i <= wayf_unhide_idps.length; i++){
+			for ( var i=0; i < wayf_unhide_idps.length; i++){
 				// Show IdP if it has to be unhidden
 				if (wayf_unhide_idps[i] == IdP){
 					return true;
@@ -515,7 +519,7 @@ function getGETArgumentSeparator(url){
 }
 
 function ieLoadBugFix(scriptElement, callback){
-	if (scriptElement.readyState=='loaded' || scriptElement.readyState=='completed'){
+	if (scriptElement.readyState && (scriptElement.readyState=='loaded' || scriptElement.readyState=='completed')){
 		callback();
 	 } else {
 		setTimeout(function() {
