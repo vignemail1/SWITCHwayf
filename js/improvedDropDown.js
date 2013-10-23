@@ -336,6 +336,7 @@ function getListElement(sourceElement) {
 								// Load logo
 								var imgObj = $(this).children("img:first-child")[0];
 								imgObj.src = $(this).attr("logo");
+								$(this).removeAttr("logo");
 							}
 						});
 				  })
@@ -642,12 +643,12 @@ function positionList(listControl) {
 
             var childItems = listControl.children('.idd_listItem:visible,.idd_listItemGroupHeader:visible');
 
-            var elementHeightPx = getElementsTotalHeightPx(childItems) + 5;
+            var elementHeightPx = getElementsTotalHeightPx(childItems);
 
 			// Use absolute position of list to calculate list height
-            var maxHeightPx = $(window).height() + $(document).scrollTop() - listControl.offset().top - 20;
+			var maxHeightPx = $(window).height() + $(document).scrollTop() - listControl.offset().top - 10;
             var minListHeigtPx = 12;
-            var listhHeight = Math.min(elementHeightPx, maxHeightPx)
+            var listhHeight = Math.min(elementHeightPx, maxHeightPx);
 
             listhHeight = Math.max(listhHeight, minListHeigtPx);
             listControl.css('height', listhHeight + 'px');
@@ -660,8 +661,7 @@ function positionList(listControl) {
             // List width shall be at max page width - 100px
 			listWidthPx = Math.min(($(window).width() - 100), listWidthPx);
 
-			// Add some margin for compensating scrollbar
-			var effectiveListWidth = (listWidthPx + 20);
+			var effectiveListWidth = listWidthPx;
 			listControl.css('width', effectiveListWidth + 'px');
             
             // Determine on which side to expand list
@@ -693,7 +693,7 @@ function getElementsTotalHeightPx(jElements) {
     var maxHeight = 0;
  
     jElements.each(function () {
-        maxHeight += $(this).outerHeight(); 
+		maxHeight += $(this).outerHeight() + 4;
     });
 
     return maxHeight; 
@@ -884,18 +884,18 @@ function processDelayedCall(key, func) {
 * only accounts for vertical position, not horizontal.
 */
 $.fn.visible = function(partial,hidden){
-var $t	= $(this).eq(0),
-t	= $t.get(0),
-$w	= $(window),
-viewTop	= $w.scrollTop(),
-viewBottom	= viewTop + $w.height(),
-_top	= $t.offset().top,
-_bottom	= _top + $t.height(),
-compareTop	= partial === true ? _bottom : _top,
-compareBottom	= partial === true ? _top : _bottom,
-clientSize	= hidden === true ? t.offsetWidth * t.offsetHeight : true;
-
-return !!clientSize && ((compareBottom <= viewBottom) && (compareTop >= viewTop));
-    };
+	var $t	= $(this).eq(0),
+	t	= $t.get(0),
+	$w	= $(window),
+	viewTop	= $w.scrollTop(),
+	viewBottom	= viewTop + $w.height(),
+	_top	= $t.offset().top,
+	_bottom	= _top + $t.height(),
+	compareTop	= partial === true ? _bottom : _top,
+	compareBottom	= partial === true ? _top : _bottom,
+	clientSize	= hidden === true ? t.offsetWidth * t.offsetHeight : true;
+	
+	return !!clientSize && ((compareBottom <= viewBottom) && (compareTop >= viewTop));
+};
     
 })(jQuery);
