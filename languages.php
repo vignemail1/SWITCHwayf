@@ -150,8 +150,8 @@ $langStrings['fr']['permanently_remember_selection'] = 'Se souvenir de mon choix
 $langStrings['fr']['confirm_permanent_selection'] = '&Ecirc;tes-vous s&ucirc; de vouloir d&eacute;finir votre s&eacute;lection comme votre &eacute;tablissement par d&eacute;faut ? N\'utilisez pas cette fonction si vous avez plusieurs identit&eacute;s AAI.';
 $langStrings['fr']['save_button'] = 'Sauver';
 $langStrings['fr']['access_host'] = 'Pour acc&eacute;der au service %s s&eacute;lectionnez ou cherchez l\'&eacute;tablissement auquel vous &ecirc;tes rattach&eacute;.';
-$langStrings['fr']['select_idp'] = 'Veuillez s&eacute;lectionner l\'organisation &agrave; laquelle vous appartenez.';
-$langStrings['fr']['search_idp'] = 'Veuillez taper le nom de l\'organisation &agrave; laquelle vous appartenez.';
+$langStrings['fr']['select_idp'] = 'Veuillez s&eacute;lectionner l\'&eacute;tablissement &agrave; laquelle vous appartenez.';
+$langStrings['fr']['search_idp'] = 'Veuillez taper le nom de l\'&eacute;tablissement &agrave; laquelle vous appartenez.';
 $langStrings['fr']['remember_selection'] = 'Se souvenir de mon choix pour cette session.';
 $langStrings['fr']['invalid_user_idp'] = 'Une erreur s\'est produite.<br>La valeur de votre donn&eacute;e <code>\'%s\'</code> n\'est pas valide.<br>Seules ces valeurs sont admises :';
 $langStrings['fr']['contact_assistance'] = 'Contactez le support <a href="mailto:%s">%s</a> si l\'erreur persiste.';
@@ -166,7 +166,7 @@ $langStrings['fr']['login_with'] = 'Se connecter avec:';
 $langStrings['fr']['other_federation'] = 'D\'autres f&eacute;derations';
 $langStrings['fr']['logged_in'] = 'Vous &ecirc;tes d&eacute;j&agrave; authentifi&eacute;. <a href=\"%s\">Continuez</a>.';
 $langStrings['fr']['most_used'] = '&Eacute;tablissements les plus utilis&eacute;es';
-$langStrings['fr']['last_used'] = 'Dernièrement utilisées';
+$langStrings['fr']['last_used'] = 'Dernièrement utilisés';
 
 
 // ****************************
