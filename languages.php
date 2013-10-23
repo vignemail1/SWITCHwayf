@@ -136,7 +136,7 @@ $langStrings['fr']['additional_info'] = '<a href="http://www.switch.ch/" target=
 $langStrings['fr']['faq'] = 'FAQ'; // This string can be hidden by setting it to ''
 $langStrings['fr']['help'] = 'Aide';// This string can be hidden by setting it to ''
 $langStrings['fr']['privacy'] = 'Protection des donn&eacute;es';// This string can be hidden by setting it to ''
-$langStrings['fr']['title'] = 'S&eacute;lection de votre établissement';
+$langStrings['fr']['title'] = 'S&eacute;lection de votre &eacute;tablissement';
 $langStrings['fr']['header'] = 'S&eacute;lectionnez votre &eacute;tablissement';
 $langStrings['fr']['make_selection'] = 'Vous devez s&eacute;lectionner un &eacute;tablissement valide.';
 $langStrings['fr']['settings'] = '&Eacute;tablissement par d&eacute;faut pour ce navigateur';

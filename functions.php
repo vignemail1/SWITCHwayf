@@ -757,23 +757,23 @@ function logAccessEntry($protocol, $type, $sp, $idp, $return){
 
 /******************************************************************************/
 // Logs an info message
-function logInfo($errorMsg){
+function logInfo($infoMsg){
 	global $developmentMode;
-	syslog(LOG_INFO, $errorMsg);
+	syslog(LOG_INFO, $infoMsg);
 	
 	if ($developmentMode){
-		echo $errorMsg;
+		echo $infoMsg;
 	}
 }
 
 /******************************************************************************/
 // Logs an warnimg message
-function logWarning($errorMsg){
+function logWarning($warnMsg){
 	global $developmentMode;
-	syslog(LOG_WARNING, $errorMsg);
+	syslog(LOG_WARNING, $warnMsg);
 	
 	if ($developmentMode){
-		echo $errorMsg;
+		echo $warnMsg;
 	}
 }
 
