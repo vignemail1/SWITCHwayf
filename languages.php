@@ -33,7 +33,7 @@ $langStrings['en']['additional_info'] = '<a href="http://www.switch.ch/" target=
 // Generic strings
 $langStrings['en']['faq'] = 'FAQ'; // This string can be hidden by setting it to ''
 $langStrings['en']['help'] = 'Help';// This string can be hidden by setting it to ''
-$langStrings['en']['privacy'] = 'Privacy'; // This string can be hidden by setting it to ''
+$langStrings['en']['privacy'] = 'Data Privacy'; // This string can be hidden by setting it to ''
 $langStrings['en']['title'] = 'Organisation Selection';
 $langStrings['en']['header'] = 'Select your organisation'; 
 $langStrings['en']['make_selection'] = 'You must select an organisation.';
@@ -49,7 +49,7 @@ $langStrings['en']['confirm_permanent_selection'] = 'Are you sure that you want 
 $langStrings['en']['save_button'] = 'Save';
 $langStrings['en']['access_host'] = 'In order to access a service on host %s please select or search the organisation you are affiliated with.';
 $langStrings['en']['select_idp'] = 'Select the organisation you are affiliated with';
-$langStrings['en']['search_idp'] = 'Type the name of the organisation you are affiliated with';
+$langStrings['en']['search_idp'] = 'Enter the name of the organisation you are affiliated with...';
 $langStrings['en']['remember_selection'] = 'Remember selection for this web browser session.';
 $langStrings['en']['invalid_user_idp'] = 'There may be an error in the data you just submitted.<br>The value of your input <code>\'%s\'</code> is invalid.<br>Only the following values are allowed:';
 $langStrings['en']['contact_assistance'] = 'Please contact <a href="mailto:%s">%s</a> for assistance.';
@@ -100,7 +100,7 @@ $langStrings['de']['confirm_permanent_selection'] = 'Sind Sie sicher, dass Sie d
 $langStrings['de']['save_button'] = 'Speichern';
 $langStrings['de']['access_host'] = 'Um auf den Dienst %s zuzugreifen, w&auml;hlen oder suchen Sie bitte die Organisation, der Sie angeh&ouml;ren.';
 $langStrings['de']['select_idp'] = 'W&auml;hlen Sie die Organisation aus, der Sie angeh&ouml;ren';
-$langStrings['de']['search_idp'] = 'Tippen Sie den Namen der Organisation, der Sie angeh&ouml;ren';
+$langStrings['de']['search_idp'] = 'Geben Sie den Namen der Organisation ein, der Sie angeh&ouml;ren...';
 $langStrings['de']['remember_selection'] = 'Auswahl f&uuml;r die laufende Webbrowser Sitzung speichern.';
 $langStrings['de']['invalid_user_idp'] = 'M&ouml;glicherweise sind die &uuml;bermittelten Daten fehlerhaft.<br>Der Wert der Eingabe <code>\'%s\'</code> ist ung&uuml;ltig.<br>Es sind ausschliesslich die folgenden Wert erlaubt:';
 $langStrings['de']['contact_assistance'] = 'F&uuml;r Unterst&uuml;tzung und Hilfe, kontaktieren Sie bitte <a href="mailto:%s">%s</a>.';
@@ -149,13 +149,13 @@ $langStrings['fr']['goto_sp'] = 'Sauver et continuez';
 $langStrings['fr']['permanently_remember_selection'] = 'Se souvenir de mon choix d&eacute;finitivement et contourner cette &eacute;tape &agrave; partir de maintenant.';
 $langStrings['fr']['confirm_permanent_selection'] = '&Ecirc;tes-vous s&ucirc; de vouloir d&eacute;finir votre s&eacute;lection comme votre &eacute;tablissement par d&eacute;faut ? N\'utilisez pas cette fonction si vous avez plusieurs identit&eacute;s AAI.';
 $langStrings['fr']['save_button'] = 'Sauver';
-$langStrings['fr']['access_host'] = 'Pour acc&eacute;der au service %s s&eacute;lectionnez ou cherchez l\'&eacute;tablissement auquel vous &ecirc;tes rattach&eacute;.';
-$langStrings['fr']['select_idp'] = 'Veuillez s&eacute;lectionner l\'&eacute;tablissement &agrave; laquelle vous appartenez.';
-$langStrings['fr']['search_idp'] = 'Veuillez taper le nom de l\'&eacute;tablissement &agrave; laquelle vous appartenez.';
-$langStrings['fr']['remember_selection'] = 'Se souvenir de mon choix pour cette session.';
+$langStrings['fr']['access_host'] = 'Pour acc&eacute;der au service %s s&eacute;lectionnez ou cherchez l\'&eacute;tablissement auquel vous appartenez.';
+$langStrings['fr']['select_idp'] = 'Veuillez s&eacute;lectionner l\'&eacute;tablissement auquel vous appartenez.';
+$langStrings['fr']['search_idp'] = 'Veuillez entrer le nom de votre &eacute;tablissement...';
+$langStrings['fr']['remember_selection'] = 'Se souvenir de l\'&eacute;tablissement s&eacute;lectionn&eacute; pour les prochaines sessions.';
 $langStrings['fr']['invalid_user_idp'] = 'Une erreur s\'est produite.<br>La valeur de votre donn&eacute;e <code>\'%s\'</code> n\'est pas valide.<br>Seules ces valeurs sont admises :';
 $langStrings['fr']['contact_assistance'] = 'Contactez le support <a href="mailto:%s">%s</a> si l\'erreur persiste.';
-$langStrings['fr']['no_arguments'] = 'Pas de param&egrave;tre re&ccedil;u !';
+$langStrings['fr']['no_arguments'] = 'Aucun param&egrave;tre re&ccedil;u !';
 $langStrings['fr']['arguments_missing'] = 'La requ&ecirc;te n\'est pas valide, certains param&egrave;tres sont manquants.<br>Les param&egrave;tres suivants ont &eacute;t&eacute; re&ccedil;us :';
 $langStrings['fr']['valid_request_description'] = 'Une requ&ecirc;te valide doit contenir au moins les param&egrave;tres <code>shire</code> et <code>target</code>. Les param&egrave;tres optionnels <code>providerID</code>, <code>origin</code> et <code>redirect</code> peuvent &ecirc;tre utilis&eacute;s pour rediriger automatiquement le navigateur vers un &eacute;tablissement.';
 $langStrings['fr']['valid_saml2_request_description'] = 'Une requ&ecirc;te valide doit contenir au moins les param&egrave;tres <code>entityID</code> et <code>return</code>. Au lieu de param&egrave;tre <code>return</code>, metadata pour ce Service Provider peut contenir un URL pour le <code>DiscoveryResponse</code>. Les param&egrave;tres optionnel <code>isPassive</code>, <code>policy</code> et <code>returnIDParam</code> peuvent &ecirc;tre utilis&eacute;s pour rediriger automatiquement le navigateur vers un &eacute;tablissement.';
@@ -165,8 +165,13 @@ $langStrings['fr']['login'] = 'Connexion';
 $langStrings['fr']['login_with'] = 'Se connecter avec:';
 $langStrings['fr']['other_federation'] = 'D\'autres f&eacute;derations';
 $langStrings['fr']['logged_in'] = 'Vous &ecirc;tes d&eacute;j&agrave; authentifi&eacute;. <a href=\"%s\">Continuez</a>.';
-$langStrings['fr']['most_used'] = '&Eacute;tablissements les plus utilis&eacute;es';
-$langStrings['fr']['last_used'] = 'Dernièrement utilisés';
+$langStrings['fr']['invalid_return_url'] = 'L\'URL de retour <code>\'%s\'</code> n\'est pas une URL valide.';
+$langStrings['fr']['unverified_return_url'] = 'L\'URL de retour <code>\'%s\'</code> ne peut pas &ecirc;tre v&eacute;rifi&eacute; pour le fournisseur de service <code>\'%s\'</code>.';
+$langStrings['fr']['unknown_sp'] = 'Le fournisseur de service <code>\'%s\'</code> ne pouvait pas &ecirc;tre trouv&eacute; dans les meta donn&eacute;es et il est donc inconnu.';
+$langStrings['fr']['no_idp_found'] = 'Aucun &eacute;tablissement trouv&eacute; pour ce texte recherch&eacute;';
+$langStrings['fr']['no_idp_available'] = 'Aucun &eacute;tablissement disponible';
+$langStrings['fr']['most_used'] = '&Eacute;tablissements les plus utilis&eacute;s';
+$langStrings['fr']['last_used'] = 'Derni&egrave;rement utilis&eacute;s';
 
 
 // ****************************
@@ -197,7 +202,7 @@ $langStrings['it']['confirm_permanent_selection'] = 'E\' sicuro di voler imposta
 $langStrings['it']['save_button'] = 'Salva';
 $langStrings['it']['access_host'] = 'Per poter accedere alla risorsa %s per favore selezioni o cerchi l\'organizzazione con la quale &egrave; affiliato.';
 $langStrings['it']['select_idp'] = 'Selezioni l\'organizzazione con la quale &egrave; affiliato.';
-$langStrings['it']['search_idp'] = 'Digitare il nome dell\'organizzazione con cui e\' affiliato.';
+$langStrings['it']['search_idp'] = 'Digitare il nome dell\'organizzazione con cui e\' affiliato...';
 $langStrings['it']['remember_selection'] = 'Ricorda la selezione per questa sessione.';
 $langStrings['it']['invalid_user_idp'] = 'Errore nei parametri pervenuti.<br>Il valore del parametro <code>\'%s\'</code> non &#143; valido.<br>Solo i seguenti valori sono ammessi:';
 $langStrings['it']['contact_assistance'] = 'Se l\' errore persiste, si prega di contattare <a href="mailto:%s">%s</a>.';
