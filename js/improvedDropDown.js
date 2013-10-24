@@ -330,15 +330,7 @@ function getListElement(sourceElement) {
                   .css('padding-right','20px')
 				  .css('background-color','white')
 				  .scroll(function() {
-						// Loop through list and check which elements are visible
-						$(this).children('.idd_listItem[logo]').each(function () {
-							if ($(this).visible() && $(this).attr("logo")){
-								// Load logo
-								var imgObj = $(this).children("img:first-child")[0];
-								imgObj.src = $(this).attr("logo");
-								$(this).removeAttr("logo");
-							}
-						});
+						loadVisibleLogos($(this));
 				  })
                   .addClass('idd_list')
                   .mouseenter(function () { suspendTextBoxExitHandler = true; })
@@ -367,6 +359,18 @@ function getListElement(sourceElement) {
     });
 
     return newListControl;
+}
+
+function loadVisibleLogos(obj){
+	// Loop through all child elements and check which elements are visible
+	$(obj).children('.idd_listItem[logo]').each(function () {
+		if ($(this).visible() && $(this).attr("logo")){
+			// Load logo
+			var imgObj = $(this).children("img:first-child")[0];
+			imgObj.src = $(this).attr("logo");
+			$(this).removeAttr("logo");
+		}
+	});
 }
 
 function populateList(existingSelectControl, newListControl,noMatchesText,noItemsText) {
@@ -738,6 +742,9 @@ function updateListFilter(textControl) {
 	}
 
     positionList(listControl); //resize list to fit new visible elements.
+    
+	// Load logos
+	loadVisibleLogos(listControl);
 }
 
 function doesListItemMach(listItem, compareText) {
