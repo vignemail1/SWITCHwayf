@@ -59,14 +59,19 @@ function printWAYF(){
 		}
 	}
 	
-	// Fallback to hostname if no name was available
+	// Reset service name if it is the same as the entityID
+	if ($serviceName == $entityID){
+		$serviceName = '';
+	}
+	
+	// Fallback to hostname of return URL if no service name was available
 	if (empty($serviceName)){
 		if (isset($_GET['return'])){
 			$serviceName = getHostNameFromURI($_GET['return']);
 		} else if (isset($_GET['shire'])){
 			$serviceName = getHostNameFromURI($_GET['shire']);
 		} else {
-			$serviceName = 'unknown';
+			$serviceName = $entityID;
 		}
 		$serviceName = '<span class="hostName">'.$serviceName.'</span>';
 	} else {
