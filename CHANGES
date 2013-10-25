@@ -41,7 +41,11 @@ SWITCHwayf Version History
     WAYF to show last n used IdPs at top of drop down list. Default is 3.
   - Added Embedded WAYF option wayf_overwrite_from_other_federations_text  
     to overwrite the category name of IdPs from other federations
+  - Added Embedded WAYF option wayf_auto_redirect_if_logged_in that 
+    automatically sends a user to the wayf_return_url if he already is 
+    authenticated.
   - Various Javascript improvements to offload computation from WAYF to client
+    and to improve the code quality.
   - Replaced the term 'Home Organisation' in the language strings to more
     generic terms that probably are better understood by users.
   - SP names from MDUI metadata elements are now used if available
