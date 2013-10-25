@@ -213,6 +213,13 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // [Optional, default: none]
 // var wayf_logged_in_messsage = "";
 
+// If the user is already logged in and this variable is set to true, the WAYF
+// will automatically redirect the user to the URL set in wayf_return_url.
+// If the WAYF is embedded on a dedicated login page, this value should be set 
+// to true. Else, it should be left at its default value 'false'.
+// [Optional, default: false]
+// var wayf_auto_redirect_if_logged_in = true;
+
 // Provide the name of a JavaScript function that checks whether the user
 // already is logged in. The function should return true if the user is logged
 // in or false otherwise. If the user is logged in, the Embedded WAYF will

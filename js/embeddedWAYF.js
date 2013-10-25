@@ -27,6 +27,7 @@ var wayf_font_size;
 var wayf_hide_logo;
 var wayf_auto_login;
 var wayf_logged_in_messsage;
+var wayf_auto_redirect_if_logged_in;
 var wayf_hide_after_login;
 var wayf_most_used_idps;
 var wayf_overwrite_last_used_idps_text;
@@ -56,6 +57,15 @@ var wayf_idps = { <?php echo $JSONIdPList ?> };
 var wayf_other_fed_idps = {};
 
 // Functions
+function redirectTo(url){
+	// Make sure the redirect always is being done in parent window
+	if (window.parent){
+		window.parent.location = url;
+	} else {
+		window.location = url;
+	}
+}
+
 function submitForm(){
 	
 	if (document.IdPList.user_idp && document.IdPList.user_idp.selectedIndex == 0){
@@ -74,7 +84,6 @@ function submitForm(){
 	
 	// User chose IdP from other federation
 	var redirect_url;
-	var redirect_url;
 	
 	// Redirect user to SP handler
 	if (wayf_use_discovery_service){
@@ -91,24 +100,13 @@ function submitForm(){
 		// Append selected Identity Provider
 		redirect_url += '&entityID=' + encodeURIComponent(selectedIdP);
 		
-		// Make sure the redirect always is being executed in parent window
-		if (window.parent){
-			window.parent.location = redirect_url;
-		} else {
-			window.location = redirect_url;
-		}
-		
+		redirectTo(redirect_url);
 	} else {
 		redirect_url = wayf_sp_handlerURL + '?providerId=' 
 		+ encodeURIComponent(selectedIdP)
 		+ '&target=' + encodeURIComponent(wayf_return_url);
 		
-		// Make sure the redirect always is being done in parent window
-		if (window.parent){
-			window.parent.location = redirect_url;
-		} else {
-			window.location = redirect_url;
-		}
+		redirectTo(redirect_url);
 	}
 	
 	// If input type button is used for submit, we must return false
@@ -770,7 +768,14 @@ function loadImprovedDropDown(){
 		){
 		wayf_logged_in_messsage = "<?php echo $loggedInString ?>".replace(/%s/, wayf_return_url);
 	}
-	
+
+	if(
+		typeof(wayf_auto_redirect_if_logged_in) == "undefined"
+		|| typeof(wayf_auto_redirect_if_logged_in) != "boolean"
+		){
+		wayf_auto_redirect_if_logged_in = false;
+	}
+
 	if(
 		typeof(wayf_num_last_used_idps) == "undefined"
 		|| typeof(wayf_num_last_used_idps) != "number"
@@ -891,6 +896,16 @@ function loadImprovedDropDown(){
 	// Check if user is logged in already:
 	var user_logged_in = isUserLoggedIn();
 	
+	// Check if user is authenticated already and should
+	// be redirected to wayf_return_url
+	if (
+		user_logged_in
+		&& wayf_auto_redirect_if_logged_in
+	){
+		redirectTo(wayf_return_url);
+		return;
+	}
+	
 	// Check if user is authenticated already and 
 	// whether something has to be drawn
 	if (
@@ -986,17 +1001,9 @@ function loadImprovedDropDown(){
 			// Redirect user automatically to WAYF
 			var redirect_url = wayf_authReq_URL.replace(/&amp;/g, '&');
 			
-			// Make sure the redirect always happens in the parent window
-			if (window.parent){
-				window.parent.location = redirect_url;
-			} else {
-				window.location = redirect_url;
-			}
-			
-			// Return here and stop writing HTML
+			redirectTo(redirect_url);
 			return;
 		}
-		
 		
 		// Get local cookie
 		var saml_idp_cookie = getCookie('_saml_idp');
