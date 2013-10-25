@@ -568,13 +568,12 @@ function loadJQuery() {
 	script.onload = function() {
 		loadImprovedDropDown();
 	};
+	head.appendChild(script);
 	
 	// Fix for IE Browsers
 	ieLoadBugFix(script, function(){
 		loadImprovedDropDown();
 	});
-	
-	head.appendChild(script);
 }
 
 function loadImprovedDropDown(){
