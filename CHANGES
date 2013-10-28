@@ -31,7 +31,7 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
-* Version 1.19 - Release date: ??? 2013
+* Version 1.19 - Release date: 29. October 2013
   - Added search-as-you-type support to Embedded WAYF. This feature is off by
     default as it is currently experimental. Can be activated with:  
     var wayf_use_improved_drop_down_list = true
@@ -171,6 +171,8 @@ The revision history of older versions, can be found on the SWITCHwayf web page:
 
 Credits
 -------
+
+Main developer of the SWITCHwayf: Lukas Hämmerle
 
 The SWITCHwayf uses code from the following libraries:
 
