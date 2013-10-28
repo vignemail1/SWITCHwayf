@@ -202,32 +202,55 @@ When activating the Embedded WAYF, carefully protect the host where the WAYF is
 operated on. If an instance of SWITCHwayf gets compromised, an attacker could 
 modify the JavaScript that is embedded on the remote site in a malicous wayf 
 (e.g. phish the user's password, redirect users to malicous pages, steal their 
-sessions etc).  
-One also has to ensure that a centrally operated WAYF has a very high availability 
-because many services will depend on it.
+sessions etc). One should also ensure that a centrally operated WAYF has a very 
+high availability because many services will depend on it.
 
 Also, please be aware that using the Embedded WAYF allows anybody to guess a 
 user's Home Organisation without much effort. This information then could be 
 used for phising attacks for example!
 
+Example Embedded WAYF Usage:
+
+* https://toolbox.switch.ch/
+* https://aai-viewer.switch.ch/
+* https://www.olat.uzh.ch/
+* https://ilias.unibe.ch/
+* https://sympa.unil.ch/
+
 -------------------------------------------------------------------------------
 
-Embedded WAYF code HTML snippet
--------------------------------
+How to use the Embedded WAYF?
+-----------------------------
 
-To get a sample HTML snippet to embedd in a web page, please access the WAYF 
-with a URL like:
+1. Find a web page where a Discovery Service in form of the Embedded WAYF 
+   can be placed. This page of course may not enforce a Shibboleth session.
+   
+2. Get a sample HTML snippet to embed on the page. To get the snippet access the 
+   WAYF with this URL:  
+   https://{HOSTNAME}/{PATH-TO-WAYF}/WAYF/embedded-wayf.js/snippet.html  
+   The script should return HTML code that consists of a configuration 
+   JavaScript, a JavaScript loaded from the  
+   https://{HOSTNAME}/{PATH-TO-WAYF}/WAYF/embedded-wayf.js and a 
+   NoScript element for cases where a user has JavaScript not enabled.
 
-https://{HOSTNAME}/{PATH-TO-WAYF}/WAYF/embedded-wayf.js/snippet.html
+3. Adapt at minimum all the 'ESSENTIAL SETTINGS' at the top of the snippet and 
+   the URL in the NoScript element.
+   Optionally also adapt the recommended and advanced settings.  
+   Optionally remove all commented-out/obsolete settings of the configuration
+   JavaScript.
 
-The script should return HTML code that can be embedded together with short 
-descriptions of the available settings.
+4. Insert the edited snippet anywhere in the body of a page outside any HTML  
+   'form' element.
+
+5. Save the page and then access it with your web browser to check whether it  
+   works. Also try logging in with JavaScript disabled.
 
 Embedded WAYF code limitations:
-
+* The Embedded WAYF won't work if placed within an HTML form element.
 * If the embedded WAYF is placed on the right side or at the bottom of a web page,
   it may be that the web browser cannot expand and render the complete drop-down
-  list of Identity Providers.
+  list of Identity Providers. Turning on the wayf_use_improved_drop_down_list 
+  setting might be a solution in this case.
 * If placed on a host where no Service Provider is installed, the Embedded WAYF
   might not be able to detect whether a user is logged in or not. Also, the 
   wayf_use_disco_feed might not be used. 
@@ -239,12 +262,14 @@ Kerberos support
 
 If this features is used, the web server needs to support Negotiate/SPNEGO 
 Kerberos protocol. For example by using mod_auth_kerb.
-- Make a symlink of the file 'WAYF' and name it like configured in the variable 
-  $kerberosRedirectURL
-- Protect file $kerberosRedirectURL with Kerberos. The Kerberos realm must be
-  specified in "IDProvider.conf.php" for each IdP. Each IdP's KDC must also
-  establish a Kerberos cross-realm trust with the WAYF's KDC. This was tested 
-  with a Windows 2000 KDC, with the WAYF running on RHEL4. 
+
+1. Make a symlink of the file 'WAYF' and name it like configured in the variable 
+   $kerberosRedirectURL
+
+2. Protect file $kerberosRedirectURL with Kerberos. The Kerberos realm must be
+   specified in "IDProvider.conf.php" for each IdP. Each IdP's KDC must also
+   establish a Kerberos cross-realm trust with the WAYF's KDC. This was tested 
+   with a Windows 2000 KDC, with the WAYF running on RHEL4. 
 
 -------------------------------------------------------------------------------
 
