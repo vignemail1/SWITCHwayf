@@ -368,7 +368,6 @@ function loadVisibleLogos(obj){
 			// Load logo
 			var imgObj = $(this).children("img:first-child")[0];
 			imgObj.src = $(this).attr("logo");
-			$(this).removeAttr("logo");
 		}
 	});
 }
@@ -454,10 +453,9 @@ function populateListItem(newListControl, optionItem) {
 		newListItem.attr('data', optionItem.text())
 	}
 	
-	// Move logo from source element to list
+	// Copy logo from source element to list
 	if (optionItem.attr('logo')){
 		newListItem.attr('logo', optionItem.attr('logo'));
-		optionItem.removeAttr('logo');
 	}
 
     newListControl.append(newListItem);
@@ -515,7 +513,6 @@ function selectItem(selectedItem,forceDirty,closeList, supressChangeEvent) {
 
 	// show logo
 	addLogoToTextElement($(textControl), $(selectedItem).attr('logo'));
-
 }
 
 function resetValue(textControl) {
