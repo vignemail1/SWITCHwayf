@@ -30,6 +30,11 @@ if(isRunViaCLI()){
 	// Load Identity Providers
 	require($IDPConfigFile);
 	
+	// Check that $IDProviders exists
+	if (!isset($IDProviders) or !is_array($IDProviders)){
+		$IDProviders = array();
+	}
+	
 	if (
 		   !file_exists($metadataFile) 
 		|| trim(@file_get_contents($metadataFile)) == '') {
@@ -65,7 +70,8 @@ if(isRunViaCLI()){
 	// Release the lock, and close.
 	flock($lockFp, LOCK_UN);
 	fclose($lockFp);
-		
+	
+	
 	// If $metadataIDProviders is not FALSE, update $IDProviders and print the Identity Providers lists.
 	if(is_array($metadataIDProviders)){ 
 
@@ -107,6 +113,11 @@ if(isRunViaCLI()){
 				$errorMsg = 'Could not get exclusive lock on '.$metadataLockFile;
 				logError($errorMsg);
 			}
+		}
+		
+		// Check that $IDProviders exists
+		if (!isset($IDProviders) or !is_array($IDProviders)){
+			$IDProviders = array();
 		}
 		
 		// Regenerate $metadataIDPFile.
