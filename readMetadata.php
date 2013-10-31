@@ -103,7 +103,12 @@ if(isRunViaCLI()){
 		$errorMsg = 'Could not open lock file '.$metadataLockFile;
 		logError($errorMsg);
 	}
-
+	
+	// Check that $IDProviders exists
+	if (!isset($IDProviders) or !is_array($IDProviders)){
+		$IDProviders = array();
+	}
+	
 	// Run as included file
 	if(!file_exists($metadataIDPFile) or filemtime($metadataFile) > filemtime($metadataIDPFile)){
 	
@@ -113,11 +118,6 @@ if(isRunViaCLI()){
 				$errorMsg = 'Could not get exclusive lock on '.$metadataLockFile;
 				logError($errorMsg);
 			}
-		}
-		
-		// Check that $IDProviders exists
-		if (!isset($IDProviders) or !is_array($IDProviders)){
-			$IDProviders = array();
 		}
 		
 		// Regenerate $metadataIDPFile.
