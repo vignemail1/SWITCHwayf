@@ -116,7 +116,9 @@ function printSettings(){
 function printDropDownList($IDProviders, $selectedIDP = ''){
 	global $language;
 	
-	printPreviouslyUsedIdPs();
+	$previouslyUsedIdPsHTML = getPreviouslyUsedIdPsHTML();
+	echo $previouslyUsedIdPsHTML;
+	
 	
 	$counter = 0;
 	$optgroup = '';
@@ -134,11 +136,15 @@ function printDropDownList($IDProviders, $selectedIDP = ''){
 					echo "\n".'</optgroup>';
 				}
 				
-				// Add another category unless first (and  probably only) category is unknown
-				if (!empty($optgroup) || $key != 'unknown'){
-					echo "\n".'<optgroup label="'.$IdPName.'">';
-					$optgroup = $key;
+				// Skip adding a new category if first category is 'unknown'
+				// and it is the (probably) only category
+				if ($key == 'unknown' && empty($optgroup) && $previouslyUsedIdPsHTML == ''){
+					continue;
 				}
+				
+				echo "\n".'<optgroup label="'.$IdPName.'">';
+				$optgroup = $key;
+				
 			}
 			continue;
 		}
@@ -156,43 +162,44 @@ function printDropDownList($IDProviders, $selectedIDP = ''){
 
 /******************************************************************************/
 // Prints option group of previously used organisations
-function printPreviouslyUsedIdPs(){
+function getPreviouslyUsedIdPsHTML(){
 	global $IDProviders, $IDPArray, $selectedIDP, $showNumOfPreviouslyUsedIdPs;
 	
 	if (!isset($IDPArray) || count($IDPArray) < 1){
-		return;
+		return '';
 	}
 	
 	$content = '';
 	$counter = (isset($showNumOfPreviouslyUsedIdPs)) ? $showNumOfPreviouslyUsedIdPs : 3;
-	foreach($IDPArray as $key){
+	
+	for($n = count($IDPArray) - 1; $n >= 0; $n--){
 		
 		if ($counter <= 0){
 			break;
 		}
 		
-		$optionHTML = printOptionElement($IDProviders, $key, $selectedIDP);
+		$optionHTML = printOptionElement($IDProviders, $IDPArray[$n], $selectedIDP);
 		
 		if (empty($optionHTML)){
 			continue;
 		}
 		
-		$content = "\n\t".$optionHTML.$content;
+		$content .= "\t".$optionHTML."\n";
 		
 		$counter--;
 	}
 	
 	// Return if no previously used IdPs exist
 	if (empty($content)){
-		return;
+		return '';
 	}
 	
 	// Print previously used IdPs
 	$categoryName = getLocalString('last_used');
-	$content = "\n".'<optgroup label="'.$categoryName.'">'.$content;
-	$content .= "\n".'</optgroup>';
+	$content = "\n".'<optgroup label="'.$categoryName.'">'."\n".$content;
+	$content .= '</optgroup>';
 	
-	echo $content;
+	return $content;
 }
 
 /******************************************************************************/
