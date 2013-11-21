@@ -31,6 +31,15 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
+* Version 1.19.1 - Release date: XX. November 2013
+  - Fixed a bug that listed the last used IdPs in wrong order
+  - Fixed a bug where Identity Providers would not be shown in the drop-down  
+    list unless there was at least one entry in IDProviders.conf.php
+  - The default category 'unknown' is now also shown in case the last used
+    category is displayed.
+  - Saved one click to permanently save a default organisation.
+  - Changed some language strings
+
 * Version 1.19 - Release date: 29. October 2013
   - Added search-as-you-type support to Embedded WAYF. This feature is off by
     default as it is currently experimental. Can be activated with:  

@@ -23,6 +23,7 @@ Some of the Features:
 
 - Supports Discovery Service and the Shibboleth authentication request protocol 
 - Supports processing SAML2 metadata files
+- The central Discovery Service also works without Java Script
 - Search-as-you type or selection from a list of organisations
 - Various customizations options for header, footer, language strings etc.
 - I18N support, currently language packs for en, de, it, fr and some other 
