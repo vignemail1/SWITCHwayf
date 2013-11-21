@@ -43,12 +43,6 @@
 		}
 	}
 	
-	// Confirm action
-	function showConfirmation(){
-		
-		return confirm(unescape('<?php echo getLocalString('confirm_permanent_selection', 'js') ?>'));
-	}
-	
 	// Confirm permanent selection
 	function showPermanentConfirmation(){
 		
@@ -66,11 +60,7 @@
 			alert(unescape('<?php echo getLocalString('make_selection', 'js') ?>'));
 			return false;
 		} else {
-			if (document.IdPList.permanent && document.IdPList.permanent.checked){
-				return showConfirmation();
-			} else {
-				return true;
-			}
+			return true;
 		}
 	}
 	
