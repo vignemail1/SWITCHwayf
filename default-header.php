@@ -43,14 +43,6 @@
 		}
 	}
 	
-	// Confirm permanent selection
-	function showPermanentConfirmation(){
-		
-		var message = unescape('<?php echo getLocalString('permanent_cookie_note', 'js') ?>');
-		message = message.replace('%s', window.location.href.replace(/\?.+/, ''));
-		return alert(message);
-	}
-	
 	// Perform input validation on WAYF form
 	function checkForm(){
 		if(
