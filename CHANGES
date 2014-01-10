@@ -31,7 +31,7 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
-* Version 1.19.1 - Release date: XX. November 2013
+* Version 1.19.1 - Release date: 10. January 2014
   - Fixed a bug that listed the last used IdPs in wrong order
   - Fixed a bug where Identity Providers would not be shown in the drop-down  
     list unless there was at least one entry in IDProviders.conf.php

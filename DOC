@@ -126,20 +126,22 @@ Log entries are only created if the user was forwarded to an Identity Provider.
 Optimizations
 -------------
 
-If your instance of the SWITCHwayf has to deal with many requests and the load 
-is becoming  higher and higher, you might want to think about using a PHP opcode 
-cacher like XCache, apc,  eaccelerator,  phpa,  truck-mmcache or similar.  
+If an instance of the SWITCHwayf has to deal with many requests and the load 
+is becoming  higher and higher, one should consider using a PHP opcode 
+cacher like XCache, apc,  eaccelerator, phpa, truck-mmcache or similar.
 
 Using such a tool can decrease the processing time of the PHP code almost by 
 half. However, own tests have shown that the bottleneck in general is not 
 the PHP processing but the TLS handshake, which has nothing to do with PHP 
-or the SWITCHwayf itself. 
+or the SWITCHwayf itself. Still, the more entities (Identity Providers and
+Service Provider) and instance consumes, the higher the processing speed gain.
 
 Benchmark tests conducted by SWITCH demonstrated that generating the 
-Javascript WAYF/embedded-wayf.js can be speed up using XCache by 100% if the 
-script is accessed via HTTP (without TLS). However, if the script is 
-accessed via HTTPS (default in SWITCHaai), the overall speed gain by using 
-XCache is less than 1% because the TLS hand-shake is what consumes most CPU time.
+Javascript WAYF/embedded-wayf.js can be speed up using APC or XCache 
+considerably (> 15%) if the  script is accessed via HTTP (without TLS). 
+However, if the script is accessed via HTTPS, the overall speed gain by using 
+an opcode cacher is much less because the TLS hand-shake is what 
+needs most time.
 
 -------------------------------------------------------------------------------
 
