@@ -152,7 +152,7 @@ $langStrings['fr']['save_button'] = 'Sauver';
 $langStrings['fr']['access_host'] = 'Pour acc&eacute;der au service %s s&eacute;lectionnez ou cherchez l\'&eacute;tablissement auquel vous appartenez.';
 $langStrings['fr']['select_idp'] = 'Veuillez s&eacute;lectionner l\'&eacute;tablissement auquel vous appartenez.';
 $langStrings['fr']['search_idp'] = 'Veuillez entrer le nom de votre &eacute;tablissement...';
-$langStrings['fr']['remember_selection'] = 'Se souvenir de l\'&eacute;tablissement s&eacute;lectionn&eacute; pour les prochaines sessions.';
+$langStrings['fr']['remember_selection'] = 'Se souvenir de mon choix pour cette session.';
 $langStrings['fr']['invalid_user_idp'] = 'Une erreur s\'est produite.<br>La valeur de votre donn&eacute;e <code>\'%s\'</code> n\'est pas valide.<br>Seules ces valeurs sont admises :';
 $langStrings['fr']['contact_assistance'] = 'Contactez le support <a href="mailto:%s">%s</a> si l\'erreur persiste.';
 $langStrings['fr']['no_arguments'] = 'Aucun param&egrave;tre re&ccedil;u !';
