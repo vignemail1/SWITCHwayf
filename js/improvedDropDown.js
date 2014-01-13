@@ -165,9 +165,9 @@ function getTextElement(sourceElement, imgElement) {
     var newID = sourceElement.attr('id');
     var newTextElement = $('<input type="text" />');
 	// For some reason we have to substract 2px from the height when using <!DOCTYPE HTML>
-	var quirksModeOffset = 2;
+	var quirksModeOffset = 0;
 	
-	var controlWidth = Math.max(sourceElement.outerWidth() - imgElement.outerWidth() - 2*quirksModeOffset,40);
+	var controlWidth = Math.max(sourceElement.outerWidth() - imgElement.outerWidth() - quirksModeOffset,40);
 
     newTextElement.attr('id', newID + idd_text_suffix)
                   .addClass('idd_textbox')
@@ -176,8 +176,8 @@ function getTextElement(sourceElement, imgElement) {
                   .css('font-family', sourceElement.css('font-family'))
                   .css('font-size', sourceElement.css('font-size'))
                   .css('border-width', '1px')
+                  .css('padding','0')
                   .attr('autocomplete', 'off')
-                  .attr('padding','0')
                   .width(controlWidth);
     
 	if (displayLogos){
