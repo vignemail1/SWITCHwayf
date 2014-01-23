@@ -258,13 +258,13 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 //        entityID:"urn:mace:example.org:example.university.org",
 //        SAML1SSOurl:"https://int.univ.org/shibboleth-idp/SSO",
 //        logoURL:"https://int.univ.org/favicon.ico",
-//        data:"univ.org université intérnationale X"},
+//        data:"univ.org universitÃ© intÃ©rnationale X"},
 //
 //        {name:"Some Other University",
 //        entityID:"https://other.univ.edu/idp/shibboleth",
 //        SAML1SSOurl:"https://other.univ.edu/shibboleth-idp/SSO",
 //        logoURL:"https://other.univ.edu/favicon.ico",
-//        data:"other.univ.org autre université intérnationale X"},
+//        data:"other.univ.org autre universitÃ© intÃ©rnationale X"},
 // ];
 
 
