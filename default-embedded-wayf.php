@@ -149,7 +149,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // WARNING: Only use this feature if you know exactly what you are doing
 //          This option will cause problems that are difficult to find 
 //          in case they accidentially select a wrong Home Organisation
-// [Optional, dfeault: false]
+// [Optional, default: false]
 //var wayf_force_remember_for_session = false;
 
 // Session Initiator URL of the Service Provider
