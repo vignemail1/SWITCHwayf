@@ -931,7 +931,7 @@ function loadImprovedDropDown(){
 	if (wayf_hide_logo != true){
 		
 		// Write header of logo div
-		writeHTML('<div id="wayf_logo_div" style="float: right;"><a href="<?php echo $federationURL ?>" target="_blank" style="border:0px; margin-bottom: 4px;">');
+		writeHTML('<div id="wayf_logo_div" style="float: right;"><a href="<?php echo sprintf($federationURL, $language) ?>" target="_blank" style="border:0px; margin-bottom: 4px;">');
 		
 		// Which size of the logo should we display
 		var embeddedLogoURL = '';
