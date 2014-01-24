@@ -439,6 +439,12 @@ function convertToJSString($string){
 }
 
 /******************************************************************************/
+// Replaces all newlines with spaces and then trims the string to get one line
+function trimToSingleLine($string){
+	return trim(preg_replace("|\n|",' ',$string));
+}
+
+/******************************************************************************/
 // Checks if entityID hostname of a valid IdP exists in path info
 function getIdPPathInfoHint(){
 	

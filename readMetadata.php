@@ -542,7 +542,7 @@ function getMDUIDisplayNames($RoleDescriptorNode){
 	$MDUIDisplayNames = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:metadata:ui', 'DisplayName');
 	foreach( $MDUIDisplayNames as $MDUIDisplayName ){
 		$lang = $MDUIDisplayName->getAttributeNodeNS('http://www.w3.org/XML/1998/namespace', 'lang')->nodeValue;
-		$Entity[$lang] = $MDUIDisplayName->nodeValue;
+		$Entity[$lang] = trimToSingleLine($MDUIDisplayName->nodeValue);
 	}
 	
 	return $Entity;
@@ -557,7 +557,7 @@ function getMDUIKeywords($RoleDescriptorNode){
 	$MDUIKeywords = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:metadata:ui', 'Keywords');
 	foreach( $MDUIKeywords as $MDUIKeywordEntry ){
 		$lang = $MDUIKeywordEntry->getAttributeNodeNS('http://www.w3.org/XML/1998/namespace', 'lang')->nodeValue;
-		$Entity[$lang] = $MDUIKeywordEntry->nodeValue;
+		$Entity[$lang] = trimToSingleLine($MDUIKeywordEntry->nodeValue);
 	}
 	
 	return $Entity;
@@ -571,10 +571,10 @@ function getMDUILogos($RoleDescriptorNode){
 	$MDUILogos = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:metadata:ui', 'Logo');
 	foreach( $MDUILogos as $MDUILogoEntry ){
 		$Logo = Array();
-		$Logo['URL'] = trim($MDUILogoEntry->nodeValue);
-		$Logo['Height'] = ($MDUILogoEntry->getAttribute('height') != '') ? trim($MDUILogoEntry->getAttribute('height')) : '16';
-		$Logo['Width'] = ($MDUILogoEntry->getAttribute('width') != '') ? trim($MDUILogoEntry->getAttribute('width')) : '16';
-		$Logo['Lang'] = ($MDUILogoEntry->getAttribute('lang') != '') ? trim($MDUILogoEntry->getAttribute('lang')) : '';
+		$Logo['URL'] = trimToSingleLine($MDUILogoEntry->nodeValue);
+		$Logo['Height'] = ($MDUILogoEntry->getAttribute('height') != '') ? trimToSingleLine($MDUILogoEntry->getAttribute('height')) : '16';
+		$Logo['Width'] = ($MDUILogoEntry->getAttribute('width') != '') ? trimToSingleLine($MDUILogoEntry->getAttribute('width')) : '16';
+		$Logo['Lang'] = ($MDUILogoEntry->getAttribute('lang') != '') ? trimToSingleLine($MDUILogoEntry->getAttribute('lang')) : '';
 		$Logos[] = $Logo;
 	}
 	
@@ -590,7 +590,7 @@ function getSAMLAttributeValues($RoleDescriptorNode){
 	
 	$SAMLAttributeValues = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:assertion', 'AttributeValue');
 	foreach( $SAMLAttributeValues as $SAMLAttributeValuesEntry ){
-		$Entity[] = trim($SAMLAttributeValuesEntry->nodeValue);
+		$Entity[] = trimToSingleLine($SAMLAttributeValuesEntry->nodeValue);
 	}
 	
 	return $Entity;
@@ -605,10 +605,10 @@ function getMDUIIPHints($RoleDescriptorNode){
 	
 	$MDUIIPHints = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:metadata:ui', 'IPHint');
 	foreach( $MDUIIPHints as $MDUIIPHintEntry ){
-		if (preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\/[0-9]{1,2}$/", trim($MDUIIPHintEntry->nodeValue), $splitIP)){
-			$Entity[] = $splitIP[0];
-		} elseif (preg_match("/^.*\:.*\/[0-9]{1,2}$/", trim($MDUIIPHintEntry->nodeValue), $splitIP)){ 
-			$Entity[] = $splitIP[0];
+		if (preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\/[0-9]{1,2}$/", trimToSingleLine($MDUIIPHintEntry->nodeValue), $splitIP)){
+			$Entity[] = trimToSingleLine($splitIP[0]);
+		} elseif (preg_match("/^.*\:.*\/[0-9]{1,2}$/", trimToSingleLine($MDUIIPHintEntry->nodeValue), $splitIP)){ 
+			$Entity[] = trimToSingleLine($splitIP[0]);
 		}
 	}
 	
@@ -623,7 +623,7 @@ function getMDUIDomainHints($RoleDescriptorNode){
 	
 	$MDUIDomainHints = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:metadata:ui', 'DomainHint');
 	foreach( $MDUIDomainHints as $MDUIDomainHintEntry ){
-		$Entity[] = trim($MDUIDomainHintEntry->nodeValue);
+		$Entity[] = trimToSingleLine($MDUIDomainHintEntry->nodeValue);
 	}
 	
 	return $Entity;
@@ -637,9 +637,8 @@ function getMDUIGeolocationHints($RoleDescriptorNode){
 	
 	$MDUIGeolocationHints = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:metadata:ui', 'GeolocationHint');
 	foreach( $MDUIGeolocationHints as $MDUIGeolocationHintEntry ){
-		if (preg_match("/^geo:([0-9]+\.{0,1}[0-9]*,[0-9]+\.{0,1}[0-9]*)$/", trim($MDUIGeolocationHintEntry->nodeValue), $splitGeo)){
-			$Entity[] = $splitGeo[1];
-
+		if (preg_match("/^geo:([0-9]+\.{0,1}[0-9]*,[0-9]+\.{0,1}[0-9]*)$/", trimToSingleLine($MDUIGeolocationHintEntry->nodeValue), $splitGeo)){
+			$Entity[] = trimToSingleLine($splitGeo[1]);
 		}
 	}
 	
@@ -657,7 +656,7 @@ function getOrganizationNames($RoleDescriptorNode){
 		$DisplayNames = $Orgnization->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:metadata', 'OrganizationDisplayName');
 		foreach ($DisplayNames as $DisplayName){
 			$lang = $DisplayName->getAttributeNodeNS('http://www.w3.org/XML/1998/namespace', 'lang')->nodeValue;
-			$Entity[$lang] = $DisplayName->nodeValue;
+			$Entity[$lang] = trimToSingleLine($DisplayName->nodeValue);
 		}
 	}
 	
@@ -666,7 +665,7 @@ function getOrganizationNames($RoleDescriptorNode){
 
 
 /******************************************************************************/
-// Get Organization Names from RoleDescriptor
+// Get Attribute Consuming Service
 function getAttributeConsumingServiceNames($RoleDescriptorNode){
 	
 	$Entity = Array();
@@ -674,7 +673,7 @@ function getAttributeConsumingServiceNames($RoleDescriptorNode){
 	$ServiceNames = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:metadata', 'ServiceName' );
 	foreach ($ServiceNames as $ServiceName){
 		$lang = $ServiceName->getAttributeNodeNS('http://www.w3.org/XML/1998/namespace', 'lang')->nodeValue;
-		$Entity[$lang] = $ServiceName->nodeValue;
+		$Entity[$lang] = trimToSingleLine($ServiceName->nodeValue);
 	}
 	
 	return $Entity;
