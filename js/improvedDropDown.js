@@ -649,7 +649,7 @@ function positionList(listControl) {
 
 			// Use absolute position of list to calculate list height
 			var maxHeightPx = $(window).height() + $(document).scrollTop() - listControl.offset().top - 10;
-            var minListHeigtPx = 12;
+			var minListHeigtPx = 80;
             var listhHeight = Math.min(elementHeightPx, maxHeightPx);
 
             listhHeight = Math.max(listhHeight, minListHeigtPx);
