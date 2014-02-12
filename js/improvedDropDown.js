@@ -164,8 +164,8 @@ function getTextElement(sourceElement, imgElement) {
 
     var newID = sourceElement.attr('id');
     var newTextElement = $('<input type="text" />');
-	// For some reason we have to substract 2px from the height when using <!DOCTYPE HTML>
-	var quirksModeOffset = 0;
+	// We have to substract 2px from the height if page is not rendered in standard mode
+	var quirksModeOffset = (document.compatMode ==='CSS1Compat') ? 0 : -2 ;
 	
 	var controlWidth = Math.max(sourceElement.outerWidth() - imgElement.outerWidth() - quirksModeOffset,40);
 
