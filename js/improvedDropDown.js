@@ -272,7 +272,7 @@ function getImageElement(sourceElement,iconPath) {
     var newID = sourceElement.attr('id');
     var newImgElement = $('<img />');
     var quirksModeOffset = (document.compatMode ==='CSS1Compat') ? 0 : 2;
-	var imageSize = sourceElement.outerHeight() + quirksModeOffset;
+	var imageSize = Math.max(sourceElement.outerHeight() + quirksModeOffset, 20);
 
     newImgElement.attr('id', newID + idd_icon_suffix)
                  .attr('src',iconPath)
