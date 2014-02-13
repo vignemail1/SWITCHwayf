@@ -1171,7 +1171,7 @@ function loadImprovedDropDown(){
 		writeHTML('</select>');
 		
 		// Draw checkbox
-		writeHTML('<div id="wayf_remember_checkbox_div" style="float: left;margin-top:6px;"><table style="border-collapse: collapse;"><tr><td style="vertical-align: top;">');
+		writeHTML('<div id="wayf_remember_checkbox_div" style="float: left;margin-top:6px;"><table style="border: 0; border-collapse: collapse;"><tr><td style="vertical-align: top;">');
 		
 		// Do we have to show the remember settings checkbox?
 		if (wayf_show_remember_checkbox){
