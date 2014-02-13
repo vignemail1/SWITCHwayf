@@ -125,7 +125,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 
 //////////////////// ADVANCED SETTINGS ////////////////////
 
-// [Experimental Feature] Use the SAML2/Shibboleth 2 Discovery Service protocol where
+// Use the SAML2/Shibboleth 2 Discovery Service protocol where
 // the user is sent back to the Service Provider after selection
 // of his Home Organisation.
 // This feature should only be uncommented and set to false if there 
