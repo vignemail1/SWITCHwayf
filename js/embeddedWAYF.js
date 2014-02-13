@@ -1170,11 +1170,12 @@ function loadImprovedDropDown(){
 		
 		writeHTML('</select>');
 		
-		// Draw checkbox
-		writeHTML('<div id="wayf_remember_checkbox_div" style="float: left;margin-top:6px;"><table style="border: 0; border-collapse: collapse;"><tr><td style="vertical-align: top;">');
-		
 		// Do we have to show the remember settings checkbox?
 		if (wayf_show_remember_checkbox){
+			
+			// Draw checkbox table
+			writeHTML('<div id="wayf_remember_checkbox_div" style="float: left;margin-top:6px;"><table style="border: 0; border-collapse: collapse;"><tr><td style="vertical-align: top;">');
+			
 			// Is the checkbox forced to be checked
 			if (wayf_force_remember_for_session){
 				// First draw the dummy checkbox ...
@@ -1187,12 +1188,13 @@ function loadImprovedDropDown(){
 			
 			// Draw label
 			writeHTML('</td><td style="vertical-align: top;"><label for="wayf_remember_checkbox" id="wayf_remember_checkbox_label" style="font-size:' + wayf_font_size + 'px;color:' + wayf_font_color + ';">' + wayf_overwrite_checkbox_label_text + '</label>');
+			
+			writeHTML('</td></tr></table></div>');
 		} else if (wayf_force_remember_for_session){
 			// Is the checkbox forced to be checked but hidden
 			writeHTML('<input id="wayf_remember_checkbox" type="hidden" name="session" value="true">');
 		}
 		
-		writeHTML('</td></tr></table></div>');
 		
 		// Draw submit button
 		writeHTML('<input id="wayf_submit_button" type="submit" name="Login" accesskey="s" value="' + wayf_overwrite_submit_button_text + '" style="float: right; margin-top:6px;" onClick="javascript:return submitForm();">');
