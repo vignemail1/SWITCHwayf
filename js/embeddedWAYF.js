@@ -563,16 +563,20 @@ function loadJQuery() {
 	
 	var head = document.getElementsByTagName('head')[0];
 	var script = document.createElement('script');
+	var improvedDropDownLoaded = false;
 	script.src = '<?php echo $javascriptURL ?>/jquery.js';
 	script.type = 'text/javascript';
 	script.onload = function() {
 		loadImprovedDropDown();
+		improvedDropDownLoaded = true;
 	};
 	head.appendChild(script);
 	
 	// Fix for IE Browsers
 	ieLoadBugFix(script, function(){
-		loadImprovedDropDown();
+		if (!improvedDropDownLoaded){
+			loadImprovedDropDown();
+		}
 	});
 }
 
