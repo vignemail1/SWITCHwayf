@@ -165,14 +165,14 @@ function getTextElement(sourceElement, imgElement) {
     var newID = sourceElement.attr('id');
     var newTextElement = $('<input type="text" />');
 	// We have to substract 2px from the height if page is not rendered in standard mode
-	var quirksModeOffset = (document.compatMode ==='CSS1Compat') ? 0 : -2 ;
+	var quirksModeOffset = (document.compatMode ==='CSS1Compat') ? 0 : 2 ;
 	
-	var controlWidth = Math.max(sourceElement.outerWidth() - imgElement.outerWidth() - quirksModeOffset,40);
+	var controlWidth = Math.max(sourceElement.outerWidth() - imgElement.outerWidth() + quirksModeOffset,40);
 
     newTextElement.attr('id', newID + idd_text_suffix)
                   .addClass('idd_textbox')
                   .attr('value', sourceElement.find('option:selected').text())
-				  .css('height', Math.max((imgElement.innerHeight() - quirksModeOffset), 18) + 'px')
+				  .css('height', Math.max((imgElement.innerHeight() + quirksModeOffset), 18) + 'px')
                   .css('font-family', sourceElement.css('font-family'))
                   .css('font-size', sourceElement.css('font-size'))
                   .css('border-width', '1px')
@@ -271,7 +271,7 @@ function getTextElement(sourceElement, imgElement) {
 function getImageElement(sourceElement,iconPath) {
     var newID = sourceElement.attr('id');
     var newImgElement = $('<img />');
-    var quirksModeOffset = jQuery.support.boxModel ? 0 : 2;
+    var quirksModeOffset = (document.compatMode ==='CSS1Compat') ? 0 : 2;
 	var imageSize = sourceElement.outerHeight() + quirksModeOffset;
 
     newImgElement.attr('id', newID + idd_icon_suffix)
