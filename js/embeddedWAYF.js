@@ -36,6 +36,7 @@ var wayf_overwrite_checkbox_label_text;
 var wayf_overwrite_submit_button_text;
 var wayf_overwrite_intro_text;
 var wayf_overwrite_from_other_federations_text;
+var wayf_default_idp;
 var wayf_num_last_used_idps;
 var wayf_show_categories;
 var wayf_hide_categories;
@@ -780,6 +781,13 @@ function loadImprovedDropDown(){
 	}
 
 	if(
+		typeof(wayf_default_idp) == "undefined"
+		|| typeof(wayf_default_idp) != "string"
+		){
+		wayf_default_idp = '';
+	}
+
+	if(
 		typeof(wayf_num_last_used_idps) == "undefined"
 		|| typeof(wayf_num_last_used_idps) != "number"
 		){
@@ -1044,7 +1052,9 @@ function loadImprovedDropDown(){
 					continue;
 				}
 				
-				if (IdP.entityID && IdP.entityID == last_idp){
+				if (IdP.entityID && last_idp != '' && IdP.entityID == last_idp){
+					IdP.selected = true;
+				} else if (IdP.entityID && last_idp == '' && IdP.entityID == wayf_default_idp){
 					IdP.selected = true;
 				}
 				
@@ -1057,6 +1067,13 @@ function loadImprovedDropDown(){
 				}
 				
 				wayf_other_fed_idps[IdP.entityID] = IdP;
+			}
+		}
+		
+		// Set default IdP if no last used IdP exists
+		if (last_idp == '' && wayf_default_idp != ''){
+			if (wayf_idps[wayf_default_idp]){
+				wayf_idps[wayf_default_idp].selected = true;
 			}
 		}
 		
