@@ -485,14 +485,15 @@ function getIdPPathInfoHint(){
 }
 
 /******************************************************************************/
-// Parses the Kerbores realm out of the string and returns it
-
+// Joins localized names and keywords of an IdP to a single string
 function composeOptionData($IdPValues){
 	$data = '';
 	foreach($IdPValues as $key => $value){
 		if (is_array($value) && isset($value['Name'])){
 			$data .= ' '.$value['Name'];
-		} elseif (is_array($value) && isset($value['Keywords'])) {
+		} 
+		
+		if (is_array($value) && isset($value['Keywords'])) {
 			$data .= ' '.$value['Keywords'];
 		}
 	}
