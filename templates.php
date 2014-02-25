@@ -228,7 +228,7 @@ function printOptionElement($IDProviders, $key, $selectedIDP){
 	// Add logo (which is assumed to be 16x16px) to extension string
 	$logo =  (isset($values['Logo'])) ? 'logo="'.$values['Logo']['URL']. '"' : '' ;
 	
-	return '<option value="'.$key.'"'.$selected.' data="'.$data.'" '.$logo.'>'.$IdPName.'</option>';
+	return '<option value="'.$key.'"'.$selected.' data="'.htmlspecialchars($data).'" '.$logo.'>'.$IdPName.'</option>';
 }
 
 /******************************************************************************/
