@@ -116,7 +116,7 @@ $langStrings['de']['other_federation'] = 'Von anderen F&ouml;derationen';
 $langStrings['de']['logged_in'] = 'Sie sind bereits angemeldet. <a href=\"%s\">Weiter</a>.';
 $langStrings['de']['most_used'] = 'Meist benutzte Organisationen';
 $langStrings['de']['invalid_return_url'] = 'Die return URL <code>\'%s\'</code> ist keine g&uuml;tige URL.';
-$langStrings['de']['unverified_return_url'] = 'Die return URL <code>\'%s\'</code> ist nicht g&uuml;tige f&uuml;r den Service Provider <code>\'%s\'</code>.';
+$langStrings['de']['unverified_return_url'] = 'Die return URL <code>\'%s\'</code> ist nicht g&uuml;ltig f&uuml;r den Service Provider <code>\'%s\'</code>.';
 $langStrings['de']['unknown_sp'] = 'Der Service Provider <code>\'%s\'</code> konnte nicht in den Metadaten gefunden werden und ist deshalb unbekannt.';
 $langStrings['de']['no_idp_found'] = 'Keine Organisation gefunden f&uuml;r diesen Suchtext';
 $langStrings['de']['no_idp_available'] = 'Keine Organisation verf&uuml;gbar';
