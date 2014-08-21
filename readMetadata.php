@@ -286,20 +286,20 @@ function processIDPRoleDescriptor($IDPRoleDescriptorNode){
 	global $defaultLanguage;
 	
 	$IDP = Array();
-	
+	$Profiles = Array();
+
 	// Get SSO URL
 	$SSOServices = $IDPRoleDescriptorNode->getElementsByTagNameNS( 'urn:oasis:names:tc:SAML:2.0:metadata', 'SingleSignOnService' );
 	foreach( $SSOServices as $SSOService ){
-		if ($SSOService->getAttribute('Binding') == 'urn:mace:shibboleth:1.0:profiles:AuthnRequest'){
-			$IDP['SSO'] =  $SSOService->getAttribute('Location');
-			break;
-		} else if ($SSOService->getAttribute('Binding') == 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'){
-			$IDP['SSO'] =  $SSOService->getAttribute('Location');
-			break;
-		}
+	  $Profiles[$SSOService->getAttribute('Binding')] = $SSOService->getAttribute('Location');
 	}
 	
-	if (!isset($IDP['SSO'])){
+	// Set SAML1 SSO URL
+	if ($Profiles['urn:mace:shibboleth:1.0:profiles:AuthnRequest']) {
+		$IDP['SSO'] = $Profiles['urn:mace:shibboleth:1.0:profiles:AuthnRequest'];
+	} else if ($Profiles['urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect']) {
+		$IDP['SSO'] = $Profiles['urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'];
+	} else {
 		$IDP['SSO'] = 'https://no.saml1.or.saml2.sso.url.defined.com/error';
 	}
 	
