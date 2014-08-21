@@ -209,8 +209,8 @@ function parseMetadata($metadataFile, $defaultLanguage){
 		return Array(false, false);
 	}
 	
-	$doc = new DOMDocument();
-	if(!$doc->load( $metadataFile )){
+	$CurrentXMLReaderNode = new XMLReader();
+	if(!$CurrentXMLReaderNode->open($metadataFile, null, LIBXML_PARSEHUGE | LIBXML_NOERROR | LIBXML_NOWARNING | 1)){
 		$errorMsg = 'Could not parse metadata file '.$metadataFile; 
 		if (isRunViaCLI()){
 			echo $errorMsg."\n";
@@ -220,40 +220,42 @@ function parseMetadata($metadataFile, $defaultLanguage){
 		return Array(false, false);
 	}
 	
-	$EntityDescriptors = $doc->getElementsByTagNameNS( 'urn:oasis:names:tc:SAML:2.0:metadata', 'EntityDescriptor' );
-	
-	$metadataIDProviders = Array();
-	$metadataSProviders = Array();
-	foreach( $EntityDescriptors as $EntityDescriptor ){
-		$entityID = $EntityDescriptor->getAttribute('entityID');
-		
-		foreach($EntityDescriptor->childNodes as $RoleDescriptor) {
-			$nodeName = $RoleDescriptor->localName;
- 			switch($nodeName){
-				case 'IDPSSODescriptor':
-					$IDP = processIDPRoleDescriptor($RoleDescriptor);
-					if ($IDP){
-						$metadataIDProviders[$entityID] = $IDP;
-					}
-					break;
-				case 'SPSSODescriptor':
-					$SP = processSPRoleDescriptor($RoleDescriptor);
-					if ($SP){
-						$metadataSProviders[$entityID] = $SP;
-					} else {
-						$errorMsg = "Failed to load SP with entityID $entityID from metadata file $metadataFile";
-						if (isRunViaCLI()){
-							echo $errorMsg."\n";
-						} else {
-							logWarning($errorMsg);
+	// Process individual EntityDescriptors
+	while( $CurrentXMLReaderNode->read() ) {
+		if($CurrentXMLReaderNode->nodeType == XMLReader::ELEMENT && $CurrentXMLReaderNode->localName  === 'EntityDescriptor') {
+			$entityID = $CurrentXMLReaderNode->getAttribute('entityID');
+			$EntityDescriptorXML = $CurrentXMLReaderNode->readOuterXML();
+			$EntityDescriptorDOM = new DOMDocument();
+			$EntityDescriptorDOM->loadXML($EntityDescriptorXML);
+			
+			// Check role descriptors
+			foreach($EntityDescriptorDOM->documentElement->childNodes as $RoleDescriptor) {
+				$nodeName = $RoleDescriptor->localName;
+				switch($nodeName){
+					case 'IDPSSODescriptor':
+						$IDP = processIDPRoleDescriptor($RoleDescriptor);
+						if ($IDP){
+							$metadataIDProviders[$entityID] = $IDP;
 						}
-					}
-					break;
-				default:
+						break;
+					case 'SPSSODescriptor':
+						$SP = processSPRoleDescriptor($RoleDescriptor);
+						if ($SP){
+							$metadataSProviders[$entityID] = $SP;
+						} else {
+							$errorMsg = "Failed to load SP with entityID $entityID from metadata file $metadataFile";
+							if (isRunViaCLI()){
+								echo $errorMsg."\n";
+							} else {
+								logWarning($errorMsg);
+							}
+						}
+						break;
+					default:
+				}
 			}
 		}
 	}
-	
 	
 	// Output result
 	$infoMsg = "Successfully parsed metadata file ".$metadataFile. ". Found ".count($metadataIDProviders)." IdPs and ".count($metadataSProviders)." SPs";
