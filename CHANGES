@@ -31,6 +31,22 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
+* Version 1.19.3 - Release date: 21. August 2014
+  - Fixed a bug that would cause readMetadata.php not read the correct
+    SAML1 SSO endpoint which could result in users being redirected
+    to a wrong URL when the Shibboleth protocol is used for SAML1.
+    Bug reported with a patch by Olivier Salaün
+
+* Version 1.19.2 - Release date: 7. March 2014
+  - Fixed a bug that caused JavaScript errors because of new lines in
+    certain metadata elements.
+  - Fixed a bug where text for the Embedded WAYF would not be properly
+    substituted
+  - Fixed a bug where the height of the Embedded WAYF improved drop down
+    list would be too small to read/select an entry.
+  - Fixed a bug which caused that the wayf_default_idp setting was
+    ignored
+
 * Version 1.19.1 - Release date: 10. January 2014
   - Fixed a bug that listed the last used IdPs in wrong order
   - Fixed a bug where Identity Providers would not be shown in the drop-down  
