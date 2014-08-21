@@ -1240,7 +1240,7 @@ function loadImprovedDropDown(){
 			var version = jQuery.fn.jquery.split('.');
 			var versionMajor = parseFloat(version[0]);
 			var versionMinor = parseFloat(version[1]);
-			if (versionMajor <= 1 && versionMinor < 10){
+			if (versionMajor <= 1 && versionMinor < 5){
 				loadJQuery();
 			} else {
 				loadImprovedDropDown();
