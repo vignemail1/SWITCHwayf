@@ -959,14 +959,14 @@ function sortUsingTypeIndexAndName($a, $b){
 	global $language;
 	
 	if ($a['Type'] != $b['Type']){
-		return strcmp($a['Type'], $b['Type']);
+		return strcasecmp($a['Type'], $b['Type']);
 	} elseif (isset($a['Index']) && isset($b['Index']) && $a['Index'] != $b['Index']){
-		return strcmp($a['Index'], $b['Index']);
+		return strcasecmp($a['Index'], $b['Index']);
 	} else {
 		// Sort using locale names
 		$localNameB = (isset($a[$language]['Name'])) ? $a[$language]['Name'] : $a['Name'];
 		$localNameA = (isset($b[$language]['Name'])) ? $b[$language]['Name'] : $b['Name'];
-		return strcmp($localNameB, $localNameA);
+		return strcasecmp($localNameB, $localNameA);
 	}
 }
 
