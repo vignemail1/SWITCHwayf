@@ -36,6 +36,8 @@ SWITCHwayf Version History
     SAML1 SSO endpoint which could result in users being redirected
     to a wrong URL when the Shibboleth protocol is used for SAML1.
     Bug reported with a patch by Olivier Salaün
+  - Improved the code to handle large metadata files to prevent memory
+    limit issues
 
 * Version 1.19.2 - Release date: 7. March 2014
   - Fixed a bug that caused JavaScript errors because of new lines in
