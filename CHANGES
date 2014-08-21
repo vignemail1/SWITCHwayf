@@ -38,6 +38,9 @@ SWITCHwayf Version History
     Bug reported with a patch by Olivier Salaün
   - Improved the code to handle large metadata files to prevent memory
     limit issues
+  - Improved drop-down list now does not reload JQuery 1.x unless JQuery 
+    version is older than 1.5
+  - Updated JQuery library to latest version, which is 1.11.1
 
 * Version 1.19.2 - Release date: 7. March 2014
   - Fixed a bug that caused JavaScript errors because of new lines in
