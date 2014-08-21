@@ -31,7 +31,7 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
-* Version 1.19.3 - Release date: 21. August 2014
+* Version 1.19.3 - Release date: 27. August 2014
   - Fixed a bug that would cause readMetadata.php not read the correct
     SAML1 SSO endpoint which could result in users being redirected
     to a wrong URL when the Shibboleth protocol is used for SAML1.
