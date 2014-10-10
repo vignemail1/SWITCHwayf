@@ -1,4 +1,4 @@
-Copyright (c) 2013, SWITCH - Serving Swiss Universities
+Copyright (c) 2014, SWITCH - Serving Swiss Universities
 See LICENSE file for details.
 
 -------------------------------------------------------------------------------
@@ -31,6 +31,11 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
+* Version 1.19.4 - Release date: 10. October 2014
+  - Fixed/improved some CSS and HTML code for better rendering
+    of the stand-alone WAYF on mobile devices.
+    Reported with a patch by Olivier Salaün
+
 * Version 1.19.3 - Release date: 27. August 2014
   - Fixed a bug that would cause readMetadata.php not read the correct
     SAML1 SSO endpoint which could result in users being redirected

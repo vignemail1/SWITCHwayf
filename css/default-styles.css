@@ -176,6 +176,10 @@ pre {
 	#userIdPSelection, .userIdPSelection {
 		width: 60%;
 	}
+	
+	#userIdPSelection_iddwrap input {
+		width:90%!important;
+	}
 }
 
 html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6 {
