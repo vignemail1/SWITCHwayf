@@ -1,4 +1,4 @@
-// Copyright (c) 2013, SWITCH - Serving Swiss Universities
+// Copyright (c) 2014, SWITCH
 // To use this JavaScript, please access:
 // <?php echo $configurationScriptUrl ?>
 // and copy/paste the resulting HTML snippet to an unprotected web page that 

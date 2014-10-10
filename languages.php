@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2013, SWITCH - Serving Swiss Universities
+<?php // Copyright (c) 2014, SWITCH
 
 // Localized language strings for SWITCHwayf
 // Make sure to use HTML entities instead of plain UTF-8 characters for 
