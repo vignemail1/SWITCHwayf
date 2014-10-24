@@ -31,6 +31,10 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
+* Version 1.X.Y - Release date: XX. YY ZZZZ
+  - Updated Japanese language pack.
+    Contributed by Takeshi Nishimura
+
 * Version 1.19.4 - Release date: 10. October 2014
   - Fixed/improved some CSS and HTML code for better rendering
     of the stand-alone WAYF on mobile devices.

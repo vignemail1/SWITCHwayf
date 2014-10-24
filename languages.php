@@ -267,43 +267,48 @@ $langStrings['pt']['most_used'] = 'Institui&ccedil;&atilde;o mais utilizada';
 // ****************************
 
 // Read note on line 16 how to properly customize locales so that they survive updates
-$langStrings['jp']['about_federation'] = 'フェデレーションとは'; // This string can be hidden by setting it to ''
-$langStrings['jp']['about_organisation'] = '学認とは'; // This string can be hidden by setting it to ''
-$langStrings['jp']['additional_info'] = '<a href="http://www.gakunin.jp/" target="_blank">GakuNin</a>は，学術認証フェデレーションの略です．'; // This string can be hidden by setting it to ''
+$langStrings['ja']['about_federation'] = 'フェデレーションとは'; // This string can be hidden by setting it to ''
+$langStrings['ja']['about_organisation'] = 'SWITCHとは'; // This string can be hidden by setting it to ''
+$langStrings['ja']['additional_info'] = '<a href="http://www.switch.ch/" target="_blank">SWITCH</a>は革新的で唯一無二のインターネットサービスをスイスの大学およびインターネットの利用者に提供します．'; // This string can be hidden by setting it to ''
 
 // Generic strings
-$langStrings['jp']['faq'] = 'FAQ'; // This string can be hidden by setting it to ''
-$langStrings['jp']['help'] = 'ヘルプ'; // This string can be hidden by setting it to ''
-$langStrings['jp']['privacy'] = 'プライバシー'; // This string can be hidden by setting it to ''
-$langStrings['jp']['title'] = '所属機関選択';
-$langStrings['jp']['header'] = '所属機関の選択';
-$langStrings['jp']['make_selection'] = '正しい所属機関を選んで下さい';
-$langStrings['jp']['settings'] = 'このブラウザで利用するデフォルト所属機関';
-$langStrings['jp']['permanent_select_header'] = '所属機関情報の保存';
-$langStrings['jp']['permanent_cookie'] = 'このブラウザで利用する<strong>デフォルト所属機関</strong>を保存できます．この設定により，サービスで機関認証を選択した場合に，再び所属機関のIdPを選択することなく，直接機関のIdPにリダイレクトされます．いくつかのアカウントを使い分けている場合には，この機能を利用しないで下さい．';
-$langStrings['jp']['permanent_cookie_notice'] = '現在セット中のデフォルト所属機関は:';
-$langStrings['jp']['permanent_cookie_note'] = '次のURLにアクセスすることで，デフォルトセッティングをリセットできます: %s';
-$langStrings['jp']['delete_permanent_cookie_button'] = 'リセット';
-$langStrings['jp']['goto_sp'] = '所属機関を保存して次へ';
-$langStrings['jp']['permanently_remember_selection'] = '選択した所属機関を保存して今後IdPの選択画面をスキップする';
-$langStrings['jp']['confirm_permanent_selection'] = '選択した機関をデフォルト所属機関として保存してもよいですか？　いくつかのアカウントを使い分けている場合にはこの機能を利用しないで下さい．';
-$langStrings['jp']['save_button'] = '保存';
-$langStrings['jp']['access_host'] = 'サービス<tt>\'%s\'</tt>を利用するために認証が必要です';
-$langStrings['jp']['select_idp'] = '所属している機関を選択';
-$langStrings['jp']['search_idp'] = '所属している機関を入力';
-$langStrings['jp']['remember_selection'] = 'ブラウザ起動中は自動ログイン';
-$langStrings['jp']['invalid_user_idp'] = '入力したIdPの情報（<tt>\'%s\'</tt>）に誤りがあります<br>以下の値のみが入力可能です:';
-$langStrings['jp']['contact_assistance'] = '問い合わせ先：<a href="mailto:%s">%s</a>';
-$langStrings['jp']['no_arguments'] = '引数が送られてきませんでした';
-$langStrings['jp']['arguments_missing'] = 'ブラウザが無効なクエリを受付ました．いくつかの必要な引数が不足しています．<br>以下の引数を受けつけました．:';
-$langStrings['jp']['valid_request_description'] = '有効なリクエストでは少なくとも，<tt>shire</tt>と<tt>target</tt>の適正な値を必要とします．オプショナルな引数である<tt>providerID</tt>，<tt>origin</tt>や<tt>redirect</tt>を送信することにより，ウェブブラウザを所属機関にIdPに自動的にリダイレクトさせることができます．';
-$langStrings['jp']['valid_saml2_request_description'] = '有効なSAML2のリクエストでは少なくとも，<tt>entityID</tt>と<tt>return</tt>の適正な値を必要とします．オプショナルな引数である<tt>isPassive</tt>, <tt>policy</tt>や<tt>returnIDParam</tt>を送信することにより，ウェブブラウザを所属機関にIdPに自動的にリダイレクトさせることができます．';
-$langStrings['jp']['invalid_query'] = 'エラー: 無効なクエリです';
-$langStrings['jp']['select_button'] = '選択';
-$langStrings['jp']['login'] = '選択';
-$langStrings['jp']['login_with'] = '所属機関:';
-$langStrings['jp']['other_federation'] = '他のフェデレーションから';
-$langStrings['jp']['logged_in'] = '認証済 <a href=\"%s\">進む</a>.';
-$langStrings['jp']['no_idp_found'] = 'この検索キーでは機関が見つかりません';
-$langStrings['jp']['no_idp_available'] = '使用できる機関がありません';
+$langStrings['ja']['faq'] = 'FAQ'; // This string can be hidden by setting it to ''
+$langStrings['ja']['help'] = 'ヘルプ'; // This string can be hidden by setting it to ''
+$langStrings['ja']['privacy'] = 'プライバシー'; // This string can be hidden by setting it to ''
+$langStrings['ja']['title'] = '所属機関選択';
+$langStrings['ja']['header'] = '所属機関の選択';
+$langStrings['ja']['make_selection'] = '所属機関を選んで下さい';
+$langStrings['ja']['settings'] = 'このブラウザで利用するデフォルト所属機関';
+$langStrings['ja']['permanent_select_header'] = '所属機関情報の保存';
+$langStrings['ja']['permanent_cookie'] = 'このブラウザで利用する<strong>デフォルト所属機関</strong>を保存できます．この設定により，サービスで機関認証を選択した場合に，再び所属機関のIdPを選択することなく，直接機関のIdPにリダイレクトされます．複数の機関のアカウントを使い分ける場合この機能を利用しないで下さい．';
+$langStrings['ja']['permanent_cookie_notice'] = '現在セット中のデフォルト所属機関は:';
+$langStrings['ja']['permanent_cookie_note'] = '次のURLにアクセスすることで，デフォルトセッティングをリセットできます: %s';
+$langStrings['ja']['delete_permanent_cookie_button'] = 'リセット';
+$langStrings['ja']['goto_sp'] = '保存して続行';
+$langStrings['ja']['permanently_remember_selection'] = '選択した所属機関を保存して今後この画面をスキップする';
+$langStrings['ja']['confirm_permanent_selection'] = '選択した機関をデフォルト所属機関としてもよいですか？　複数の機関のアカウントを使い分ける場合この機能を利用しないで下さい．';
+$langStrings['ja']['save_button'] = '保存';
+$langStrings['ja']['access_host'] = 'サービス %s を利用するために所属機関を選択もしくは入力してください';
+$langStrings['ja']['select_idp'] = '所属している機関を選択';
+$langStrings['ja']['search_idp'] = '所属している機関を入力...';
+$langStrings['ja']['remember_selection'] = 'ブラウザ起動中は自動ログイン';
+$langStrings['ja']['invalid_user_idp'] = '入力したIdPの情報（<code>\'%s\'</code>）に誤りがあります<br>以下の値のみが入力可能です:';
+$langStrings['ja']['contact_assistance'] = '問い合わせ先：<a href="mailto:%s">%s</a>';
+$langStrings['ja']['no_arguments'] = '引数が送られてきませんでした';
+$langStrings['ja']['arguments_missing'] = 'ウェブサーバーが無効なクエリを受け付けました．いくつかの必要な引数が不足しています．<br>以下の引数を受け付けました:';
+$langStrings['ja']['valid_request_description'] = '有効なリクエストでは少なくとも，<code>shire</code>と<code>target</code>の適正な値を必要とします．オプショナルな引数である<code>providerID</code>，<code>origin</code>や<code>redirect</code>を送信することにより，ウェブブラウザを所属機関IdPに自動的にリダイレクトさせることができます．';
+$langStrings['ja']['valid_saml2_request_description'] = '有効なSAML2のリクエストでは少なくとも，<code>entityID</code>と<code>return</code>の適正な値を必要とします．<code>return</code>の代わりにSPメタデータに<code>DiscoveryResponse</code>エンドポイントを含めても良いです．オプショナルな引数である<code>isPassive</code>, <code>policy</code>や<code>returnIDParam</code>を送信することにより，ウェブブラウザを所属機関IdPに自動的にリダイレクトさせることができます．';
+$langStrings['ja']['invalid_query'] = 'エラー: 無効なクエリです';
+$langStrings['ja']['select_button'] = '選択';
+$langStrings['ja']['login'] = '選択';
+$langStrings['ja']['login_with'] = '所属機関:';
+$langStrings['ja']['other_federation'] = '他のフェデレーションから';
+$langStrings['ja']['logged_in'] = '認証済 <a href=\"%s\">進む</a>.';
+$langStrings['ja']['most_used'] = '最もよく利用されている機関';
+$langStrings['ja']['invalid_return_url'] = 'リターンURL <code>\'%s\'</code> が不正です';
+$langStrings['ja']['unverified_return_url'] = 'リターンURL <code>\'%s\'</code> はSP <code>\'%s\'</code> のものとみなされません';
+$langStrings['ja']['unknown_sp'] = 'SP <code>\'%s\'</code> はメタデータに存在しないので不明です';
+$langStrings['ja']['no_idp_found'] = 'この検索キーでは機関が見つかりません';
+$langStrings['ja']['no_idp_available'] = '利用できる機関がありません';
+$langStrings['ja']['last_used'] = '前回利用';
 ?>
