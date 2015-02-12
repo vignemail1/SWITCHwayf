@@ -362,6 +362,7 @@ function printEmbeddedWAYFScript(){
 		// Add other information to find IdP
 		$IdPData = getDomainNameFromURI($key);
 		$IdPData .= composeOptionData($IDProvider);
+		$IdPData = addslashes( $IdPData);
 		
 		// Skip non-IdP entries
 		if ($IdPType == ''){
