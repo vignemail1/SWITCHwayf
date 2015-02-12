@@ -230,33 +230,9 @@ function verifyAndStripReturnURL($url){
 	
 	if (!$components){
 		return false;
+	} else {
+		return $url;
 	}
-	
-	$recomposedURL = $components['scheme'].'://';
-	
-	if (isset($components['user'])){
-		$recomposedURL .= $components['user'];
-		
-		if (isset($components['pass'])){
-			$recomposedURL .= ':'.$components['pass'];
-		}
-		
-		$recomposedURL .= '@';
-	}
-	
-	if (isset($components['host'])){
-		$recomposedURL .= $components['host'];
-	}
-	
-	if (isset($components['port'])){
-		$recomposedURL .= ':'.$components['port'];
-	}
-	
-	if (isset($components['path'])){
-		$recomposedURL .= $components['path'];
-	}
-	
-	return $recomposedURL;
 }
 
 /******************************************************************************/
@@ -266,7 +242,8 @@ function getHostNameFromURI($string){
 	// Check if string is URN
 	if (preg_match('/^urn:mace:/i', $string)){
 		// Return last component of URN
-		return end(explode(':', $string));
+		$components = explode(':', $string);
+		return end($components);
 	}
 	
 	// Apparently we are dealing with something like a URL
@@ -284,7 +261,8 @@ function getDomainNameFromURI($string){
 	// Check if string is URN
 	if (preg_match('/^urn:mace:/i', $string)){
 		// Return last component of URN
-		return getTopLevelDomain(end(explode(':', $string)));
+		$components = explode(':', $string);
+		return getTopLevelDomain(end($components));
 	}
 	
 	// Apparently we are dealing with something like a URL
