@@ -1,9 +1,9 @@
-<?php // Copyright (c) 2014, SWITCH
+<?php // Copyright (c) 2015, SWITCH
 
 /*
 ******************************************************************************
 SWITCHwayf
-Version: 1.19.4
+Version: 1.20
 Contact:  aai@switch.ch
 Web site: http://www.switch.ch/aai/wayf
 ******************************************************************************
@@ -87,7 +87,7 @@ if (isset($_GET['getArguments']) && isset($_GET['origin']) && isset($_GET['redir
 
 if(isValidDSRequest()){
 	// Check that return URL in DS request is a valid URL
-	$returnURL = verifyAndStripReturnURL($_GET['return']);
+	$returnURL = getSanitizedURL($_GET['return']);
 	if(!$returnURL){
 		// Show error
 		$message = sprintf(getLocalString('invalid_return_url'), htmlentities($_GET['return']));

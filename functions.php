@@ -223,15 +223,15 @@ function checkIDPAndShowErrors($IDP){
 
 
 /******************************************************************************/
-// Validates the URL format and returns the URL without GET arguments and fragment
-function verifyAndStripReturnURL($url){
+// Validates the URL and returns it if it is valid or false otherwise 
+function getSanitizedURL($url){
 	
 	$components = parse_url($url);
 	
-	if (!$components){
-		return false;
-	} else {
+	if ($components){
 		return $url;
+	} else {
+		return false;
 	}
 }
 
@@ -588,37 +588,50 @@ function convertIPtoBinaryForm($ip){
 }
 
 /******************************************************************************/
+// Returns URL without GET arguments
+function getURLWithoutArguments($url){
+	return preg_replace('/\?.*/', '', $url);
+}
+
+/******************************************************************************/
 // Returns true if URL could be verified or if no check is necessary, false otherwise
 function verifyReturnURL($entityID, $returnURL) {
 	global $SProviders, $useACURLsForReturnParamCheck;
 	
 	// If SP has a <idpdisc:DiscoveryResponse>, check return param
 	if (isset($SProviders[$entityID]['DSURL'])){
-		return in_array($returnURL, $SProviders[$entityID]['DSURL']);
-	}
-	
-	// If fall back check is enabled, check return param
-	if ($useACURLsForReturnParamCheck){
-		
-		// Return true if no assertion consumer URL is defined to check against
-		// Should never happend
-		if (!isset($SProviders[$entityID]['ACURL'])){
-			return false;
-		}
-		
-		$returnURLHostName = getHostNameFromURI($returnURL);
-		foreach($SProviders[$entityID]['ACURL'] as $ACURL){
-			if (getHostNameFromURI($ACURL) == $returnURLHostName){
+		$returnURLWithoutArguments = getURLWithoutArguments($returnURL);
+		foreach($SProviders[$entityID]['DSURL'] as $DSURL){
+			$DSURLWithoutArguments = getURLWithoutArguments($DSURL);
+			if ($DSURLWithoutArguments == $returnURLWithoutArguments){
 				return true;
 			}
 		}
-		// We haven't found a matchin assertion consumer url so we return false
+		
+		// DS URLs did not match the return URL
 		return false;
 	}
 	
-	// SP has no <idpdisc:DiscoveryResponse> and $useACURLsForReturnParamCheck
-	// is disabled, so we don't check anything
-	return true;
+	// Return true if SP has no <idpdisc:DiscoveryResponse> 
+	// and $useACURLsForReturnParamCheck is disabled (we don't check anything)
+	if (!$useACURLsForReturnParamCheck){
+		return true;
+	}
+	
+	// $useACURLsForReturnParamCheck is enabled, so
+	// check return param against host name of assertion consumer URLs
+	
+	// Check hostnames
+	$returnURLHostName = getHostNameFromURI($returnURL);
+	foreach($SProviders[$entityID]['ACURL'] as $ACURL){
+		if (getHostNameFromURI($ACURL) == $returnURLHostName){
+			return true;
+		}
+	}
+	
+	// We haven't found a matching assertion consumer URL, therefore we return false
+	return false;
+	
 }
 
 /******************************************************************************/
