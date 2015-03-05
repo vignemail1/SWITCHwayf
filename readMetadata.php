@@ -97,6 +97,7 @@ if(isRunViaCLI()){
 	
 	
 } elseif (isRunViaInclude()) {
+	// Run as included file
 	
 	// Open the metadata lock file.
 	if (($lockFp = fopen($metadataLockFile, 'a+')) === false) {
@@ -119,7 +120,10 @@ if(isRunViaCLI()){
 				logError($errorMsg);
 			}
 		}
-		
+	}
+	
+	// Now that we have the lock, check again
+	if(!file_exists($metadataIDPFile) or filemtime($metadataFile) > filemtime($metadataIDPFile)){
 		// Regenerate $metadataIDPFile.
 		list($metadataIDProviders, $metadataSProviders) = parseMetadata($metadataFile, $defaultLanguage);
 		
@@ -151,6 +155,11 @@ if(isRunViaCLI()){
 		// Get a shared lock to read the IdP and SP files
 		// generated from the metadata file.
 		if ($lockFp !== false) {
+			
+			// Release the lock in case we had it for some 
+			// reason and still ended up here
+			flock($lockFp, LOCK_UN);
+			
 			if (flock($lockFp, LOCK_SH) === false) { 
 				$errorMsg = 'Could not lock file '.$metadataLockFile;
 				logError($errorMsg);
@@ -172,7 +181,7 @@ if(isRunViaCLI()){
 		// Fow now copy the array by reference
 		$SProviders = &$metadataSProviders;
 	}
-
+	
 	// Close the metadata lock file.
 	if ($lockFp !== false) {
 		fclose($lockFp);
@@ -297,9 +306,9 @@ function processIDPRoleDescriptor($IDPRoleDescriptorNode){
 	}
 	
 	// Set SAML1 SSO URL
-	if ($Profiles['urn:mace:shibboleth:1.0:profiles:AuthnRequest']) {
+	if (isset($Profiles['urn:mace:shibboleth:1.0:profiles:AuthnRequest'])) {
 		$IDP['SSO'] = $Profiles['urn:mace:shibboleth:1.0:profiles:AuthnRequest'];
-	} else if ($Profiles['urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect']) {
+	} else if (isset($Profiles['urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'])) {
 		$IDP['SSO'] = $Profiles['urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'];
 	} else {
 		$IDP['SSO'] = 'https://no.saml1.or.saml2.sso.url.defined.com/error';
