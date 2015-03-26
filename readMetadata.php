@@ -8,21 +8,23 @@
 // readMetadata.php periodically as web server user, e.g. with a cron entry like:
 // 5 * * * * /usr/bin/php readMetadata.php > /dev/null
 
+
+// Set dummy server name if run in CLI
+if (!isset($_SERVER['SERVER_NAME'])){
+	$_SERVER['SERVER_NAME'] = 'localhost';
+}
+
 require_once('functions.php');
 require_once('config.php');
 
 // Init log file
-openlog("SWITCHwayf.readMetadata.php", LOG_PID | LOG_PERROR, LOG_LOCAL0);
-
+openlog("SWITCHwayf SAML Metadata Processing (readMetadata.php)", LOG_PID | LOG_PERROR, LOG_LOCAL0);
 
 // Make sure this script is not accessed directly
 if(isRunViaCLI()){
 	// Run in cli mode.
 	// Could be used for testing purposes or to facilitate startup confiduration.
 	// Results are dumped in $metadataIDPFile (see config.php)
-	
-	// Set dummy server name
-	$_SERVER['SERVER_NAME'] = 'localhost';
 	
 	// Set default config options
 	initConfigOptions();
@@ -75,7 +77,7 @@ if(isRunViaCLI()){
 	// If $metadataIDProviders is not FALSE, update $IDProviders and print the Identity Providers lists.
 	if(is_array($metadataIDProviders)){ 
 
-		echo 'Merging parsed Identity Providers with data from file '.$IDProviders."\n";
+		echo 'Merging parsed Identity Providers with data from file '.$IDPConfigFile."\n";
 		$IDProviders = mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries);
 		
 		echo "Printing parsed Identity Providers:\n";
@@ -229,6 +231,9 @@ function parseMetadata($metadataFile, $defaultLanguage){
 		return Array(false, false);
 	}
 	
+	// Ignored IdPs
+	$hiddenIdPs = 0;
+	
 	// Process individual EntityDescriptors
 	while( $CurrentXMLReaderNode->read() ) {
 		if($CurrentXMLReaderNode->nodeType == XMLReader::ELEMENT && $CurrentXMLReaderNode->localName  === 'EntityDescriptor') {
@@ -245,6 +250,8 @@ function parseMetadata($metadataFile, $defaultLanguage){
 						$IDP = processIDPRoleDescriptor($RoleDescriptor);
 						if ($IDP){
 							$metadataIDProviders[$entityID] = $IDP;
+						} else {
+							$hiddenIdPs++;
 						}
 						break;
 					case 'SPSSODescriptor':
@@ -267,7 +274,9 @@ function parseMetadata($metadataFile, $defaultLanguage){
 	}
 	
 	// Output result
-	$infoMsg = "Successfully parsed metadata file ".$metadataFile. ". Found ".count($metadataIDProviders)." IdPs and ".count($metadataSProviders)." SPs";
+	$infoMsg = "Successfully parsed metadata file ".$metadataFile. "\n";
+	$infoMsg .= "Added ".count($metadataIDProviders)." IdPs and ".count($metadataSProviders)." SPs. ".$hiddenIdPs." hidden IdPs were not added.";
+	
 	if (isRunViaCLI()){
 		echo $infoMsg."\n";
 	} else {
@@ -294,11 +303,19 @@ function isRunViaInclude(){
 // Processes an IDPRoleDescriptor XML node and returns an IDP entry or false if 
 // something went wrong
 function processIDPRoleDescriptor($IDPRoleDescriptorNode){
-	global $defaultLanguage;
+	global $defaultLanguage, $supportHideFromDiscoveryEntityCategory;
 	
 	$IDP = Array();
 	$Profiles = Array();
-
+	
+	// Skip Idp if it has the Hide-From-Discovery entity 
+	// category attribute
+	if (!isset($supportHideFromDiscoveryEntityCategory) || $supportHideFromDiscoveryEntityCategory){
+		if (hasHideFromDiscoveryEntityCategory($IDPRoleDescriptorNode)){
+			return false;
+		}
+	}
+	
 	// Get SSO URL
 	$SSOServices = $IDPRoleDescriptorNode->getElementsByTagNameNS( 'urn:oasis:names:tc:SAML:2.0:metadata', 'SingleSignOnService' );
 	foreach( $SSOServices as $SSOService ){
@@ -674,7 +691,6 @@ function getOrganizationNames($RoleDescriptorNode){
 	return $Entity;
 }
 
-
 /******************************************************************************/
 // Get Attribute Consuming Service
 function getAttributeConsumingServiceNames($RoleDescriptorNode){
@@ -688,6 +704,25 @@ function getAttributeConsumingServiceNames($RoleDescriptorNode){
 	}
 	
 	return $Entity;
+}
+
+/******************************************************************************/
+// Returns true if IdP has Hide-From-Discovery entity category attribute
+function hasHideFromDiscoveryEntityCategory($IDPRoleDescriptorNode){
+	// Get SAML Attributes for this entity
+	$AttributeValues = $IDPRoleDescriptorNode->parentNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:assertion', 'AttributeValue');
+	
+	if (!$AttributeValues || $AttributeValues->length < 1){
+		return false;
+	}
+	
+	foreach( $AttributeValues as $AttributeValue ){
+		if (trim($AttributeValue->nodeValue) == 'http://refeds.org/category/hide-from-discovery'){
+			return true;
+		}
+	}
+	
+	return false;
 }
 
 ?>

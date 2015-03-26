@@ -141,6 +141,16 @@
   // to be false
   //$useEmbeddedWAYFRefererForPrivacyProtection = false;
 
+// If enabled (default) Identity Providers that are in the 
+// "Hide From Discovery" entity category (see 
+// https://refeds.org/category/hide-from-discovery/) will not
+// be parsed when SAML2 metadata is processed. The effect will
+// be that these IdPs are not shown in the organisation drop 
+// down list. IdPs in this entity category, however, still can 
+// be manually added using the Embedded WAYF.
+// $supportHideFromDiscoveryEntityCategory = true
+
+
 // Whether or not to add the entityID of the preselected IdP to the
 // exported JSON/Text/PHP Code
 // Lowers security against phising!
