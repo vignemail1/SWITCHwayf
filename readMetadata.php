@@ -21,9 +21,6 @@ require_once('config.php');
 if(isRunViaCLI()){
 	// Run in cli mode.
 	
-	// Init log file
-	openlog("SWITCHwayf.readMetadata.php", LOG_ODELAY, LOG_USER);
-	
 	// Set default config options
 	initConfigOptions();
 	

@@ -9,9 +9,6 @@ Web site: https://www.switch.ch/aai/support/tools/wayf/
 ******************************************************************************
 */
 
-// Init connection to system logger
-openlog("SWITCHwayf", LOG_ODELAY, LOG_USER);
-
 /*------------------------------------------------*/
 // Load general configuration and template file
 /*------------------------------------------------*/

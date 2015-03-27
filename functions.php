@@ -756,9 +756,18 @@ function logAccessEntry($protocol, $type, $sp, $idp, $return){
 }
 
 /******************************************************************************/
+// Init connection to system logger
+function initLogger(){
+	openlog("SWITCHwayf", LOG_NDELAY, LOG_USER);
+}
+
+/******************************************************************************/
 // Logs an info message
 function logInfo($infoMsg){
 	global $developmentMode;
+	
+	initLogger();
+	
 	syslog(LOG_INFO, $infoMsg);
 	
 	if ($developmentMode && isRun){
@@ -771,6 +780,8 @@ function logInfo($infoMsg){
 function logWarning($warnMsg){
 	global $developmentMode;
 	
+	initLogger();
+	
 	syslog(LOG_WARNING, $warnMsg);
 	
 	if ($developmentMode && isRunViaCLI()){
@@ -782,6 +793,8 @@ function logWarning($warnMsg){
 // Logs an error message
 function logError($errorMsg){
 	global $developmentMode;
+	
+	initLogger();
 	
 	syslog(LOG_ERR, $errorMsg);
 	
