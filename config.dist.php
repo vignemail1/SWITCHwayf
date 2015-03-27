@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2014, SWITCH
+<?php // Copyright (c) 2015, SWITCH
 
 //******************************************************************************
 // This file contains the configuration of SWITCHwayf, a light-weight 
@@ -164,7 +164,9 @@
 // If turned on make sure to also configure $WAYFLogFile
 //$useLogging = true; 
 
-  // Where to log the access
+  // Where to log the access requests
+  // This log is only an audit log for access requests. 
+  // Errors (e.g. when parsing SAML metadata) go to the syslog.
   // Make sure the web server user has write access to this file!
   //$WAYFLogFile = '/var/log/apache2/wayf.log'; 
 

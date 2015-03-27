@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2014, SWITCH
+<?php // Copyright (c) 2015, SWITCH
 
 // This file is used to dynamically create the list of IdPs and SP to be 
 // displayed for the WAYF/DS service based on the federation metadata.
@@ -17,14 +17,12 @@ if (!isset($_SERVER['SERVER_NAME'])){
 require_once('functions.php');
 require_once('config.php');
 
-// Init log file
-openlog("SWITCHwayf SAML Metadata Processing (readMetadata.php)", LOG_PID | LOG_PERROR, LOG_LOCAL0);
-
 // Make sure this script is not accessed directly
 if(isRunViaCLI()){
 	// Run in cli mode.
-	// Could be used for testing purposes or to facilitate startup confiduration.
-	// Results are dumped in $metadataIDPFile (see config.php)
+	
+	// Init log file
+	openlog("SWITCHwayf.readMetadata.php", LOG_ODELAY, LOG_USER);
 	
 	// Set default config options
 	initConfigOptions();
@@ -291,18 +289,6 @@ function parseMetadata($metadataFile, $defaultLanguage){
 	
 	
 	return Array($metadataIDProviders, $metadataSProviders);
-}
-
-/******************************************************************************/
-// Is this script run in CLI mode
-function isRunViaCLI(){
-	return !isset($_SERVER['REMOTE_ADDR']);
-}
-
-/******************************************************************************/
-// Is this script run in CLI mode
-function isRunViaInclude(){
-	return basename($_SERVER['SCRIPT_NAME']) != 'readMetadata.php';
 }
 
 /******************************************************************************/

@@ -5,21 +5,21 @@
 SWITCHwayf
 Version: 1.20
 Contact:  aai@switch.ch
-Web site: http://www.switch.ch/aai/wayf
+Web site: https://www.switch.ch/aai/support/tools/wayf/
 ******************************************************************************
 */
+
+// Init connection to system logger
+openlog("SWITCHwayf", LOG_ODELAY, LOG_USER);
 
 /*------------------------------------------------*/
 // Load general configuration and template file
 /*------------------------------------------------*/
 
-require_once('templates.php');
-require_once('functions.php');
-require_once('languages.php');
 require_once('config.php');
-
-// Set P3P headers just in case they were not set in Apache already
-header('P3P: CP="NOI CUR DEVa OUR IND COM NAV PRE"');
+require_once('languages.php');
+require_once('functions.php');
+require_once('templates.php');
 
 // Set default config options
 initConfigOptions();
@@ -75,6 +75,9 @@ foreach ($IDProviders as $key => $values){
 // Back-wards compatibility logic
 /*------------------------------------------------*/
 
+// Set P3P headers just in case they were not set in Apache already
+header('P3P: CP="NOI CUR DEVa OUR IND COM NAV PRE"');
+
 // This is for back-wards compatibility with very old versions of the WAYF
 if (isset($_GET['getArguments']) && isset($_GET['origin']) && isset($_GET['redirect'])){
 	redirectTo($_SERVER['PHP_SELF'].'/redirect/'.$_GET['origin'].'?'.$_GET['getArguments']);
@@ -91,6 +94,7 @@ if(isValidDSRequest()){
 	if(!$returnURL){
 		// Show error
 		$message = sprintf(getLocalString('invalid_return_url'), htmlentities($_GET['return']));
+		logWarning('Invalid return URL: '.$_GET['return']);
 		printError($message);
 		exit;
 	}
@@ -100,6 +104,7 @@ if(isValidDSRequest()){
 		if(!isset($SProviders[$_GET['entityID']])){
 			// Show error
 			$message = sprintf(getLocalString('unknown_sp'), htmlentities($_GET['entityID']));
+			logWarning('Unknown SP: '.$_GET['entityID']);
 			printError($message);
 			exit;
 		}
@@ -109,6 +114,7 @@ if(isValidDSRequest()){
 		if(!$returnURLOK){
 			// Show error
 			$message = sprintf(getLocalString('unverified_return_url'), htmlentities($returnURL), htmlentities($_GET['entityID']));
+			logWarning('Unverified return URL: '.$returnURL.' for SP: '.$_GET['entityID']);
 			printError($message);
 			exit;
 		}
@@ -498,6 +504,7 @@ if (
 	$message = getLocalString('arguments_missing') . '<pre>';
 	$message .= '<code>'.htmlentities($invalidstring).'</code></pre></p>';
 	$message .= '<p>'. getLocalString('valid_request_description');
+	logWarning('Invalid GET arguments for Shibboleth discovery requests: '.$invalidstring);
 	printError($message);
 	exit;
 } elseif(
@@ -513,6 +520,7 @@ if (
 	$message = getLocalString('arguments_missing') . '</p><pre>';
 	$message .= '<code>'.htmlentities($invalidstring).'</code></pre>';
 	$message .= '<p>'. getLocalString('valid_saml2_request_description');
+	logWarning('Invalid GET arguments for SAML discovery requests: '.$invalidstring);
 	printError($message);
 	exit;
 	

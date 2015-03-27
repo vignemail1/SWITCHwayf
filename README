@@ -1,4 +1,4 @@
-Copyright (c) 2014, SWITCH
+Copyright (c) 2015, SWITCH
 See LICENSE file for details.
 
 -------------------------------------------------------------------------------
@@ -250,6 +250,7 @@ and potentially
 
 in case the metadata loaded by SWITCHwayf does not include DiscoveryResponse 
 elements for many Service Providers.
+
 
 -------------------------------------------------------------------------------
 

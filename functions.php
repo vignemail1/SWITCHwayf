@@ -1,7 +1,15 @@
-<?php // Copyright (c) 2014, SWITCH
+<?php // Copyright (c) 2015, SWITCH
 
-/******************************************************************************/
-// Commonly used functions for the WAYF
+/*
+******************************************************************************
+This file contains common functions of the SWITCHwayf
+******************************************************************************
+*/
+
+if(!isset($_SERVER['REMOTE_ADDR']) || basename($_SERVER['SCRIPT_NAME']) == 'templates.php'){
+	exit('No direct script access allowed');
+}
+
 /******************************************************************************/
 
 // Initilizes default configuration options if they were not set already
@@ -759,7 +767,7 @@ function logInfo($infoMsg){
 	global $developmentMode;
 	syslog(LOG_INFO, $infoMsg);
 	
-	if ($developmentMode){
+	if ($developmentMode && isRun){
 		echo $infoMsg;
 	}
 }
@@ -768,9 +776,10 @@ function logInfo($infoMsg){
 // Logs an warnimg message
 function logWarning($warnMsg){
 	global $developmentMode;
+	
 	syslog(LOG_WARNING, $warnMsg);
 	
-	if ($developmentMode){
+	if ($developmentMode && isRunViaCLI()){
 		echo $warnMsg;
 	}
 }
@@ -779,6 +788,7 @@ function logWarning($warnMsg){
 // Logs an error message
 function logError($errorMsg){
 	global $developmentMode;
+	
 	syslog(LOG_ERR, $errorMsg);
 	
 	if ($developmentMode){
@@ -1009,4 +1019,17 @@ function isRequestRefererMatchingSPHost(){
 	
 	return false;
 }
+
+/******************************************************************************/
+// Is this script run in CLI mode
+function isRunViaCLI(){
+	return !isset($_SERVER['REMOTE_ADDR']);
+}
+
+/******************************************************************************/
+// Is this script run in CLI mode
+function isRunViaInclude(){
+	return basename($_SERVER['SCRIPT_NAME']) != 'readMetadata.php';
+}
+
 ?>

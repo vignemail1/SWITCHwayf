@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2014, SWITCH ?>
+<?php // Copyright (c) 2015, SWITCH ?>
 
 <!-- Identity Provider Selection: Start -->
 <h1><?php echo getLocalString('header'); ?></h1> 

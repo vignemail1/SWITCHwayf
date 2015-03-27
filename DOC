@@ -1,4 +1,4 @@
-Copyright (c) 2014, SWITCH
+Copyright (c) 2015, SWITCH
 See LICENSE file for details.
 
 -------------------------------------------------------------------------------
@@ -101,12 +101,26 @@ above information for each custom file.
 Logging
 -------
 
-Errors are generally written to syslog. Error messages might be cases where
-files cannot be read or written due to permission problems.
+The SWITCHwayf currently uses two types of logs:
 
-If the configuration option $useLogging is true, a log file will be written to 
-the path specified in $WAYFLogFile. This log file is an audit log file where 
-each line is an entry of the form:
+* General Log
+  Whenever a warning or an error message is thrown, this goes
+  to the system log file. Errors occur when for example files 
+  cannot be read or written due to permission problems.
+
+* Audit Log
+  This is file-based logging. Whenever a user is redirected
+  to an Identity Provider, a new entry is added to the file
+  $WAYFLogFile which typically is in the same directory as
+  the web server access log files (because it's the web server
+  that writes to this file)
+
+
+On the Audit log:
+If the configuration option $useLogging is true, an audit log 
+file will be written to the path specified in $WAYFLogFile. 
+This log file is an audit log file where each line is an entry 
+of the form:
 
 {DATE} {TIME} {IP} {IDP-SELECTION} {REQUEST-TYPE} {IDP-ENTITYID} {FORWARDING-URL}
 
