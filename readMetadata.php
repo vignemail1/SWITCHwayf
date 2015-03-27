@@ -273,13 +273,10 @@ function parseMetadata($metadataFile, $defaultLanguage){
 	}
 	
 	// Output result
-	$infoMsg = "Successfully parsed metadata file ".$metadataFile. "\n";
-	$infoMsg .= "Added ".count($metadataIDProviders)." IdPs and ".count($metadataSProviders)." SPs.";
-	if (!isset($supportHideFromDiscoveryEntityCategory) || $supportHideFromDiscoveryEntityCategory){
-		$infoMsg .=  " ".$hiddenIdPs." hidden IdPs were not added.";
-	} else {
-		$infoMsg .=  ' Potentially hidden IdPs were also added because $supportHideFromDiscoveryEntityCategory is false.';
-	}
+	$infoMsg = "Successfully parsed metadata file ".$metadataFile. " ";
+	$infoMsg .= "(".count($metadataIDProviders)." IdPs, ";
+	$infoMsg .= " ".count($metadataSProviders)." SPs, ";
+	$infoMsg .=  ($hiddenIdPs > 0) ? $hiddenIdPs." IdPs are hidden)" : "no hidden IdPs)" ;
 	
 	if (isRunViaCLI()){
 		echo $infoMsg."\n";
