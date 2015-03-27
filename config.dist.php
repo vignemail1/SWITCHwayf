@@ -214,7 +214,15 @@
 // 5. Appearance Settings
 //**************************
 
-// Name of the federation
+// Identifier for this particular instance of the SWITCHwayf
+// This is mainly used for logging to syslog and in particular
+// useful in case multiple instances of the SWITCHwayf are
+// operated on the same host
+// $instanceIdentifier = 'SWITCHwayf';
+
+// Name of the federation [deprecated]
+// This value is not used anymore in the standard code. 
+// Please ensure it is not used anymore in templates
 //$federationName = 'myFederation';
 
 // URL to send user to when clicking on federation logo

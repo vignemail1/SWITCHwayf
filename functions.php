@@ -758,7 +758,14 @@ function logAccessEntry($protocol, $type, $sp, $idp, $return){
 /******************************************************************************/
 // Init connection to system logger
 function initLogger(){
-	openlog("SWITCHwayf", LOG_NDELAY, LOG_USER);
+	global $instanceIdentifier;
+	
+	$logIdentifier = 'SWITCHwayf';
+	if (isset($instanceIdentifier) && !empty($instanceIdentifier)){
+		$logIdentifier = $instanceIdentifier;
+	}
+	
+	openlog($logIdentifier, LOG_NDELAY, LOG_USER);
 }
 
 /******************************************************************************/
@@ -834,7 +841,6 @@ function isPartOfPathInfo($needle){
 /******************************************************************************/
 // Converts to the unified datastructure that the Shibboleth DS will be using
 function convertToShibDSStructure($IDProviders){
-	global $federationName;
 	
 	$ShibDSIDProviders = array();
 	
