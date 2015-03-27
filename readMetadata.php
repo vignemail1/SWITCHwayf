@@ -199,6 +199,7 @@ closelog();
 // Function parseMetadata, parses metadata file and returns Array($IdPs, SPs)  or
 // Array(false, false) if error occurs while parsing metadata file
 function parseMetadata($metadataFile, $defaultLanguage){
+	global $supportHideFromDiscoveryEntityCategory;
 	
 	if(!file_exists($metadataFile)){
 		$errorMsg = 'File '.$metadataFile." does not exist"; 
@@ -275,7 +276,12 @@ function parseMetadata($metadataFile, $defaultLanguage){
 	
 	// Output result
 	$infoMsg = "Successfully parsed metadata file ".$metadataFile. "\n";
-	$infoMsg .= "Added ".count($metadataIDProviders)." IdPs and ".count($metadataSProviders)." SPs. ".$hiddenIdPs." hidden IdPs were not added.";
+	$infoMsg .= "Added ".count($metadataIDProviders)." IdPs and ".count($metadataSProviders)." SPs.";
+	if (!isset($supportHideFromDiscoveryEntityCategory) || $supportHideFromDiscoveryEntityCategory){
+		$infoMsg .=  " ".$hiddenIdPs." hidden IdPs were not added.";
+	} else {
+		$infoMsg .=  ' Potentially hidden IdPs were also added because $supportHideFromDiscoveryEntityCategory is false.';
+	}
 	
 	if (isRunViaCLI()){
 		echo $infoMsg."\n";
