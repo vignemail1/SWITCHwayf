@@ -6,12 +6,6 @@ This file contains common functions of the SWITCHwayf
 ******************************************************************************
 */
 
-if(!isset($_SERVER['REMOTE_ADDR']) || basename($_SERVER['SCRIPT_NAME']) == 'templates.php'){
-	exit('No direct script access allowed');
-}
-
-/******************************************************************************/
-
 // Initilizes default configuration options if they were not set already
 function initConfigOptions(){
 	global $defaultLanguage;
