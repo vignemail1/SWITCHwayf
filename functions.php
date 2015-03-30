@@ -59,6 +59,7 @@ function initConfigOptions(){
 	
 	// Set independet default configuration options
 	$defaults = array();
+	$defaults['instanceIdentifier'] = 'SWITCHwayf';
 	$defaults['defaultLanguage'] = 'en'; 
 	$defaults['commonDomain'] = getTopLevelDomain($_SERVER['SERVER_NAME']);
 	$defaults['cookieNamePrefix'] = '';
@@ -94,10 +95,10 @@ function initConfigOptions(){
 	$defaults['metadataFile'] = '/etc/shibboleth/metadata.switchaai.xml';
 	$defaults['metadataIDPFile'] = 'IDProvider.metadata.php';
 	$defaults['metadataSPFile'] = 'SProvider.metadata.php';
-	$defaults['metadataLockFile'] = (substr($_SERVER['PATH'],0,1) == '/') ? '/tmp/wayf_metadata.lock' : 'C:\windows\TEMP';
+	$lockFileName = preg_replace('/[^-_\.a-zA-Z]/', '', $defaults['instanceIdentifier']);
+	$defaults['metadataLockFile'] = (substr($_SERVER['PATH'],0,1) == '/') ? '/tmp/wayf_metadata-'.$lockFileName.'.lock' : 'C:\windows\TEMP\wayf_metadata-'.$lockFileName.'.lock';
 	$defaults['WAYFLogFile'] = '/var/log/apache2/wayf.log'; 
 	$defaults['kerberosRedirectURL'] = dirname($_SERVER['SCRIPT_NAME']).'kerberosRedirect.php';
-	$defaults['instanceIdentifier'] = 'SWITCHwayf';
 	$defaults['developmentMode'] = false;
 	
 	// Initialize independent defaults
