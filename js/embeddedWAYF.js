@@ -17,6 +17,7 @@ var wayf_sp_handlerURL;
 // Other settings
 var wayf_use_discovery_service;
 var wayf_use_improved_drop_down_list;
+var wayf_disable_remote_idp_logos;
 var wayf_use_small_logo;
 var wayf_width;
 var wayf_height;
@@ -596,7 +597,8 @@ function loadImprovedDropDown(){
 		$("#user_idp:enabled").improveDropDown({
 			iconPath:'<?php echo $imageURL ?>/drop_icon.png',
 			noMatchesText: '<?php echo $noIdPFoundText ?>',
-			noItemsText: '<?php echo $noIdPAvailableText ?>'
+			noItemsText: '<?php echo $noIdPAvailableText ?>',
+			disableRemoteLogos: wayf_disable_remote_idp_logos
 		});
 	 
 	});
@@ -623,6 +625,13 @@ function loadImprovedDropDown(){
 		|| typeof(wayf_use_improved_drop_down_list) != "boolean"
 	){
 		wayf_use_improved_drop_down_list = false;
+	}
+	
+	if(
+		typeof(wayf_disable_remote_idp_logos)  == "undefined"  
+		|| typeof(wayf_disable_remote_idp_logos) != "boolean"
+	){
+		wayf_disable_remote_idp_logos = false;
 	}
 	
 	// Overwrite entityID with GET argument if present

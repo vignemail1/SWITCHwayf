@@ -19,6 +19,7 @@ function initConfigOptions(){
 	global $cookieValidity;
 	global $showPermanentSetting;
 	global $useImprovedDropDownList;
+	global $disableRemoteLogos;
 	global $useSAML2Metadata;
 	global $SAML2MetaOverLocalConf;
 	global $includeLocalConfEntries;
@@ -52,7 +53,9 @@ function initConfigOptions(){
 	global $metadataLockFile;
 	global $WAYFLogFile;
 	global $kerberosRedirectURL;
+	global $instanceIdentifier;
 	global $developmentMode;
+	
 	
 	// Set independet default configuration options
 	$defaults = array();
@@ -63,6 +66,7 @@ function initConfigOptions(){
 	$defaults['cookieValidity'] = 100;
 	$defaults['showPermanentSetting'] = false;
 	$defaults['useImprovedDropDownList'] = true;
+	$defaults['disableRemoteLogos'] = false;
 	$defaults['useSAML2Metadata'] = false; 
 	$defaults['SAML2MetaOverLocalConf'] = false;
 	$defaults['includeLocalConfEntries'] = true;
@@ -93,6 +97,7 @@ function initConfigOptions(){
 	$defaults['metadataLockFile'] = (substr($_SERVER['PATH'],0,1) == '/') ? '/tmp/wayf_metadata.lock' : 'C:\windows\TEMP';
 	$defaults['WAYFLogFile'] = '/var/log/apache2/wayf.log'; 
 	$defaults['kerberosRedirectURL'] = dirname($_SERVER['SCRIPT_NAME']).'kerberosRedirect.php';
+	$defaults['instanceIdentifier'] = 'SWITCHwayf';
 	$defaults['developmentMode'] = false;
 	
 	// Initialize independent defaults
@@ -760,12 +765,7 @@ function logAccessEntry($protocol, $type, $sp, $idp, $return){
 function initLogger(){
 	global $instanceIdentifier;
 	
-	$logIdentifier = 'SWITCHwayf';
-	if (isset($instanceIdentifier) && !empty($instanceIdentifier)){
-		$logIdentifier = $instanceIdentifier;
-	}
-	
-	openlog($logIdentifier, LOG_NDELAY, LOG_USER);
+	openlog($instanceIdentifier, LOG_NDELAY, LOG_USER);
 }
 
 /******************************************************************************/

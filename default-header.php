@@ -71,7 +71,8 @@
 			$("#userIdPSelection:enabled").improveDropDown({
 				iconPath:'<?php echo $imageURL ?>/drop_icon.png',
 				noMatchesText: '<?php echo getLocalString('no_idp_found', 'js') ?>',
-				noItemsText: '<?php echo getLocalString('no_idp_available', 'js') ?>'
+				noItemsText: '<?php echo getLocalString('no_idp_available', 'js') ?>',
+				disableRemoteLogos: <?php echo ($disableRemoteLogos) ? 'true' : 'false' ?>
 			});
 		}
 	}

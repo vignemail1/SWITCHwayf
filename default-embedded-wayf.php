@@ -147,6 +147,16 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // [Optional, default: false]
 // var wayf_use_improved_drop_down_list = false;
 
+// If true the improved drop-down-list will not display IdP logos that
+// have to be loaded from remote URLs. That way the web browser
+// does not have to make requests to third party hosts.
+// Logos that are embedded using data URIs 
+// (src="data:image/png;base64...") will however still be displayed
+// Don't confuse this with wayf_hide_logo, which shows or hides
+// the logo of this WAYF instance
+// [Optional, default: false]
+//  wayf_disable_remote_idp_logos = false;
+
 // Force the user's Home Organisation selection to be remembered for the
 // current browser session. If wayf_show_remember_checkbox is true
 // the checkbox will be shown but will be read only.

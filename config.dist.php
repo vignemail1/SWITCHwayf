@@ -63,7 +63,18 @@
 //$showPermanentSetting = false;
 
 // Whether or not to use the search-as-you-type feature of the drop down list
+// Enabling this will use JavaScript to convert the select element containing
+// all Identity Providers to a searchable search-as-you-type list that also
+// displays logos if available 
 //$useImprovedDropDownList = true;
+
+  // If true the improved drop-down-list will not display logos that
+  // have to be loaded from remote URLs. That way the web browser
+  // does not have to make requests to third party hosts.
+  // Logos that are embedded using data URIs 
+  // (src="data:image/png;base64...") will however still be displayed
+  //$disableRemoteLogos = false;
+
 
 // Number of previously used Identity Providers to show at top of drop-down list
 // Default is 3, set to 0 to disable

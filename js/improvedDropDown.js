@@ -60,11 +60,13 @@ var suspendTextBoxExitHandler = false;
                     var iconPath='./img/dropIcon.png';
                     var noMatchesText='No Matches';
                     var noItemsText='No Items Available';
+					var disableRemoteLogos=false;
                 
                     if (arguments.length==1) {
                       if ('iconPath' in value) {iconPath = value.iconPath.toString();}
                       if ('noMatchesText' in value) {noMatchesText = value.noMatchesText.toString();}
                       if ('noItemsText' in value) {noItemsText = value.noItemsText.toString();}
+						if ('disableRemoteLogos' in value) {disableRemoteLogos = value.disableRemoteLogos;}
                     }
     
                 this.each(function () {
@@ -83,6 +85,11 @@ var suspendTextBoxExitHandler = false;
                     var newListControl = getListElement(thisElement);
                     wrapperControl.append(newListControl); 
     
+					// Remove logos from remote URL if this features is activated
+					if (disableRemoteLogos){
+						removeRemoteLogos(thisElement);
+					}
+					
                     populateList(thisElement, newListControl,noMatchesText,noItemsText);
     
                     if (document.activeElement == thisElement[0]) {
@@ -129,6 +136,30 @@ function getWrapperElement(sourceElement) {
                      .click(function () {return false;});
 
     return newWrapperElement;
+}
+
+
+function removeRemoteLogos(existingSelectControl){
+	var sourceListItems = existingSelectControl.find('OPTION');
+	
+	if (sourceListItems.length == 0) {
+		return;
+	}
+	
+	sourceListItems.each(
+		 function () {
+			var optionItem = $(this);
+			
+			// Skip items without logos
+			if (!optionItem.attr('logo')){
+				return;
+			}
+			
+			// Remove logos that are not embedded as data URIs
+			if (optionItem.attr('logo').toLowerCase().indexOf('data:image') !== 0){
+				optionItem.removeAttr('logo');
+			}
+	 });
 }
 
 function addLogoToTextElement(newTextElement, url){
