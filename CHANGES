@@ -31,17 +31,18 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
-* Version 1.20 - Release date: XX. YY ZZZZ
-  - Updated Japanese language pack.
-    Contributed by Takeshi Nishimura
+* Version 1.20 - Release date: 30. April 2015
   - Added support for Hide-From-Discovery
-  - Improved logging to system log
   - Ensured that metadata is not processed multiple times
     when it changed
   - Fixed a bug that affected Discovery URLs in metadata
     containing GET arguments
   - Added an option to central and embedded WAYF to disable
     loading logo images from third party hosts.
+  - Improved logging to system log
+  - Updated Japanese language pack.
+    Contributed by Takeshi Nishimura
+  - Updated JQuery library to v1.11.2
 
 * Version 1.19.4 - Release date: 10. October 2014
   - Fixed/improved some CSS and HTML code for better rendering
