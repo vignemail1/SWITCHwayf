@@ -31,6 +31,10 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
+* Version 1.20.1 - Release date: X. Y 2015
+  - Added code to prevent WAYF loading invalid metadata files
+    Reported with a patch by Olivier Salaün
+
 * Version 1.20 - Release date: 30. April 2015
   - Added support for Hide-From-Discovery
   - Ensured that metadata is not processed multiple times

@@ -85,7 +85,7 @@ if(isRunViaCLI()){
 	// If $metadataSProviders is not FALSE, update $SProviders and print the list.
 	if(is_array($metadataSProviders)){ 
 		
-		// Fow now copy the array by reference
+		// For now copy the array by reference
 		$SProviders = &$metadataSProviders;
 		
 		echo "Printing parsed Service Providers:\n";
@@ -120,31 +120,15 @@ if(isRunViaCLI()){
 	}
 	
 	// Now that we have the lock, check again
-	if(!file_exists($metadataIDPFile) or filemtime($metadataFile) > filemtime($metadataIDPFile)){
-		// Regenerate $metadataIDPFile.
-		list($metadataIDProviders, $metadataSProviders) = parseMetadata($metadataFile, $defaultLanguage);
-		
-		// If $metadataIDProviders is not an array (parse error in metadata),
-		// $IDProviders from $IDPConfigFile will be used.
-		if(is_array($metadataIDProviders)){
-			dumpFile($metadataIDPFile, $metadataIDProviders, 'metadataIDProviders');
-			$IDProviders = mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries);
-		}
-		
-		if(is_array($metadataSProviders)){
-			dumpFile($metadataSPFile, $metadataSProviders, 'metadataSProviders');
-			require($metadataSPFile);
-		}
-		
-		// Release the lock.
-		if ($lockFp !== false) {
-			flock($lockFp, LOCK_UN);
-		}
+	if(
+		(!file_exists($metadataIDPFile) or filemtime($metadataFile) > filemtime($metadataIDPFile)) 
+		and regenerateMetadata($metadataFile, $defaultLanguage)
+	){
 		
 		// Now merge IDPs from metadata and static file
 		$IDProviders = mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries);
 		
-		// Fow now copy the array by reference
+		// For now copy the array by reference
 		$SProviders = &$metadataSProviders;
 		
 	} elseif (file_exists($metadataIDPFile)){
@@ -162,7 +146,7 @@ if(isRunViaCLI()){
 				logError($errorMsg);
 			}
 		}
-
+		
 		// Read SP and IDP files generated with metadata
 		require($metadataIDPFile);
 		require($metadataSPFile);
@@ -171,11 +155,11 @@ if(isRunViaCLI()){
 		if ($lockFp !== false) {
 			flock($lockFp, LOCK_UN);
 		}
-
+		
 		// Now merge IDPs from metadata and static file
 		$IDProviders = mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries);
 		
-		// Fow now copy the array by reference
+		// For now copy the array by reference
 		$SProviders = &$metadataSProviders;
 	}
 	
@@ -219,6 +203,19 @@ function parseMetadata($metadataFile, $defaultLanguage){
 	$CurrentXMLReaderNode = new XMLReader();
 	if(!$CurrentXMLReaderNode->open($metadataFile, null, LIBXML_PARSEHUGE | LIBXML_NOERROR | LIBXML_NOWARNING | 1)){
 		$errorMsg = 'Could not parse metadata file '.$metadataFile; 
+		if (isRunViaCLI()){
+			echo $errorMsg."\n";
+		} else {
+			logError($errorMsg);
+		}
+		return Array(false, false);
+	}
+	
+	// Go to first element and check it is named 'EntitiesDescriptor'
+	// If not it's probably not a valid SAML metadata file
+	$CurrentXMLReaderNode->read();
+	if ($CurrentXMLReaderNode->localName  !== 'EntitiesDescriptor') {
+		$errorMsg = 'Metadata file '.$metadataFile.' does not include a root node EntitiesDescriptor'; 
 		if (isRunViaCLI()){
 			echo $errorMsg."\n";
 		} else {
@@ -283,6 +280,39 @@ function parseMetadata($metadataFile, $defaultLanguage){
 	
 	
 	return Array($metadataIDProviders, $metadataSProviders);
+}
+
+
+/******************************************************************************/
+// Load SAML metadata file, parse it and update 
+// IDProvider.metadata.php and SProvider.metadata.php files
+function regenerateMetadata($metadataFile, $defaultLanguage) {
+	global $metadataIDPFile, $metadataSPFile, $IDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries, $lockFp;
+	
+	// Regenerate $metadataIDPFile.
+	list($metadataIDProviders, $metadataSProviders) = parseMetadata($metadataFile, $defaultLanguage);
+	
+	if($metadataIDProviders == false) {
+		return false;
+	}
+	
+	// If $metadataIDProviders is not an array (parse error in metadata),
+	// $IDProviders from $IDPConfigFile will be used.
+	if(is_array($metadataIDProviders)){
+		dumpFile($metadataIDPFile, $metadataIDProviders, 'metadataIDProviders');
+		$IDProviders = mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries);
+	}
+	
+	if(is_array($metadataSProviders)){
+		dumpFile($metadataSPFile, $metadataSProviders, 'metadataSProviders');
+		require($metadataSPFile);
+	}
+	
+	// Release the lock.
+	if ($lockFp !== false) {
+		flock($lockFp, LOCK_UN);
+	}
+	
 }
 
 /******************************************************************************/
