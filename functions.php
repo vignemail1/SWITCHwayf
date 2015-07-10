@@ -778,7 +778,7 @@ function logInfo($infoMsg){
 	
 	syslog(LOG_INFO, $infoMsg);
 	
-	if ($developmentMode && isRun){
+	if ($developmentMode && isRunViaCLI()){
 		echo $infoMsg;
 	}
 }
