@@ -132,6 +132,7 @@ function getWrapperElement(sourceElement) {
     newWrapperElement.attr('id', newID + idd_wrap_suffix)
                      .css('border-style','none')
                      .css('white-space', 'nowrap')
+					.css('float', 'left')
                      .css('padding', '0')                     
                      .click(function () {return false;});
 
