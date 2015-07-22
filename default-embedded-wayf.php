@@ -134,7 +134,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // [Optional, default: true]
 // var wayf_use_discovery_service = false;
 
-// [Experimental Feature] If enabled, the Embedded WAYF will activate the 
+// If enabled, the Embedded WAYF will activate the 
 // improved drop down list feature, which will transform the list of 
 // organisations into a search-field while keeping its original function as
 // a select list. To make this work, the JQuery library will dynamically be 
