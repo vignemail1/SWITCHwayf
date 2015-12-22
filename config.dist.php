@@ -22,7 +22,7 @@
 //*******************
 
 // Domain within the WAYF cookie should be readable. Must start with a .
-// $commonDomain = '.example.org';
+//$commonDomain = '.example.org';
 
 // Optionnal cookie name prefix in case you run several 
 // instances of the WAYF in the same domain. 
@@ -143,7 +143,7 @@
   // Requires $useEmbeddedWAYF to be true
   //$useEmbeddedWAYFPrivacyProtection = false;
 
-  // If enabled, the referer hostname of the request must match an assertion 
+  // If enabled, the referer hostname of the request must match an assertion	 
   // consumer URL or a discovery URL of a Service Provider in $metadataSPFile
   // in order to let the Embedded WAYF preselect an Identity Provider.
   // Therefore, this option is a good compromise between data protection and
@@ -212,12 +212,18 @@
 //$metadataLockFile = '/tmp/wayf_metadata.lock';
 
 // Use an absolute URL in case you want to use the embedded WAYF
+// The default assumes that this is in the same directory like
+// the WAYF script.
 //$imageURL = 'https://ds.example.org/SWITCHwayf/images';
 
 // Absolute URL to point to css directory
+// The default assumes that this is in the same directory like
+// the WAYF script.
 //$cssURL = 'https://ds.example.org/SWITCHwayf/css';
 
 // Absolute URL to point to javascript directory
+// The default assumes that this is in the same directory like
+// the WAYF script.
 //$javascriptURL = 'https://ds.example.org/SWITCHwayf/js';
 
 
@@ -229,7 +235,7 @@
 // This is mainly used for logging to syslog and in particular
 // useful in case multiple instances of the SWITCHwayf are
 // operated on the same host
-// $instanceIdentifier = 'SWITCHwayf';
+//$instanceIdentifier = 'SWITCHwayf';
 
 // Name of the federation [deprecated]
 // This value is not used anymore in the standard code. 

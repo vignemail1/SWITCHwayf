@@ -36,6 +36,7 @@ SWITCHwayf Version History
     Reported with a patch by Olivier Salaün
   - Fixed an HTML issue that caused the interface elements
     in Chrome to be displayed in the wrong order
+  - Fixed a few typos in the configuration help texts
 
 * Version 1.20 - Release date: 30. April 2015
   - Added support for Hide-From-Discovery
