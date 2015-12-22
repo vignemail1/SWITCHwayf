@@ -143,7 +143,7 @@
   // Requires $useEmbeddedWAYF to be true
   //$useEmbeddedWAYFPrivacyProtection = false;
 
-  // If enabled, the referer hostname of the request must match tan assertion 
+  // If enabled, the referer hostname of the request must match an assertion 
   // consumer URL or a discovery URL of a Service Provider in $metadataSPFile
   // in order to let the Embedded WAYF preselect an Identity Provider.
   // Therefore, this option is a good compromise between data protection and
@@ -159,7 +159,7 @@
 // be that these IdPs are not shown in the organisation drop 
 // down list. IdPs in this entity category, however, still can 
 // be manually added using the Embedded WAYF.
-// $supportHideFromDiscoveryEntityCategory = true
+//$supportHideFromDiscoveryEntityCategory = true;
 
 
 // Whether or not to add the entityID of the preselected IdP to the
