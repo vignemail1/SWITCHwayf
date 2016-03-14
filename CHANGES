@@ -31,7 +31,7 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
-* Version 1.20.1 - Release date: X. Y 2015
+* Version 1.20.1 - Release date: 22. 12. 2015
   - Added code to prevent WAYF loading invalid metadata files
     Reported with a patch by Olivier Salaün
   - Fixed an HTML issue that caused the interface elements
