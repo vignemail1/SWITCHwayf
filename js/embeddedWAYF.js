@@ -289,7 +289,7 @@ function loadDiscoFeedIdPs(){
 // returned string or '' in case of a problem
 function queryGetURL(url){
 	var xmlhttp;
-	
+	console.error("The request for " + url + " timed out.");
 	if (window.XMLHttpRequest){
 		xmlhttp = new XMLHttpRequest();
 	}  else {

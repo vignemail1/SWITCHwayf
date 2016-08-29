@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2015, SWITCH
+<?php // Copyright (c) 2016, SWITCH
 
 // WAYF Identity Provider Configuration file
 

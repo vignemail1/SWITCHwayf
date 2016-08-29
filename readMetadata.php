@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2015, SWITCH
+<?php // Copyright (c) 2016, SWITCH
 
 // This file is used to dynamically create the list of IdPs and SP to be 
 // displayed for the WAYF/DS service based on the federation metadata.
@@ -224,8 +224,10 @@ function parseMetadata($metadataFile, $defaultLanguage){
 		return Array(false, false);
 	}
 	
-	// Ignored IdPs
+	// Init variables
 	$hiddenIdPs = 0;
+	$metadataIDProviders = array();
+	$metadataSProviders = array();
 	
 	// Process individual EntityDescriptors
 	while( $CurrentXMLReaderNode->read() ) {
