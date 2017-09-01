@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2016, SWITCH
+<?php // Copyright (c) 2017, SWITCH
 
 // Localized language strings for SWITCHwayf
 // Make sure to use HTML entities instead of plain UTF-8 characters for 
