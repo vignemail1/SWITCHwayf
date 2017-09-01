@@ -31,6 +31,12 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
+* Version 1.20.3 - Release date: x. y 2017
+  - Updated JQuery to v3.2.1
+  - Made Javascript less prone to conflicts thanks to
+    contributed code from Christian Glahn
+  - Fixed a few minor issues
+
 * Version 1.20.2 - Release date: 22. 12 2015
   - Upgraded JQuery library to 3.1
   - Fixed bug #3736 that causes SProvider.metadata.php not to 
@@ -256,6 +262,7 @@ alphabetically.
 - Pavlos Drandakis from University of Athens (GR)
 - Nicolas Dunand from Université Lausanne (CH)
 - Michael R. Gettes from Internet2 (US)
+- Christian Glahn, HTW Chur (CH)
 - Nuno Gonçalves from FCCN (PT)
 - Florent Guilleux from CRU (FR)
 - Josh Howlett from University of Bristol (UK)
