@@ -289,7 +289,7 @@ function loadDiscoFeedIdPs(){
 // returned string or '' in case of a problem
 function queryGetURL(url){
 	var xmlhttp;
-	console.error("The request for " + url + " timed out.");
+	
 	if (window.XMLHttpRequest){
 		xmlhttp = new XMLHttpRequest();
 	}  else {
@@ -1227,7 +1227,7 @@ function loadImprovedDropDown(){
 		
 		
 		// Draw submit button
-		writeHTML('<input id="wayf_submit_button" type="submit" name="Login" accesskey="s" value="' + wayf_overwrite_submit_button_text + '" style="float: right; margin-top:6px;" onClick="javascript:return submitForm();">');
+		writeHTML('<input id="wayf_submit_button" type="submit" name="Login" accesskey="s" value="' + wayf_overwrite_submit_button_text + '" style="float: right; margin-top:6px;" onclick="javascript:return submitForm();">');
 		
 		// Close form
 		writeHTML('</form>');
