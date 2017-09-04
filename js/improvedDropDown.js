@@ -1,5 +1,5 @@
-﻿/* ImprovedDropDown */
-/* Verison 1.0.2 */
+/* ImprovedDropDown */
+/* Verison 1.0.2 + variable protection */
 
 /*
    Copyright 2011 John Fuex
@@ -17,10 +17,16 @@
    limitations under the License.
 */
 
-
 /* 
    All tab indented lines were modified by aai@switch.ch 
 */
+	(function(global, factory) {
+		typeof global.define === 'function' && global.define.amd ? define("improvedDropDown", ["jquery"], factory) :
+		typeof global.$ === 'function'                           ? factory(global.$) :
+		typeof global.jQuery === 'function'                      ? factory(global.jQuery) :
+		typeof global.jquery === 'function'                      ? factory(global.jquery) :
+		""; // noop - die silently
+	})(this, function(jq) {
 
 var debugMode = 0; //setting this to 1 will supress hiding the original select controls for debugging purposes.
 
@@ -49,12 +55,14 @@ var suspendTextBoxExitHandler = false;
 (function ($) {
     $.fn.improveDropDown = function (value) {
              if (!resizeHandlerSet) {
-                $(window).resize(function() {delayCall('windowResize', function() { idd_windowResize(); }, 20 );} );
+				$(window).resize(function() {
+					delayCall('windowResize', idd_windowResize, 20 );
+				});
                 $(document).click(windowDismissOpenLists);
                 resizeHandlerSet = true;
-              }
-    
-            if ((arguments.length==0)||typeof(value)=='object') { 
+            }
+
+			if (arguments.length === 0 || typeof value === 'object') {
                     //init
     
                     var iconPath='./img/dropIcon.png';
@@ -62,7 +70,7 @@ var suspendTextBoxExitHandler = false;
                     var noItemsText='No Items Available';
 					var disableRemoteLogos=false;
                 
-                    if (arguments.length==1) {
+					if (arguments.length === 1) {
                       if ('iconPath' in value) {iconPath = value.iconPath.toString();}
                       if ('noMatchesText' in value) {noMatchesText = value.noMatchesText.toString();}
                       if ('noItemsText' in value) {noItemsText = value.noItemsText.toString();}
@@ -115,17 +123,17 @@ var suspendTextBoxExitHandler = false;
     
              return this; //preserve chaining.
         };
-    })(jQuery);
+	})(jq);
 
 
 
 /** Start: Initializers and Control Builders **/
 function getWrapperElement(sourceElement) {
     var newID = sourceElement.attr('id');
-    var newWrapperElement = $('<span></span>');
+	var newWrapperElement = jq('<span></span>');
 
 	// Activate logo usage if there is at least one logo present
-	if ($('#' + newID ).find('option[logo]').length > 0){
+	if (jq('#' + newID ).find('option[logo]').length > 0) {
 		displayLogos = true;
 	}
 
@@ -143,13 +151,13 @@ function getWrapperElement(sourceElement) {
 function removeRemoteLogos(existingSelectControl){
 	var sourceListItems = existingSelectControl.find('OPTION');
 	
-	if (sourceListItems.length == 0) {
+	if (sourceListItems.length === 0) {
 		return;
 	}
 	
 	sourceListItems.each(
 		 function () {
-			var optionItem = $(this);
+			var optionItem = jq(this);
 			
 			// Skip items without logos
 			if (!optionItem.attr('logo')){
@@ -195,7 +203,7 @@ function getTextElement(sourceElement, imgElement) {
     //Important! imgElement must already be added to DOM and visible!
 
     var newID = sourceElement.attr('id');
-    var newTextElement = $('<input type="text" />');
+	var newTextElement = jq('<input type="text" />');
 	// We have to substract 2px from the height if page is not rendered in standard mode
 	var quirksModeOffset = (document.compatMode ==='CSS1Compat') ? 0 : 2 ;
 	
@@ -223,7 +231,7 @@ function getTextElement(sourceElement, imgElement) {
         switch (e.which) {
             case KEY_ENTER:
                 {
-                    selectFirstMatch($(this), true);
+					selectFirstMatch(jq(this), true);
                     e.stopPropagation();
                     return false;  //prevents form submit on enter key whenfocus is on this field.
                 }
@@ -231,35 +239,37 @@ function getTextElement(sourceElement, imgElement) {
             case KEY_TAB:
                 if (e.which == KEY_TAB) {
                     //handles case where mouseover dropdown  list and user presses tab key to leave field
-                    selectFirstMatch($(this), true);
+                    selectFirstMatch(jq(this), true);
                     break;
                 }
 
             case KEY_DOWNARROW:
                 {
-                    navItem($(this), 'forward');
+					navItem(jq(this), 'forward');
                     e.stopPropagation();
                     return false;
                 }
 
             case KEY_UPARROW:
                 {
-                    navItem($(this), 'back');
+					navItem(jq(this), 'back');
                     e.stopPropagation();
                     return false;
                 }
+			default:
+				break;
         }
     });
 
     newTextElement.keyup(function (e) {
-        var thisTextElement = $(this);
+        var thisTextElement = jq(this);
         switch (e.which) {
             case KEY_ESCAPE: closeListUndoTyping(thisTextElement); break;
             case KEY_TAB: break;
             case KEY_ENTER:
 				// Submit if only one entry matches
 				if (matchedEntries == 1) {
-					$('[name="Select"]').click();
+					jq('[name="Select"]').click();
 				}
 				break;
             case KEY_DOWNARROW: break;
@@ -273,27 +283,27 @@ function getTextElement(sourceElement, imgElement) {
 
     newTextElement.focusout(function () {
         if (!suspendTextBoxExitHandler) { 
-           selectFirstMatch($(this),true);
+		   selectFirstMatch(jq(this),true);
         }
     });
     
 	// Clear text area on click
 	newTextElement.click(function (obj) {
-		if (obj.target.value != ''){
+		if (obj.target.value !== ''){
 			obj.target.savedValue = obj.target.value;
 			obj.target.value = '';
-			obj.target.savedLogo = $(obj.target).css('background-image');
-			addLogoToTextElement($(obj.target), null);
+			obj.target.savedLogo = jq(obj.target).css('background-image');
+			addLogoToTextElement(jq(obj.target), null);
 		}
 		
-		 $('#' + newID + idd_icon_suffix).click();
+		jq('#' + newID + idd_icon_suffix).click();
 	});
 	
 	// Restore text area on focos out
 	newTextElement.focusout(function (obj) {
-		if (obj.target.value == '' && obj.target.savedValue != ''){
+		if (obj.target.value === '' && obj.target.savedValue !== ''){
 			obj.target.value = obj.target.savedValue;
-			addLogoToTextElement($(obj.target), obj.target.savedLogo);
+			addLogoToTextElement(jq(obj.target), obj.target.savedLogo);
 		}
 	});
 
@@ -302,7 +312,7 @@ function getTextElement(sourceElement, imgElement) {
 
 function getImageElement(sourceElement,iconPath) {
     var newID = sourceElement.attr('id');
-    var newImgElement = $('<img />');
+	var newImgElement = jq('<img />');
     var quirksModeOffset = (document.compatMode ==='CSS1Compat') ? 0 : 2;
 	var imageSize = Math.max(sourceElement.outerHeight() + quirksModeOffset, 20);
 
@@ -323,21 +333,21 @@ function getImageElement(sourceElement,iconPath) {
     newImgElement.mouseleave(function () { suspendTextBoxExitHandler = false; });
 
     newImgElement.click(function (event) {
-        var listControl = getListControlFromOtherControl($(this));
-        var textControl = getTextControlFromOtherControl($(this));
+		var listControl = getListControlFromOtherControl(jq(this));
+		var textControl = getTextControlFromOtherControl(jq(this));
         if (listControl.is(':visible')) {
             selectFirstMatch(textControl,true);
         }
         else {
             windowDismissOpenLists(listControl); 
-            clearFilter(getTextControlFromOtherControl($(this)));
+			clearFilter(getTextControlFromOtherControl(jq(this)));
             showList(listControl)
             textControl.focus().select(); 
         }
 
 		// Highlight selected item
 		var selectElement = getSelectControlFromOtherControl(listControl);
-		var selectedListElement = $("[savedValue='" + selectElement.val() + "']").first();
+		var selectedListElement = jq("[savedValue='" + selectElement.val() + "']").first();
 		selectedListElement.addClass("idd_listItem_Hover");
 		
 		// Scroll to proper list entry
@@ -352,7 +362,7 @@ function getImageElement(sourceElement,iconPath) {
 
 function getListElement(sourceElement) {
     var newID = sourceElement.attr('id');
-    var newListControl = $('<div></div>');
+	var newListControl = jq('<div></div>');
 
     newListControl.attr('id', newID + idd_list_suffix)
                   .css('position','absolute')    
@@ -363,7 +373,7 @@ function getListElement(sourceElement) {
                   .css('padding-right','20px')
 				  .css('background-color','white')
 				  .scroll(function() {
-						loadVisibleLogos($(this));
+						loadVisibleLogos(jq(this));
 				  })
                   .addClass('idd_list')
                   .mouseenter(function () { suspendTextBoxExitHandler = true; })
@@ -376,7 +386,7 @@ function getListElement(sourceElement) {
 
             case KEY_DOWNARROW:
                 {                    
-                    navItem(getTextControlFromOtherControl($(this)), 'forward');
+					navItem(getTextControlFromOtherControl(jq(this)), 'forward');
                     e.stopPropagation();
                     return false;
                 }
@@ -384,10 +394,12 @@ function getListElement(sourceElement) {
 
             case KEY_UPARROW:
                 {
-                    navItem(getTextControlFromOtherControl($(this)), 'back');
+                    navItem(getTextControlFromOtherControl(jq(this)), 'back');
                     e.stopPropagation();
                     return false;
                 }
+			default:
+				break;
         }
     });
 
@@ -396,11 +408,11 @@ function getListElement(sourceElement) {
 
 function loadVisibleLogos(obj){
 	// Loop through all child elements and check which elements are visible
-	$(obj).children('.idd_listItem[logo]').each(function () {
-		if ($(this).visible() && $(this).attr("logo")){
+	jq(obj).children('.idd_listItem[logo]').each(function () {
+		if (jq(this).visible() && jq(this).attr("logo")){
 			// Load logo
-			var imgObj = $(this).children("img:first-child")[0];
-			imgObj.src = $(this).attr("logo");
+			var imgObj = jq(this).children("img:first-child")[0];
+			imgObj.src = jq(this).attr("logo");
 		}
 	});
 }
@@ -411,18 +423,18 @@ function populateList(existingSelectControl, newListControl,noMatchesText,noItem
     newListControl.append(noMatchesHeader);
 
     var sourceListItems = existingSelectControl.children('OPTGROUP, OPTION');
-    if (sourceListItems.length == 0) {
+	if (sourceListItems.length === 0) {
         var noItemsHeader = getListGroupItem(noItemsText,true).addClass('idd_message');
         newListControl.append(noItemsHeader);
     }
     
     sourceListItems.each(
          function () {
-             if (isOptGroup($(this))) { 
-                populateListGroupItem(newListControl, $(this)); 
+			 if (isOptGroup(jq(this))) { 
+				populateListGroupItem(newListControl, jq(this)); 
              }
              else { 
-                populateListItem(newListControl, $(this)); 
+				populateListItem(newListControl, jq(this)); 
              }
          });
 
@@ -431,11 +443,11 @@ function populateList(existingSelectControl, newListControl,noMatchesText,noItem
 function populateListGroupItem(newListControl, optionGroupItem) {
     var newListItem = getListGroupItem(optionGroupItem.attr('label'),true);    
     newListControl.append(newListItem);
-    optionGroupItem.children('OPTION').each(function () { populateListItem(newListControl, $(this)); });
+	optionGroupItem.children('OPTION').each(function () { populateListItem(newListControl, jq(this)); });
 }
 
 function getListGroupItem(label,visible) {
-    var newListItem = $('<div>' + label + '</div>');
+	var newListItem = jq('<div>' + label + '</div>');
     newListItem.addClass('idd_listItemGroupHeader');
     newListItem.css('white-space','nowrap')
                .css('cursor','default');
@@ -461,8 +473,8 @@ function populateListItem(newListControl, optionItem) {
 			logo = '<img src="' + noImage + '" width="16" height="16" class="idd_listItemLogo" />';
 		}
 	}
-    
-	var newListItem = $('<div>' + logo + optionItem.text() + '</div>');
+
+	var newListItem = jq('<div>' + logo + optionItem.text() + '</div>');
 
     newListItem.addClass('idd_listItem');
     
@@ -495,18 +507,18 @@ function populateListItem(newListControl, optionItem) {
 
     if((optionItem.attr("disabled")||'')=='') {
         newListItem.mouseover(function () {
-            $(this).parent().find('.idd_listItem_Hover').removeClass('idd_listItem_Hover');
-            $(this).addClass('idd_listItem_Hover');
+			jq(this).parent().find('.idd_listItem_Hover').removeClass('idd_listItem_Hover');
+			jq(this).addClass('idd_listItem_Hover');
         });
-        newListItem.mouseout(function () { $(this).removeClass('idd_listItem_Hover'); });
+		newListItem.mouseout(function () { jq(this).removeClass('idd_listItem_Hover'); });
         newListItem.click(function () {
-			selectItem($(this),true,true,false);
+			selectItem(jq(this),true,true,false);
 			if (optionItem.attr('logo')){
 				var textControl = getTextControlFromOtherControl(newListControl);
-				addLogoToTextElement($(textControl), optionItem.attr('logo'));
+				addLogoToTextElement(jq(textControl), optionItem.attr('logo'));
 			}
 			
-			$('[name="Select"]').click();
+			jq('[name="Select"]').click();
         });
     }
     else {
@@ -545,7 +557,7 @@ function selectItem(selectedItem,forceDirty,closeList, supressChangeEvent) {
    }
 
 	// show logo
-	addLogoToTextElement($(textControl), $(selectedItem).attr('logo'));
+	addLogoToTextElement(jq(textControl), jq(selectedItem).attr('logo'));
 }
 
 function resetValue(textControl) {
@@ -558,7 +570,7 @@ function findItemByValue(listControl,value) {
     var retVal = null;
 
     listControl.find('.idd_listItem').each(function () {
-            var item = $(this);
+			var item = jq(this);
             if (getItemValue(item) == value) { retVal=item; return false; }
         });
 
@@ -569,7 +581,7 @@ function getBestMatch(value, listControl) {
     // returns jquery idd_listItem div tag of matching item or null on nomatch
 
     var filterMatches = listControl.find('.idd_listItem').filter(function () {
-        if (doesListItemMach($(this), value)) { return true; }
+		if (doesListItemMach(jq(this), value)) { return true; }
         return false;
     });
 
@@ -586,8 +598,8 @@ function getBestMatch(value, listControl) {
             var exactMatch = null;
 
             filterMatches.each(function () {
-                if ($(this).text().toLowerCase() == typedText.toLowerCase()) {
-                    exactMatch = $(this); return false;
+				if (jq(this).text().toLowerCase() == typedText.toLowerCase()) {
+					exactMatch = jq(this); return false;
                 }
             });
 
@@ -623,9 +635,9 @@ function selectFirstMatch(textControl,closeList) {
 
 /* start: dropdown list management */
 function windowDismissOpenLists(exceptionListElement) {
-    $("div.idd_list:visible").each(function () {
-        if ($(this) != exceptionListElement) {
-            var txtElement = getTextControlFromOtherControl($(this));
+	jq("div.idd_list:visible").each(function () {
+		if (jq(this) != exceptionListElement) {
+			var txtElement = getTextControlFromOtherControl(jq(this));
             selectFirstMatch(txtElement,true);
         }
     });
@@ -633,7 +645,7 @@ function windowDismissOpenLists(exceptionListElement) {
 
 function idd_windowResize() {
     //reset the position and size of absolutely positioned dropdown lists
-    $('div.idd_list:visible').each(function () { positionList($(this))})
+	jq('div.idd_list:visible').each(function () { positionList(jq(this))})
 }
 
 function closeListUndoTyping(textControl) {
@@ -658,8 +670,8 @@ function showList(listControl) {
         listControl.show();
 		// Add scroll event handler to list div
 		listControl.children('.idd_listItem[logo]').each(function () {
-			if ($(this).visible()){
-				$(this).children("img").attr("src", $(this).attr("logo"));
+			if (jq(this).visible()) {
+				jq(this).children("img").attr("src", jq(this).attr("logo"));
 			}
 		});
         positionList(listControl);
@@ -680,7 +692,7 @@ function positionList(listControl) {
             var elementHeightPx = getElementsTotalHeightPx(childItems);
 
 			// Use absolute position of list to calculate list height
-			var maxHeightPx = $(window).height() + $(document).scrollTop() - listControl.offset().top - 10;
+			var maxHeightPx = jq(window).height() + jq(document).scrollTop() - listControl.offset().top - 10;
 			var minListHeigtPx = 80;
             var listhHeight = Math.min(elementHeightPx, maxHeightPx);
 
@@ -693,14 +705,14 @@ function positionList(listControl) {
             var listWidthPx = Math.max(minListWidthPx, widestListItemPx);
             
             // List width shall be at max page width - 100px
-			listWidthPx = Math.min(($(window).width() - 100), listWidthPx);
+			listWidthPx = Math.min((jq(window).width() - 100), listWidthPx);
 
 			var effectiveListWidth = listWidthPx;
 			listControl.css('width', effectiveListWidth + 'px');
             
             // Determine on which side to expand list
 			var listLeft = textElement.position().left;
-			if ((listLeft + effectiveListWidth + 20)  >= $(window).width()){
+			if ((listLeft + effectiveListWidth + 20)  >= jq(window).width()) {
 				// Expand list to the left
 				var newLeft = (listLeft - (effectiveListWidth + (listControl.outerWidth() - listControl.innerWidth()) - textElement.width()));
 				listControl.css('left', newLeft + 'px');
@@ -716,7 +728,7 @@ function getElementsLongestWidthPx(jElements) {
     var maxLenPx = 0;
 
     jElements.each(function () {
-        thisControl = $(this);
+		thisControl = jq(this);
         maxLenPx = Math.max(maxLenPx, thisControl.outerWidth());
     });
 
@@ -727,7 +739,7 @@ function getElementsTotalHeightPx(jElements) {
     var maxHeight = 0;
  
     jElements.each(function () {
-		maxHeight += $(this).outerHeight() + 4;
+		maxHeight += jq(this).outerHeight() + 4;
     });
 
     return maxHeight; 
@@ -745,7 +757,7 @@ function updateListFilter(textControl) {
     showList(listControl);
     listItems.each(
          function () {
-             $(this).toggle(doesListItemMach($(this), typedValue));
+			 jq(this).toggle(doesListItemMach(jq(this), typedValue));
          });
 
     //show nomatches item, and no other headers if the filter excludes everything
@@ -758,12 +770,12 @@ function updateListFilter(textControl) {
 	var allListItems = listControl.children().filter(':visible');
 	allListItems.each(
 		function () {
-			if ($(this).hasClass("idd_listItemGroupHeader")){
+			if (jq(this).hasClass("idd_listItemGroupHeader")){
 				if (previousElement != null && previousElement.hasClass("idd_listItemGroupHeader")){
 					previousElement.hide();
 				}
 			}
-			previousElement = $(this);
+			previousElement = jq(this);
 	});
 	
 	// Hide last visible item if it is a category
@@ -780,16 +792,16 @@ function updateListFilter(textControl) {
 function doesListItemMach(listItem, compareText) {
 	
 	// Ensure the is not returned
-	if (listItem.attr('savedValue') == '-'){
+	if (listItem.attr('savedValue') === '-'){
 		return false;
 	}
 
     // Compares a listItem (jQuery object representing item in dropdown list) to compareText
-	return (!listItem.hasClass('idd_listItem_Disabled')) && (stringContainsCaseInsensitive(listItem.text(), compareText) || stringContainsCaseInsensitive(listItem.attr('data'), compareText))
+	return (!listItem.hasClass('idd_listItem_Disabled')) && (stringContainsCaseInsensitive(listItem.text(), compareText) || stringContainsCaseInsensitive(listItem.attr('data'), compareText));
 }
 
 function getIsDirty(textControl) {
-   return textControl.attr('isDirty') != '';
+   return textControl.attr('isDirty') !== '';
 }
 
 function setIsDirty(textControl,isDirty) {
@@ -876,10 +888,10 @@ function swapControlSuffix(Control, newSuffix) {
     var suffixStart = controlID.lastIndexOf('_');
 
     if (suffixStart<0) {
-        return($('#' + controlID + newSuffix));
+		return(jq('#' + controlID + newSuffix));
     }
     else {
-        return $('#' + controlID.substr(0, suffixStart) + newSuffix);
+		return jq('#' + controlID.substr(0, suffixStart) + newSuffix);
     }
 }
 /* end: Control converters */
@@ -935,4 +947,6 @@ $.fn.visible = function(partial,hidden){
 	return !!clientSize && ((compareBottom <= viewBottom) && (compareTop >= viewTop));
 };
     
-})(jQuery);
+})(jq);
+
+});

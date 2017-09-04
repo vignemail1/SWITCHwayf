@@ -1,3 +1,17 @@
+(function(global, factory) {
+   if (typeof global.define === 'function' && global.define.amd) {
+       define("wayfGlobalObject", [], global);
+       define("embedded-wayf", ["jquery", "wayfGlobalObject"], factory);
+   }
+   else {
+       typeof global.$ === 'function' ? factory(global.$, global) :
+       typeof global.jQuery === 'function' ? factory(global.jQuery, global) :
+       typeof global.jquery === 'function' ? factory(global.jquery, global) :
+       factory(null, global); // allow dynamic loading of the libraries on default
+   }
+})(this, function($, global) {
+
+
 // Copyright (c) 2017, SWITCH
 // To use this JavaScript, please access:
 // <?php echo $configurationScriptUrl ?>
@@ -9,49 +23,52 @@
 // Declare all global variables
 
 // Essential settings
-var wayf_sp_entityID;
-var wayf_URL;
-var wayf_return_url;
-var wayf_sp_handlerURL;
+var wayf_sp_entityID = global.wayf_sp_entityID;
+var wayf_URL = global.wayf_URL;
+var wayf_return_url = global.wayf_return_url;
+var wayf_sp_handlerURL = global.wayf_sp_handlerURL;
 
 // Other settings
-var wayf_use_discovery_service;
-var wayf_use_improved_drop_down_list;
-var wayf_disable_remote_idp_logos;
-var wayf_use_small_logo;
-var wayf_width;
-var wayf_height;
-var wayf_background_color;
-var wayf_border_color;
-var wayf_font_color;
-var wayf_font_size;
-var wayf_hide_logo;
-var wayf_auto_login;
-var wayf_logged_in_messsage;
-var wayf_auto_redirect_if_logged_in;
-var wayf_hide_after_login;
-var wayf_most_used_idps;
-var wayf_overwrite_last_used_idps_text;
-var wayf_overwrite_most_used_idps_text;
-var wayf_overwrite_checkbox_label_text;
-var wayf_overwrite_submit_button_text;
-var wayf_overwrite_intro_text;
-var wayf_overwrite_from_other_federations_text;
-var wayf_default_idp;
-var wayf_num_last_used_idps;
-var wayf_show_categories;
-var wayf_hide_categories;
-var wayf_hide_idps;
-var wayf_unhide_idps;
-var wayf_show_remember_checkbox;
-var wayf_force_remember_for_session;
-var wayf_additional_idps;
-var wayf_sp_samlDSURL;
-var wayf_sp_samlACURL;
-var wayf_use_disco_feed;
-var wayf_discofeed_url;
+var wayf_use_discovery_service = global.wayf_use_discovery_service;
+var wayf_use_improved_drop_down_list = global.wayf_use_improved_drop_down_list;
+var wayf_disable_remote_idp_logos = global.wayf_disable_remote_idp_logos;
+var wayf_use_small_logo = global.wayf_use_small_logo;
+var wayf_width = global.wayf_width;
+var wayf_height = global.wayf_height;
+var wayf_background_color = global.wayf_background_color;
+var wayf_border_color = global.wayf_border_color;
+var wayf_font_color = global.wayf_font_color;
+var wayf_font_size = global.wayf_font_size;
+var wayf_hide_logo = global.wayf_hide_logo;
+var wayf_auto_login = global.wayf_auto_login;
+var wayf_logged_in_messsage = global.wayf_logged_in_messsage;
+var wayf_auto_redirect_if_logged_in = global.wayf_auto_redirect_if_logged_in;
+var wayf_hide_after_login = global.wayf_hide_after_login;
+var wayf_most_used_idps = global.wayf_most_used_idps;
+var wayf_overwrite_last_used_idps_text = global.wayf_overwrite_last_used_idps_text;
+var wayf_overwrite_most_used_idps_text = global.wayf_overwrite_most_used_idps_text;
+var wayf_overwrite_checkbox_label_text = global.wayf_overwrite_checkbox_label_text;
+var wayf_overwrite_submit_button_text = global.wayf_overwrite_submit_button_text;
+var wayf_overwrite_intro_text = global.wayf_overwrite_intro_text;
+var wayf_overwrite_from_other_federations_text = global.wayf_overwrite_from_other_federations_text;
+var wayf_default_idp = global.wayf_default_idp;
+var wayf_num_last_used_idps = global.wayf_num_last_used_idps;
+var wayf_show_categories = global.wayf_show_categories;
+var wayf_hide_categories = global.wayf_hide_categories;
+var wayf_hide_idps = global.wayf_hide_idps;
+var wayf_unhide_idps = global.wayf_unhide_idps;
+var wayf_show_remember_checkbox = global.wayf_show_remember_checkbox;
+var wayf_force_remember_for_session = global.wayf_force_remember_for_session;
+var wayf_additional_idps = global.wayf_additional_idps;
+var wayf_sp_samlDSURL = global.wayf_sp_samlDSURL;
+var wayf_sp_samlACURL = global.wayf_sp_samlACURL;
+var wayf_use_disco_feed = global.wayf_use_disco_feed;
+var wayf_discofeed_url = global.wayf_discofeed_url;
 
 // Internal variables
+var wayf_improved_dropdown_url = '<?php echo $javascriptURL ?>/improvedDropDown.js';
+var wayf_jquery_url = '<?php echo $javascriptURL ?>/jquery.js';
+var wayf_dropdown_icon_url = '<?php echo $imageURL ?>/drop_icon.png';
 var wayf_disco_feed_idps;
 var wayf_html = "";
 var wayf_categories = { <?php echo $JSONCategoryList ?>};
@@ -122,7 +139,7 @@ function writeOptGroup(IdPElements, category){
 		return;
 	}
 	
-	if (IdPElements == ''){
+	if (IdPElements === ''){
 		return;
 	}
 	
@@ -176,7 +193,7 @@ function isAllowedIdP(IdP){
 		// Check if IdP is unhidden in this category
 	for ( var i = 0; i < wayf_hide_categories.length; i++){
 		
-		if (wayf_hide_categories[i] == "all" || wayf_hide_categories[i] == type){
+		if (wayf_hide_categories[i] === "all" || wayf_hide_categories[i] == type){
 			
 			for ( var i=0; i < wayf_unhide_idps.length; i++){
 				// Show IdP if it has to be unhidden
@@ -318,7 +335,7 @@ function queryGetURL(url){
 // contained in the Discovery Feed
 function processDiscoFeedIdPs(IdPs){
 	
-	if (typeof(IdPs) == "undefined"){
+	if (typeof(IdPs) === "undefined"){
 		return;
 	}
 	
@@ -426,8 +443,8 @@ function sortEntities(a, b){
 function isUserLoggedIn(){
 	
 	if (
-		   typeof(wayf_check_login_state_function) != "undefined"
-		&& typeof(wayf_check_login_state_function) == "function" ){
+		   typeof(wayf_check_login_state_function) !== "undefined"
+		&& typeof(wayf_check_login_state_function) === "function" ){
 		
 		// Use custom function
 		return wayf_check_login_state_function();
@@ -562,13 +579,18 @@ function getOptionHTML(entityID){
 }
 
 function loadJQuery() {
-	
 	var head = document.getElementsByTagName('head')[0];
 	var script = document.createElement('script');
 	var improvedDropDownLoaded = false;
+	
 	script.src = '<?php echo $javascriptURL ?>/jquery.js';
 	script.type = 'text/javascript';
 	script.onload = function() {
+		// Extra security check, because jquery cannot set our local $
+		// Sometimes $ does not even exist.
+		if (typeof jQuery === "function") {
+			$ = jQuery;
+		}
 		loadImprovedDropDown();
 		improvedDropDownLoaded = true;
 	};
@@ -589,18 +611,26 @@ function loadImprovedDropDown(){
 	$('head').append('<link rel="stylesheet" type="text/css" href="<?php echo $cssURL ?>/default-ImprovedDropDown.css">');
 	
 	// Load Improved Drop Down Javascript
-	$.getScript( '<?php echo $javascriptURL ?>/improvedDropDown.js', function( ) {
+	$.getScript( '<?php echo $javascriptURL ?>/improvedDropDown.js', function() {
+		
 		var searchText = '<?php echo $searchText ?>';
 		$("#user_idp:enabled option[value='-']").text(searchText);
 		
-		// Convert select element into improved drop down list
-		$("#user_idp:enabled").improveDropDown({
+		// Ensure that the extension is loaded in a Asynchronous Module Definition (AMD) environment.
+		// Due to async processing the AMD environment can appear during runtime.
+		typeof define === "function" && define.amd ? require(["improvedDropDown"], runImproveDropDown) : runImproveDropDown();
+		
+	});
+}
+
+function runImproveDropDown() {
+
+	// Convert select element into improved drop down list
+	$("#user_idp:enabled").improveDropDown({
 			iconPath:'<?php echo $imageURL ?>/drop_icon.png',
 			noMatchesText: '<?php echo $noIdPFoundText ?>',
 			noItemsText: '<?php echo $noIdPAvailableText ?>',
 			disableRemoteLogos: wayf_disable_remote_idp_logos
-		});
-	 
 	});
 }
 
@@ -611,299 +641,299 @@ function loadImprovedDropDown(){
 	// Get GET parameters that maybe are set by Shibboleth
 	var returnGETParam = getGETArgument("return");
 	var entityIDGETParam = getGETArgument("entityID");
-	
+
 	// First lets make sure properties are available
 	if(
-		typeof(wayf_use_discovery_service)  == "undefined"  
-		|| typeof(wayf_use_discovery_service) != "boolean"
+		typeof wayf_use_discovery_service === "undefined"
+		|| typeof wayf_use_discovery_service !== "boolean"
 	){
 		wayf_use_discovery_service = true;
 	}
-	
+
 	if(
-		typeof(wayf_use_improved_drop_down_list)  == "undefined"  
-		|| typeof(wayf_use_improved_drop_down_list) != "boolean"
+		typeof wayf_use_improved_drop_down_list === "undefined"
+		|| typeof wayf_use_improved_drop_down_list !== "boolean"
 	){
 		wayf_use_improved_drop_down_list = false;
 	}
-	
+
 	if(
-		typeof(wayf_disable_remote_idp_logos)  == "undefined"  
-		|| typeof(wayf_disable_remote_idp_logos) != "boolean"
+		typeof wayf_disable_remote_idp_logos === "undefined"
+		|| typeof wayf_disable_remote_idp_logos !== "boolean"
 	){
 		wayf_disable_remote_idp_logos = false;
 	}
-	
+
 	// Overwrite entityID with GET argument if present
 	var entityIDGETParam = getGETArgument("entityID");
-	if (entityIDGETParam != ""){
+	if (entityIDGETParam !== ""){
 		wayf_sp_entityID = entityIDGETParam;
 	}
-	
+
 	if(
-		typeof(wayf_sp_entityID) == "undefined"
-		|| typeof(wayf_sp_entityID) != "string"
+		typeof wayf_sp_entityID === "undefined"
+		|| typeof wayf_sp_entityID !== "string"
 		){
 		alert('The mandatory parameter \'wayf_sp_entityID\' is missing. Please add it as a javascript variable on this page.');
 		config_ok = false;
 	}
-	
+
 	if(
-		typeof(wayf_URL) == "undefined"
-		|| typeof(wayf_URL) != "string"
+		typeof wayf_URL === "undefined"
+		|| typeof wayf_URL !== "string"
 		){
 		alert('The mandatory parameter \'wayf_URL\' is missing. Please add it as a javascript variable on this page.');
 		config_ok = false;
 	}
-	
+
 	if(
-		typeof(wayf_return_url) == "undefined"
-		|| typeof(wayf_return_url) != "string"
+		typeof wayf_return_url === "undefined"
+		|| typeof wayf_return_url !== "string"
 		){
 		alert('The mandatory parameter \'wayf_return_url\' is missing. Please add it as a javascript variable on this page.');
 		config_ok = false;
 	}
-	
+
 	if(
-		wayf_use_discovery_service == false 
-		&& typeof(wayf_sp_handlerURL) == "undefined"
+		wayf_use_discovery_service === false
+		&& typeof wayf_sp_handlerURL === "undefined"
 		){
 		alert('The mandatory parameter \'wayf_sp_handlerURL\' is missing. Please add it as a javascript variable on this page.');
 		config_ok = false;
 	}
-	
+
 	if(
-		wayf_use_discovery_service == true 
-		&& typeof(wayf_sp_samlDSURL) == "undefined"
+		wayf_use_discovery_service === true
+		&& typeof wayf_sp_samlDSURL === "undefined"
 		){
 		// Set to default DS handler
 		wayf_sp_samlDSURL = wayf_sp_handlerURL + "/Login";
 	}
-	
+
 	if (
-		typeof(wayf_sp_samlACURL) == "undefined"
-		|| typeof(wayf_sp_samlACURL) != "string"
+		typeof wayf_sp_samlACURL === "undefined"
+		|| typeof wayf_sp_samlACURL !== "string"
 		){
 		wayf_sp_samlACURL = wayf_sp_handlerURL + '/SAML/POST';
 	}
-	
+
 	if(
-		typeof(wayf_font_color) == "undefined"
-		|| typeof(wayf_font_color) != "string"
+		typeof wayf_font_color === "undefined"
+		|| typeof wayf_font_color !== "string"
 		){
 		wayf_font_color = 'black';
 	}
-	
+
 	if(
-		typeof(wayf_font_size) == "undefined"
-		|| typeof(wayf_font_size) != "number"
+		typeof wayf_font_size === "undefined"
+		|| typeof wayf_font_size !== "number"
 		){
 		wayf_font_size = 12;
 	}
-	
+
 	if(
-		typeof(wayf_border_color) == "undefined"
-		|| typeof(wayf_border_color) != "string"
+		typeof wayf_border_color === "undefined"
+		|| typeof wayf_border_color !== "string"
 		){
 		wayf_border_color = '#848484';
 	}
-	
+
 	if(
-		typeof(wayf_background_color) == "undefined"
-		|| typeof(wayf_background_color) != "string"
+		typeof wayf_background_color === "undefined"
+		|| typeof wayf_background_color !== "string"
 		){
 		wayf_background_color = '#F0F0F0';
 	}
-	
+
 	if(
-		typeof(wayf_use_small_logo) == "undefined" 
-		|| typeof(wayf_use_small_logo) != "boolean"
+		typeof wayf_use_small_logo === "undefined"
+		|| typeof wayf_use_small_logo !== "boolean"
 		){
 		wayf_use_small_logo = true;
 	}
-	
+
 	if(
-		typeof(wayf_hide_logo) == "undefined" 
-		|| typeof(wayf_use_small_logo) != "boolean"
+		typeof wayf_hide_logo === "undefined"
+		|| typeof wayf_use_small_logo !== "boolean"
 		){
 		wayf_hide_logo = false;
 	}
-	
+
 	if(
-		typeof(wayf_width) == "undefined" 
-		|| typeof(wayf_width) != "number"
+		typeof wayf_width === "undefined"
+		|| typeof wayf_width !== "number"
 	){
 		wayf_width = "auto";
 	} else {
 		wayf_width += 'px';
 	}
-	
+
 	if(
-		typeof(wayf_height) == "undefined" 
-		|| typeof(wayf_height) != "number"
+		typeof wayf_height === "undefined"
+		|| typeof wayf_height !== "number"
 		){
 		wayf_height = "auto";
 	} else {
 		wayf_height += "px";
 	}
-	
+
 	if(
-		typeof(wayf_show_remember_checkbox) == "undefined"
-		|| typeof(wayf_show_remember_checkbox) != "boolean"
+		typeof wayf_show_remember_checkbox === "undefined"
+		|| typeof wayf_show_remember_checkbox !== "boolean"
 		){
 		wayf_show_remember_checkbox = true;
 	}
-	
+
 	if(
-		typeof(wayf_force_remember_for_session) == "undefined"
-		|| typeof(wayf_force_remember_for_session) != "boolean"
+		typeof wayf_force_remember_for_session === "undefined"
+		|| typeof wayf_force_remember_for_session !== "boolean"
 		){
 		wayf_force_remember_for_session = false;
 	}
-	
+
 	if(
-		typeof(wayf_auto_login) == "undefined"
-		|| typeof(wayf_auto_login) != "boolean"
+		typeof wayf_auto_login === "undefined"
+		|| typeof wayf_auto_login !== "boolean"
 		){
 		wayf_auto_login = true;
 	}
-	
+
 	if(
-		typeof(wayf_hide_after_login) == "undefined"
-		|| typeof(wayf_hide_after_login) != "boolean"
+		typeof wayf_hide_after_login === "undefined"
+		|| typeof wayf_hide_after_login !== "boolean"
 		){
 		wayf_hide_after_login = true;
 	}
-	
+
 	if(
-		typeof(wayf_logged_in_messsage) == "undefined"
-		|| typeof(wayf_logged_in_messsage) != "string"
+		typeof wayf_logged_in_messsage === "undefined"
+		|| typeof wayf_logged_in_messsage !== "string"
 		){
-		wayf_logged_in_messsage = "<?php echo $loggedInString ?>".replace(/%s/, wayf_return_url);
+		wayf_logged_in_messsage = "Sie sind bereits angemeldet. <a href=\"%s\">Weiter</a>.".replace(/%s/, wayf_return_url);
 	}
 
 	if(
-		typeof(wayf_auto_redirect_if_logged_in) == "undefined"
-		|| typeof(wayf_auto_redirect_if_logged_in) != "boolean"
+		typeof wayf_auto_redirect_if_logged_in === "undefined"
+		|| typeof wayf_auto_redirect_if_logged_in !== "boolean"
 		){
 		wayf_auto_redirect_if_logged_in = false;
 	}
 
 	if(
-		typeof(wayf_default_idp) == "undefined"
-		|| typeof(wayf_default_idp) != "string"
+		typeof wayf_default_idp === "undefined"
+		|| typeof wayf_default_idp !== "string"
 		){
 		wayf_default_idp = '';
 	}
 
 	if(
-		typeof(wayf_num_last_used_idps) == "undefined"
-		|| typeof(wayf_num_last_used_idps) != "number"
+		typeof wayf_num_last_used_idps === "undefined"
+		|| typeof wayf_num_last_used_idps !== "number"
 		){
 		wayf_num_last_used_idps = 3;
 	}
-	
+
 	if(
-		typeof(wayf_most_used_idps) == "undefined"
-		|| typeof(wayf_most_used_idps) != "object"
+		typeof wayf_most_used_idps === "undefined"
+		|| typeof wayf_most_used_idps !== "object"
 		){
 		wayf_most_used_idps = new Array();
 	}
 
 	if(
-		typeof(wayf_logged_in_messsage) == "undefined"
-		|| typeof(wayf_logged_in_messsage) != "string"
+		typeof wayf_logged_in_messsage === "undefined"
+		|| typeof wayf_logged_in_messsage !== "string"
 		){
-		wayf_logged_in_messsage = "<?php echo $loggedInString ?>".replace(/%s/, wayf_return_url);
+		wayf_logged_in_messsage = "Sie sind bereits angemeldet. <a href=\"%s\">Weiter</a>.".replace(/%s/, wayf_return_url);
 	}
 
 	if(
-		typeof(wayf_overwrite_last_used_idps_text) == "undefined"
-		|| typeof(wayf_overwrite_last_used_idps_text) != "string"
+		typeof wayf_overwrite_last_used_idps_text === "undefined"
+		|| typeof wayf_overwrite_last_used_idps_text !== "string"
 		){
-		wayf_overwrite_last_used_idps_text = "<?php echo $lastUsedIdPsString ?>";
+		wayf_overwrite_last_used_idps_text = "Zuletzt benutzt";
 	}
 
 	if(
-		typeof(wayf_overwrite_most_used_idps_text) == "undefined"
-		|| typeof(wayf_overwrite_most_used_idps_text) != "string"
+		typeof wayf_overwrite_most_used_idps_text === "undefined"
+		|| typeof wayf_overwrite_most_used_idps_text !== "string"
 		){
-		wayf_overwrite_most_used_idps_text = "<?php echo $mostUsedIdPsString ?>";
+		wayf_overwrite_most_used_idps_text = "Meist benutzte Organisationen";
 	}
 
 	if(
-		typeof(wayf_overwrite_checkbox_label_text) == "undefined"
-		|| typeof(wayf_overwrite_checkbox_label_text) != "string"
+		typeof wayf_overwrite_checkbox_label_text === "undefined"
+		|| typeof wayf_overwrite_checkbox_label_text !== "string"
 		){
-		wayf_overwrite_checkbox_label_text = "<?php echo $rememberSelectionText ?>";
+		wayf_overwrite_checkbox_label_text = "Auswahl f&uuml;r die laufende Webbrowser Sitzung speichern.";
 	}
 
 	if(
-		typeof(wayf_overwrite_submit_button_text) == "undefined"
-		|| typeof(wayf_overwrite_submit_button_text) != "string"
+		typeof wayf_overwrite_submit_button_text === "undefined"
+		|| typeof wayf_overwrite_submit_button_text !== "string"
 		){
-		wayf_overwrite_submit_button_text = "<?php echo $loginString ?>";
+		wayf_overwrite_submit_button_text = "Anmelden";
 	}
 
 	if(
-		typeof(wayf_overwrite_intro_text) == "undefined"
-		|| typeof(wayf_overwrite_intro_text) != "string"
+		typeof wayf_overwrite_intro_text === "undefined"
+		|| typeof wayf_overwrite_intro_text !== "string"
 		){
-		wayf_overwrite_intro_text = "<?php echo $loginWithString ?>";
+		wayf_overwrite_intro_text = "Anmelden &uuml;ber:";
 	}
-	
+
 	if(
-		typeof(wayf_overwrite_from_other_federations_text) == "undefined"
-		|| typeof(wayf_overwrite_from_other_federations_text) != "string"
+		typeof wayf_overwrite_from_other_federations_text === "undefined"
+		|| typeof wayf_overwrite_from_other_federations_text !== "string"
 		){
-		wayf_overwrite_from_other_federations_text = "<?php echo $otherFederationString ?>";
+		wayf_overwrite_from_other_federations_text = "Von anderen F&ouml;derationen";
 	}
-	
+
 	if(
-		typeof(wayf_show_categories) == "undefined"
-		|| typeof(wayf_show_categories) != "boolean"
+		typeof wayf_show_categories === "undefined"
+		|| typeof wayf_show_categories !== "boolean"
 		){
 		wayf_show_categories = true;
 	}
-	
+
 	if(
-		typeof(wayf_hide_categories) == "undefined"
-		|| typeof(wayf_hide_categories) != "object"
+		typeof wayf_hide_categories === "undefined"
+		|| typeof wayf_hide_categories !== "object"
 		){
 		wayf_hide_categories = new Array();
 	}
-	
+
 	if(
-		typeof(wayf_unhide_idps) == "undefined"
-		||  typeof(wayf_unhide_idps) != "object"
+		typeof wayf_unhide_idps === "undefined"
+		||  typeof wayf_unhide_idps !== "object"
 	){
 		wayf_unhide_idps = new Array();
 	}
-	
+
 	if(
-		typeof(wayf_hide_idps) == "undefined"
-		|| typeof(wayf_hide_idps) != "object"
+		typeof wayf_hide_idps === "undefined"
+		|| typeof wayf_hide_idps !== "object"
 		){
 		wayf_hide_idps = new Array();
 	}
-	
+
 	if(
-		typeof(wayf_additional_idps) == "undefined"
-		|| typeof(wayf_additional_idps) != "object"
+		typeof wayf_additional_idps === "undefined"
+		|| typeof wayf_additional_idps !== "object"
 		){
 		wayf_additional_idps = [];
 	}
-	
+
 	if(
-		typeof(wayf_use_disco_feed) == "undefined"
-		|| typeof(wayf_use_disco_feed) != "boolean"
+		typeof wayf_use_disco_feed === "undefined"
+		|| typeof wayf_use_disco_feed !== "boolean"
 		){
 		wayf_use_disco_feed = false;
 	}
-	
+
 	if(
-		typeof(wayf_discofeed_url) == "undefined"
-		|| typeof(wayf_discofeed_url) != "string"
+		typeof wayf_discofeed_url === "undefined"
+		|| typeof wayf_discofeed_url !== "string"
 		){
 		wayf_discofeed_url = "/Shibboleth.sso/DiscoFeed";
 	}
@@ -931,7 +961,7 @@ function loadImprovedDropDown(){
 	if (
 		wayf_hide_after_login 
 		&& user_logged_in 
-		&& wayf_logged_in_messsage == ''
+		&& wayf_logged_in_messsage === ''
 	){
 		
 		// Exit script without drawing
@@ -988,7 +1018,7 @@ function loadImprovedDropDown(){
 		var wayf_authReq_URL = '';
 		var form_start = '';
 		
-		if (wayf_use_discovery_service == true){
+		if (wayf_use_discovery_service === true){
 			// New SAML Discovery Service protocol
 			
 			wayf_authReq_URL = wayf_URL;
@@ -1061,9 +1091,9 @@ function loadImprovedDropDown(){
 					continue;
 				}
 				
-				if (IdP.entityID && last_idp != '' && IdP.entityID == last_idp){
+				if (IdP.entityID && last_idp !== '' && IdP.entityID == last_idp){
 					IdP.selected = true;
-				} else if (IdP.entityID && last_idp == '' && IdP.entityID == wayf_default_idp){
+				} else if (IdP.entityID && last_idp === '' && IdP.entityID == wayf_default_idp){
 					IdP.selected = true;
 				}
 				
@@ -1080,7 +1110,7 @@ function loadImprovedDropDown(){
 		}
 		
 		// Set default IdP if no last used IdP exists
-		if (last_idp == '' && wayf_default_idp != ''){
+		if (last_idp === '' && wayf_default_idp !== ''){
 			if (wayf_idps[wayf_default_idp]){
 				wayf_idps[wayf_default_idp].selected = true;
 			}
@@ -1095,7 +1125,7 @@ function loadImprovedDropDown(){
 		writeHTML('<option value="-"><?php echo $selectIdPString ?> ...</option>');
 		
 		// Last used
-		if (wayf_show_categories == true && wayf_num_last_used_idps > 0 && last_idps.length > 0){
+		if (wayf_show_categories === true && wayf_num_last_used_idps > 0 && last_idps.length > 0){
 			
 			// Add new category
 			var category = "wayf_last_used_idps";
@@ -1126,7 +1156,7 @@ function loadImprovedDropDown(){
 		}
 		
 		// Most used and Favourites
-		if (wayf_show_categories == true && wayf_most_used_idps.length > 0){
+		if (wayf_show_categories === true && wayf_most_used_idps.length > 0){
 			
 			// Add new category
 			var category = "wayf_most_used_idps";
@@ -1242,7 +1272,7 @@ function loadImprovedDropDown(){
 	
 	if (wayf_use_improved_drop_down_list){
 		// Check if jQuery is alread loaded or version is older that this version's
-		if (typeof jQuery == 'undefined'){
+		if (typeof jQuery === "undefined"){
 			loadJQuery();
 		} else {
 			// Check JQuery version and load our version if it is newer
@@ -1256,4 +1286,6 @@ function loadImprovedDropDown(){
 			}
 		}
 	}
-})()
+})();
+
+});
