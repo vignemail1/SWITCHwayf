@@ -1,9 +1,8 @@
 (function(global, factory) {
    if (typeof global.define === 'function' && global.define.amd) {
        define("wayfGlobalObject", [], global);
-       define("embedded-wayf", ["jquery", "wayfGlobalObject"], factory);
-   }
-   else {
+       define("embeddedWayf", ["jquery", "wayfGlobalObject"], factory);
+   } else {
        typeof global.$ === 'function' ? factory(global.$, global) :
        typeof global.jQuery === 'function' ? factory(global.jQuery, global) :
        typeof global.jquery === 'function' ? factory(global.jquery, global) :
@@ -86,7 +85,7 @@ function redirectTo(url){
 }
 
 function submitForm(){
-	
+
 	if (document.IdPList.user_idp && document.IdPList.user_idp.selectedIndex == 0){
 		alert('<?php echo $makeSelectionString ?>');
 		return false;
@@ -1257,7 +1256,7 @@ function runImproveDropDown() {
 		
 		
 		// Draw submit button
-		writeHTML('<input id="wayf_submit_button" type="submit" name="Login" accesskey="s" value="' + wayf_overwrite_submit_button_text + '" style="float: right; margin-top:6px;" onclick="javascript:return submitForm();">');
+		writeHTML('<input id="wayf_submit_button" type="submit" name="Login" accesskey="s" value="' + wayf_overwrite_submit_button_text + '" style="float: right; margin-top:6px;">');
 		
 		// Close form
 		writeHTML('</form>');
@@ -1270,6 +1269,12 @@ function runImproveDropDown() {
 	// Now output HTML all at once
 	document.write(wayf_html);
 	
+	// Ensure that form submit calls validation function
+	document.getElementById("IdPList").addEventListener("submit", function(){
+		submitForm();
+	}); 
+	
+	// Load JQuery and improved drop down list code if feature is enabled 
 	if (wayf_use_improved_drop_down_list){
 		// Check if jQuery is alread loaded or version is older that this version's
 		if (typeof jQuery === "undefined"){
