@@ -31,7 +31,10 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
-* Version 1.20.3 - Release date: x. y 2017
+* Version 1.21 - Release date: x. y 2017
+  - Allow loading configuration from a path in a 
+    web server environment variable to allow multi-tenant
+    deployments. Code provided by Guillaume Rousse.
   - Updated JQuery to v3.2.1
   - Made Javascript less prone to conflicts thanks to
     contributed code from Christian Glahn
@@ -267,6 +270,7 @@ alphabetically.
 - Christian Glahn, HTW Chur (CH)
 - Nuno Gonçalves from FCCN (PT)
 - Florent Guilleux from CRU (FR)
+- Guillaume Rousse from RENATER (FR)
 - Josh Howlett from University of Bristol (UK)
 - Franz Kuster from ETH Zurich (CH)
 - Wolgang Lierz from ETH Zurich (CH)

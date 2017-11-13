@@ -15,7 +15,11 @@ if (!isset($_SERVER['SERVER_NAME'])){
 }
 
 require_once('functions.php');
-require_once('config.php');
+if (isset($_SERVER{'SWITCHWAYF_CONFIG'})){
+	require_once($_SERVER{'SWITCHWAYF_CONFIG'});
+} else {
+	require_once('config.php');
+}
 
 // Make sure this script is not accessed directly
 if(isRunViaCLI()){

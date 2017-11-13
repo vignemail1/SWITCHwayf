@@ -454,6 +454,44 @@ $langStrings['de_CH']['title'] = 'Auswahl der Heimorganisation';
 
 -------------------------------------------------------------------------------
 
+Multi-tenant Deployment:
+------------------------
+If there should be deployed multiple instances of the SWITCHwayf 
+on the same host, it might be desired to make all instances
+use the same code base but different configuration files.
+To achieve this, the SWITCHWAYF_CONFIG environment variable can
+be used.
+
+The usage of SWITCHWAYF_CONFIG environment variable allows to 
+specify an alternative location for the configuration file. 
+The default configuration file is still used, if this variable 
+is not defined. This allows a single software deployment to 
+provides a discovery services for multiple federations, 
+depending of virtual host or URL used.
+
+Below is an example of an Apache httpd server configuration 
+with two different virtual hosts using different 
+configuration files:
+
+    DocumentRoot /usr/share/switchwayf
+    <Directory /usr/share/switchwayf>
+        Require all granted
+        DirectoryIndex WAYF
+    </Directory>
+    
+    <VirtualHost *:443>
+        ServerName wayf.switch.ch
+        SetEnv SWITCHWAYF_CONFIG=/etc/switchwayf/switch_config.php
+    </VirtualHost>
+    
+    <VirtualHost *:443>
+        ServerName wayf.edugain.org
+        SetEnv SWITCHWAYF_CONFIG=/etc/switchwayf/edugain_config.php
+    </VirtualHost>
+
+-------------------------------------------------------------------------------
+
+
 Special handlers:
 -----------------
 In order for the Embedded WAYF feature to work there are some special files that

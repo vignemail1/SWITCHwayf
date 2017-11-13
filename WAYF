@@ -13,7 +13,11 @@ Web site: https://www.switch.ch/aai/support/tools/wayf/
 // Load general configuration and template file
 /*------------------------------------------------*/
 
-require_once('config.php');
+if (isset($_SERVER{'SWITCHWAYF_CONFIG'})){
+	require_once($_SERVER{'SWITCHWAYF_CONFIG'});
+} else {
+	require_once('config.php');
+}
 require_once('languages.php');
 require_once('functions.php');
 require_once('templates.php');
@@ -208,6 +212,61 @@ if (isset($_POST['permanent'])
 // Redirecting user
 /*------------------------------------------------*/
 
+// Redirect using user selection
+if (
+	isset($_POST['user_idp']) 
+	&& checkIDPAndShowErrors($_POST['user_idp'])
+	&& isValidShibRequest()
+	&& !isset($_POST['permanent'])
+	){
+	
+	$selectedIDP = $_POST['user_idp'];
+	
+	// Handle cascaded WAYF
+	if (isset($IDProviders[$selectedIDP]['Type']) && $IDProviders[$selectedIDP]['Type'] == 'wayf'){
+		
+		// Send user to cascaded WAYF with same request
+		redirectTo($IDProviders[$selectedIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
+		
+	} else if (isValidDSRequest()){
+		redirectToSP($_GET['return'], $selectedIDP);
+		
+		// Create log entry
+		if (isset($_POST['request_type']) && $_POST['request_type'] == 'embedded'){
+			$dsType = 'Embedded-DS';
+		} else {
+			$dsType = 'DS';
+		}
+		logAccessEntry($dsType, 'Request', $_GET['entityID'], $selectedIDP, $_GET['return']);
+		
+	} else {
+		redirectTo($IDProviders[$selectedIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
+		
+		// Create log entry
+		if (isset($_POST['request_type']) && $_POST['request_type'] == 'embedded'){
+			$dsType = 'Embedded-WAYF';
+		} else {
+			$dsType = 'WAYF';
+		}
+		logAccessEntry($dsType, 'Request', (isset($_GET['providerId'])) ? $_GET['providerId'] : '-', $selectedIDP, $_GET['shire']);
+	}
+	exit;
+}
+
+// For backwards compatiblity
+if (	
+		isset($_GET['shire']) 
+		&& isset($_GET['target'])
+		&& isset($_GET['origin'])
+		&& checkIDPAndShowErrors($_GET['origin'])
+	){
+	redirectTo($IDProviders[$_GET['origin']]['SSO'].'?'.$_SERVER['QUERY_STRING']);
+	
+	// Create log entry
+	logAccessEntry('WAYF', 'Old-Request', (isset($_GET['providerId'])) ? $_GET['providerId'] : '-', $_GET['origin'], $_GET['shire']);
+	exit;
+} 
+
 // IDP determined by redirect cookie
 if (	
 		isValidShibRequest()
@@ -294,20 +353,6 @@ if ($useKerberos && !isset($kerberosRealm)) {
 	// If the User Agent doesn't support Negotiate, we continue as usual.
 }
 
-// For backwards compatiblity
-if (	
-		isset($_GET['shire']) 
-		&& isset($_GET['target'])
-		&& isset($_GET['origin'])
-		&& checkIDPAndShowErrors($_GET['origin'])
-	){
-	redirectTo($IDProviders[$_GET['origin']]['SSO'].'?'.$_SERVER['QUERY_STRING']);
-	
-	// Create log entry
-	logAccessEntry('WAYF', 'Old-Request', (isset($_GET['providerId'])) ? $_GET['providerId'] : '-', $_GET['origin'], $_GET['shire']);
-	exit;
-} 
-
 // Redirect using resource hint
 $hintedPathIDP = getIdPPathInfoHint();
 if ($hintedPathIDP != '-'){
@@ -340,46 +385,7 @@ if ($hintedPathIDP != '-'){
 	}
 }
 
-// Redirect using user selection
-if (
-	isset($_POST['user_idp']) 
-	&& checkIDPAndShowErrors($_POST['user_idp'])
-	&& isValidShibRequest()
-	&& !isset($_POST['permanent'])
-	){
-	
-	$selectedIDP = $_POST['user_idp'];
-	
-	// Handle cascaded WAYF
-	if (isset($IDProviders[$selectedIDP]['Type']) && $IDProviders[$selectedIDP]['Type'] == 'wayf'){
-		
-		// Send user to cascaded WAYF with same request
-		redirectTo($IDProviders[$selectedIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
-		
-	} else if (isValidDSRequest()){
-		redirectToSP($_GET['return'], $selectedIDP);
-		
-		// Create log entry
-		if (isset($_POST['request_type']) && $_POST['request_type'] == 'embedded'){
-			$dsType = 'Embedded-DS';
-		} else {
-			$dsType = 'DS';
-		}
-		logAccessEntry($dsType, 'Request', $_GET['entityID'], $selectedIDP, $_GET['return']);
-		
-	} else {
-		redirectTo($IDProviders[$selectedIDP]['SSO'].'?'.$_SERVER['QUERY_STRING']);
-		
-		// Create log entry
-		if (isset($_POST['request_type']) && $_POST['request_type'] == 'embedded'){
-			$dsType = 'Embedded-WAYF';
-		} else {
-			$dsType = 'WAYF';
-		}
-		logAccessEntry($dsType, 'Request', (isset($_GET['providerId'])) ? $_GET['providerId'] : '-', $selectedIDP, $_GET['shire']);
-	}
-	exit;
-}
+
 
 /*------------------------------------------------*/
 // Gather data to preselect user's IdP
