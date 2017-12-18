@@ -51,6 +51,7 @@ var suspendTextBoxExitHandler = false;
 	// Stores number of entries that matched for text
 	var matchedEntries = 0;
 	var displayLogos = false;
+	var enableValueMatching = true;
 
 (function ($) {
     $.fn.improveDropDown = function (value) {
@@ -75,6 +76,7 @@ var suspendTextBoxExitHandler = false;
                       if ('noMatchesText' in value) {noMatchesText = value.noMatchesText.toString();}
                       if ('noItemsText' in value) {noItemsText = value.noItemsText.toString();}
 						if ('disableRemoteLogos' in value) {disableRemoteLogos = value.disableRemoteLogos;}
+						if ('enableValueMatching' in value) {enableValueMatching = value.enableValueMatching;}
                     }
     
                 this.each(function () {
@@ -797,8 +799,22 @@ function doesListItemMach(listItem, compareText) {
 		return false;
 	}
 
-    // Compares a listItem (jQuery object representing item in dropdown list) to compareText
-	return (!listItem.hasClass('idd_listItem_Disabled')) && (stringContainsCaseInsensitive(listItem.text(), compareText) || stringContainsCaseInsensitive(listItem.attr('data'), compareText));
+	// disabled item
+	if (listItem.hasClass('idd_listItem_Disabled')) {
+		return false;
+	}
+
+	// item with matching text
+	if (stringContainsCaseInsensitive(listItem.text(), compareText)) {
+		return true;
+	}
+
+	// item with with matching value
+	if (enableValueMatching && stringContainsCaseInsensitive(listItem.attr('data'), compareText)) {
+		return true;
+	}
+
+	return false;
 }
 
 function getIsDirty(textControl) {

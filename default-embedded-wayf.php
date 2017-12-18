@@ -157,6 +157,13 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // [Optional, default: false]
 //  wayf_disable_remote_idp_logos = false;
 
+// If true the improved drop-down-list automatic filtering
+// of entries while typing content in the search box will
+// allow matching IdPs either by their name or entityID, 
+// whereas otherwise only the name is considered
+// [Optional, default: true]
+// wayf_enable_entityid_matching = true;
+
 // Force the user's Home Organisation selection to be remembered for the
 // current browser session. If wayf_show_remember_checkbox is true
 // the checkbox will be shown but will be read only.

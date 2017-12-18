@@ -31,6 +31,7 @@ var wayf_sp_handlerURL = global.wayf_sp_handlerURL;
 var wayf_use_discovery_service = global.wayf_use_discovery_service;
 var wayf_use_improved_drop_down_list = global.wayf_use_improved_drop_down_list;
 var wayf_disable_remote_idp_logos = global.wayf_disable_remote_idp_logos;
+var wayf_enable_entity_matching = global.wayf_enable_entityid_matching;
 var wayf_use_small_logo = global.wayf_use_small_logo;
 var wayf_width = global.wayf_width;
 var wayf_height = global.wayf_height;
@@ -629,7 +630,8 @@ function runImproveDropDown() {
 			iconPath:'<?php echo $imageURL ?>/drop_icon.png',
 			noMatchesText: '<?php echo $noIdPFoundText ?>',
 			noItemsText: '<?php echo $noIdPAvailableText ?>',
-			disableRemoteLogos: wayf_disable_remote_idp_logos
+			disableRemoteLogos: wayf_disable_remote_idp_logos,
+			enableValueMatching: wayf_enable_entityid_matching
 	});
 }
 
@@ -661,6 +663,13 @@ function runImproveDropDown() {
 		|| typeof wayf_disable_remote_idp_logos !== "boolean"
 	){
 		wayf_disable_remote_idp_logos = false;
+	}
+
+	if(
+		typeof wayf_enable_entityid_matching === "undefined"
+		|| typeof wayf_enable_entityid_matching !== "boolean"
+	){
+		wayf_enable_entityid_matching = true;
 	}
 
 	// Overwrite entityID with GET argument if present
