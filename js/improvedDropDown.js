@@ -318,6 +318,7 @@ function getImageElement(sourceElement,iconPath) {
 
     newImgElement.attr('id', newID + idd_icon_suffix)
                  .attr('src',iconPath)
+                 .attr('alt', 'drop-down list')
                  .addClass('idd_icon')
                  .css('cursor', 'pointer')
                  .css('height', imageSize + 'px')
