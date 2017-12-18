@@ -181,15 +181,15 @@ function isAllowedIdP(IdP){
 		type = wayf_other_fed_idps[IdP].type;
 	}
 	
-	// Check if IdP shall be hidden 
+	// Check if IdP should be hidden 
 	for ( var i = 0; i < wayf_hide_idps.length; i++){
 		if (wayf_hide_idps[i] == IdP){
 			return false;
 		}
 	}
 	
-	// Check if category is hidden
-		// Check if IdP is unhidden in this category
+	// Check if category should be hidden
+	// Check if IdP is unhidden in this category
 	for ( var i = 0; i < wayf_hide_categories.length; i++){
 		
 		if (wayf_hide_categories[i] === "all" || wayf_hide_categories[i] == type){
@@ -1142,6 +1142,13 @@ function runImproveDropDown() {
 				}
 				
 				var currentIdP = decodeBase64(last_idps[i]);
+				
+				// Skip if IdP is hidden explicitly
+				if (!isAllowedIdP(currentIdP)){
+					continue;
+				}
+				
+				// Add option
 				var content = getOptionHTML(currentIdP);
 				
 				if (content != ''){
@@ -1167,8 +1174,12 @@ function runImproveDropDown() {
 			// Show most used IdPs in the order they are defined
 			var IdPElements = '';
 			for ( var i=0; i < wayf_most_used_idps.length; i++){
-				if (wayf_idps[wayf_most_used_idps[i]]){
-					IdPElements += getOptionHTML(wayf_most_used_idps[i]);
+				
+				var currentIdP = wayf_most_used_idps[i];
+				
+				// Add option if IdP exists in list of elements
+				if (wayf_idps[currentIdP]){
+					IdPElements += getOptionHTML(currentIdP);
 				}
 			}
 			
