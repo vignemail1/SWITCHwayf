@@ -35,6 +35,7 @@ SWITCHwayf Version History
   - Allow loading configuration from a path in a 
     web server environment variable to allow multi-tenant
     deployments. Code provided by Guillaume Rousse.
+  - Various other improvements suggested by Guillaume Rousse. 
   - Updated JQuery to v3.2.1
   - Hide IdPs also from category Last Used IdP
   - Made Javascript less prone to conflicts thanks to
