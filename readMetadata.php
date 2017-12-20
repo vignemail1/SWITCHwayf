@@ -218,6 +218,36 @@ function parseMetadata($metadataFile, $defaultLanguage){
 	// Go to first element and check it is named 'EntitiesDescriptor'
 	// If not it's probably not a valid SAML metadata file
 	$CurrentXMLReaderNode->read();
+	
+	// Often there are comments at the beginning of the metadata,
+	// this will eat/skip a max #(3) of comments and then hit the 
+	// evaluation of the EntitiesDescriptor tweak if necessary
+	$maxCommentCount=3;    
+	$commentCount=0;
+	while ($CurrentXMLReaderNode->localName  == '#comment') {
+			$CurrentXMLReaderNode->read();
+			// Always have an way to punch out of a while loop & inform the user why
+			if ($commentCount++ >=$maxCommentCount){
+					$errorMsg= 'This file has exceeded the max # comments of'. $maxCommentCount;
+					$errorMsg .=' XML comments before an EntityDescriptor. Are you sure this is a well formed Metadata file?';
+					if (isRunViaCLI()){
+							echo $errorMsg."\n";
+					} else {
+							logError($errorMsg);
+					}
+					return Array(false, false);
+			}
+	}
+	
+	// If we arrive here, we have read the first node at very 
+	// least and if it's not a comment, it should be an 
+	// EntityDescriptor
+	// If it WAS 1 or more comments, we will have eaten then up 
+	// and the NEXT read will have occurred
+	// If this next read of the XML nodes is NOT an 
+	// EntitiesDescriptor, (note the plural), we should fail.
+	// If the next read of the XML nodes IS an 
+	// EntitiesDescriptor, we should proceed stead of 'read again'
 	if ($CurrentXMLReaderNode->localName  !== 'EntitiesDescriptor') {
 		$errorMsg = 'Metadata file '.$metadataFile.' does not include a root node EntitiesDescriptor'; 
 		if (isRunViaCLI()){
@@ -746,5 +776,3 @@ function hasHideFromDiscoveryEntityCategory($IDPRoleDescriptorNode){
 	
 	return false;
 }
-
-?>

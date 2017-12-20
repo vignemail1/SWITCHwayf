@@ -41,6 +41,8 @@ SWITCHwayf Version History
     web server environment variable to allow multi-tenant
     deployments. Code provided by Guillaume Rousse.
   - Various other improvements suggested by Guillaume Rousse. 
+  - Added code to readMetadata.php to ignore comments
+    Contributed by Chris Philips
   - Updated JQuery to v3.2.1
   - Hide IdPs also from category Last Used IdP
   - Made Javascript less prone to conflicts thanks to
@@ -275,6 +277,7 @@ alphabetically.
 - Nicolas Dunand from Université Lausanne (CH)
 - Michael R. Gettes from Internet2 (US)
 - Christian Glahn, HTW Chur (CH)
+- Chris Philips, Canarie (CA)
 - Nuno Gonçalves from FCCN (PT)
 - Florent Guilleux from CRU (FR)
 - Guillaume Rousse from RENATER (FR)
