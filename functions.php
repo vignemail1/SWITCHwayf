@@ -148,7 +148,8 @@ function getValueFromIdPArray($CookieArray){
 }
 
 /******************************************************************************/
-// Append a value to the array of IDPs
+// Append a value to the array of IDPs, ensure no more than 5 
+// entries are in array
 function appendValueToIdPArray($value, $CookieArray){
 	
 	// Remove value if it already existed in array
@@ -160,6 +161,12 @@ function appendValueToIdPArray($value, $CookieArray){
 	
 	// Add value to end of array
 	$CookieArray[] = $value;
+	
+	// Shorten array from beginning as latest entry should 
+	// be at end according to SAML spec
+	while (count($CookieArray) > 5){
+		array_shift($CookieArray);
+	}
 	
 	return $CookieArray;
 }
