@@ -6,6 +6,11 @@ See LICENSE file for details.
 SWITCHwayf Changes
 ==================
 
+SWITCHwayf version: v1.21
+Bundled with:
+* JQuery v3.2.1
+* ImprovedDropDown v1.0.2 (with modifications)
+
 Find below the changes for past releases of the SWITCHwayf and in the credits
 sections the people who contributed to the SWITCHwayf.
 
