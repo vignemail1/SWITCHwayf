@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2017, SWITCH
+<?php // Copyright (c) 2018, SWITCH
 
 //******************************************************************************
 // This file contains the configuration of SWITCHwayf, a light-weight

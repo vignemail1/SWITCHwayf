@@ -1,4 +1,4 @@
-Copyright (c) 2017, SWITCH
+Copyright (c) 2018, SWITCH
 See LICENSE file for details.
 
 -------------------------------------------------------------------------------

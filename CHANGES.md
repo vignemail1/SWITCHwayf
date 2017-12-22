@@ -1,4 +1,4 @@
-Copyright (c) 2017, SWITCH
+Copyright (c) 2018, SWITCH
 See LICENSE file for details.
 
 -------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
-* Version 1.21 - Release date: x. y 2017
+* Version 1.21 - Release date: x. y 2018
   - Allow loading configuration from a path in a 
     web server environment variable to allow multi-tenant
     deployments. Code provided by Guillaume Rousse.

@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2017, SWITCH
+<?php // Copyright (c) 2018, SWITCH
 
 // This file is used to dynamically create the list of IdPs and SP to be 
 // displayed for the WAYF/DS service based on the federation metadata.
