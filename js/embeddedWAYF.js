@@ -1191,8 +1191,8 @@ function runImproveDropDown() {
 				
 				var currentIdP = wayf_most_used_idps[i];
 				
-				// Add option if IdP exists in list of elements
-				if (wayf_idps[currentIdP]){
+				// Add option if IdP exists in lists of IdPs
+				if (wayf_idps[currentIdP] || wayf_other_fed_idps[currentIdP]){
 					IdPElements += getOptionHTML(currentIdP);
 				}
 			}
