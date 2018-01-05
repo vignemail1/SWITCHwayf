@@ -822,7 +822,7 @@ function runImproveDropDown() {
 		typeof wayf_logged_in_messsage === "undefined"
 		|| typeof wayf_logged_in_messsage !== "string"
 		){
-		wayf_logged_in_messsage = "Sie sind bereits angemeldet. <a href=\"%s\">Weiter</a>.".replace(/%s/, wayf_return_url);
+		wayf_logged_in_messsage = "<?php echo $loggedInString ?>".replace(/%s/, wayf_return_url);
 	}
 
 	if(
@@ -854,52 +854,45 @@ function runImproveDropDown() {
 	}
 
 	if(
-		typeof wayf_logged_in_messsage === "undefined"
-		|| typeof wayf_logged_in_messsage !== "string"
-		){
-		wayf_logged_in_messsage = "Sie sind bereits angemeldet. <a href=\"%s\">Weiter</a>.".replace(/%s/, wayf_return_url);
-	}
-
-	if(
 		typeof wayf_overwrite_last_used_idps_text === "undefined"
 		|| typeof wayf_overwrite_last_used_idps_text !== "string"
 		){
-		wayf_overwrite_last_used_idps_text = "Zuletzt benutzt";
+		wayf_overwrite_last_used_idps_text = "<?php echo $lastUsedIdPsString ?>";
 	}
 
 	if(
 		typeof wayf_overwrite_most_used_idps_text === "undefined"
 		|| typeof wayf_overwrite_most_used_idps_text !== "string"
 		){
-		wayf_overwrite_most_used_idps_text = "Meist benutzte Organisationen";
+		wayf_overwrite_most_used_idps_text = "<?php echo $mostUsedIdPsString ?>";
 	}
 
 	if(
 		typeof wayf_overwrite_checkbox_label_text === "undefined"
 		|| typeof wayf_overwrite_checkbox_label_text !== "string"
 		){
-		wayf_overwrite_checkbox_label_text = "Auswahl f&uuml;r die laufende Webbrowser Sitzung speichern.";
+		wayf_overwrite_checkbox_label_text = "<?php echo $rememberSelectionText ?>";
 	}
 
 	if(
 		typeof wayf_overwrite_submit_button_text === "undefined"
 		|| typeof wayf_overwrite_submit_button_text !== "string"
 		){
-		wayf_overwrite_submit_button_text = "Anmelden";
+		wayf_overwrite_submit_button_text = "<?php echo $loginString ?>";
 	}
 
 	if(
 		typeof wayf_overwrite_intro_text === "undefined"
 		|| typeof wayf_overwrite_intro_text !== "string"
 		){
-		wayf_overwrite_intro_text = "Anmelden &uuml;ber:";
+		wayf_overwrite_intro_text = "<?php echo $loginWithString ?>";
 	}
 
 	if(
 		typeof wayf_overwrite_from_other_federations_text === "undefined"
 		|| typeof wayf_overwrite_from_other_federations_text !== "string"
 		){
-		wayf_overwrite_from_other_federations_text = "Von anderen F&ouml;derationen";
+		wayf_overwrite_from_other_federations_text = "<?php echo $otherFederationString ?>";
 	}
 
 	if(
