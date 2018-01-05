@@ -85,13 +85,12 @@ function redirectTo(url){
 	}
 }
 
-function submitForm(){
+function submitForm(eventObj){
 
 	if (document.IdPList.user_idp && document.IdPList.user_idp.selectedIndex == 0){
 		alert('<?php echo $makeSelectionString ?>');
 		return false;
 	}
-	
 	// Set local cookie
 	var selectedIdP = document.IdPList.user_idp[document.IdPList.user_idp.selectedIndex].value;
 	setDomainSAMLDomainCookie(selectedIdP);
@@ -116,6 +115,9 @@ function submitForm(){
 			redirect_url += getGETArgumentSeparator(redirect_url) + 'target=' + encodeURIComponent(wayf_return_url);
 		}
 		
+		// Prevent default submit action
+		eventObj.preventDefault();
+		
 		// Append selected Identity Provider
 		redirect_url += '&entityID=' + encodeURIComponent(selectedIdP);
 		
@@ -124,6 +126,9 @@ function submitForm(){
 		redirect_url = wayf_sp_handlerURL + '?providerId=' 
 		+ encodeURIComponent(selectedIdP)
 		+ '&target=' + encodeURIComponent(wayf_return_url);
+		
+				// Prevent default submit action
+		eventObj.preventDefault();
 		
 		redirectTo(redirect_url);
 	}
@@ -1290,8 +1295,8 @@ function runImproveDropDown() {
 	document.write(wayf_html);
 	
 	// Ensure that form submit calls validation function
-	document.getElementById("IdPList").addEventListener("submit", function(){
-		submitForm();
+	document.getElementById("IdPList").addEventListener("submit", function(eventObj){
+		submitForm(eventObj);
 	}); 
 	
 	// Load JQuery and improved drop down list code if feature is enabled 
