@@ -220,20 +220,35 @@ function setDomainSAMLDomainCookie(entityID){
 	// Create and store SAML domain cookie on host where WAYF is embedded
 	var currentDomainCookie = getCookie('_saml_idp');
 	var encodedEntityID = encodeBase64(entityID);
-	
 	if (currentDomainCookie == null){
 		currentDomainCookie = '';
 	}
 	
-	var oldIdPs = currentDomainCookie.split(' ');
-	var newCookie = '';
-	for (var i = 0; i < oldIdPs.length; i++) {
-		if (oldIdPs[i] != encodedEntityID && oldIdPs[i] != ''){
-			newCookie += oldIdPs[i] + ' ';
+	// Ensure current IdP is not already in array
+	var currentIdPs = currentDomainCookie.split(' ');
+	var newIdPs = new Array();
+	for (var i = 0; i < currentIdPs.length; i++) {
+		if (currentIdPs[i] != encodedEntityID && currentIdPs[i] != ''){
+			newIdPs.push(currentIdPs[i]);
 		}
 	}
-	newCookie += encodedEntityID;
-	setCookie('<?php echo $SAMLDomainCookieName ?>', newCookie , 100);
+	
+	// Add new IdP
+	newIdPs.push(encodedEntityID);
+	
+	// Ensure array is no longer than 5 IdPs
+	while (newIdPs.length > 5){
+		newIdPs.shift(); 
+	}
+	
+	// Compose cookie value
+	var newDomainCookie = '';
+	for (var i = 0; i < newIdPs.length; i++) {
+		newDomainCookie += newIdPs[i] + ' ';
+	}
+	
+	// Set cookie value
+	setCookie('<?php echo $SAMLDomainCookieName ?>', newDomainCookie.trim() , 100);
 }
 
 function setCookie(c_name, value, expiredays){
