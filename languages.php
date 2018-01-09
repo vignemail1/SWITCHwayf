@@ -26,9 +26,9 @@
 
 // In particular you might want to override these three locales or set the
 // to an empty string in order to hide them if they are not needed.
-$langStrings['en']['about_federation'] = 'About AAI';  // This string can be hidden by setting it to ''
-$langStrings['en']['about_organisation'] = 'About SWITCH'; // This string can be hidden by setting it to ''
-$langStrings['en']['additional_info'] = '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> provides innovative, unique internet services for the Swiss universities and internet users.'; // This string can be hidden by setting it to ''
+$langStrings['en']['about_federation'] = 'About Federation';  // This string can be hidden by setting it to ''
+$langStrings['en']['about_organisation'] = 'About Federation Operator'; // This string can be hidden by setting it to ''
+$langStrings['en']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.'; // This string can be hidden by setting it to ''
 
 // Generic strings
 $langStrings['en']['faq'] = 'FAQ'; // This string can be hidden by setting it to ''
@@ -77,9 +77,9 @@ $langStrings['en']['last_used'] = 'Last used';
 // ****************************
 
 // Read note on line 16 how to properly customize locales so that they survive updates
-$langStrings['de']['about_federation'] = '&Uuml;ber AAI';  // This string can be hidden by setting it to ''
-$langStrings['de']['about_organisation'] = '&Uuml;ber SWITCH';  // This string can be hidden by setting it to ''
-$langStrings['de']['additional_info'] = '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> erbringt innovative, einzigartige Internet-Dienstleistungen f&uuml;r die Schweizer Hochschulen und Internetbenutzer.';  // This string can be hidden by setting it to ''
+$langStrings['de']['about_federation'] = '&Uuml;ber Föderation';  // This string can be hidden by setting it to ''
+$langStrings['de'][''] = '&Uuml;ber Föderationsbetreiber';  // This string can be hidden by setting it to ''
+$langStrings['de']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.';  // This string can be hidden by setting it to ''
 
 // Generic strings
 $langStrings['de']['faq'] = 'FAQ';  // This string can be hidden by setting it to ''
@@ -128,9 +128,9 @@ $langStrings['de']['last_used'] = 'Zuletzt benutzt';
 // ****************************
 
 // Read note on line 16 how to properly customize locales so that they survive updates
-$langStrings['fr']['about_federation'] = '&Agrave; propos de l\'AAI'; // This string can be hidden by setting it to ''
-$langStrings['fr']['about_organisation'] = '&Agrave; propos de SWITCH'; // This string can be hidden by setting it to ''
-$langStrings['fr']['additional_info'] = '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> fournit des prestations innovantes et uniques pour les hautes &eacute;coles suisses et les utilisateurs d\'Internet.'; // This string can be hidden by setting it to ''
+$langStrings['fr']['about_federation'] = '&Agrave; propos de la f&eacute;deration'; // This string can be hidden by setting it to ''
+$langStrings['fr']['about_organisation'] = '&Agrave; propos d\'op&eacute;rateur de al Féderation'; // This string can be hidden by setting it to ''
+$langStrings['fr']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.'; // This string can be hidden by setting it to ''
 
 // Generic strings
 $langStrings['fr']['faq'] = 'FAQ'; // This string can be hidden by setting it to ''
@@ -179,9 +179,9 @@ $langStrings['fr']['last_used'] = 'Derni&egrave;rement utilis&eacute;s';
 // ****************************
 
 // Read note on line 16 how to properly customize locales so that they survive updates
-$langStrings['it']['about_federation'] = 'Informazioni su AAI'; // This string can be hidden by setting it to ''
-$langStrings['it']['about_organisation'] = 'Informazioni su SWITCH'; // This string can be hidden by setting it to ''
-$langStrings['it']['additional_info'] = '<a href="http://www.switch.ch/" target="_blank">SWITCH</a> eroga servizi Internet innovativi e unici per le scuole universitarie svizzere e per gli utenti di Internet.'; // This string can be hidden by setting it to ''
+$langStrings['it']['about_federation'] = 'About Federation'; // This string can be hidden by setting it to ''
+$langStrings['it']['about_organisation'] = 'About Federation Operator'; // This string can be hidden by setting it to ''
+$langStrings['it']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.'; // This string can be hidden by setting it to ''
 
 // Generic strings
 $langStrings['it']['faq'] = 'FAQ'; // This string can be hidden by setting it to ''
@@ -224,9 +224,9 @@ $langStrings['it']['most_used'] = 'Organizzaziones utilizzate pi&ugrave; spesso'
 // ****************************
 
 // Read note on line 16 how to properly customize locales so that they survive updates
-$langStrings['pt']['about_federation'] = 'Sobre AAI'; // This string can be hidden by setting it to ''
-$langStrings['pt']['about_organisation'] = 'Sobre a SWITCH'; // This string can be hidden by setting it to ''
-$langStrings['pt']['additional_info'] = 'A SWITCH foundation &eacute; uma institui&ccedil;&atilde;o gere e opera a rede de investiga&ccedil;&atilde;o e ensino sui&ccedil;a por forma a garantir conectividade de alto desempenho &agrave; Internet e a redes de I&amp;D globais para o beneficio de uma educa&ccedil;&atilde;o superior na sui&ccedil;a'; // This string can be hidden by setting it to ''
+$langStrings['pt']['about_federation'] = 'About Federation'; // This string can be hidden by setting it to ''
+$langStrings['pt']['about_organisation'] = 'About Federation Operator'; // This string can be hidden by setting it to ''
+$langStrings['pt']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.'; // This string can be hidden by setting it to ''
 
 // Generic strings
 $langStrings['pt']['faq'] = 'FAQ'; // This string can be hidden by setting it to ''
@@ -267,9 +267,9 @@ $langStrings['pt']['most_used'] = 'Institui&ccedil;&atilde;o mais utilizada';
 // ****************************
 
 // Read note on line 16 how to properly customize locales so that they survive updates
-$langStrings['ja']['about_federation'] = 'フェデレーションとは'; // This string can be hidden by setting it to ''
-$langStrings['ja']['about_organisation'] = 'SWITCHとは'; // This string can be hidden by setting it to ''
-$langStrings['ja']['additional_info'] = '<a href="http://www.switch.ch/" target="_blank">SWITCH</a>は革新的で唯一無二のインターネットサービスをスイスの大学およびインターネットの利用者に提供します．'; // This string can be hidden by setting it to ''
+$langStrings['ja']['about_federation'] = 'About Federation'; // This string can be hidden by setting it to ''
+$langStrings['ja']['about_organisation'] = 'About Federation Operator'; // This string can be hidden by setting it to ''
+$langStrings['ja']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.'; // This string can be hidden by setting it to ''
 
 // Generic strings
 $langStrings['ja']['faq'] = 'FAQ'; // This string can be hidden by setting it to ''
