@@ -40,16 +40,18 @@ SWITCHwayf Version History
   - Allow loading configuration from a path in a 
     web server environment variable to allow multi-tenant
     deployments. Code provided by Guillaume Rousse.
-  - Various other improvements suggested by Guillaume Rousse. 
   - Added code to readMetadata.php to ignore comments
     Contributed by Chris Philips
+  - Manually added/Discovery Feed IdPs can now also be
+    added as most used IdPs
   - Updated JQuery to v3.2.1
-  - Hide IdPs also from category Last Used IdP
-  - Made Javascript less prone to conflicts thanks to
-    contributed code from Christian Glahn
+  - Hide IdPs also from category 'Last Used IdP'
   - User HTTP post has preference over session cookies
     set by 'remember' checkbox
-  - Fixed a few minor issues
+  - Various other improvements suggested by Guillaume Rousse. 
+  - Removed SWITCH-specific strings from languages file
+  - Made Javascript less prone to conflicts thanks to
+    contributed code from Christian Glahn
 
 * Version 1.20.2 - Release date: 22. 12 2015
   - Upgraded JQuery library to 3.1
