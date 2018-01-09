@@ -77,9 +77,9 @@ $langStrings['en']['last_used'] = 'Last used';
 // ****************************
 
 // Read note on line 16 how to properly customize locales so that they survive updates
-$langStrings['de']['about_federation'] = '&Uuml;ber Föderation';  // This string can be hidden by setting it to ''
-$langStrings['de'][''] = '&Uuml;ber Föderationsbetreiber';  // This string can be hidden by setting it to ''
-$langStrings['de']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.';  // This string can be hidden by setting it to ''
+//$langStrings['de']['about_federation'] = '&Uuml;ber Föderation';  // This string can be hidden by setting it to ''
+//$langStrings['de'][''] = '&Uuml;ber Föderationsbetreiber';  // This string can be hidden by setting it to ''
+//$langStrings['de']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.';  // This string can be hidden by setting it to ''
 
 // Generic strings
 $langStrings['de']['faq'] = 'FAQ';  // This string can be hidden by setting it to ''
@@ -128,9 +128,9 @@ $langStrings['de']['last_used'] = 'Zuletzt benutzt';
 // ****************************
 
 // Read note on line 16 how to properly customize locales so that they survive updates
-$langStrings['fr']['about_federation'] = '&Agrave; propos de la f&eacute;deration'; // This string can be hidden by setting it to ''
-$langStrings['fr']['about_organisation'] = '&Agrave; propos d\'op&eacute;rateur de al Féderation'; // This string can be hidden by setting it to ''
-$langStrings['fr']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.'; // This string can be hidden by setting it to ''
+//$langStrings['fr']['about_federation'] = '&Agrave; propos de la f&eacute;deration'; // This string can be hidden by setting it to ''
+//$langStrings['fr']['about_organisation'] = '&Agrave; propos d\'op&eacute;rateur de al Féderation'; // This string can be hidden by setting it to ''
+//$langStrings['fr']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.'; // This string can be hidden by setting it to ''
 
 // Generic strings
 $langStrings['fr']['faq'] = 'FAQ'; // This string can be hidden by setting it to ''
@@ -179,9 +179,9 @@ $langStrings['fr']['last_used'] = 'Derni&egrave;rement utilis&eacute;s';
 // ****************************
 
 // Read note on line 16 how to properly customize locales so that they survive updates
-$langStrings['it']['about_federation'] = 'About Federation'; // This string can be hidden by setting it to ''
-$langStrings['it']['about_organisation'] = 'About Federation Operator'; // This string can be hidden by setting it to ''
-$langStrings['it']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.'; // This string can be hidden by setting it to ''
+//$langStrings['it']['about_federation'] = 'About Federation'; // This string can be hidden by setting it to ''
+//$langStrings['it']['about_organisation'] = 'About Federation Operator'; // This string can be hidden by setting it to ''
+//$langStrings['it']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.'; // This string can be hidden by setting it to ''
 
 // Generic strings
 $langStrings['it']['faq'] = 'FAQ'; // This string can be hidden by setting it to ''
@@ -224,9 +224,9 @@ $langStrings['it']['most_used'] = 'Organizzaziones utilizzate pi&ugrave; spesso'
 // ****************************
 
 // Read note on line 16 how to properly customize locales so that they survive updates
-$langStrings['pt']['about_federation'] = 'About Federation'; // This string can be hidden by setting it to ''
-$langStrings['pt']['about_organisation'] = 'About Federation Operator'; // This string can be hidden by setting it to ''
-$langStrings['pt']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.'; // This string can be hidden by setting it to ''
+//$langStrings['pt']['about_federation'] = 'About Federation'; // This string can be hidden by setting it to ''
+//$langStrings['pt']['about_organisation'] = 'About Federation Operator'; // This string can be hidden by setting it to ''
+//$langStrings['pt']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.'; // This string can be hidden by setting it to ''
 
 // Generic strings
 $langStrings['pt']['faq'] = 'FAQ'; // This string can be hidden by setting it to ''
@@ -267,9 +267,9 @@ $langStrings['pt']['most_used'] = 'Institui&ccedil;&atilde;o mais utilizada';
 // ****************************
 
 // Read note on line 16 how to properly customize locales so that they survive updates
-$langStrings['ja']['about_federation'] = 'About Federation'; // This string can be hidden by setting it to ''
-$langStrings['ja']['about_organisation'] = 'About Federation Operator'; // This string can be hidden by setting it to ''
-$langStrings['ja']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.'; // This string can be hidden by setting it to ''
+//$langStrings['ja']['about_federation'] = 'About Federation'; // This string can be hidden by setting it to ''
+//$langStrings['ja']['about_organisation'] = 'About Federation Operator'; // This string can be hidden by setting it to ''
+//$langStrings['ja']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.'; // This string can be hidden by setting it to ''
 
 // Generic strings
 $langStrings['ja']['faq'] = 'FAQ'; // This string can be hidden by setting it to ''
