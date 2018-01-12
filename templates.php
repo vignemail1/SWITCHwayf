@@ -262,7 +262,9 @@ function printNotice(){
 	if ($permanentUserIdP != ''){
 		$hiddenUserIdPInput = '<input type="hidden" name="user_idp" value="'.$permanentUserIdP.'">';
 		$permanentUserIdPName = $IDProviders[$permanentUserIdP]['Name'];
-		$permanentUserIdPLogo = $IDProviders[$permanentUserIdP]['Logo']['URL'];
+		if (isset($IDProviders[$permanentUserIdP]['Logo']['URL'])){
+			$permanentUserIdPLogo = $IDProviders[$permanentUserIdP]['Logo']['URL'];
+		}
 	}
 	
 	// Check if footer template exists
