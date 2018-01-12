@@ -22,8 +22,9 @@ including the installation and update instructions.
 
 Requirements
 ------------
-- PHP 5.3 or newer
+- PHP 5.3 or newer, PHP 7
 - PHP XML Parser extension is required for parsing SAML2 metadata
+  (Debian/Ubuntu: 'apt install php-xml', CentOS/RedHat: yum install php-xml)
 - The web server users must have write permissions to some files including: 
   * $backupIDPConfigFile (default 'IDProvider.conf.php')
   * $metadataIDPFile (default 'IDProvider.metadata.conf.php')
