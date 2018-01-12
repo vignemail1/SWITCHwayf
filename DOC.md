@@ -52,40 +52,54 @@ Files whose names start with 'default-' can be copied and renamed to start with
 
 In particular, the following customizations can be applied:
 
-* HTML Header:   custom-header.php
+* HTML Header:   `custom-header.php`
   Customize page header
 
-* HTML Footer:   custom-footer.php
-Customize page footer
+* HTML Footer:   `custom-footer.php`
+  Customize page footer
 
-* HTML Body:     custom-body.php
+* HTML Body:     `custom-body.php`
   Customize WAYF/DS body
 
-* HTML Body:     custom-settings.php
+* HTML Body:     `custom-settings.php`
   Customize WAYF/DS permanent settings body
 
-* HTML Body:     custom-notice.php
+* HTML Body:     `custom-notice.php`
   Customize WAYF/DS permanent settings notice body
 
-* HTML Body:     custom-embedded-wayf.php
+* HTML Body:     `custom-embedded-wayf.php`
   Customize WAYF/DS body
 
-* HTML Error:    custom-error.php
+* HTML Error:    `custom-error.php`
   Customize error messages
 
-* CSS Main Style:    css/custom-styles.css
+* CSS Main Style:    `css/custom-styles.css`
   Customize CSS styles that are loaded in addition to the default-styles.css.
   Therefore, they can be used to overwrite the default CSS styles.
 
-* CSS Improved Drop Down Style:    css/custom-ImprovedDropDown.css
+* CSS Improved Drop Down Style:    `css/custom-ImprovedDropDown.css`
   Customize CSS styles to alter the appearance of the improved drop-down list,
   both for the stand-alone WAYF as well as the Embedded WAYF. The styles are
   loaded in addition to the default-ImprovedDropDown.css.
 
-* Languages:     custom-languages.php
+* Languages:     `custom-languages.php`
   Can be used to change default or add new language strings. The custom
   languages strings in addition to the default styles. Therefore, they can be
   used to overwrite the default CSS styles.
+  This file can also be used to white or black list certain languages by
+  adding to the end of the file:
+  
+        // Example to black list Japanase and Portuguese
+        unset($langStrings['ja']);
+        unset($langStrings['pt']);
+  
+        // Example to white list English, Italian, French and German
+        foreach($langStrings as $lang => $strings){
+          if ($lang != 'en' && $lang != 'it' && $lang != 'fr' && $lang != 'de'){
+            unset($langStrings[$lang]);
+          }
+        }
+
 
 If a custom file doesn't exist yet, the default templates and settings
 are used. To create a custom template, copy the default files with:
