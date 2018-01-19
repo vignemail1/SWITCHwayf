@@ -8,6 +8,7 @@ SWITCHwayf Changes
 
 SWITCHwayf version: v1.21
 Bundled with:
+
 * JQuery v3.2.1
 * ImprovedDropDown v1.0.2 (with modifications)
 
@@ -23,12 +24,12 @@ sections the people who contributed to the SWITCHwayf.
 Version Number Policy
 ---------------------
 
-Releases with a version number 'X.Y.Z' are bug fix releases correcting
+* Releases with a version number 'X.Y.Z' are bug fix releases correcting
 small bugs, typos and graphical issues.
-Releases with a version number 'X.Y' are minor releases that introduce 
+* Releases with a version number 'X.Y' are minor releases that introduce 
 new functionality of fix non-trivial bugs. Few adaptions in the configuration 
 might be necessary to upgrade to minor releases.
-Releases with a version number X are major releases that will require major 
+* Releases with a version number X are major releases that will require major 
 changes in the configuration files. Therefore, a clean instalation might be 
 necessary for such releases.
 
@@ -36,7 +37,7 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
-* Version 1.21 - Release date: x. y 2018
+* Version 1.21 - Release date: 19. January 2018
   - Allow loading configuration from a path in a 
     web server environment variable to allow multi-tenant
     deployments. Code provided by Guillaume Rousse.
@@ -53,13 +54,13 @@ SWITCHwayf Version History
   - Made Javascript less prone to conflicts thanks to
     contributed code from Christian Glahn
 
-* Version 1.20.2 - Release date: 22. 12 2015
+* Version 1.20.2 - Release date: 22. December 2015
   - Upgraded JQuery library to 3.1
   - Fixed bug #3736 that causes SProvider.metadata.php not to 
     be written/updated if metadata file only contains IdPs.
   - Updated in copyright information
 
-* Version 1.20.1 - Release date: 22. 12 2015
+* Version 1.20.1 - Release date: 22. December 2015
   - Added code to prevent WAYF loading invalid metadata files
     Reported with a patch by Olivier Salaün
   - Fixed an HTML issue that caused the interface elements
@@ -256,7 +257,7 @@ The revision history of older versions, can be found on the SWITCHwayf web page:
 Credits
 -------
 
-Main developer of the SWITCHwayf: Lukas Hämmerle
+Main developer of the SWITCHwayf: Lukas Hämmerle (SWITCH)
 
 The SWITCHwayf uses code from the following libraries:
 
@@ -267,7 +268,7 @@ The SWITCHwayf uses code from the following libraries:
 * jQuery Plug-in "Basic Visibility Detection" by Digital Fusion
   http://teamdf.com/
 
-Please consult the LICENSE file for the individual licenses of these components.
+Please consult the LICENSE.txt file for the individual licenses of these components.
 
 Find below a list of people who have contributed to the code, either because they 
 found bugs, suggested improvements or contributed code. Have a look at the 
@@ -299,6 +300,6 @@ alphabetically.
   bug fixes and translation to this code.
 
 Special also go to RENATER, the French Research & Education Network. The main 
-developer (Lukas Hämmerle) has been a guest at REANTER for 6 months in 2013, 
+developer (Lukas Hämmerle) has been a guest at RENATER for 6 months in 2013, 
 during which he worked - among other things - also on the versions 1.18 and 1.19
 of the SWITCHwayf.
