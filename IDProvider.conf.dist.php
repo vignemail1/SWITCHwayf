@@ -80,5 +80,3 @@ $IDProviders['unknown'] = array (
         'fr' => array ('Name' => 'Autres'),
         'it' => array ('Name' => 'Altri'),
 );
-
-?>

@@ -456,4 +456,3 @@ function printCSS($file){
 	
 	echo $cssContent;
 }
-?>

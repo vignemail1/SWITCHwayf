@@ -311,4 +311,3 @@ $langStrings['ja']['unknown_sp'] = 'SP <code>\'%s\'</code> はメタデータに
 $langStrings['ja']['no_idp_found'] = 'この検索キーでは機関が見つかりません';
 $langStrings['ja']['no_idp_available'] = '利用できる機関がありません';
 $langStrings['ja']['last_used'] = '前回利用';
-?>

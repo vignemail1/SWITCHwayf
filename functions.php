@@ -1052,5 +1052,3 @@ function isRunViaCLI(){
 function isRunViaInclude(){
 	return basename($_SERVER['SCRIPT_NAME']) != 'readMetadata.php';
 }
-
-?>

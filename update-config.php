@@ -55,4 +55,3 @@ current configuration file 'config.php' with this new file after reviewing it.
 
 NOTE;
 
-?>
