@@ -3,7 +3,7 @@
 /*
 ******************************************************************************
 SWITCHwayf
-Version: 1.21
+Version: 1.22
 Contact:  aai@switch.ch
 Web site: https://www.switch.ch/aai/support/tools/wayf/
 ******************************************************************************
@@ -63,6 +63,7 @@ if ($IDPConfigFile == $backupIDPConfigFile){
 // Read metadata file if configuration option is set
 if($useSAML2Metadata && function_exists('xml_parser_create')){
 	require('readMetadata.php');
+	updateMetadata();
 }
 
 // Set default type

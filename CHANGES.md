@@ -6,7 +6,7 @@ See LICENSE file for details.
 SWITCHwayf Changes
 ==================
 
-SWITCHwayf version: v1.21
+SWITCHwayf version: v1.22
 Bundled with:
 
 * JQuery v3.2.1
@@ -37,6 +37,10 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
+* Version 1.22 - Release date: XX. XXXXXX 2018
+   - Made readMetadata.php to a library
+     Code provided by Guillaume Rousse.
+
 * Version 1.21 - Release date: 19. January 2018
   - Allow loading configuration from a path in a 
     web server environment variable to allow multi-tenant

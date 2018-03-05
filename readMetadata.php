@@ -1,104 +1,10 @@
 <?php // Copyright (c) 2018, SWITCH
 
-// This file is used to dynamically create the list of IdPs and SP to be 
-// displayed for the WAYF/DS service based on the federation metadata.
-// Configuration parameters are specified in config.php.
-//
-// The list of Identity Providers can also be updated by running the script
-// readMetadata.php periodically as web server user, e.g. with a cron entry like:
-// 5 * * * * /usr/bin/php readMetadata.php > /dev/null
-
-
-// Set dummy server name if run in CLI
-if (!isset($_SERVER['SERVER_NAME'])){
-	$_SERVER['SERVER_NAME'] = 'localhost';
-}
-
-require_once('functions.php');
-if (isset($_SERVER{'SWITCHWAYF_CONFIG'})){
-	require_once($_SERVER{'SWITCHWAYF_CONFIG'});
-} else {
-	require_once('config.php');
-}
-
-// Make sure this script is not accessed directly
-if(isRunViaCLI()){
-	// Run in cli mode.
-	
-	// Set default config options
-	initConfigOptions();
-	
-	// Load Identity Providers
-	require($IDPConfigFile);
-	
-	// Check that $IDProviders exists
-	if (!isset($IDProviders) or !is_array($IDProviders)){
-		$IDProviders = array();
-	}
-	
-	if (
-		   !file_exists($metadataFile) 
-		|| trim(@file_get_contents($metadataFile)) == '') {
-	  exit ("Exiting: File ".$metadataFile." is empty or does not exist\n");
-	}
-	
-	// Get an exclusive lock to generate our parsed IdP and SP files.
-	if (($lockFp = fopen($metadataLockFile, 'a+')) === false) {
-		$errorMsg = 'Could not open lock file '.$metadataLockFile;
-		die($errorMsg);
-	}
-	if (flock($lockFp, LOCK_EX) === false) { 
-		$errorMsg = 'Could not lock file '.$metadataLockFile;
-		die($errorMsg);
-	}
-	
-	echo 'Parsing metadata file '.$metadataFile."\n";
-	list($metadataIDProviders, $metadataSProviders) = parseMetadata($metadataFile, $defaultLanguage);
-	
-	// If $metadataIDProviders is not FALSE, dump results in $metadataIDPFile.
-	if(is_array($metadataIDProviders)){ 
-		
-		echo 'Dumping parsed Identity Providers to file '.$metadataIDPFile."\n";
-		dumpFile($metadataIDPFile, $metadataIDProviders, 'metadataIDProviders');
-	}
-	// If $metadataSProviders is not FALSE, dump results in $metadataSPFile.
-	if(is_array($metadataSProviders)){ 
-		
-		echo 'Dumping parsed Service Providers to file '.$metadataSPFile."\n";
-		dumpFile($metadataSPFile, $metadataSProviders, 'metadataSProviders');
-	}
-
-	// Release the lock, and close.
-	flock($lockFp, LOCK_UN);
-	fclose($lockFp);
-	
-	
-	// If $metadataIDProviders is not FALSE, update $IDProviders and print the Identity Providers lists.
-	if(is_array($metadataIDProviders)){ 
-
-		echo 'Merging parsed Identity Providers with data from file '.$IDPConfigFile."\n";
-		$IDProviders = mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries);
-		
-		echo "Printing parsed Identity Providers:\n";
-		print_r($metadataIDProviders);
-		
-		echo "Printing effective Identity Providers:\n";
-		print_r($IDProviders);
-	}
-	
-	// If $metadataSProviders is not FALSE, update $SProviders and print the list.
-	if(is_array($metadataSProviders)){ 
-		
-		// For now copy the array by reference
-		$SProviders = &$metadataSProviders;
-		
-		echo "Printing parsed Service Providers:\n";
-		print_r($metadataSProviders);
-	}
-	
-	
-} elseif (isRunViaInclude()) {
-	// Run as included file
+function updateMetadata() {
+	global $metadataLockFile, $metadataIDPFile, $metadataSPFile;
+	global $metadataFile, $defaultLanguage;
+	global $SAML2MetaOverLocalConf, $includeLocalConfEntries;
+	global $verbose;
 	
 	// Open the metadata lock file.
 	if (($lockFp = fopen($metadataLockFile, 'a+')) === false) {
@@ -154,7 +60,7 @@ if(isRunViaCLI()){
 		// Read SP and IDP files generated with metadata
 		require($metadataIDPFile);
 		require($metadataSPFile);
-	
+		
 		// Release the lock.
 		if ($lockFp !== false) {
 			flock($lockFp, LOCK_UN);
@@ -172,13 +78,8 @@ if(isRunViaCLI()){
 		fclose($lockFp);
 	}
 	
-} else {
-	exit('No direct script access allowed');
 }
 
-closelog();
-
-/*****************************************************************************/
 // Function parseMetadata, parses metadata file and returns Array($IdPs, SPs)  or
 // Array(false, false) if error occurs while parsing metadata file
 function parseMetadata($metadataFile, $defaultLanguage){
@@ -308,18 +209,15 @@ function parseMetadata($metadataFile, $defaultLanguage){
 	$infoMsg .= " ".count($metadataSProviders)." SPs, ";
 	$infoMsg .=  ($hiddenIdPs > 0) ? $hiddenIdPs." IdPs are hidden)" : "no hidden IdPs)" ;
 	
-	if (isRunViaCLI()){
+	if (isRunViaCLI() && isset($verbose) && $verbose){
 		echo $infoMsg."\n";
 	} else {
 		logInfo($infoMsg);
 	}
 	
-	
 	return Array($metadataIDProviders, $metadataSProviders);
 }
 
-
-/******************************************************************************/
 // Load SAML metadata file, parse it and update 
 // IDProvider.metadata.php and SProvider.metadata.php files
 function regenerateMetadata($metadataFile, $defaultLanguage) {
@@ -351,7 +249,6 @@ function regenerateMetadata($metadataFile, $defaultLanguage) {
 	
 }
 
-/******************************************************************************/
 // Processes an IDPRoleDescriptor XML node and returns an IDP entry or false if 
 // something went wrong
 function processIDPRoleDescriptor($IDPRoleDescriptorNode){
@@ -473,7 +370,6 @@ function processIDPRoleDescriptor($IDPRoleDescriptorNode){
 	return $IDP;
 }
 
-/******************************************************************************/
 // Processes an SPRoleDescriptor XML node and returns an SP entry or false if 
 // something went wrong
 function processSPRoleDescriptor($SPRoleDescriptorNode){
@@ -539,7 +435,6 @@ function processSPRoleDescriptor($SPRoleDescriptorNode){
 	return $SP;
 }
 
-/******************************************************************************/
 // Dump variable to a file 
 function dumpFile($dumpFile, $providers, $variableName){
 	 
@@ -564,8 +459,6 @@ function dumpFile($dumpFile, $providers, $variableName){
 	}
 }
 
-
-/******************************************************************************/
 // Function mergeInfo is used to create the effective $IDProviders array.
 // For each IDP found in the metadata, merge the values from IDProvider.conf.php.
 // If an IDP is found in IDProvider.conf as well as in metadata, use metadata  
@@ -613,7 +506,6 @@ function mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, 
 	return $mergedArray;
 }
 
-/******************************************************************************/
 // Get MD Display Names from RoleDescriptor
 function getMDUIDisplayNames($RoleDescriptorNode){
 	
@@ -628,7 +520,6 @@ function getMDUIDisplayNames($RoleDescriptorNode){
 	return $Entity;
 }
 
-/******************************************************************************/
 // Get MD Keywords from RoleDescriptor
 function getMDUIKeywords($RoleDescriptorNode){
 	
@@ -643,7 +534,6 @@ function getMDUIKeywords($RoleDescriptorNode){
 	return $Entity;
 }
 
-/******************************************************************************/
 // Get MD Logos from RoleDescriptor. Prefer the favicon logos
 function getMDUILogos($RoleDescriptorNode){
 	
@@ -661,8 +551,6 @@ function getMDUILogos($RoleDescriptorNode){
 	return $Logos;
 }
 
-
-/******************************************************************************/
 // Get MD Attribute Value(kind) from RoleDescriptor
 function getSAMLAttributeValues($RoleDescriptorNode){
 	
@@ -676,8 +564,6 @@ function getSAMLAttributeValues($RoleDescriptorNode){
 	return $Entity;
 }
 
-
-/******************************************************************************/
 // Get MD IP Address Hints from RoleDescriptor
 function getMDUIIPHints($RoleDescriptorNode){
 	
@@ -695,7 +581,6 @@ function getMDUIIPHints($RoleDescriptorNode){
 	return $Entity;
 }
 
-/******************************************************************************/
 // Get MD Domain Hints from RoleDescriptor
 function getMDUIDomainHints($RoleDescriptorNode){
 	
@@ -709,7 +594,6 @@ function getMDUIDomainHints($RoleDescriptorNode){
 	return $Entity;
 }
 
-/******************************************************************************/
 // Get MD Geolocation Hints from RoleDescriptor
 function getMDUIGeolocationHints($RoleDescriptorNode){
 	
@@ -725,7 +609,6 @@ function getMDUIGeolocationHints($RoleDescriptorNode){
 	return $Entity;
 }
 
-/******************************************************************************/
 // Get Organization Names from RoleDescriptor
 function getOrganizationNames($RoleDescriptorNode){
 	
@@ -743,7 +626,6 @@ function getOrganizationNames($RoleDescriptorNode){
 	return $Entity;
 }
 
-/******************************************************************************/
 // Get Attribute Consuming Service
 function getAttributeConsumingServiceNames($RoleDescriptorNode){
 	
@@ -758,7 +640,6 @@ function getAttributeConsumingServiceNames($RoleDescriptorNode){
 	return $Entity;
 }
 
-/******************************************************************************/
 // Returns true if IdP has Hide-From-Discovery entity category attribute
 function hasHideFromDiscoveryEntityCategory($IDPRoleDescriptorNode){
 	// Get SAML Attributes for this entity
