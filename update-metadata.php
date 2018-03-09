@@ -179,3 +179,12 @@ if (is_array($metadataSProviders)){
 		exit("Exiting: Could not rename temporary file $metadataTempSPFile to $metadataSPFile");
 	}
 }
+
+// clean up if needed
+if ($metadataURL) {
+	$result = unlink($metadataFile);
+	if (!$result) {
+		$error = error_get_last();
+		exit("Exiting: could not delete temporary file $metadataFile: $error\n");
+	}
+}
