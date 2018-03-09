@@ -44,8 +44,10 @@ Argument Description
 
 PAGE;
 
-require_once('functions.php');
-require_once('readMetadata.php');
+$toplevelDir = dirname(__DIR__);
+
+require_once($topLevelDir . '/lib/functions.php');
+require_once($topLevelDir . '/lib/readMetadata.php');
 
 // Script options
 $longopts = array(

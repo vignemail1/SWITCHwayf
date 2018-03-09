@@ -7,19 +7,25 @@ if (isset($_SERVER['REMOTE_ADDR'])){
 	exit('No direct script access allowed');
 }
 
-if (!file_exists('config.dist.php')) {
-	die('The default configuration file config.dist.php does not exist in this directory!');
+$toplevelDir           = dirname(__DIR__);
+$distConfigFilePath    = $topLevelDir . '/etc/config.dist.php');
+$newConfigFilePath     = $topLevelDir . '/etc/config.new.php');
+$currentConfigFilePath = $topLevelDir . '/etc/config.php');
+
+if (!file_exists($distConfigFilePath)) {
+	die("The default configuration file 'config.dist.php' does not exist in configuration directory!");
 }
 
-if (!file_exists('config.php')) {
-	die('The configuration file config.php does not exist in this directory!');
+if (!file_exists($currentConfigFilePath)) {
+	die("The configuration file 'config.php' does not exist in configuration directory!");
 }
-require_once('config.php');
+require_once($currentConfigFilePath);
 
 echo "Parsing current configuration and default configuration...\n";
-$fp = fopen('config.new.php', 'w') or die("Cannot open file 'config.new.php' for writing!") ;
-$distConfigFile = file('config.dist.php');
-$currentConfigFile = file('config.php');
+$fp = fopen($newConfigFilePath, 'w')
+	or die("Cannot open file 'config.new.php' for writing!") ;
+$distConfigFile = file($distConfigFilePath);
+$currentConfigFile = file($currentConfigFilePath);
 
 $configSettings = Array();
 foreach ($currentConfigFile as $line){
