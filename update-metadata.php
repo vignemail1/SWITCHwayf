@@ -16,10 +16,10 @@ Usage:
 php update-metadata.php -help|-h
 php update-metadata.php --metadata-file <file> \
     --metadata-idp-file <file> --metadata-sp-file <file> \
-    [--verbose | -v]
+    [--verbose | -v] [--min-sp-count <count>] [--min-idp-count <count>]
 php update-metadata.php --metadata-url <url> \
     --metadata-idp-file <file> --metadata-sp-file <file> \
-    [--verbose | -v]
+    [--verbose | -v] [--min-sp-count <count>] [--min-idp-count <count>]
 
 
 Example usage: 
@@ -35,6 +35,8 @@ Argument Description
 --metadata-file <file>      SAML2 metadata file
 --metadata-idp-file <file>  File containing Service Providers 
 --metadata-sp-file <file>   File containing Identity Providers 
+--min-idp-count <count>     Minimum expected number of IdPs in metadata
+--min-sp-count <count>      Minimum expected number of SPs in metadata
 --language <locale>         Language locale, e.g. 'en', 'jp', ...
 --verbose | -v              Verbose mode
 --help | -h                  Print this man page
@@ -51,6 +53,8 @@ $longopts = array(
     "metadata-file:",
     "metadata-idp-file:",
     "metadata-sp-file:",
+    "min-idp-count:",
+    "min-sp-count:",
     "language:",
     "verbose",
     "help",
@@ -82,6 +86,26 @@ if (!isset($options['metadata-idp-file'])) {
 } else {
 	$metadataIDPFile = $options['metadata-idp-file'];
 	$metadataTempIDPFile = $metadataIDPFile.'.swp';
+}
+
+if (isset($options['min-sp-count'])) {
+	if (!is_numeric($options['min-sp-count'])) {
+		exit("Exiting: invalid value for --min-sp-count parameter\n");
+	} else {
+		$minSPCount = $options['min-sp-count'];
+	}
+} else {
+	$minSPCount = 0;
+}
+
+if (isset($options['min-idp-count'])) {
+	if (!is_numeric($options['min-idp-count'])) {
+		exit("Exiting: invalid value for --min-idp-count parameter\n");
+	} else {
+		$minIDPCount = $options['min-idp-count'];
+	}
+} else {
+	$minIDPCount = 0;
 }
 
 // Set other options
@@ -124,6 +148,10 @@ list($metadataIDProviders, $metadataSProviders) = parseMetadata($metadataFile, $
 
 // If $metadataIDProviders is not FALSE, dump results in $metadataIDPFile.
 if (is_array($metadataIDProviders)){
+	$IDPCount = count($metadataIDProviders);
+	if ($IDPCount < $minIDPCount) {
+		exit("Exiting: number of Identity Providers found ($IDPCount) lower than expected ($minIDPCount)\n");
+	}
 
 	if ($verbose) {
 		echo "Dumping parsed Identity Providers to file $metadataIDPFile\n";
@@ -137,6 +165,10 @@ if (is_array($metadataIDProviders)){
 
 // If $metadataSProviders is not FALSE, dump results in $metadataSPFile.
 if (is_array($metadataSProviders)){
+	$SPCount = count($metadataSProviders);
+	if ($SPCount < $minSPCount) {
+		exit("Exiting: number of Service Providers found ($SPCount) lower than expected ($minSPCount)\n");
+	}
 
 	if ($verbose) {
 		echo "Dumping parsed Service Providers to file $metadataSPFile\n";
