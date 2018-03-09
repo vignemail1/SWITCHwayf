@@ -17,6 +17,9 @@ php update-metadata.php -help|-h
 php update-metadata.php --metadata-file <file> \
     --metadata-idp-file <file> --metadata-sp-file <file> \
     [--verbose | -v]
+php update-metadata.php --metadata-url <url> \
+    --metadata-idp-file <file> --metadata-sp-file <file> \
+    [--verbose | -v]
 
 
 Example usage: 
@@ -28,6 +31,7 @@ php update-metadata.php \
 
 Argument Description 
 -------------------
+--metadata-url <url>        SAML2 metadata URL
 --metadata-file <file>      SAML2 metadata file
 --metadata-idp-file <file>  File containing Service Providers 
 --metadata-sp-file <file>   File containing Identity Providers 
@@ -43,6 +47,7 @@ require_once('readMetadata.php');
 
 // Script options
 $longopts = array(
+    "metadata-url:",
     "metadata-file:",
     "metadata-idp-file:",
     "metadata-sp-file:",
@@ -57,10 +62,12 @@ if (isset($options['help']) || isset($options['h'])) {
 	exit($MAN);
 } 
 
-if (!isset($options['metadata-file'])) {
-	exit("Exiting: mandatory --metadata-file parameter missing\n");
-} else {
+if (isset($options['metadata-url'])) {
+	$metadataURL = $options['metadata-url'];
+} elseif (isset($options['metadata-file'])) {
 	$metadataFile = $options['metadata-file'];
+} else {
+	exit("Exiting: both --metadata-url and --metadata-file parameters missing\n");
 }
 
 if (!isset($options['metadata-sp-file'])) {
@@ -82,15 +89,30 @@ $language = isset($options['language']) ? $options['language'] : 'en';
 $verbose  = isset($options['verbose']) || isset($options['v']) ? true : false;
 
 // Input validation
-if (
-	!file_exists($metadataFile)
-	|| filesize($metadataFile) == 0
-	) {
-	exit("Exiting: File $metadataFile is empty or does not exist\n");
-}
+if ($metadataURL) {
+	$metadataFile = tempnam(sys_get_temp_dir(), 'metadata');
+	if (!ini_get('allow_url_fopen')) {
+		exit("Exiting: allow_url_fopen disabled, unabled to download $metadataURL\n");
+	}
+	if ($verbose) {
+		echo "Downloading metadata from $metadataURL to $metadataFile\n";
+	}
+	$result = copy($metadataURL, $metadataFile);
+	if (!$result) {
+		$error = error_get_last();
+		exit("Exiting: could not download $metadataURL: $error\n");
+	}
+} else {
+	if (
+		!file_exists($metadataFile)
+		|| filesize($metadataFile) == 0
+		) {
+		exit("Exiting: File $metadataFile is empty or does not exist\n");
+	}
 
-if (!is_readable($metadataFile)){
-	exit("Exiting: File $metadataFile is not readable\n");
+	if (!is_readable($metadataFile)){
+		exit("Exiting: File $metadataFile is not readable\n");
+	}
 }
 
 if ($verbose) {
