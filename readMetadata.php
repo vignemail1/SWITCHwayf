@@ -221,7 +221,7 @@ function parseMetadata($metadataFile, $defaultLanguage){
 // Load SAML metadata file, parse it and update 
 // IDProvider.metadata.php and SProvider.metadata.php files
 function regenerateMetadata($metadataFile, $defaultLanguage) {
-	global $metadataIDPFile, $metadataSPFile, $IDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries, $lockFp;
+	global $metadataIDPFile, $metadataSPFile, $IDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries;
 	
 	// Regenerate $metadataIDPFile.
 	list($metadataIDProviders, $metadataSProviders) = parseMetadata($metadataFile, $defaultLanguage);
@@ -241,12 +241,6 @@ function regenerateMetadata($metadataFile, $defaultLanguage) {
 		dumpFile($metadataSPFile, $metadataSProviders, 'metadataSProviders');
 		require($metadataSPFile);
 	}
-	
-	// Release the lock.
-	if ($lockFp !== false) {
-		flock($lockFp, LOCK_UN);
-	}
-	
 }
 
 // Processes an IDPRoleDescriptor XML node and returns an IDP entry or false if 
