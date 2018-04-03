@@ -185,6 +185,7 @@
 
 // 4. Files and path Settings
 //***************************
+// all relatives paths are resolved relatively to configuration directory
 
 // Set both config files to the same value if you don't want to use the
 // the WAYF to read a (potential) automatically generated file that undergoes

@@ -55,6 +55,7 @@ function initConfigOptions(){
 	global $kerberosRedirectURL;
 	global $instanceIdentifier;
 	global $developmentMode;
+	global $topLevelDir;
 	
 	
 	// Set independet default configuration options
@@ -122,6 +123,17 @@ function initConfigOptions(){
 	foreach($defaults as $key => $value){
 		if (!isset($$key)){
 			$$key = $value;
+		}
+	}
+
+	// Turn relatives paths into absolute ones
+	$files = array(
+		'IDPConfigFile', 'backupIDPConfigFile', 'metadataFile',
+		'metadataIDPFile', 'metadataSPFile', 'metadataLockFile'
+	);
+	foreach($files as $file) {
+		if (substr($$file, 0, 1) != '/') {
+			$$file = $topLevelDir . '/etc/' . $$file;
 		}
 	}
 }

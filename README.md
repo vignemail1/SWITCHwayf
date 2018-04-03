@@ -53,7 +53,7 @@ Installation
      This file contains the list of Identity Providers that that can be  
      configured by hand
 
-3. Enure that permissions for the files:
+3. Ensure that permissions for the files:
      - SProvider.metadata.php
      - IDProvider.metadata.php 
      - metadata.lock
@@ -64,12 +64,12 @@ Installation
 4. Adapt the SWITCHwayf configuration in config.php. There are comments in that
    file that should help you make suitable choices for your use case.
 
-5. If Apache 2 is used, add the following statement to the Apache configugration:
+5. If Apache 2 is used, add the following statement to the Apache configuration:
 
 --
 
-Alias /SWITCHaai /#YOUR-PATH-TO#/SWITCHwayf
-<Directory /#YOUR-PATH-TO#/SWITCHwayf>
+Alias /SWITCHaai /#YOUR-PATH-TO#/SWITCHwayf/www
+<Directory /#YOUR-PATH-TO#/SWITCHwayf/www>
     Options Indexes MultiViews
     AllowOverride None
     Order allow,deny
@@ -83,6 +83,7 @@ Alias /SWITCHaai /#YOUR-PATH-TO#/SWITCHwayf
 </Directory>
 
 --
+   Beware, only the www subdirectory should be exposed, not the top-level directory.
 
    Alternatively, one also could rename the file 'WAYF' to 'WAYF.php'.
 

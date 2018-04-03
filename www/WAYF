@@ -13,21 +13,23 @@ Web site: https://www.switch.ch/aai/support/tools/wayf/
 // Load general configuration and template file
 /*------------------------------------------------*/
 
+$topLevelDir = dirname(__DIR__);
+
 if (isset($_SERVER{'SWITCHWAYF_CONFIG'})){
 	require_once($_SERVER{'SWITCHWAYF_CONFIG'});
 } else {
-	require_once('config.php');
+	require_once($topLevelDir . '/etc/config.php');
 }
-require_once('languages.php');
-require_once('functions.php');
-require_once('templates.php');
+require_once($topLevelDir . '/lib/languages.php');
+require_once($topLevelDir . '/lib/functions.php');
+require_once($topLevelDir . '/lib/templates.php');
 
 // Set default config options
 initConfigOptions();
 
 // Read custom locales
-if (file_exists('custom-languages.php')){
-	require_once('custom-languages.php');
+if (file_exists($topLevelDir . '/lib/custom-languages.php')){
+	require_once($topLevelDir . '/lib/custom-languages.php');
 }
 
 /*------------------------------------------------*/
@@ -62,7 +64,7 @@ if ($IDPConfigFile == $backupIDPConfigFile){
 
 // Read metadata file if configuration option is set
 if($useSAML2Metadata && function_exists('xml_parser_create')){
-	require('readMetadata.php');
+	require($topLevelDir . '/lib/readMetadata.php');
 	updateMetadata();
 }
 
