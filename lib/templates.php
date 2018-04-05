@@ -19,6 +19,7 @@ function printHeader(){
 	global $langStrings, $language, $imageURL, $javascriptURL, $cssURL, $logoURL;
 	global $useImprovedDropDownList, $disableRemoteLogos, $organizationLogoURL;
 	global $federationURL, $organizationURL, $faqURL, $helpURL, $privacyURL;
+	global $customStrings;
 	
 	// Check if custom header template exists
 	if(file_exists('custom-header.php')){
@@ -35,6 +36,7 @@ function printHeader(){
 function printWAYF(){
 	
 	global $selectedIDP, $language, $IDProviders, $SProviders, $redirectCookieName, $imageURL, $redirectStateCookieName, $showPermanentSetting;
+	global $customStrings;
 	
 	if (!isset($showPermanentSetting)){
 		$showPermanentSetting = false;
@@ -99,6 +101,7 @@ function printWAYF(){
 function printSettings(){
 	
 	global $selectedIDP, $language, $IDProviders, $redirectCookieName;
+	global $customStrings;
 	
 	$actionURL = $_SERVER['SCRIPT_NAME'].'?'.htmlentities($_SERVER['QUERY_STRING']);
 	$defaultSelected = ($selectedIDP == '-') ? 'selected="selected"' : '';
@@ -238,6 +241,7 @@ function printOptionElement($IDProviders, $key, $selectedIDP){
 function printNotice(){
 	
 	global $redirectCookieName, $IDProviders;
+	global $customStrings;
 	
 	$actionURL = $_SERVER['SCRIPT_NAME'].'?'.htmlentities($_SERVER['QUERY_STRING']);
 	
@@ -280,6 +284,8 @@ function printNotice(){
 // Prints end of HTML page
 function printFooter(){
 	
+	global $customStrings;
+
 	// Check if footer template exists
 	if(file_exists('custom-footer.php')){
 		include('custom-footer.php');
@@ -294,6 +300,7 @@ function printFooter(){
 function printError($message){
 	
 	global $langStrings, $language, $supportContactEmail;
+	global $customStrings;
 	
 	// Show Header
 	printHeader();
@@ -316,6 +323,7 @@ function printEmbeddedWAYFScript(){
 
 	global $langStrings, $language, $imageURL, $javascriptURL, $cssURL, $logoURL, $smallLogoURL, $federationURL;
 	global $selectedIDP, $IDProviders, $SAMLDomainCookieName, $redirectCookieName, $redirectStateCookieName, $federationName;
+	global $customStrings;
 	
 	// Set values that are used in the java script
 	$loginWithString = getLocalString('login_with');
@@ -410,6 +418,7 @@ ENTRY;
 // Print sample configuration script used for Embedded WAYF
 function printEmbeddedConfigurationScript(){
 	global $IDProviders;
+	global $customStrings;
 	
 	$types = array();
 	foreach ($IDProviders as $IDProvider){
