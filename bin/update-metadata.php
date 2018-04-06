@@ -44,7 +44,7 @@ Argument Description
 
 PAGE;
 
-$toplevelDir = dirname(__DIR__);
+$topLevelDir = dirname(__DIR__);
 
 require_once($topLevelDir . '/lib/functions.php');
 require_once($topLevelDir . '/lib/readMetadata.php');

@@ -7,7 +7,7 @@ if (isset($_SERVER['REMOTE_ADDR'])){
 	exit('No direct script access allowed');
 }
 
-$toplevelDir           = dirname(__DIR__);
+$topLevelDir           = dirname(__DIR__);
 $distConfigFilePath    = $topLevelDir . '/etc/config.dist.php');
 $newConfigFilePath     = $topLevelDir . '/etc/config.new.php');
 $currentConfigFilePath = $topLevelDir . '/etc/config.php');
