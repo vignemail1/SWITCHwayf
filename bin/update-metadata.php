@@ -156,7 +156,7 @@ if (is_array($metadataIDProviders)){
 	}
 
 	if ($verbose) {
-		echo "Dumping parsed Identity Providers to file $metadataIDPFile\n";
+		echo "Dumping $IDPCount extracted Identity Providers to file $metadataIDPFile\n";
 	}
 	dumpFile($metadataTempIDPFile, $metadataIDProviders, 'metadataIDProviders');
 	
@@ -173,7 +173,7 @@ if (is_array($metadataSProviders)){
 	}
 
 	if ($verbose) {
-		echo "Dumping parsed Service Providers to file $metadataSPFile\n";
+		echo "Dumping $SPCount extracted Service Providers to file $metadataSPFile\n";
 	}
 	dumpFile($metadataTempSPFile, $metadataSProviders, 'metadataSProviders');
 	
