@@ -20,13 +20,7 @@ function printHeader(){
 	global $useImprovedDropDownList, $disableRemoteLogos, $organizationLogoURL;
 	global $federationURL, $organizationURL, $faqURL, $helpURL, $privacyURL;
 	
-	// Check if custom header template exists
-	if(file_exists('custom-header.php')){
-		include('custom-header.php');
-	} else {
-		// Use default code
-		include('default-header.php');
-	}
+	include(get_template('header.php'));
 }
 
 
@@ -85,13 +79,7 @@ function printWAYF(){
 	$defaultSelected = ($selectedIDP == '-') ? 'selected="selected"' : '';
 	$rememberSelectionChecked = (isset($_COOKIE[$redirectStateCookieName])) ? 'checked="checked"' : '' ;
 	
-	// Check if custom header template exists
-	if(file_exists('custom-body.php')){
-		include('custom-body.php');
-	} else {
-		// Use default code
-		include('default-body.php');
-	}
+	include(get_template('body.php'));
 }
 
 /******************************************************************************/
@@ -103,13 +91,7 @@ function printSettings(){
 	$actionURL = $_SERVER['SCRIPT_NAME'].'?'.htmlentities($_SERVER['QUERY_STRING']);
 	$defaultSelected = ($selectedIDP == '-') ? 'selected="selected"' : '';
 	
-	// Check if custom header template exists
-	if(file_exists('custom-settings.php')){
-		include('custom-settings.php');
-	} else {
-		// Use default code
-		include('default-settings.php');
-	} 
+	include(get_template('settings.php'));
 }
 
 /******************************************************************************/
@@ -267,26 +249,14 @@ function printNotice(){
 		}
 	}
 	
-	// Check if footer template exists
-	if(file_exists('custom-notice.php')){
-		include('custom-notice.php');
-	} else {
-		// Use default code
-		include('default-notice.php');
-	}
+	include(get_template('notice.php'));
 }
 
 /******************************************************************************/
 // Prints end of HTML page
 function printFooter(){
 	
-	// Check if footer template exists
-	if(file_exists('custom-footer.php')){
-		include('custom-footer.php');
-	} else {
-		// Use default code
-		include('default-footer.php');
-	}
+	include(get_template('footer.php'));
 }
 
 /******************************************************************************/
@@ -298,13 +268,7 @@ function printError($message){
 	// Show Header
 	printHeader();
 	
-	// Check if error template exists
-	if(file_exists('custom-error.php')){
-		include('custom-error.php');
-	} else {
-		// Use default code
-		include('default-error.php');
-	}
+	include(get_template('error.php'));
 	
 	// Show footer
 	printFooter();
@@ -424,12 +388,7 @@ function printEmbeddedConfigurationScript(){
 	
 	header('Content-type: text/plain;charset="utf-8"');
 	
-	if(file_exists('custom-embedded-wayf.php')){
-		include('custom-embedded-wayf.php');
-	} else {
-		// Use default code
-		include('default-embedded-wayf.php');
-	}
+	include(get_template('embedded-wayf.php'));
 }
 
 /******************************************************************************/
@@ -455,4 +414,15 @@ function printCSS($file){
 	$cssContent = preg_replace('/{?\$imageURL}?/',$imageURL, $cssContent);
 	
 	echo $cssContent;
+}
+
+function get_template($name) {
+
+	global $topLevelDir;
+
+	$custom_template = $topLevelDir . '/lib/custom-' . $name;
+	$default_template = $topLevelDir . '/lib/default-' . $name;
+
+	return (file_exists($custom_template)) ?
+	       	$custom_template : $default_template;
 }
