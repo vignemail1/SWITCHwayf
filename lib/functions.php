@@ -45,6 +45,7 @@ function initConfigOptions(){
 	global $logoURL;
 	global $smallLogoURL;
 	global $organizationLogoURL;
+	global $customStrings;
 	global $IDPConfigFile;
 	global $backupIDPConfigFile;
 	global $metadataFile;
@@ -101,6 +102,7 @@ function initConfigOptions(){
 	$defaults['WAYFLogFile'] = '/var/log/apache2/wayf.log'; 
 	$defaults['kerberosRedirectURL'] = dirname($_SERVER['SCRIPT_NAME']).'kerberosRedirect.php';
 	$defaults['developmentMode'] = false;
+	$defaults['customStrings'] = array();
 	
 	// Initialize independent defaults
 	foreach($defaults as $key => $value){

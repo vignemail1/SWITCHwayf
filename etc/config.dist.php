@@ -238,11 +238,6 @@
 // operated on the same host
 //$instanceIdentifier = 'SWITCHwayf';
 
-// Name of the federation [deprecated]
-// This value is not used anymore in the standard code.
-// Please ensure it is not used anymore in templates
-//$federationName = 'myFederation';
-
 // URL to send user to when clicking on federation logo
 // Insert %s as macro to be substituted by the language (e.g. 'en', 'de', 'fr', ...) the WAYF uses
 // Set to an empty string to hide the logo
@@ -284,6 +279,10 @@
 // Set to an empty string to hide the logo
 //$privacyURL = 'http://www.example.org/%s/myFed/privacy/';
 
+// Additional strings form custom templates
+//$customStrings = array(
+//    federationName = 'myFederation'
+//);
 
 
 // Development mode settings
