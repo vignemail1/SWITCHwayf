@@ -46,8 +46,8 @@ function updateMetadata() {
 		// Now merge IDPs from metadata and static file
 		$IDProviders = mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries);
 		
-		// For now copy the array by reference
-		$SProviders = &$metadataSProviders;
+		// There is no static file for SPs, use metadata only
+		$SProviders = $metadataSProviders;
 
 	} elseif (file_exists($metadataIDPFile)) {
 
@@ -70,8 +70,8 @@ function updateMetadata() {
 		// Now merge IDPs from metadata and static file
 		$IDProviders = mergeInfo($IDProviders, $metadataIDProviders, $SAML2MetaOverLocalConf, $includeLocalConfEntries);
 		
-		// For now copy the array by reference
-		$SProviders = &$metadataSProviders;
+		// There is no static file for SPs, use metadata only
+		$SProviders = $metadataSProviders;
 	}
 	
 	// Close the metadata lock file.

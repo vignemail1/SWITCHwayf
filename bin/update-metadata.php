@@ -2,17 +2,19 @@
 $MAN=<<<PAGE
 Name:        SWITCHwayf
 Author:      Lukas Haemmerle, SWITCH
-Description: This file is used to dynamically create the list of 
+Description: This script is used to dynamically create the list of
              IdPs and SP to be displayed for the WAYF/DS service 
              based on the federation metadata.
-             Configuration parameters are specified in config.php.
-             The list of Identity Providers can also be updated 
-             by running the script update-metadata.php 
-             periodically as web server user, e.g. with a cron 
+             It is intended to be run periodically, e.g. with a cron
              entry like:
-             5 * * * * /usr/bin/php update-metadata.php > /dev/null
+             5 * * * * /usr/bin/php update-metadata.php \
+                 --metadata-file /var/cache/shibboleth/metadata.switchaai.xml \
+                 --metadata-idp-file /tmp/IDProvider.metadata.php \
+                 --metadata-sp-file /tmp/SProvider.metadata.php \
+                 > /dev/null
         
-Usage: 
+Usage
+-----
 php update-metadata.php -help|-h
 php update-metadata.php --metadata-file <file> \
     --metadata-idp-file <file> --metadata-sp-file <file> \
@@ -21,16 +23,8 @@ php update-metadata.php --metadata-url <url> \
     --metadata-idp-file <file> --metadata-sp-file <file> \
     [--verbose | -v] [--min-sp-count <count>] [--min-idp-count <count>]
 
-
-Example usage: 
-php update-metadata.php \
-    --metadata-file /var/cache/shibboleth/metadata.switchaai.xml \
-    --metadata-idp-file /tmp/IDProvider.metadata.php \
-    --metadata-sp-file /tmp/SProvider.metadata.php
-
-
-Argument Description 
--------------------
+Argument Description
+--------------------
 --metadata-url <url>        SAML2 metadata URL
 --metadata-file <file>      SAML2 metadata file
 --metadata-idp-file <file>  File containing Service Providers 
@@ -39,12 +33,12 @@ Argument Description
 --min-sp-count <count>      Minimum expected number of SPs in metadata
 --language <locale>         Language locale, e.g. 'en', 'jp', ...
 --verbose | -v              Verbose mode
---help | -h                  Print this man page
+--help | -h                 Print this man page
 
 
 PAGE;
 
-$toplevelDir = dirname(__DIR__);
+$topLevelDir = dirname(__DIR__);
 
 require_once($topLevelDir . '/lib/functions.php');
 require_once($topLevelDir . '/lib/readMetadata.php');
@@ -156,7 +150,7 @@ if (is_array($metadataIDProviders)){
 	}
 
 	if ($verbose) {
-		echo "Dumping parsed Identity Providers to file $metadataIDPFile\n";
+		echo "Dumping $IDPCount extracted Identity Providers to file $metadataIDPFile\n";
 	}
 	dumpFile($metadataTempIDPFile, $metadataIDProviders, 'metadataIDProviders');
 	
@@ -173,7 +167,7 @@ if (is_array($metadataSProviders)){
 	}
 
 	if ($verbose) {
-		echo "Dumping parsed Service Providers to file $metadataSPFile\n";
+		echo "Dumping $SPCount extracted Service Providers to file $metadataSPFile\n";
 	}
 	dumpFile($metadataTempSPFile, $metadataSProviders, 'metadataSProviders');
 	
