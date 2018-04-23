@@ -281,7 +281,7 @@
 
 // Additional strings form custom templates
 //$customStrings = array(
-//    federationName = 'myFederation'
+//    'federationName' = 'myFederation'
 //);
 
 

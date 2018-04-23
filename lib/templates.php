@@ -283,7 +283,7 @@ function printError($message){
 function printEmbeddedWAYFScript(){
 
 	global $langStrings, $language, $imageURL, $javascriptURL, $cssURL, $logoURL, $smallLogoURL, $federationURL;
-	global $selectedIDP, $IDProviders, $SAMLDomainCookieName, $redirectCookieName, $redirectStateCookieName, $federationName;
+	global $selectedIDP, $IDProviders, $SAMLDomainCookieName, $redirectCookieName, $redirectStateCookieName;
 	global $customStrings;
 	
 	// Set values that are used in the java script
