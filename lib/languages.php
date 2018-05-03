@@ -102,7 +102,7 @@ $langStrings['de']['access_host'] = 'Um auf den Dienst %s zuzugreifen, w&auml;hl
 $langStrings['de']['select_idp'] = 'W&auml;hlen Sie die Organisation aus, der Sie angeh&ouml;ren.';
 $langStrings['de']['search_idp'] = 'Geben Sie den Namen der Organisation ein, der Sie angeh&ouml;ren...';
 $langStrings['de']['remember_selection'] = 'Auswahl f&uuml;r die laufende Webbrowser Sitzung speichern.';
-$langStrings['de']['invalid_user_idp'] = 'M&ouml;glicherweise sind die &uuml;bermittelten Daten fehlerhaft.<br>Der Wert der Eingabe <code>\'%s\'</code> ist ung&uuml;ltig.<br>Es sind ausschliesslich die folgenden Wert erlaubt:';
+$langStrings['de']['invalid_user_idp'] = 'M&ouml;glicherweise sind die &uuml;bermittelten Daten fehlerhaft.<br>Der Wert der Eingabe <code>\'%s\'</code> ist ung&uuml;ltig.<br>Es sind ausschliesslich die folgenden Werte erlaubt:';
 $langStrings['de']['contact_assistance'] = 'F&uuml;r Unterst&uuml;tzung und Hilfe, kontaktieren Sie bitte <a href="mailto:%s">%s</a>.';
 $langStrings['de']['no_arguments'] = 'Keine Argumente erhalten!';
 $langStrings['de']['arguments_missing'] = 'Der Webserver hat eine fehlerhafte Anfrage erhalten da einige Argumente in der Anfrage fehlen.<br>Folgende Argumente wurden empfangen:';
