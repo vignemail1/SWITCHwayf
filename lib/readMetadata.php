@@ -201,15 +201,12 @@ function parseMetadata($metadataFile, $defaultLanguage){
 		}
 	}
 	
-	// Output result
-	$infoMsg = "Successfully parsed metadata file ".$metadataFile. " ";
-	$infoMsg .= "(".count($metadataIDProviders)." IdPs, ";
-	$infoMsg .= " ".count($metadataSProviders)." SPs, ";
-	$infoMsg .=  ($hiddenIdPs > 0) ? $hiddenIdPs." IdPs are hidden)" : "no hidden IdPs)" ;
-	
-	if (isRunViaCLI() && isset($verbose) && $verbose){
-		echo $infoMsg."\n";
-	} else {
+	// log result when called by the web application
+	if (!isRunViaCLI()){
+		$infoMsg = "Successfully parsed metadata file ".$metadataFile. " ";
+		$infoMsg .= "(".count($metadataIDProviders)." IdPs, ";
+		$infoMsg .= " ".count($metadataSProviders)." SPs, ";
+		$infoMsg .=  ($hiddenIdPs > 0) ? $hiddenIdPs." IdPs are hidden)" : "no hidden IdPs)" ;
 		logInfo($infoMsg);
 	}
 	
