@@ -179,9 +179,9 @@ if (is_array($metadataSProviders)){
 
 // clean up if needed
 if ($metadataURL) {
-	$result = unlink($metadataFile);
+	$result = @unlink($metadataFile);
 	if (!$result) {
 		$error = error_get_last();
-		exit("Exiting: could not delete temporary file $metadataFile: $error\n");
+		exit("Exiting: could not delete temporary file $metadataFile: " . $error['message']);
 	}
 }
