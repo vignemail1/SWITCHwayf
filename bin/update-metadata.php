@@ -117,10 +117,11 @@ if ($metadataURL) {
 	if ($verbose) {
 		echo "Downloading metadata from $metadataURL to $metadataFile\n";
 	}
-	$result = copy($metadataURL, $metadataFile);
+	$result = @copy($metadataURL, $metadataFile);
 	if (!$result) {
 		$error = error_get_last();
-		exit("Exiting: could not download $metadataURL: $error\n");
+		$message = explode(': ', $error['message'])[2];
+		exit("Exiting: could not download $metadataURL: $message");
 	}
 } else {
 	if (
