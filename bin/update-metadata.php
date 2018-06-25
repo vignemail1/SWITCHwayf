@@ -32,6 +32,8 @@ Argument Description
 --min-idp-count <count>     Minimum expected number of IdPs in metadata
 --min-sp-count <count>      Minimum expected number of SPs in metadata
 --language <locale>         Language locale, e.g. 'en', 'jp', ...
+--syslog                    Use syslog for reporting
+--syslog-prefix <prefix>    Prefix for syslog messages
 --verbose | -v              Verbose mode
 --help | -h                 Print this man page
 
@@ -53,6 +55,8 @@ $longopts = array(
     "min-sp-count:",
     "language:",
     "verbose",
+    "syslog",
+    "syslog-prefix:",
     "help",
 );
 
@@ -62,17 +66,23 @@ if (isset($options['help']) || isset($options['h'])) {
 	exit($MAN);
 } 
 
+// simple options
+$language = isset($options['language']) ? $options['language'] : 'en';
+$verbose  = isset($options['verbose']) || isset($options['v']) ? true : false;
+$syslog   = isset($options['syslog']) ? true : false;
+$prefix   = isset($options['syslog-prefix']) ? $options['syslog-prefix'] : 'switchwayf';
+
 if (isset($options['metadata-url'])) {
 	$metadataURL = $options['metadata-url'];
 } elseif (isset($options['metadata-file'])) {
 	$metadataFile = $options['metadata-file'];
 } else {
-	fwrite(STDERR, "Exiting: both --metadata-url and --metadata-file parameters missing\n");
+	reportError("Exiting: both --metadata-url and --metadata-file parameters missing\n");
 	exit(1);
 }
 
 if (!isset($options['metadata-sp-file'])) {
-	fwrite(STDERR, "Exiting: mandatory --metadata-sp-file parameter missing\n");
+	reportError("Exiting: mandatory --metadata-sp-file parameter missing\n");
 	exit(1);
 } else {
 	$metadataSPFile = $options['metadata-sp-file'];
@@ -80,7 +90,7 @@ if (!isset($options['metadata-sp-file'])) {
 }
 
 if (!isset($options['metadata-idp-file'])) {
-	fwrite(STDERR, "Exiting: mandatory --metadata-idp-file parameter missing\n");
+	reportError("Exiting: mandatory --metadata-idp-file parameter missing\n");
 	exit(1);
 } else {
 	$metadataIDPFile = $options['metadata-idp-file'];
@@ -89,7 +99,7 @@ if (!isset($options['metadata-idp-file'])) {
 
 if (isset($options['min-sp-count'])) {
 	if (!is_numeric($options['min-sp-count'])) {
-		fwrite(STDERR, "Exiting: invalid value for --min-sp-count parameter\n");
+		reportError("Exiting: invalid value for --min-sp-count parameter\n");
 		exit(1);
 	} else {
 		$minSPCount = $options['min-sp-count'];
@@ -100,7 +110,7 @@ if (isset($options['min-sp-count'])) {
 
 if (isset($options['min-idp-count'])) {
 	if (!is_numeric($options['min-idp-count'])) {
-		fwrite(STDERR, "Exiting: invalid value for --min-idp-count parameter\n");
+		reportError("Exiting: invalid value for --min-idp-count parameter\n");
 		exit(1);
 	} else {
 		$minIDPCount = $options['min-idp-count'];
@@ -109,25 +119,21 @@ if (isset($options['min-idp-count'])) {
 	$minIDPCount = 0;
 }
 
-// Set other options
-$language = isset($options['language']) ? $options['language'] : 'en';
-$verbose  = isset($options['verbose']) || isset($options['v']) ? true : false;
-
 // Input validation
 if ($metadataURL) {
 	$metadataFile = tempnam(sys_get_temp_dir(), 'metadata');
 	if (!ini_get('allow_url_fopen')) {
-		fwrite(STDERR, "Exiting: allow_url_fopen disabled, unabled to download $metadataURL\n");
+		reportError("Exiting: allow_url_fopen disabled, unabled to download $metadataURL\n");
 		exit(1);
 	}
 	if ($verbose) {
-		echo "Downloading metadata from $metadataURL to $metadataFile\n";
+		reportInfo("Downloading metadata from $metadataURL to $metadataFile\n");
 	}
 	$result = @copy($metadataURL, $metadataFile);
 	if (!$result) {
 		$error = error_get_last();
 		$message = explode(': ', $error['message'])[2];
-		fwrite(STDERR, "Exiting: could not download $metadataURL: $message");
+		reportError("Exiting: could not download $metadataURL: $message");
 		exit(1);
 	}
 } else {
@@ -135,18 +141,18 @@ if ($metadataURL) {
 		!file_exists($metadataFile)
 		|| filesize($metadataFile) == 0
 		) {
-		fwrite(STDERR, "Exiting: file $metadataFile is empty or does not exist\n");
+		reportError("Exiting: file $metadataFile is empty or does not exist\n");
 		exit(1);
 	}
 
 	if (!is_readable($metadataFile)){
-		fwrite(STDERR, "Exiting: file $metadataFile is not readable\n");
+		reportError("Exiting: file $metadataFile is not readable\n");
 		exit(1);
 	}
 }
 
 if ($verbose) {
-	echo "Parsing metadata file $metadataFile\n";
+	reportInfo("Parsing metadata file $metadataFile\n");
 }
 
 // Parse metadata
@@ -156,17 +162,17 @@ list($metadataIDProviders, $metadataSProviders) = parseMetadata($metadataFile, $
 if (is_array($metadataIDProviders)){
 	$IDPCount = count($metadataIDProviders);
 	if ($IDPCount < $minIDPCount) {
-		fwrite(STDERR, "Exiting: number of Identity Providers found ($IDPCount) lower than expected ($minIDPCount)\n");
+		reportError("Exiting: number of Identity Providers found ($IDPCount) lower than expected ($minIDPCount)\n");
 		exit(1);
 	}
 
 	if ($verbose) {
-		echo "Dumping $IDPCount extracted Identity Providers to file $metadataIDPFile\n";
+		reportInfo("Dumping $IDPCount extracted Identity Providers to file $metadataIDPFile\n");
 	}
 	dumpFile($metadataTempIDPFile, $metadataIDProviders, 'metadataIDProviders');
 	
 	if(!rename($metadataTempIDPFile, $metadataIDPFile)){
-		fwrite(STDERR, "Exiting: could not rename temporary file $metadataTempIDPFile to $metadataIDPFile\n");
+		reportError("Exiting: could not rename temporary file $metadataTempIDPFile to $metadataIDPFile\n");
 		exit(1);
 	}
 }
@@ -175,17 +181,17 @@ if (is_array($metadataIDProviders)){
 if (is_array($metadataSProviders)){
 	$SPCount = count($metadataSProviders);
 	if ($SPCount < $minSPCount) {
-		fwrite(STDERR, "Exiting: number of Service Providers found ($SPCount) lower than expected ($minSPCount)\n");
+		reportError("Exiting: number of Service Providers found ($SPCount) lower than expected ($minSPCount)\n");
 		exit(1);
 	}
 
 	if ($verbose) {
-		echo "Dumping $SPCount extracted Service Providers to file $metadataSPFile\n";
+		reportInfo("Dumping $SPCount extracted Service Providers to file $metadataSPFile\n");
 	}
 	dumpFile($metadataTempSPFile, $metadataSProviders, 'metadataSProviders');
 	
 	if(!rename($metadataTempSPFile, $metadataSPFile)){
-		fwrite(STDERR, "Exiting: could not rename temporary file $metadataTempSPFile to $metadataSPFile\n");
+		reportError("Exiting: could not rename temporary file $metadataTempSPFile to $metadataSPFile\n");
 		exit(1);
 	}
 }
@@ -196,7 +202,29 @@ if ($metadataURL) {
 	if (!$result) {
 		$error = error_get_last();
 		$message = $error['message'];
-		fwrite(STDERR, "Exiting: could not delete temporary file $metadataFile: $message");
+		reportError("Exiting: could not delete temporary file $metadataFile: $message");
 		exit(1);
+	}
+}
+
+function reportError($message) {
+	global $syslog, $prefix;
+
+	if ($syslog) {
+		openlog($prefix, LOG_NDELAY, LOG_USER);
+		syslog(LOG_ERR, $message);
+	} else {
+		fwrite(STDERR, $message);
+	}
+}
+
+function reportInfo($message) {
+	global $syslog, $prefix;
+
+	if ($syslog) {
+		openlog($prefix, LOG_NDELAY, LOG_USER);
+		syslog(LOG_INFO, $message);
+	} else {
+		fwrite(STDOUT, $message);
 	}
 }
