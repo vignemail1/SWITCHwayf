@@ -30,7 +30,11 @@ Argument Description
 --metadata-idp-file <file>  File containing Service Providers 
 --metadata-sp-file <file>   File containing Identity Providers 
 --min-idp-count <count>     Minimum expected number of IdPs in metadata
+--min-idp-quota <quota>     Minimum expected number of IdPs in metadata,
+                            as a percentage of current number
 --min-sp-count <count>      Minimum expected number of SPs in metadata
+--min-sp-quota <quoat>      Minimum expected number of SPs in metadata,
+                            as a percentage of current number
 --language <locale>         Language locale, e.g. 'en', 'jp', ...
 --verbose | -v              Verbose mode
 --help | -h                 Print this man page
@@ -50,7 +54,9 @@ $longopts = array(
     "metadata-idp-file:",
     "metadata-sp-file:",
     "min-idp-count:",
+    "min-idp-quota:",
     "min-sp-count:",
+    "min-sp-quota:",
     "language:",
     "verbose",
     "help",
@@ -90,6 +96,14 @@ if (isset($options['min-sp-count'])) {
 	} else {
 		$minSPCount = $options['min-sp-count'];
 	}
+} elseif (isset($options['min-sp-quota'])) {
+	if (!is_numeric($options['min-sp-quota'])) {
+		exit("Exiting: invalid value for --min-sp-quota parameter\n");
+	} else {
+		require_once($metadataSPFile);
+		$SPCount = count($metadataSProviders);
+		$minSPCount = floor($SPCount * $options['min-sp-quota'] / 100);
+	}
 } else {
 	$minSPCount = 0;
 }
@@ -99,6 +113,14 @@ if (isset($options['min-idp-count'])) {
 		exit("Exiting: invalid value for --min-idp-count parameter\n");
 	} else {
 		$minIDPCount = $options['min-idp-count'];
+	}
+} elseif (isset($options['min-idp-quota'])) {
+	if (!is_numeric($options['min-idp-quota'])) {
+		exit("Exiting: invalid value for --min-idp-quota parameter\n");
+	} else {
+		require_once($metadataIDPFile);
+		$IDPCount = count($metadataIDProviders);
+		$minIDPCount = floor($IDPCount * $options['min-idp-quota'] / 100);
 	}
 } else {
 	$minIDPCount = 0;
