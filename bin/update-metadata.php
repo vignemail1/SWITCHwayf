@@ -86,9 +86,13 @@ if (!isset($options['metadata-idp-file'])) {
 
 if (isset($options['min-sp-count'])) {
 	if (preg_match('/^(\d+)%$/', $options['min-sp-count'], $matches)) {
-		require_once($metadataSPFile);
-		$SPCount = count($metadataSProviders);
-		$minSPCount = floor($SPCount * $matches[1] / 100);
+		if (file_exists($metadataSPFile)) {
+			require_once($metadataSPFile);
+			$SPCount = count($metadataSProviders);
+			$minSPCount = floor($SPCount * $matches[1] / 100);
+		} else {
+			$minSPCount = 0;
+		}
 	} elseif (preg_match('/^\d+$/', $options['min-sp-count'])) {
 		$minSPCount = $options['min-sp-count'];
 	} else {
@@ -100,9 +104,13 @@ if (isset($options['min-sp-count'])) {
 
 if (isset($options['min-idp-count'])) {
 	if (preg_match('/^(\d+)%$/', $options['min-idp-count'], $matches)) {
-		require_once($metadataIDPFile);
-		$IDPCount = count($metadataIDProviders);
-		$minIDPCount = floor($IDPCount * $matches[1] / 100);
+		if (file_exists($metadataIDPFile)) {
+			require_once($metadataIDPFile);
+			$IDPCount = count($metadataIDProviders);
+			$minIDPCount = floor($IDPCount * $matches[1] / 100);
+		} else {
+			$minIDPCount = 0;
+		}
 	} elseif (preg_match('/^\d+$/', $options['min-idp-count'])) {
 		$minIDPCount = $options['min-idp-count'];
 	} else {
