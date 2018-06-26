@@ -74,6 +74,10 @@ $verbose  = isset($options['verbose']) || isset($options['v']) ? true : false;
 $syslog   = isset($options['syslog']) ? true : false;
 $syslogId = isset($options['syslog-id']) ? $options['syslog-id'] : 'switchwayf';
 
+if ($syslog) {
+	openlog($syslogId, LOG_NDELAY, LOG_USER);
+}
+
 if (isset($options['metadata-url'])) {
 	$metadataURL = $options['metadata-url'];
 } elseif (isset($options['metadata-file'])) {
@@ -226,10 +230,9 @@ if ($metadataURL) {
 }
 
 function reportError($message) {
-	global $syslog, $syslogId;
+	global $syslog;
 
 	if ($syslog) {
-		openlog($syslogId, LOG_NDELAY, LOG_USER);
 		syslog(LOG_ERR, $message);
 	} else {
 		fwrite(STDERR, $message);
@@ -237,10 +240,9 @@ function reportError($message) {
 }
 
 function reportInfo($message) {
-	global $syslog, $syslogId;
+	global $syslog;
 
 	if ($syslog) {
-		openlog($syslogId, LOG_NDELAY, LOG_USER);
 		syslog(LOG_INFO, $message);
 	} else {
 		fwrite(STDOUT, $message);
