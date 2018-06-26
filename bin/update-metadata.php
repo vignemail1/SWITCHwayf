@@ -149,7 +149,7 @@ if ($metadataURL) {
 		exit(1);
 	}
 	if ($verbose) {
-		reportInfo("Downloading metadata from $metadataURL to $metadataFile\n");
+		reportInfo("Downloading metadata file from $metadataURL\n");
 	}
 	$result = @copy($metadataURL, $metadataFile);
 	if (!$result) {
