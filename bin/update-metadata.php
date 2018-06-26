@@ -72,7 +72,7 @@ if (isset($options['help']) || isset($options['h'])) {
 $language = isset($options['language']) ? $options['language'] : 'en';
 $verbose  = isset($options['verbose']) || isset($options['v']) ? true : false;
 $syslog   = isset($options['syslog']) ? true : false;
-$syslogId = isset($options['syslog-id']) ? $options['syslog-id'] : 'switchwayf';
+$syslogId = isset($options['syslog-id']) ? $options['syslog-id'] : 'SWITCHwayf';
 
 if ($syslog) {
 	openlog($syslogId, LOG_NDELAY, LOG_USER);
