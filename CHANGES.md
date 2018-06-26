@@ -37,8 +37,9 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
-* Version 1.22 - Release date: XX. XXXXXX 2018
-   - Made readMetadata.php to a library
+* Version 1.3 - Release date: XX. XXXXXX 2018
+   - Changed structure of directory and files
+     Added update-metadata.php for handling metadata.
      Code provided by Guillaume Rousse.
 
 * Version 1.21 - Release date: 19. January 2018
