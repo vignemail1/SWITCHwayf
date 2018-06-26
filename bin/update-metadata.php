@@ -229,6 +229,10 @@ if ($metadataURL) {
 	}
 }
 
+if ($syslog) {
+	closelog();
+}
+
 function reportError($message) {
 	global $syslog;
 
