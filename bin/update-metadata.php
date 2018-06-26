@@ -18,10 +18,12 @@ Usage
 php update-metadata.php -help|-h
 php update-metadata.php --metadata-file <file> \
     --metadata-idp-file <file> --metadata-sp-file <file> \
-    [--verbose | -v] [--min-sp-count <count>] [--min-idp-count <count>]
+    [--verbose | -v] [--min-sp-count <count>] [--min-idp-count <count>] \
+    [--language <locale>] [--syslog] [--syslog-id <id>]
 php update-metadata.php --metadata-url <url> \
     --metadata-idp-file <file> --metadata-sp-file <file> \
-    [--verbose | -v] [--min-sp-count <count>] [--min-idp-count <count>]
+    [--verbose | -v] [--min-sp-count <count>] [--min-idp-count <count>] \
+    [--language <locale>] [--syslog] [--syslog-id <id>]
 
 Argument Description
 --------------------
