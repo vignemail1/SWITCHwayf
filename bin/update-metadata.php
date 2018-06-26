@@ -33,7 +33,7 @@ Argument Description
 --min-sp-count <count>      Minimum expected number of SPs in metadata
 --language <locale>         Language locale, e.g. 'en', 'jp', ...
 --syslog                    Use syslog for reporting
---syslog-prefix <prefix>    Prefix for syslog messages
+--syslog-id <id>            Process identity for syslog messages
 --verbose | -v              Verbose mode
 --help | -h                 Print this man page
 
@@ -56,7 +56,7 @@ $longopts = array(
     "language:",
     "verbose",
     "syslog",
-    "syslog-prefix:",
+    "syslog-id:",
     "help",
 );
 
@@ -70,7 +70,7 @@ if (isset($options['help']) || isset($options['h'])) {
 $language = isset($options['language']) ? $options['language'] : 'en';
 $verbose  = isset($options['verbose']) || isset($options['v']) ? true : false;
 $syslog   = isset($options['syslog']) ? true : false;
-$prefix   = isset($options['syslog-prefix']) ? $options['syslog-prefix'] : 'switchwayf';
+$syslogId = isset($options['syslog-id']) ? $options['syslog-id'] : 'switchwayf';
 
 if (isset($options['metadata-url'])) {
 	$metadataURL = $options['metadata-url'];
@@ -224,10 +224,10 @@ if ($metadataURL) {
 }
 
 function reportError($message) {
-	global $syslog, $prefix;
+	global $syslog, $syslogId;
 
 	if ($syslog) {
-		openlog($prefix, LOG_NDELAY, LOG_USER);
+		openlog($syslogId, LOG_NDELAY, LOG_USER);
 		syslog(LOG_ERR, $message);
 	} else {
 		fwrite(STDERR, $message);
@@ -235,10 +235,10 @@ function reportError($message) {
 }
 
 function reportInfo($message) {
-	global $syslog, $prefix;
+	global $syslog, $syslogId;
 
 	if ($syslog) {
-		openlog($prefix, LOG_NDELAY, LOG_USER);
+		openlog($syslogId, LOG_NDELAY, LOG_USER);
 		syslog(LOG_INFO, $message);
 	} else {
 		fwrite(STDOUT, $message);
