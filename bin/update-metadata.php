@@ -109,7 +109,8 @@ if (isset($options['min-sp-count'])) {
 	} elseif (preg_match('/^\d+$/', $options['min-sp-count'])) {
 		$minSPCount = $options['min-sp-count'];
 	} else {
-		exit("Exiting: invalid value for --min-sp-count parameter\n");
+		reportError("Exiting: invalid value for --min-sp-count parameter\n");
+		exit(1);
 	}
 } else {
 	$minSPCount = 0;
@@ -127,7 +128,8 @@ if (isset($options['min-idp-count'])) {
 	} elseif (preg_match('/^\d+$/', $options['min-idp-count'])) {
 		$minIDPCount = $options['min-idp-count'];
 	} else {
-		exit("Exiting: invalid value for --min-idp-count parameter\n");
+		reportError("Exiting: invalid value for --min-idp-count parameter\n");
+		exit(1);
 	}
 } else {
 	$minIDPCount = 0;
