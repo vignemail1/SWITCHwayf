@@ -29,8 +29,8 @@ Argument Description
 --------------------
 --metadata-url <url>        SAML2 metadata URL
 --metadata-file <file>      SAML2 metadata file
---metadata-idp-file <file>  File containing Service Providers 
---metadata-sp-file <file>   File containing Identity Providers 
+--metadata-idp-file <file>  File containing service providers 
+--metadata-sp-file <file>   File containing identity providers 
 --min-idp-count <count>     Minimum expected number of IdPs in metadata
 --min-sp-count <count>      Minimum expected number of SPs in metadata
 --language <locale>         Language locale, e.g. 'en', 'jp', ...
@@ -184,12 +184,12 @@ list($metadataIDProviders, $metadataSProviders) = parseMetadata($metadataFile, $
 if (is_array($metadataIDProviders)){
 	$IDPCount = count($metadataIDProviders);
 	if ($IDPCount < $minIDPCount) {
-		reportError("Exiting: number of Identity Providers found ($IDPCount) lower than expected ($minIDPCount)\n");
+		reportError("Exiting: number of identity providers found ($IDPCount) lower than expected ($minIDPCount)\n");
 		exit(1);
 	}
 
 	if ($verbose) {
-		reportInfo("Dumping $IDPCount extracted Identity Providers to file $metadataIDPFile\n");
+		reportInfo("Dumping $IDPCount extracted identity providers to file $metadataIDPFile\n");
 	}
 	dumpFile($metadataTempIDPFile, $metadataIDProviders, 'metadataIDProviders');
 	
@@ -203,12 +203,12 @@ if (is_array($metadataIDProviders)){
 if (is_array($metadataSProviders)){
 	$SPCount = count($metadataSProviders);
 	if ($SPCount < $minSPCount) {
-		reportError("Exiting: number of Service Providers found ($SPCount) lower than expected ($minSPCount)\n");
+		reportError("Exiting: number of service providers found ($SPCount) lower than expected ($minSPCount)\n");
 		exit(1);
 	}
 
 	if ($verbose) {
-		reportInfo("Dumping $SPCount extracted Service Providers to file $metadataSPFile\n");
+		reportInfo("Dumping $SPCount extracted service providers to file $metadataSPFile\n");
 	}
 	dumpFile($metadataTempSPFile, $metadataSProviders, 'metadataSProviders');
 	
