@@ -18,22 +18,24 @@ Usage
 php update-metadata.php -help|-h
 php update-metadata.php --metadata-file <file> \
     --metadata-idp-file <file> --metadata-sp-file <file> \
-    [--verbose | -v] [--min-sp-count <count>] [--min-idp-count <count>]
+    [--verbose | -v] [--min-sp-count <count>] [--min-idp-count <count>] \
+    [--language <locale>] [--syslog] [--syslog-id <id>]
 php update-metadata.php --metadata-url <url> \
     --metadata-idp-file <file> --metadata-sp-file <file> \
-    [--verbose | -v] [--min-sp-count <count>] [--min-idp-count <count>]
+    [--verbose | -v] [--min-sp-count <count>] [--min-idp-count <count>] \
+    [--language <locale>] [--syslog] [--syslog-id <id>]
 
 Argument Description
 --------------------
 --metadata-url <url>        SAML2 metadata URL
 --metadata-file <file>      SAML2 metadata file
---metadata-idp-file <file>  File containing Service Providers 
---metadata-sp-file <file>   File containing Identity Providers 
+--metadata-idp-file <file>  File containing service providers 
+--metadata-sp-file <file>   File containing identity providers 
 --min-idp-count <count>     Minimum expected number of IdPs in metadata
 --min-sp-count <count>      Minimum expected number of SPs in metadata
 --language <locale>         Language locale, e.g. 'en', 'jp', ...
 --syslog                    Use syslog for reporting
---syslog-prefix <prefix>    Prefix for syslog messages
+--syslog-id <id>            Process identity for syslog messages
 --verbose | -v              Verbose mode
 --help | -h                 Print this man page
 
@@ -56,7 +58,7 @@ $longopts = array(
     "language:",
     "verbose",
     "syslog",
-    "syslog-prefix:",
+    "syslog-id:",
     "help",
 );
 
@@ -70,7 +72,11 @@ if (isset($options['help']) || isset($options['h'])) {
 $language = isset($options['language']) ? $options['language'] : 'en';
 $verbose  = isset($options['verbose']) || isset($options['v']) ? true : false;
 $syslog   = isset($options['syslog']) ? true : false;
-$prefix   = isset($options['syslog-prefix']) ? $options['syslog-prefix'] : 'switchwayf';
+$syslogId = isset($options['syslog-id']) ? $options['syslog-id'] : 'SWITCHwayf';
+
+if ($syslog) {
+	openlog($syslogId, LOG_NDELAY, LOG_USER);
+}
 
 if (isset($options['metadata-url'])) {
 	$metadataURL = $options['metadata-url'];
@@ -109,7 +115,8 @@ if (isset($options['min-sp-count'])) {
 	} elseif (preg_match('/^\d+$/', $options['min-sp-count'])) {
 		$minSPCount = $options['min-sp-count'];
 	} else {
-		exit("Exiting: invalid value for --min-sp-count parameter\n");
+		reportError("Exiting: invalid value for --min-sp-count parameter\n");
+		exit(1);
 	}
 } else {
 	$minSPCount = 0;
@@ -127,7 +134,8 @@ if (isset($options['min-idp-count'])) {
 	} elseif (preg_match('/^\d+$/', $options['min-idp-count'])) {
 		$minIDPCount = $options['min-idp-count'];
 	} else {
-		exit("Exiting: invalid value for --min-idp-count parameter\n");
+		reportError("Exiting: invalid value for --min-idp-count parameter\n");
+		exit(1);
 	}
 } else {
 	$minIDPCount = 0;
@@ -141,7 +149,7 @@ if ($metadataURL) {
 		exit(1);
 	}
 	if ($verbose) {
-		reportInfo("Downloading metadata from $metadataURL to $metadataFile\n");
+		reportInfo("Downloading metadata file from $metadataURL\n");
 	}
 	$result = @copy($metadataURL, $metadataFile);
 	if (!$result) {
@@ -176,12 +184,12 @@ list($metadataIDProviders, $metadataSProviders) = parseMetadata($metadataFile, $
 if (is_array($metadataIDProviders)){
 	$IDPCount = count($metadataIDProviders);
 	if ($IDPCount < $minIDPCount) {
-		reportError("Exiting: number of Identity Providers found ($IDPCount) lower than expected ($minIDPCount)\n");
+		reportError("Exiting: number of identity providers found ($IDPCount) lower than expected ($minIDPCount)\n");
 		exit(1);
 	}
 
 	if ($verbose) {
-		reportInfo("Dumping $IDPCount extracted Identity Providers to file $metadataIDPFile\n");
+		reportInfo("Dumping $IDPCount extracted identity providers to file $metadataIDPFile\n");
 	}
 	dumpFile($metadataTempIDPFile, $metadataIDProviders, 'metadataIDProviders');
 	
@@ -195,12 +203,12 @@ if (is_array($metadataIDProviders)){
 if (is_array($metadataSProviders)){
 	$SPCount = count($metadataSProviders);
 	if ($SPCount < $minSPCount) {
-		reportError("Exiting: number of Service Providers found ($SPCount) lower than expected ($minSPCount)\n");
+		reportError("Exiting: number of service providers found ($SPCount) lower than expected ($minSPCount)\n");
 		exit(1);
 	}
 
 	if ($verbose) {
-		reportInfo("Dumping $SPCount extracted Service Providers to file $metadataSPFile\n");
+		reportInfo("Dumping $SPCount extracted service providers to file $metadataSPFile\n");
 	}
 	dumpFile($metadataTempSPFile, $metadataSProviders, 'metadataSProviders');
 	
@@ -221,11 +229,14 @@ if ($metadataURL) {
 	}
 }
 
+if ($syslog) {
+	closelog();
+}
+
 function reportError($message) {
-	global $syslog, $prefix;
+	global $syslog;
 
 	if ($syslog) {
-		openlog($prefix, LOG_NDELAY, LOG_USER);
 		syslog(LOG_ERR, $message);
 	} else {
 		fwrite(STDERR, $message);
@@ -233,10 +244,9 @@ function reportError($message) {
 }
 
 function reportInfo($message) {
-	global $syslog, $prefix;
+	global $syslog;
 
 	if ($syslog) {
-		openlog($prefix, LOG_NDELAY, LOG_USER);
 		syslog(LOG_INFO, $message);
 	} else {
 		fwrite(STDOUT, $message);
