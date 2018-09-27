@@ -34,6 +34,10 @@ Argument Description
 --min-idp-count <count>     Minimum expected number of IdPs in metadata
 --min-sp-count <count>      Minimum expected number of SPs in metadata
 --language <locale>         Language locale, e.g. 'en', 'jp', ...
+--filter-idps-by-ec         Only process IdPs that are in given 
+                            entity category. Multiple categories
+                            can be provided space separated. 
+                            If the IdP is in none, the IdP is ignored.
 --syslog                    Use syslog for reporting
 --syslog-id <id>            Process identity for syslog messages
 --verbose | -v              Verbose mode
@@ -55,6 +59,7 @@ $longopts = array(
     "metadata-sp-file:",
     "min-idp-count:",
     "min-sp-count:",
+    "filter-idps-by-ec:",
     "language:",
     "verbose",
     "syslog",
@@ -139,6 +144,12 @@ if (isset($options['min-idp-count'])) {
 	}
 } else {
 	$minIDPCount = 0;
+}
+
+if(isset($options['filter-idps-by-ec'])){
+	$filterEntityCategory = $options['filter-idps-by-ec'];
+} else {
+	$filterEntityCategory = false;
 }
 
 // Input validation

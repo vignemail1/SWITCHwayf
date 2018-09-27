@@ -216,7 +216,7 @@ function parseMetadata($metadataFile, $defaultLanguage){
 // Processes an IDPRoleDescriptor XML node and returns an IDP entry or false if 
 // something went wrong
 function processIDPRoleDescriptor($IDPRoleDescriptorNode){
-	global $defaultLanguage, $supportHideFromDiscoveryEntityCategory;
+	global $defaultLanguage, $supportHideFromDiscoveryEntityCategory, $filterEntityCategory;
 	
 	$IDP = Array();
 	$Profiles = Array();
@@ -225,6 +225,13 @@ function processIDPRoleDescriptor($IDPRoleDescriptorNode){
 	// category attribute
 	if (!isset($supportHideFromDiscoveryEntityCategory) || $supportHideFromDiscoveryEntityCategory){
 		if (hasHideFromDiscoveryEntityCategory($IDPRoleDescriptorNode)){
+			return false;
+		}
+	}
+	
+	// Skip if IdPs should be filtered by entity category
+	if (isset($filterEntityCategory) && $filterEntityCategory){
+		if (!hasSpecificEntityCategory($IDPRoleDescriptorNode, $filterEntityCategory)){
 			return false;
 		}
 	}
@@ -615,6 +622,26 @@ function hasHideFromDiscoveryEntityCategory($IDPRoleDescriptorNode){
 	
 	foreach( $AttributeValues as $AttributeValue ){
 		if (trim($AttributeValue->nodeValue) == 'http://refeds.org/category/hide-from-discovery'){
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+// Returns true if IdP has specific entity category attribute
+function hasSpecificEntityCategory($IDPRoleDescriptorNode, $filterEntityCategory){
+	// Get SAML Attributes for this entity
+	$AttributeValues = $IDPRoleDescriptorNode->parentNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:assertion', 'AttributeValue');
+	
+	if (!$AttributeValues || $AttributeValues->length < 1){
+		return false;
+	}
+	
+	$entityCategories = explode(' ', $filterEntityCategory);
+	foreach( $AttributeValues as $AttributeValue ){
+		$thisCategory = trim($AttributeValue->nodeValue);
+		if (in_array($thisCategory, $entityCategories)){
 			return true;
 		}
 	}

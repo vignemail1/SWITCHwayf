@@ -161,6 +161,12 @@
 // be manually added using the Embedded WAYF.
 //$supportHideFromDiscoveryEntityCategory = true;
 
+// Only process IDPs with a particular entity category. All
+// others are ignored and not taken into account.
+// Multiple entity category identifiers can be provided 
+// space separated. If the IdP is in none of them, 
+// the IdP is ignored.
+//$filterEntityCategory = 'http://example.com/category/example-member';
 
 // Whether or not to add the entityID of the preselected IdP to the
 // exported JSON/Text/PHP Code

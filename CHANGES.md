@@ -6,7 +6,7 @@ See LICENSE file for details.
 SWITCHwayf Changes
 ==================
 
-SWITCHwayf version: v1.22
+SWITCHwayf version: v1.3
 Bundled with:
 
 * JQuery v3.2.1
@@ -41,6 +41,8 @@ SWITCHwayf Version History
    - Changed structure of directory and files
      Added update-metadata.php for handling metadata.
      Code provided by Guillaume Rousse.
+   - Added code to filter IdPs by entity categories.
+     Code provided by Michael Simon
 
 * Version 1.21 - Release date: 19. January 2018
   - Allow loading configuration from a path in a 
@@ -297,6 +299,7 @@ alphabetically.
 - Martins Purins from Latvijas Universitates (LV)
 - Olivier Salaün from RENATER (FR)
 - Tom Scavo from Internet2 (US)
+- Michael Simon from KIT (DE)
 - Andrew Sokolov, Saint Petersburg State University (RU)
 - Mika Suvanto from CSC (FI)
 - Huân Thebault from Centre de Calcul de l'IN2P3 (FR)
