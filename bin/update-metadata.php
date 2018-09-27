@@ -142,7 +142,7 @@ if (isset($options['min-idp-count'])) {
 }
 
 // Input validation
-if ($metadataURL) {
+if (isset($metadataURL) && $metadataURL) {
 	$metadataFile = tempnam(sys_get_temp_dir(), 'metadata');
 	if (!ini_get('allow_url_fopen')) {
 		reportError("Exiting: allow_url_fopen disabled, unabled to download $metadataURL\n");
@@ -219,7 +219,7 @@ if (is_array($metadataSProviders)){
 }
 
 // clean up if needed
-if ($metadataURL) {
+if (isset($metadataURL) && $metadataURL) {
 	$result = @unlink($metadataFile);
 	if (!$result) {
 		$error = error_get_last();
