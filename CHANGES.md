@@ -43,6 +43,7 @@ SWITCHwayf Version History
      Code provided by Guillaume Rousse.
    - Added code to filter IdPs by entity categories.
      Code provided by Michael Simon
+  - Added Turkish translation provided by M. Uğur Yilmaz
 
 * Version 1.21 - Release date: 19. January 2018
   - Allow loading configuration from a path in a 
@@ -304,6 +305,7 @@ alphabetically.
 - Mika Suvanto from CSC (FI)
 - Huân Thebault from Centre de Calcul de l'IN2P3 (FR)
 - Prof. Kazutsuna Yamaji from NII National Institute of Informatics (JP)
+- M. Uğur Yilmaz, TÜBİTAK-ULAKBİM (TR)
 - And of course all SWITCH staff members who have contributed suggestions,
   bug fixes and translation to this code.
 

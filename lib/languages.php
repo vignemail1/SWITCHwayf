@@ -311,3 +311,51 @@ $langStrings['ja']['unknown_sp'] = 'SP <code>\'%s\'</code> はメタデータに
 $langStrings['ja']['no_idp_found'] = 'この検索キーでは機関が見つかりません';
 $langStrings['ja']['no_idp_available'] = '利用できる機関がありません';
 $langStrings['ja']['last_used'] = '前回利用';
+
+
+// In particular you might want to override these three locales or set the
+// to an empty string in order to hide them if they are not needed.
+$langStrings['tr']['about_federation'] = 'Federasyon hakk&inodot;nda';  // This string can be hidden by setting it to ''
+$langStrings['tr']['about_organisation'] = 'Federasyon &Idot;&scedil;letmecisi Hakk&inodot;nda'; // This string can be hidden by setting it to ''
+$langStrings['tr']['additional_info'] = 'Ek bilgi ekleyin; &ouml;rne&gbreve;in g&ouml;r&uuml;nt&uuml;lemek istedi&gbreve;iniz bir <a href="javascript:alert(\'languages.php dosyas&inodot;nda beni &ouml;zelle&scedil;tirin.\')">ba&gbreve;lant&inodot;</a>.'; // This string can be hidden by setting it to ''
+
+// Generic strings
+$langStrings['tr']['faq'] = 'SSS'; // This string can be hidden by setting it to ''
+$langStrings['tr']['help'] = 'Yard&inodot;m';// This string can be hidden by setting it to ''
+$langStrings['tr']['privacy'] = 'Veri Gizlili&gbreve;i'; // This string can be hidden by setting it to ''
+$langStrings['tr']['title'] = 'Kurum Se&ccedil;imi';
+$langStrings['tr']['header'] = 'Kurumunuzu se&ccedil;in';
+$langStrings['tr']['make_selection'] = 'Bir kurum se&ccedil;melisiniz';
+$langStrings['tr']['settings'] = 'Bu taray&inodot;c&inodot; i&ccedil;in varsay&inodot;lan kurum';
+$langStrings['tr']['permanent_select_header'] = 'Kurumunuzu kal&inodot;c&inodot; olarak ayarlay&inodot;n';
+$langStrings['tr']['permanent_cookie'] = 'Bu sayfada, bu taray&inodot;c&inodot; i&ccedil;in bir <strong>varsay&inodot;lan kurum</strong> ayarlayabilirsiniz. Varsay&inodot;lan bir kurum ayarlarsan&inodot;z, giri&scedil; yapman&inodot;z gereken hizmetlere eri&scedil;ti&gbreve;inizde sizi do&gbreve;rudan kurumunuza y&ouml;nlendirecektir. Birden &ccedil;ok kurumdan kullan&inodot;c&inodot; hesab&inodot; kullan&inodot;yorsan&inodot;z, bu &ouml;zelli&gbreve;i kullanmay&inodot;n.';
+$langStrings['tr']['permanent_cookie_notice'] = 'Varsay&inodot;lan olarak se&ccedil;ilecek kurum:';
+$langStrings['tr']['permanent_cookie_note'] = 'Bu varsay&inodot;lan ayar&inodot;, &scedil;u sayfada s&inodot;f&inodot;rlayabilirsiniz: %s';
+$langStrings['tr']['delete_permanent_cookie_button'] = 'S&inodot;f&inodot;rla';
+$langStrings['tr']['goto_sp'] = 'Kaydet ve devam et';
+$langStrings['tr']['permanently_remember_selection'] = 'Se&ccedil;imi kal&inodot;c&inodot; olarak hat&inodot;rla ve bundan sonra bu ad&inodot;m&inodot; atla.';
+$langStrings['tr']['confirm_permanent_selection'] = 'Se&ccedil;ilen kurumu varsay&inodot;lan kurumunuz yapmak istedi&gbreve;inizden emin misiniz? Birden &ccedil;ok kurumdan kullan&inodot;c&inodot; hesab&inodot;n&inodot;z varsa devam etmeyin.';
+$langStrings['tr']['save_button'] = 'Kaydet';
+$langStrings['tr']['access_host'] = '%s hizmetine eri&scedil;mek i&ccedil;in l&uuml;tfen ba&gbreve;l&inodot; oldu&gbreve;unuz kurulu&scedil;u se&ccedil;in veya aray&inodot;n.';
+$langStrings['tr']['select_idp'] = 'Ba&gbreve;l&inodot; oldu&gbreve;unuz kurumu se&ccedil;in.';
+$langStrings['tr']['search_idp'] = 'Ba&#x011F;l&#x0131; oldu&#x011F;unuz kurumun ad&#x0131;n&#x0131; girin ...';
+$langStrings['tr']['remember_selection'] = 'Bu taray&inodot;c&inodot;daki oturum i&ccedil;in se&ccedil;imi hat&inodot;rla.';
+$langStrings['tr']['invalid_user_idp'] = 'G&ouml;nderdi&gbreve;iniz veride bir hata olabilir.<br><code>\'%s\'</code> giri&scedil;iniz ge&ccedil;ersiz.<br> Sadece a&scedil;a&gbreve;&inodot;daki de&gbreve;erlere izin veriliyor:';
+$langStrings['tr']['contact_assistance'] = 'L&uuml;tfen yard&inodot;m i&ccedil;in <a href="mailto:%s">%s</a> ile ileti&scedil;ime ge&ccedil;in.';
+$langStrings['tr']['no_arguments'] = 'Hi&ccedil;bir arg&uuml;man al&inodot;nmad&inodot;!';
+$langStrings['tr']['arguments_missing'] = 'Web sunucusu ge&ccedil;ersiz bir sorgu ald&inodot; &ccedil;&uuml;nk&uuml; baz&inodot; arg&uuml;manlar eksik g&ouml;r&uuml;n&uuml;yor.<br>A&scedil;a&gbreve;&inodot;daki arg&uuml;manlar al&inodot;nd&inodot;:';
+$langStrings['tr']['valid_request_description'] = 'Ge&ccedil;erli bir istekte en az&inodot;ndan, ge&ccedil;erli de&gbreve;erlere sahip, <code>shire</code> ve <code>target</code> arg&uuml;manlar&inodot; olmal&inodot;. &Idot;ste&gbreve;e ba&gbreve;l&inodot; olarak, taray&inodot;c&inodot;y&inodot; bir kuruma otomatik olarak y&ouml;nlendirmek ve ayn&inodot; y&ouml;nlendirmeyi mevcut oturum i&ccedil;inde de otomatik yapmak i&ccedil;in <code>providerID</code>, <code>origin</code> ve <code>redirect</code> arg&uuml;manlar&inodot; da sa&gbreve;lanabilir.';
+$langStrings['tr']['valid_saml2_request_description'] = 'Ge&ccedil;erli bir SAML2 iste&gbreve;inde en az&inodot;ndan, ge&ccedil;erli de&gbreve;erlere sahip, <code>entityID</code> ve <code>return</code> arg&uuml;manlar&inodot; olmal&inodot;.<code>return</code> arg&uuml;man&inodot; yerine, Servis Sa&gbreve;lay&inodot;c&inodot; &uuml;st verisi <code>DiscoveryResponse</code> u&ccedil; noktas&inodot;n&inodot; i&ccedil;erebilir. &Idot;ste&gbreve;e ba&gbreve;l&inodot; olarak, taray&inodot;c&inodot;y&inodot; bir kuruma otomatik olarak y&ouml;nlendirmek ve ayn&inodot; y&ouml;nlendirmeyi mevcut oturum i&ccedil;inde de otomatik yapmak i&ccedil;in <code>isPassive</code>, <code>policy</code> ve <code>returnIDParam</code> arg&uuml;manlar&inodot; da sa&gbreve;lanabilir.';
+$langStrings['tr']['invalid_query'] = 'Hata: Ge&ccedil;ersiz Sorgu';
+$langStrings['tr']['select_button'] = 'Se&ccedil;';
+$langStrings['tr']['login'] = 'Gir';
+$langStrings['tr']['login_with'] = 'Bununla giri&scedil; yap:';
+$langStrings['tr']['other_federation'] = 'Di&gbreve;er federasyonlardan';
+$langStrings['tr']['logged_in'] = 'Zaten do&gbreve;rulanm&inodot;&scedil;s&inodot;n&inodot;z. <a href=\"%s\">&Idot;lerleyin</a>';
+$langStrings['tr']['most_used'] = 'En &ccedil;ok kullan&inodot;lan kurumlar';
+$langStrings['tr']['invalid_return_url'] = '<code>\'%s\'</code> d&ouml;n&uuml;&scedil; URL\'i ge&ccedil;erli bir URL de&gbreve;il.';
+$langStrings['tr']['unverified_return_url'] = '<code>\'%s\'</code> d&ouml;n&uuml;&scedil; URL\'i, <code>\'%s\'</code> Servis Sa&gbreve;lay&inodot;c&inodot;s&inodot; i&ccedil;in do&gbreve;rulanamad&inodot;.';
+$langStrings['tr']['unknown_sp'] = '<code>\'%s\'</code> Servis Sa&gbreve;lay&inodot;c&inodot;s&inodot; &uuml;st veride bulunamad&inodot;, yani bilinmiyor.';
+$langStrings['tr']['no_idp_found'] = 'Bu arama metni i&ccedil;in bir kurum bulunamad&inodot;';
+$langStrings['tr']['no_idp_available'] = 'Kurum yok';
+$langStrings['tr']['last_used'] = 'Son kullan&inodot;lan';
