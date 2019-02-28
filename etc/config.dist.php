@@ -75,6 +75,12 @@
   // (src="data:image/png;base64...") will however still be displayed
   //$disableRemoteLogos = false;
 
+// Whether or not use Select2 drop down
+// Attention: setting this to true, overrides $useImprovedDropDownList param
+//$useSelect2 = true;
+
+// Config to change the number of IdP fetched when using Select2 dropdown
+//$select2PageSize = 100;
 
 // Number of previously used Identity Providers to show at top of drop-down list
 // Default is 3, set to 0 to disable
@@ -143,7 +149,7 @@
   // Requires $useEmbeddedWAYF to be true
   //$useEmbeddedWAYFPrivacyProtection = false;
 
-  // If enabled, the referer hostname of the request must match an assertion	
+  // If enabled, the referer hostname of the request must match an assertion
   // consumer URL or a discovery URL of a Service Provider in $metadataSPFile
   // in order to let the Embedded WAYF preselect an Identity Provider.
   // Therefore, this option is a good compromise between data protection and
@@ -163,8 +169,8 @@
 
 // Only process IDPs with a particular entity category. All
 // others are ignored and not taken into account.
-// Multiple entity category identifiers can be provided 
-// space separated. If the IdP is in none of them, 
+// Multiple entity category identifiers can be provided
+// space separated. If the IdP is in none of them,
 // the IdP is ignored.
 //$filterEntityCategory = 'http://example.com/category/example-member';
 

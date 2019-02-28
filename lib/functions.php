@@ -70,6 +70,8 @@ function initConfigOptions()
     $defaults['cookieValidity'] = 100;
     $defaults['showPermanentSetting'] = false;
     $defaults['useImprovedDropDownList'] = true;
+    $defaults['useSelect2'] = false;
+    $defaults['select2PageSize'] = 50;
     $defaults['disableRemoteLogos'] = false;
     $defaults['useSAML2Metadata'] = false;
     $defaults['SAML2MetaOverLocalConf'] = false;
