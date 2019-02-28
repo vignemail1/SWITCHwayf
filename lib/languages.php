@@ -1,9 +1,9 @@
 <?php // Copyright (c) 2019, SWITCH
 
 // Localized language strings for SWITCHwayf
-// Make sure to use HTML entities instead of plain UTF-8 characters for
+// Make sure to use HTML entities instead of plain UTF-8 characters for 
 // non-ASCII characters if you are using the Embedded WAYF. It could be that the
-// Embedded WAYF is used on non-UTF8 web pages, which then could cause
+// Embedded WAYF is used on non-UTF8 web pages, which then could cause 
 // encoding issues
 
 // *********************************************************************************
@@ -14,12 +14,12 @@
 // ****************************
 
 // To permanently customize locales such that they are not overwritten by updates
-// of the SWITCHwayf, create a file 'custom-languages.php' and override any
+// of the SWITCHwayf, create a file 'custom-languages.php' and override any 
 // individual locale in the $langStrings array. For example like this:
-//
+// 
 // $langStrings['en']['about_federation'] = 'About Example Federation';
 // $langStrings['en']['additional_info'] = 'My <b>sample HTML content</b>';
-//
+// 
 //
 // Set a locale to an empty string ('') in order to hide it
 // Note that any string in custom-languages.php will survive updates
@@ -35,7 +35,7 @@ $langStrings['en']['faq'] = 'FAQ'; // This string can be hidden by setting it to
 $langStrings['en']['help'] = 'Help';// This string can be hidden by setting it to ''
 $langStrings['en']['privacy'] = 'Data Privacy'; // This string can be hidden by setting it to ''
 $langStrings['en']['title'] = 'Organisation Selection';
-$langStrings['en']['header'] = 'Select your organisation';
+$langStrings['en']['header'] = 'Select your organisation'; 
 $langStrings['en']['make_selection'] = 'You must select an organisation.';
 $langStrings['en']['settings'] = 'Default organisation for this web browser';
 $langStrings['en']['permanent_select_header'] = 'Permanently set your organisation';
@@ -128,50 +128,50 @@ $langStrings['de']['last_used'] = 'Zuletzt benutzt';
 // ****************************
 
 // Read note on line 16 how to properly customize locales so that they survive updates
-//$langStrings['fr']['about_federation'] = '\u00e0 propos de la f\u00e9deration'; // This string can be hidden by setting it to ''
-//$langStrings['fr']['about_organisation'] = '\u00e0 propos d\'op\u00e9rateur de al Féderation'; // This string can be hidden by setting it to ''
+//$langStrings['fr']['about_federation'] = '&Agrave; propos de la f&eacute;deration'; // This string can be hidden by setting it to ''
+//$langStrings['fr']['about_organisation'] = '&Agrave; propos d\'op&eacute;rateur de al Féderation'; // This string can be hidden by setting it to ''
 //$langStrings['fr']['additional_info'] = 'Add some additional information and for example a <a href="javascript:alert(\'Customize me in languages.php\')">link</a> you want to display.'; // This string can be hidden by setting it to ''
 
 // Generic strings
 $langStrings['fr']['faq'] = 'FAQ'; // This string can be hidden by setting it to ''
 $langStrings['fr']['help'] = 'Aide';// This string can be hidden by setting it to ''
-$langStrings['fr']['privacy'] = 'Protection des donn\u00e9es';// This string can be hidden by setting it to ''
-$langStrings['fr']['title'] = 'S\u00e9lection de votre \u00e9tablissement';
-$langStrings['fr']['header'] = 'S\u00e9lectionnez votre \u00e9tablissement';
-$langStrings['fr']['make_selection'] = 'Vous devez s\u00e9lectionner un \u00e9tablissement valide.';
-$langStrings['fr']['settings'] = '\u00e9tablissement par d\u00e9faut pour ce navigateur';
-$langStrings['fr']['permanent_select_header'] = 'S\u00e9lection d\'un \u00e9tablissement de fa\u00e8on permanente';
-$langStrings['fr']['permanent_cookie'] = 'Sur cette page vous pouvez d\u00e9finir un <strong>\u00e9tablissement par d\u00e9faut</strong> pour ce navigateur. En d\u00e9finissant un \u00e9tablissement par d\u00e9faut, vous serez automatiquement redirig\u00e9 vers cet \u00e9tablissement lorsque vous acc\u00e9dez \u00e0 une ressource. N\'utilisez pas cette fonction si vous avez plusieurs identit\u00e9s dans plusieurs \u00e9tablissements.';
-$langStrings['fr']['permanent_cookie_notice'] = 'Par d\u00e9faut l\'\u00e9tablissement sera : ';
-$langStrings['fr']['permanent_cookie_note'] = 'Vous pouvez r\u00e9initialiser la propri\u00e9t\u00e9 par d\u00e9faut en allant \u00e0 l\'adresse: %s';
-$langStrings['fr']['delete_permanent_cookie_button'] = 'R\u00e9initialiser';
+$langStrings['fr']['privacy'] = 'Protection des donn&eacute;es';// This string can be hidden by setting it to ''
+$langStrings['fr']['title'] = 'S&eacute;lection de votre &eacute;tablissement';
+$langStrings['fr']['header'] = 'S&eacute;lectionnez votre &eacute;tablissement';
+$langStrings['fr']['make_selection'] = 'Vous devez s&eacute;lectionner un &eacute;tablissement valide.';
+$langStrings['fr']['settings'] = '&Eacute;tablissement par d&eacute;faut pour ce navigateur';
+$langStrings['fr']['permanent_select_header'] = 'S&eacute;lection d\'un &eacute;tablissement de fa&ccedil;on permanente';
+$langStrings['fr']['permanent_cookie'] = 'Sur cette page vous pouvez d&eacute;finir un <strong>&eacute;tablissement par d&eacute;faut</strong> pour ce navigateur. En d&eacute;finissant un &eacute;tablissement par d&eacute;faut, vous serez automatiquement redirig&eacute; vers cet &eacute;tablissement lorsque vous acc&eacute;dez &agrave; une ressource. N\'utilisez pas cette fonction si vous avez plusieurs identit&eacute;s dans plusieurs &eacute;tablissements.';
+$langStrings['fr']['permanent_cookie_notice'] = 'Par d&eacute;faut l\'&eacute;tablissement sera : ';
+$langStrings['fr']['permanent_cookie_note'] = 'Vous pouvez r&eacute;initialiser la propri&eacute;t&eacute; par d&eacute;faut en allant &agrave; l\'adresse: %s';
+$langStrings['fr']['delete_permanent_cookie_button'] = 'R&eacute;initialiser';
 $langStrings['fr']['goto_sp'] = 'Sauver et continuez';
-$langStrings['fr']['permanently_remember_selection'] = 'Se souvenir de mon choix d\u00e9finitivement et contourner cette \u00e9tape \u00e0 partir de maintenant.';
-$langStrings['fr']['confirm_permanent_selection'] = '\u00eates-vous s\u00fbr de ce choix d&rsquo;\u00e9tablissement par d\u00e9faut ? N\'utilisez pas cette fonctionnalit\u00e9 si vous poss\u00e9der des comptes dans plusieurs \u00e9tablissements.';
+$langStrings['fr']['permanently_remember_selection'] = 'Se souvenir de mon choix d&eacute;finitivement et contourner cette &eacute;tape &agrave; partir de maintenant.';
+$langStrings['fr']['confirm_permanent_selection'] = '&Ecirc;tes-vous s&ucirc;r de ce choix d&rsquo;&eacute;tablissement par d&eacute;faut ? N&rsquo;utilisez pas cette fonctionnalit&eacute; si vous poss&eacute;der des comptes dans plusieurs &eacute;tablissements.';
 $langStrings['fr']['save_button'] = 'Sauver';
-$langStrings['fr']['access_host'] = 'Pour acc\u00e9der au service %s s\u00e9lectionnez ou cherchez l\'\u00e9tablissement auquel vous appartenez.';
-$langStrings['fr']['select_idp'] = 'Veuillez s\u00e9lectionner l\'\u00e9tablissement auquel vous appartenez.';
-$langStrings['fr']['search_idp'] = 'Veuillez entrer le nom de votre \u00e9tablissement...';
+$langStrings['fr']['access_host'] = 'Pour acc&eacute;der au service %s s&eacute;lectionnez ou cherchez l\'&eacute;tablissement auquel vous appartenez.';
+$langStrings['fr']['select_idp'] = 'Veuillez s&eacute;lectionner l\'&eacute;tablissement auquel vous appartenez.';
+$langStrings['fr']['search_idp'] = 'Veuillez entrer le nom de votre &eacute;tablissement...';
 $langStrings['fr']['remember_selection'] = 'Se souvenir de mon choix pour cette session.';
-$langStrings['fr']['invalid_user_idp'] = 'Une erreur s\'est produite.<br>La valeur de votre donn\u00e9e <code>\'%s\'</code> n\'est pas valide.<br>Seules ces valeurs sont admises :';
+$langStrings['fr']['invalid_user_idp'] = 'Une erreur s\'est produite.<br>La valeur de votre donn&eacute;e <code>\'%s\'</code> n\'est pas valide.<br>Seules ces valeurs sont admises :';
 $langStrings['fr']['contact_assistance'] = 'Contactez le support <a href="mailto:%s">%s</a> si l\'erreur persiste.';
-$langStrings['fr']['no_arguments'] = 'Aucun param&egrave;tre re\u00e8u !';
-$langStrings['fr']['arguments_missing'] = 'La requ\u00eate n\'est pas valide, certains param&egrave;tres sont manquants.<br>Les param&egrave;tres suivants ont \u00e9t\u00e9 re\u00e8us :';
-$langStrings['fr']['valid_request_description'] = 'Une requ\u00eate valide doit contenir au moins les param&egrave;tres <code>shire</code> et <code>target</code>. Les param&egrave;tres optionnels <code>providerID</code>, <code>origin</code> et <code>redirect</code> peuvent \u00eatre utilis\u00e9s pour rediriger automatiquement le navigateur vers un \u00e9tablissement.';
-$langStrings['fr']['valid_saml2_request_description'] = 'Une requ\u00eate valide doit contenir au moins les param&egrave;tres <code>entityID</code> et <code>return</code>. Au lieu de param&egrave;tre <code>return</code>, metadata pour ce Service Provider peut contenir un URL pour le <code>DiscoveryResponse</code>. Les param&egrave;tres optionnel <code>isPassive</code>, <code>policy</code> et <code>returnIDParam</code> peuvent \u00eatre utilis\u00e9s pour rediriger automatiquement le navigateur vers un \u00e9tablissement.';
-$langStrings['fr']['invalid_query'] = 'Erreur : La requ\u00eate n\'est pas valide';
-$langStrings['fr']['select_button'] = 'S\u00e9lection';
+$langStrings['fr']['no_arguments'] = 'Aucun param&egrave;tre re&ccedil;u !';
+$langStrings['fr']['arguments_missing'] = 'La requ&ecirc;te n\'est pas valide, certains param&egrave;tres sont manquants.<br>Les param&egrave;tres suivants ont &eacute;t&eacute; re&ccedil;us :';
+$langStrings['fr']['valid_request_description'] = 'Une requ&ecirc;te valide doit contenir au moins les param&egrave;tres <code>shire</code> et <code>target</code>. Les param&egrave;tres optionnels <code>providerID</code>, <code>origin</code> et <code>redirect</code> peuvent &ecirc;tre utilis&eacute;s pour rediriger automatiquement le navigateur vers un &eacute;tablissement.';
+$langStrings['fr']['valid_saml2_request_description'] = 'Une requ&ecirc;te valide doit contenir au moins les param&egrave;tres <code>entityID</code> et <code>return</code>. Au lieu de param&egrave;tre <code>return</code>, metadata pour ce Service Provider peut contenir un URL pour le <code>DiscoveryResponse</code>. Les param&egrave;tres optionnel <code>isPassive</code>, <code>policy</code> et <code>returnIDParam</code> peuvent &ecirc;tre utilis&eacute;s pour rediriger automatiquement le navigateur vers un &eacute;tablissement.';
+$langStrings['fr']['invalid_query'] = 'Erreur : La requ&ecirc;te n\'est pas valide';
+$langStrings['fr']['select_button'] = 'S&eacute;lection';
 $langStrings['fr']['login'] = 'Connexion';
 $langStrings['fr']['login_with'] = 'Se connecter avec:';
-$langStrings['fr']['other_federation'] = 'D\'autres f\u00e9derations';
-$langStrings['fr']['logged_in'] = 'Vous \u00eates d\u00e9j\u00e0 authentifi\u00e9. <a href=\"%s\">Continuez</a>.';
+$langStrings['fr']['other_federation'] = 'D\'autres f&eacute;derations';
+$langStrings['fr']['logged_in'] = 'Vous &ecirc;tes d&eacute;j&agrave; authentifi&eacute;. <a href=\"%s\">Continuez</a>.';
 $langStrings['fr']['invalid_return_url'] = 'L\'URL de retour <code>\'%s\'</code> n\'est pas une URL valide.';
-$langStrings['fr']['unverified_return_url'] = 'L\'URL de retour <code>\'%s\'</code> ne peut pas \u00eatre v\u00e9rifi\u00e9 pour le fournisseur de service <code>\'%s\'</code>.';
-$langStrings['fr']['unknown_sp'] = 'Le fournisseur de service <code>\'%s\'</code> ne pouvait pas \u00eatre trouv\u00e9 dans les meta donn\u00e9es et il est donc inconnu.';
-$langStrings['fr']['no_idp_found'] = 'Aucun \u00e9tablissement trouv\u00e9 pour ce texte recherch\u00e9';
-$langStrings['fr']['no_idp_available'] = 'Aucun \u00e9tablissement disponible';
-$langStrings['fr']['most_used'] = '\u00e9tablissements les plus utilis\u00e9s';
-$langStrings['fr']['last_used'] = 'Derni&egrave;rement utilis\u00e9s';
+$langStrings['fr']['unverified_return_url'] = 'L\'URL de retour <code>\'%s\'</code> ne peut pas &ecirc;tre v&eacute;rifi&eacute; pour le fournisseur de service <code>\'%s\'</code>.';
+$langStrings['fr']['unknown_sp'] = 'Le fournisseur de service <code>\'%s\'</code> ne pouvait pas &ecirc;tre trouv&eacute; dans les meta donn&eacute;es et il est donc inconnu.';
+$langStrings['fr']['no_idp_found'] = 'Aucun &eacute;tablissement trouv&eacute; pour ce texte recherch&eacute;';
+$langStrings['fr']['no_idp_available'] = 'Aucun &eacute;tablissement disponible';
+$langStrings['fr']['most_used'] = '&Eacute;tablissements les plus utilis&eacute;s';
+$langStrings['fr']['last_used'] = 'Derni&egrave;rement utilis&eacute;s';
 
 
 // ****************************
@@ -192,7 +192,7 @@ $langStrings['it']['header'] = 'Selezioni la sua organizzazione';
 $langStrings['it']['make_selection'] = 'Per favore, scelga una valida organizzazione.';
 $langStrings['it']['settings'] = 'Organizzazione predefinita per questo web browser.';
 $langStrings['it']['permanent_select_header'] = 'Salvare l\'organizzazione.';
-$langStrings['it']['permanent_cookie'] = 'In questa pagina pu&ograve; impostare la <strong>organizzazione predefinita</strong> per questo web browser. Impostare una organizzazione predefinita consentir\u00e0 al suo web browser di venir reindirizzato alla sua organizzazione automaticamente ogni qual volta lei tenter\u00e0 di accedere a risorse per le quali necessita un\'autentificazione. Non &egrave; da impostare se lei possiede e usa correntemente differenti account.';
+$langStrings['it']['permanent_cookie'] = 'In questa pagina pu&ograve; impostare la <strong>organizzazione predefinita</strong> per questo web browser. Impostare una organizzazione predefinita consentir&agrave; al suo web browser di venir reindirizzato alla sua organizzazione automaticamente ogni qual volta lei tenter&agrave; di accedere a risorse per le quali necessita un\'autentificazione. Non &egrave; da impostare se lei possiede e usa correntemente differenti account.';
 $langStrings['it']['permanent_cookie_notice'] = 'L\'impostazione predefinita &egrave;:';
 $langStrings['it']['permanent_cookie_note'] = 'Pu&ograve; cambiare la sua impostazione predefinita sulla pagina: %s';
 $langStrings['it']['delete_permanent_cookie_button'] = 'Cancella';
@@ -215,7 +215,7 @@ $langStrings['it']['select_button'] = 'Seleziona';
 $langStrings['it']['login'] = 'Login';
 $langStrings['it']['login_with'] = 'Login con:';
 $langStrings['it']['other_federation'] = 'Di altra federaziones';
-$langStrings['it']['logged_in'] = 'Lei &egrave; gi\u00e0 autenticato. <a href=\"%s\">Proseguire</a>.';
+$langStrings['it']['logged_in'] = 'Lei &egrave; gi&agrave; autenticato. <a href=\"%s\">Proseguire</a>.';
 $langStrings['it']['most_used'] = 'Organizzaziones utilizzate pi&ugrave; spesso';
 
 
@@ -232,34 +232,34 @@ $langStrings['it']['most_used'] = 'Organizzaziones utilizzate pi&ugrave; spesso'
 $langStrings['pt']['faq'] = 'FAQ'; // This string can be hidden by setting it to ''
 $langStrings['pt']['help'] = 'Ajuda'; // This string can be hidden by setting it to ''
 $langStrings['pt']['privacy'] = 'Privacidade'; // This string can be hidden by setting it to ''
-$langStrings['pt']['title'] = 'Selec\u00e8&atilde;o de institui\u00e8&atilde;o';
-$langStrings['pt']['header'] = 'Seleccione a sua institui\u00e8&atilde;o';
-$langStrings['pt']['make_selection'] = 'Dever&aacute; seleccionar uma institui\u00e8&atilde;o V&aacute;lida';
-$langStrings['pt']['settings'] = 'Institui\u00e8&atilde;o por defeito para este web browser';
-$langStrings['pt']['permanent_select_header'] = 'Defina permanentemente a sua institui\u00e8&atilde;o';
-$langStrings['pt']['permanent_cookie'] = 'Nesta p&aacute;gina poder&aacute; definir a sua <strong>institui\u00e8&atilde;o</strong> para este web browser. Defenir uma institui\u00e8&atilde;o levar&aacute; a que seja redireccionado directamente para a sua institui\u00e8&atilde;o aquando do acesso de recursos. N&atilde;o use esta funcionalidade se possuir v&aacute;rias contas.';
-$langStrings['pt']['permanent_cookie_notice'] = 'A configura\u00e8&atilde;o &ecute;:';
-$langStrings['pt']['permanent_cookie_note'] = 'Poder&aacute; efectuar um reset \u00e0s configura\u00e8&otilde;es no URL %s';
+$langStrings['pt']['title'] = 'Selec&ccedil;&atilde;o de institui&ccedil;&atilde;o';
+$langStrings['pt']['header'] = 'Seleccione a sua institui&ccedil;&atilde;o';
+$langStrings['pt']['make_selection'] = 'Dever&aacute; seleccionar uma institui&ccedil;&atilde;o V&aacute;lida';
+$langStrings['pt']['settings'] = 'Institui&ccedil;&atilde;o por defeito para este web browser';
+$langStrings['pt']['permanent_select_header'] = 'Defina permanentemente a sua institui&ccedil;&atilde;o';
+$langStrings['pt']['permanent_cookie'] = 'Nesta p&aacute;gina poder&aacute; definir a sua <strong>institui&ccedil;&atilde;o</strong> para este web browser. Defenir uma institui&ccedil;&atilde;o levar&aacute; a que seja redireccionado directamente para a sua institui&ccedil;&atilde;o aquando do acesso de recursos. N&atilde;o use esta funcionalidade se possuir v&aacute;rias contas.';
+$langStrings['pt']['permanent_cookie_notice'] = 'A configura&ccedil;&atilde;o &ecute;:';
+$langStrings['pt']['permanent_cookie_note'] = 'Poder&aacute; efectuar um reset &agrave;s configura&ccedil;&otilde;es no URL %s';
 $langStrings['pt']['delete_permanent_cookie_button'] = 'Reset';
 $langStrings['pt']['goto_sp'] = 'Salve e continue';
-$langStrings['pt']['permanently_remember_selection'] = 'Memorize a sua selec\u00e8&atilde;o permanentemente e passe o mecanismo WAYF apartir de agora.';
-$langStrings['pt']['confirm_permanent_selection'] = 'Tem a certeza que pretende seleccionar a op\u00e8&atilde;o escolhida como a sua institui\u00e8&atilde;o? N&atilde;o seleccione se possui v&aacute;rias contas.';
+$langStrings['pt']['permanently_remember_selection'] = 'Memorize a sua selec&ccedil;&atilde;o permanentemente e passe o mecanismo WAYF apartir de agora.';
+$langStrings['pt']['confirm_permanent_selection'] = 'Tem a certeza que pretende seleccionar a op&ccedil;&atilde;o escolhida como a sua institui&ccedil;&atilde;o? N&atilde;o seleccione se possui v&aacute;rias contas.';
 $langStrings['pt']['save_button'] = 'Guarde';
 $langStrings['pt']['access_host'] = 'No sentido de aceder ao recurso em <code>\'%s\'</code> dever&aacute; autenticar-se.';
-$langStrings['pt']['select_idp'] = 'Seleccione a sua institui\u00e8&atilde;o.';
-$langStrings['pt']['remember_selection'] = 'Memorize a selec\u00e8&atilde;o para esta sess&atilde;o.';
+$langStrings['pt']['select_idp'] = 'Seleccione a sua institui&ccedil;&atilde;o.';
+$langStrings['pt']['remember_selection'] = 'Memorize a selec&ccedil;&atilde;o para esta sess&atilde;o.';
 $langStrings['pt']['invalid_user_idp'] = 'Poder&aacute; existir um erro nos dados que enviou.<br>Os valores enviados <code>\'%s\'</code> s&atilde;o inv&aacute;lidos.<br>Apenas os valores seguintes s&atilde;o permitidos:';
 $langStrings['pt']['contact_assistance'] = 'Contacte <a href="mailto:%s">%s</a> para assistencia.';
 $langStrings['pt']['no_arguments'] = 'Nenhum argumento recebido!';
-$langStrings['pt']['arguments_missing'] = 'O servidor web recebeu uma query inv&acute;lida devido \u00e0 falta de alguns argumentos. Foram recebidos os seguintes argumentos:';
+$langStrings['pt']['arguments_missing'] = 'O servidor web recebeu uma query inv&acute;lida devido &agrave; falta de alguns argumentos. Foram recebidos os seguintes argumentos:';
 $langStrings['pt']['valid_request_description'] = 'Um pedido v&acute;lido necessita de pelo menos dos atributos <code>shire</code> e <code>target</code> com valores v&acute;lidos. Opcionalmente os argumentos <code>providerID</code>, <code>origin</code> e <code>redirect</code> podem ser fornecidos para de uma forma autom&acute;tica redireccionar o browser do utilizador.';
 $langStrings['pt']['invalid_query'] = 'Erro: Query Invalida';
 $langStrings['pt']['select_button'] = 'Seleccione';
 $langStrings['pt']['login'] = 'Autenticar';
 $langStrings['pt']['login_with'] = 'Autenticar em:';
-$langStrings['pt']['other_federation'] = 'Outra Federa\u00e8Atilde;o';
+$langStrings['pt']['other_federation'] = 'Outra Federa&ccedil;Atilde;o';
 $langStrings['pt']['logged_in'] = 'J&aacute; se encontra autenticado. <a href=\"%s\">Continue</a>.';
-$langStrings['pt']['most_used'] = 'Institui\u00e8&atilde;o mais utilizada';
+$langStrings['pt']['most_used'] = 'Institui&ccedil;&atilde;o mais utilizada';
 
 
 // ****************************
@@ -323,39 +323,39 @@ $langStrings['tr']['additional_info'] = 'Ek bilgi ekleyin; &ouml;rne&gbreve;in g
 $langStrings['tr']['faq'] = 'SSS'; // This string can be hidden by setting it to ''
 $langStrings['tr']['help'] = 'Yard&inodot;m';// This string can be hidden by setting it to ''
 $langStrings['tr']['privacy'] = 'Veri Gizlili&gbreve;i'; // This string can be hidden by setting it to ''
-$langStrings['tr']['title'] = 'Kurum Se\u00e8imi';
-$langStrings['tr']['header'] = 'Kurumunuzu se\u00e8in';
-$langStrings['tr']['make_selection'] = 'Bir kurum se\u00e8melisiniz';
-$langStrings['tr']['settings'] = 'Bu taray&inodot;c&inodot; i\u00e8in varsay&inodot;lan kurum';
+$langStrings['tr']['title'] = 'Kurum Se&ccedil;imi';
+$langStrings['tr']['header'] = 'Kurumunuzu se&ccedil;in';
+$langStrings['tr']['make_selection'] = 'Bir kurum se&ccedil;melisiniz';
+$langStrings['tr']['settings'] = 'Bu taray&inodot;c&inodot; i&ccedil;in varsay&inodot;lan kurum';
 $langStrings['tr']['permanent_select_header'] = 'Kurumunuzu kal&inodot;c&inodot; olarak ayarlay&inodot;n';
-$langStrings['tr']['permanent_cookie'] = 'Bu sayfada, bu taray&inodot;c&inodot; i\u00e8in bir <strong>varsay&inodot;lan kurum</strong> ayarlayabilirsiniz. Varsay&inodot;lan bir kurum ayarlarsan&inodot;z, giri&scedil; yapman&inodot;z gereken hizmetlere eri&scedil;ti&gbreve;inizde sizi do&gbreve;rudan kurumunuza y&ouml;nlendirecektir. Birden \u00e8ok kurumdan kullan&inodot;c&inodot; hesab&inodot; kullan&inodot;yorsan&inodot;z, bu &ouml;zelli&gbreve;i kullanmay&inodot;n.';
-$langStrings['tr']['permanent_cookie_notice'] = 'Varsay&inodot;lan olarak se\u00e8ilecek kurum:';
+$langStrings['tr']['permanent_cookie'] = 'Bu sayfada, bu taray&inodot;c&inodot; i&ccedil;in bir <strong>varsay&inodot;lan kurum</strong> ayarlayabilirsiniz. Varsay&inodot;lan bir kurum ayarlarsan&inodot;z, giri&scedil; yapman&inodot;z gereken hizmetlere eri&scedil;ti&gbreve;inizde sizi do&gbreve;rudan kurumunuza y&ouml;nlendirecektir. Birden &ccedil;ok kurumdan kullan&inodot;c&inodot; hesab&inodot; kullan&inodot;yorsan&inodot;z, bu &ouml;zelli&gbreve;i kullanmay&inodot;n.';
+$langStrings['tr']['permanent_cookie_notice'] = 'Varsay&inodot;lan olarak se&ccedil;ilecek kurum:';
 $langStrings['tr']['permanent_cookie_note'] = 'Bu varsay&inodot;lan ayar&inodot;, &scedil;u sayfada s&inodot;f&inodot;rlayabilirsiniz: %s';
 $langStrings['tr']['delete_permanent_cookie_button'] = 'S&inodot;f&inodot;rla';
 $langStrings['tr']['goto_sp'] = 'Kaydet ve devam et';
-$langStrings['tr']['permanently_remember_selection'] = 'Se\u00e8imi kal&inodot;c&inodot; olarak hat&inodot;rla ve bundan sonra bu ad&inodot;m&inodot; atla.';
-$langStrings['tr']['confirm_permanent_selection'] = 'Se\u00e8ilen kurumu varsay&inodot;lan kurumunuz yapmak istedi&gbreve;inizden emin misiniz? Birden \u00e8ok kurumdan kullan&inodot;c&inodot; hesab&inodot;n&inodot;z varsa devam etmeyin.';
+$langStrings['tr']['permanently_remember_selection'] = 'Se&ccedil;imi kal&inodot;c&inodot; olarak hat&inodot;rla ve bundan sonra bu ad&inodot;m&inodot; atla.';
+$langStrings['tr']['confirm_permanent_selection'] = 'Se&ccedil;ilen kurumu varsay&inodot;lan kurumunuz yapmak istedi&gbreve;inizden emin misiniz? Birden &ccedil;ok kurumdan kullan&inodot;c&inodot; hesab&inodot;n&inodot;z varsa devam etmeyin.';
 $langStrings['tr']['save_button'] = 'Kaydet';
-$langStrings['tr']['access_host'] = '%s hizmetine eri&scedil;mek i\u00e8in l&uuml;tfen ba&gbreve;l&inodot; oldu&gbreve;unuz kurulu&scedil;u se\u00e8in veya aray&inodot;n.';
-$langStrings['tr']['select_idp'] = 'Ba&gbreve;l&inodot; oldu&gbreve;unuz kurumu se\u00e8in.';
+$langStrings['tr']['access_host'] = '%s hizmetine eri&scedil;mek i&ccedil;in l&uuml;tfen ba&gbreve;l&inodot; oldu&gbreve;unuz kurulu&scedil;u se&ccedil;in veya aray&inodot;n.';
+$langStrings['tr']['select_idp'] = 'Ba&gbreve;l&inodot; oldu&gbreve;unuz kurumu se&ccedil;in.';
 $langStrings['tr']['search_idp'] = 'Ba&#x011F;l&#x0131; oldu&#x011F;unuz kurumun ad&#x0131;n&#x0131; girin ...';
-$langStrings['tr']['remember_selection'] = 'Bu taray&inodot;c&inodot;daki oturum i\u00e8in se\u00e8imi hat&inodot;rla.';
-$langStrings['tr']['invalid_user_idp'] = 'G&ouml;nderdi&gbreve;iniz veride bir hata olabilir.<br><code>\'%s\'</code> giri&scedil;iniz ge\u00e8ersiz.<br> Sadece a&scedil;a&gbreve;&inodot;daki de&gbreve;erlere izin veriliyor:';
-$langStrings['tr']['contact_assistance'] = 'L&uuml;tfen yard&inodot;m i\u00e8in <a href="mailto:%s">%s</a> ile ileti&scedil;ime ge\u00e8in.';
-$langStrings['tr']['no_arguments'] = 'Hi\u00e8bir arg&uuml;man al&inodot;nmad&inodot;!';
-$langStrings['tr']['arguments_missing'] = 'Web sunucusu ge\u00e8ersiz bir sorgu ald&inodot; \u00e8&uuml;nk&uuml; baz&inodot; arg&uuml;manlar eksik g&ouml;r&uuml;n&uuml;yor.<br>A&scedil;a&gbreve;&inodot;daki arg&uuml;manlar al&inodot;nd&inodot;:';
-$langStrings['tr']['valid_request_description'] = 'Ge\u00e8erli bir istekte en az&inodot;ndan, ge\u00e8erli de&gbreve;erlere sahip, <code>shire</code> ve <code>target</code> arg&uuml;manlar&inodot; olmal&inodot;. &Idot;ste&gbreve;e ba&gbreve;l&inodot; olarak, taray&inodot;c&inodot;y&inodot; bir kuruma otomatik olarak y&ouml;nlendirmek ve ayn&inodot; y&ouml;nlendirmeyi mevcut oturum i\u00e8inde de otomatik yapmak i\u00e8in <code>providerID</code>, <code>origin</code> ve <code>redirect</code> arg&uuml;manlar&inodot; da sa&gbreve;lanabilir.';
-$langStrings['tr']['valid_saml2_request_description'] = 'Ge\u00e8erli bir SAML2 iste&gbreve;inde en az&inodot;ndan, ge\u00e8erli de&gbreve;erlere sahip, <code>entityID</code> ve <code>return</code> arg&uuml;manlar&inodot; olmal&inodot;.<code>return</code> arg&uuml;man&inodot; yerine, Servis Sa&gbreve;lay&inodot;c&inodot; &uuml;st verisi <code>DiscoveryResponse</code> u\u00e8 noktas&inodot;n&inodot; i\u00e8erebilir. &Idot;ste&gbreve;e ba&gbreve;l&inodot; olarak, taray&inodot;c&inodot;y&inodot; bir kuruma otomatik olarak y&ouml;nlendirmek ve ayn&inodot; y&ouml;nlendirmeyi mevcut oturum i\u00e8inde de otomatik yapmak i\u00e8in <code>isPassive</code>, <code>policy</code> ve <code>returnIDParam</code> arg&uuml;manlar&inodot; da sa&gbreve;lanabilir.';
-$langStrings['tr']['invalid_query'] = 'Hata: Ge\u00e8ersiz Sorgu';
-$langStrings['tr']['select_button'] = 'Se\u00e8';
+$langStrings['tr']['remember_selection'] = 'Bu taray&inodot;c&inodot;daki oturum i&ccedil;in se&ccedil;imi hat&inodot;rla.';
+$langStrings['tr']['invalid_user_idp'] = 'G&ouml;nderdi&gbreve;iniz veride bir hata olabilir.<br><code>\'%s\'</code> giri&scedil;iniz ge&ccedil;ersiz.<br> Sadece a&scedil;a&gbreve;&inodot;daki de&gbreve;erlere izin veriliyor:';
+$langStrings['tr']['contact_assistance'] = 'L&uuml;tfen yard&inodot;m i&ccedil;in <a href="mailto:%s">%s</a> ile ileti&scedil;ime ge&ccedil;in.';
+$langStrings['tr']['no_arguments'] = 'Hi&ccedil;bir arg&uuml;man al&inodot;nmad&inodot;!';
+$langStrings['tr']['arguments_missing'] = 'Web sunucusu ge&ccedil;ersiz bir sorgu ald&inodot; &ccedil;&uuml;nk&uuml; baz&inodot; arg&uuml;manlar eksik g&ouml;r&uuml;n&uuml;yor.<br>A&scedil;a&gbreve;&inodot;daki arg&uuml;manlar al&inodot;nd&inodot;:';
+$langStrings['tr']['valid_request_description'] = 'Ge&ccedil;erli bir istekte en az&inodot;ndan, ge&ccedil;erli de&gbreve;erlere sahip, <code>shire</code> ve <code>target</code> arg&uuml;manlar&inodot; olmal&inodot;. &Idot;ste&gbreve;e ba&gbreve;l&inodot; olarak, taray&inodot;c&inodot;y&inodot; bir kuruma otomatik olarak y&ouml;nlendirmek ve ayn&inodot; y&ouml;nlendirmeyi mevcut oturum i&ccedil;inde de otomatik yapmak i&ccedil;in <code>providerID</code>, <code>origin</code> ve <code>redirect</code> arg&uuml;manlar&inodot; da sa&gbreve;lanabilir.';
+$langStrings['tr']['valid_saml2_request_description'] = 'Ge&ccedil;erli bir SAML2 iste&gbreve;inde en az&inodot;ndan, ge&ccedil;erli de&gbreve;erlere sahip, <code>entityID</code> ve <code>return</code> arg&uuml;manlar&inodot; olmal&inodot;.<code>return</code> arg&uuml;man&inodot; yerine, Servis Sa&gbreve;lay&inodot;c&inodot; &uuml;st verisi <code>DiscoveryResponse</code> u&ccedil; noktas&inodot;n&inodot; i&ccedil;erebilir. &Idot;ste&gbreve;e ba&gbreve;l&inodot; olarak, taray&inodot;c&inodot;y&inodot; bir kuruma otomatik olarak y&ouml;nlendirmek ve ayn&inodot; y&ouml;nlendirmeyi mevcut oturum i&ccedil;inde de otomatik yapmak i&ccedil;in <code>isPassive</code>, <code>policy</code> ve <code>returnIDParam</code> arg&uuml;manlar&inodot; da sa&gbreve;lanabilir.';
+$langStrings['tr']['invalid_query'] = 'Hata: Ge&ccedil;ersiz Sorgu';
+$langStrings['tr']['select_button'] = 'Se&ccedil;';
 $langStrings['tr']['login'] = 'Gir';
 $langStrings['tr']['login_with'] = 'Bununla giri&scedil; yap:';
 $langStrings['tr']['other_federation'] = 'Di&gbreve;er federasyonlardan';
 $langStrings['tr']['logged_in'] = 'Zaten do&gbreve;rulanm&inodot;&scedil;s&inodot;n&inodot;z. <a href=\"%s\">&Idot;lerleyin</a>';
-$langStrings['tr']['most_used'] = 'En \u00e8ok kullan&inodot;lan kurumlar';
-$langStrings['tr']['invalid_return_url'] = '<code>\'%s\'</code> d&ouml;n&uuml;&scedil; URL\'i ge\u00e8erli bir URL de&gbreve;il.';
-$langStrings['tr']['unverified_return_url'] = '<code>\'%s\'</code> d&ouml;n&uuml;&scedil; URL\'i, <code>\'%s\'</code> Servis Sa&gbreve;lay&inodot;c&inodot;s&inodot; i\u00e8in do&gbreve;rulanamad&inodot;.';
+$langStrings['tr']['most_used'] = 'En &ccedil;ok kullan&inodot;lan kurumlar';
+$langStrings['tr']['invalid_return_url'] = '<code>\'%s\'</code> d&ouml;n&uuml;&scedil; URL\'i ge&ccedil;erli bir URL de&gbreve;il.';
+$langStrings['tr']['unverified_return_url'] = '<code>\'%s\'</code> d&ouml;n&uuml;&scedil; URL\'i, <code>\'%s\'</code> Servis Sa&gbreve;lay&inodot;c&inodot;s&inodot; i&ccedil;in do&gbreve;rulanamad&inodot;.';
 $langStrings['tr']['unknown_sp'] = '<code>\'%s\'</code> Servis Sa&gbreve;lay&inodot;c&inodot;s&inodot; &uuml;st veride bulunamad&inodot;, yani bilinmiyor.';
-$langStrings['tr']['no_idp_found'] = 'Bu arama metni i\u00e8in bir kurum bulunamad&inodot;';
+$langStrings['tr']['no_idp_found'] = 'Bu arama metni i&ccedil;in bir kurum bulunamad&inodot;';
 $langStrings['tr']['no_idp_available'] = 'Kurum yok';
 $langStrings['tr']['last_used'] = 'Son kullan&inodot;lan';
