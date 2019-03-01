@@ -56,7 +56,7 @@ final class IdpObject
             }
             // languages
             if (isset($value{"Name"})) {
-                // Asume it's a language
+                // Assume it's a language
                 $this->names{$key} = $value{"Name"};
             }
         }
@@ -124,7 +124,6 @@ final class IdpRepository
           array_filter(
             $this->idpObjects,
             function ($value) use ($query) {
-                // FIXME : ne pas comparer les accents
                 return (
                     fnmatch("*".removeAccents($query)."*", removeAccents($value->name), FNM_CASEFOLD)
                  || fnmatch("*".removeAccents($query)."*", removeAccents($value->text), FNM_CASEFOLD)

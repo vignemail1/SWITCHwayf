@@ -410,7 +410,7 @@ function printCSS($file)
 {
     global $imageURL;
 
-    if ($file != 'ImprovedDropDown.css') {
+    if ($file != 'ImprovedDropDown.css' && $file != 'select2.css') {
         $file= 'styles.css';
     }
 

@@ -13,7 +13,7 @@
 	<?php
 
     if ($useSelect2) {
-        echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />'.PHP_EOL;
+        echo '<link rel="stylesheet" href="'. $_SERVER['SCRIPT_NAME'] .'/select2.css" type="text/css" >'.PHP_EOL;
         echo '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>'.PHP_EOL;
         echo '<script type="text/javascript" src="'.$javascriptURL .'/select2Functions.js"></script>'.PHP_EOL;
     } elseif ($useImprovedDropDownList) {
@@ -98,8 +98,8 @@
 			},
 			placeholder: "<?php echo getLocalString('select_idp') ?>",
 			allowClear: true,
-			// templateResult: formatList,
-			// templateSelection: formatRepoSelection,
+			templateResult: formatList,
+			templateSelection: formatSelection,
 			escapeMarkup: function (text) { return text; }
 		});
 

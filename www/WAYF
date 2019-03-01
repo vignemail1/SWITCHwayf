@@ -463,6 +463,12 @@ if (
     printCSS('ImprovedDropDown.css');
 
     exit;
+} elseif (isRequestType('select2.css')) {
+    header('Content-Type: text/css');
+
+    printCSS('select2.css');
+
+    exit;
 } elseif (isRequestType('snippet.html')) {
 
     // Check if this feature is activated at all

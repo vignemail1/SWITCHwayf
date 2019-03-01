@@ -7,6 +7,7 @@
 		<p class="promptMessage"><?php echo getLocalString('permanent_cookie'); ?></p>
 		<p><?php echo getLocalString('select_idp'); ?></p>
 		<div style="text-align: center">
+
 			<select name="user_idp" id="userIdPSelection" class="userIdPSelection" tabindex="0">
 				<?php
           // If we use select2, we don't want IDP to be in DOM, but to use AJAX instead
