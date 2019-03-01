@@ -2,7 +2,13 @@
 
 <!-- Identity Provider Selection: Start -->
 <h1><?php echo getLocalString('permanent_select_header'); ?></h1>
-<form id="IdPList" name="IdPList" method="post" onSubmit="return checkForm()" action="<?php echo $actionURL ?>">
+<form id="IdPList" name="IdPList" method="post" onSubmit="<?php
+        if ($useSelect2) {
+            echo "return select2CheckForm()";
+        } else {
+            echo "return checkForm()";
+        }
+?>" action="<?php echo $actionURL ?>">
 	<div id="userInputArea">
 		<p class="promptMessage"><?php echo getLocalString('permanent_cookie'); ?></p>
 		<p><?php echo getLocalString('select_idp'); ?></p>

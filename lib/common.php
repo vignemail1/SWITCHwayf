@@ -80,3 +80,14 @@ if ($useSAML2Metadata) {
     // from metadata instead of being manualy managed
     sortIdentityProviders($IDProviders);
 }
+
+/*------------------------------------------------*/
+// Retrieve previously selected IDPs
+/*------------------------------------------------*/
+
+// Get previously accessed IdPs
+if (isset($_COOKIE[$SAMLDomainCookieName])) {
+    $IDPArray = getIdPArrayFromValue($_COOKIE[$SAMLDomainCookieName]);
+} else {
+    $IDPArray = array();
+}

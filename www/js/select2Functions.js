@@ -12,26 +12,35 @@ function formatList(idp) {
     return idp.text;
   }
 
-  var img = "";
-  if (idp.logo !== null) {
-    // Logo present
-    if (idp.logo.toLowerCase().indexOf('data:image') !== 0) {
-      // TODO : gérer le cas où on ne veut pas fetcher les logos distants
-      // remote logo
-      img = "<img src='" + idp.logo + "' />";
+  if (idp.children == null) {
+    // IDP
+    var img = "";
+    if (idp.logo !== null) {
+      // Logo present
+      if (idp.logo.toLowerCase().indexOf('data:image') !== 0) {
+        // TODO : gérer le cas où on ne veut pas fetcher les logos distants
+        // remote logo
+        img = "<img src='" + idp.logo + "' />";
+      } else {
+        // local logo
+        img = "<img src='" + idp.logo + "' />";
+      }
     } else {
-      // local logo
-      img = "<img src='" + idp.logo + "' />";
+      img = "&nbsp;";
     }
+
+    var markup = "<div class='select2-result-repository clearfix'>" +
+      "<div class='select2-result-repository__logo'>" + img + "</div>" +
+      "<div class='select2-result-repository__title'>" + idp.text + "</div></div>";
+
+    return markup;
   } else {
-    img = "&nbsp;";
+    // Group
+    var markup = "<div class='select2-result-repository clearfix'>" +
+      idp.text + "</div>";
+
+    return markup;
   }
-
-  var markup = "<div class='select2-result-repository clearfix'>" +
-    "<div class='select2-result-repository__logo'>" + img + "</div>" +
-    "<div class='select2-result-repository__title'>" + idp.text + "</div></div>";
-
-  return markup;
 }
 
 /*

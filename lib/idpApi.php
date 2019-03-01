@@ -5,12 +5,7 @@
 // The API is compliant with select2 (https://select2.org/)
 /*------------------------------------------------*/
 
-
-
-
 // TODO : gérer la pré-sélection
-// TODO : gérer le groupes
-// TODO : gérer les icones
 $topLevelDir = dirname(__DIR__);
 
 require('common.php');
@@ -18,7 +13,7 @@ require('idpApiObjects.php');
 
 header('Content-Type: application/json');
 
-$repo = new IdpRepository($IDProviders);
+$repo = new IdpRepository($IDProviders, $IDPArray);
 
 global $select2PageSize;
 

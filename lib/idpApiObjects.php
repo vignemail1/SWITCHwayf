@@ -26,10 +26,11 @@ final class IdpObject
     public $names = array();
     public $protocols;
     public $logo;
+    /* group */
+    public $type;
 
     public function __construct($entId, $idp)
     {
-        // FIXME groups are missing
         $this->entityId = $entId;
         $this->id = $entId;
 
@@ -59,8 +60,33 @@ final class IdpObject
                 // Assume it's a language
                 $this->names{$key} = $value{"Name"};
             }
+            // Group
+            if ($key == "Type") {
+                $this->type = $value;
+            }
         }
     }
+}
+
+/*
+{
+      "text": "Group 1",
+      "children" : [
+        {
+            "id": 1,
+            "text": "Option 1.1"
+        },
+        {
+            "id": 2,
+            "text": "Option 1.2"
+        }
+      ]
+    }
+*/
+final class IdpGroup
+{
+    public $text;
+    public $children = array();
 }
 
 /*
@@ -73,12 +99,55 @@ final class IdpRepository
     // The idps in the form of IdpObject
     public $idpObjects = array();
 
-    public function __construct(array $IDProviders = array())
+    public function __construct(array $IDProviders = array(), array $previouslySelectedIdps = null)
     {
-        foreach ($IDProviders as $key => $value) {
-            $tmp = new IdpObject($key, $value);
-            $this->idpObjects[] = $tmp;
+        if ($previouslySelectedIdps != null) {
+            foreach ($previouslySelectedIdps as $selIdp) {
+                $idp = new IdpObject($selIdp, $IDProviders[$selIdp]);
+                $idp->type = getLocalString('last_used');
+                $this->idpObjects[] = $idp;
+            }
         }
+
+        foreach ($IDProviders as $key => $value) {
+
+            // Skip categories
+            if ($value['Type'] == 'category') {
+                continue;
+            }
+
+            // Skip incomplete descriptions
+            if (!is_array($value) || !isset($value['Name'])) {
+                continue;
+            }
+
+            $idp = new IdpObject($key, $value);
+            $this->idpObjects[] = $idp;
+        }
+    }
+
+    /*
+     * Groups a given array
+     */
+    private function toGroups($array)
+    {
+        $result = array();
+        $tmp = array();
+        foreach ($array as $key => $idpObject) {
+            $type = $idpObject->type;
+
+            if (!isset($tmp[$type])) {
+                $group = new IdpGroup();
+                $group->text = $type;
+                $tmp[$type] = $group;
+            }
+            $tmp[$type]->children[] = $idpObject;
+        }
+
+        foreach ($tmp as $key => $idpGroup) {
+            $result[] = $idpGroup;
+        }
+        return $result;
     }
 
     public function countIdps()
@@ -91,7 +160,7 @@ final class IdpRepository
      */
     public function toJson()
     {
-        return json_encode($this->idpObjects);
+        return json_encode($this->toGroups($this->idpObjects), JSON_UNESCAPED_SLASHES);
     }
 
     /*
@@ -108,8 +177,11 @@ final class IdpRepository
 
         $idpPage = array_slice($array, $from, $pageSize);
 
-        $result{"results"} = $idpPage;
-        $result{"pagination"}{"more"} = (($pageNumber + 1)*$pageSize <= $this->countIdps());
+        $result{"results"} = $this->toGroups($idpPage);
+
+        // When using select2 optgroups, the pagination must be named "paginate"
+        // $result{"pagination"}{"more"} = (($pageNumber + 1)*$pageSize <= sizeof($array));
+        $result{"pagination"}{"more"} = (($pageNumber + 1)*$pageSize <= sizeof($array));
 
         return json_encode($result, JSON_UNESCAPED_SLASHES);
     }

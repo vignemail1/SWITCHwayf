@@ -15,6 +15,7 @@
     if ($useSelect2) {
         echo '<link rel="stylesheet" href="'. $_SERVER['SCRIPT_NAME'] .'/select2.css" type="text/css" >'.PHP_EOL;
         echo '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>'.PHP_EOL;
+        // echo '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.js"></script>'.PHP_EOL;
         echo '<script type="text/javascript" src="'.$javascriptURL .'/select2Functions.js"></script>'.PHP_EOL;
     } elseif ($useImprovedDropDownList) {
         echo '<link rel="stylesheet" href="'. $_SERVER['SCRIPT_NAME'] .'/ImprovedDropDown.css" type="text/css">'.PHP_EOL;
@@ -56,6 +57,7 @@
 
 	// Perform input validation on WAYF form
 	function checkForm(){
+		//console.log("checkForm ", document.IdPList.user_idp, "/", document.IdPList.user_idp.selectedIndex);
 		if(
 			document.IdPList.user_idp &&
 			document.IdPList.user_idp.selectedIndex == 0
@@ -67,6 +69,23 @@
 		}
 	}
 
+	// Perform input validation on WAYF form for select2
+	function select2CheckForm() {
+	  // FIXME : to be reviewed for select2 !!!
+	  console.log("checkForm ", $('.userIdPSelection option:selected').text());
+	  if (
+	    document.IdPList.user_idp && (
+				$('.userIdPSelection option:selected').text() == null ||
+	    $('.userIdPSelection option:selected').text() == ''
+		)
+	  ) {
+	    alert(unescape('<?php echo getLocalString('make_selection', 'js') ?>'));
+	    return false;
+	  } else {
+	    return true;
+	  }
+	}
+
 	// Init WAYF
 	function init(){
 		preventIframeEmbedding();
@@ -76,8 +95,8 @@
 		if (<?php echo ($useSelect2) ? 'true' : 'false' ?>){
 			$('.userIdPSelection').select2({
 			ajax: {
-				url: <?php echo "'".$_SERVER['REQUEST_URI']."api/idps'" ?>,
-				delay: 1000,
+				url: <?php echo "'".$apiURL."/idps'" ?>,
+				delay: 250,
 				dataType: 'json',
 				data: function (params) {
 						var query = {

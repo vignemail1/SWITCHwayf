@@ -20,7 +20,7 @@ function printHeader()
     global $useImprovedDropDownList, $disableRemoteLogos, $organizationLogoURL;
     global $federationURL, $organizationURL, $faqURL, $helpURL, $privacyURL;
     global $customStrings;
-    global $developmentMode, $useSelect2;
+    global $developmentMode, $useSelect2, $apiURL;
 
     include(get_template('header.php'));
 }

@@ -90,12 +90,12 @@ if (isset($_POST['clear_user_idp'])) {
     exit;
 }
 
-// Get previously accessed IdPs
-if (isset($_COOKIE[$SAMLDomainCookieName])) {
-    $IDPArray = getIdPArrayFromValue($_COOKIE[$SAMLDomainCookieName]);
-} else {
-    $IDPArray = array();
-}
+// // Get previously accessed IdPs
+// if (isset($_COOKIE[$SAMLDomainCookieName])) {
+//     $IDPArray = getIdPArrayFromValue($_COOKIE[$SAMLDomainCookieName]);
+// } else {
+//     $IDPArray = array();
+// }
 
 // Get previously accessed SPs
 if (isset($_COOKIE[$SPCookieName])) {
