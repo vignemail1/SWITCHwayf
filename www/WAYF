@@ -364,15 +364,15 @@ if ($hintedCookieIdP != '-') {
     $selectedIDP = '-';
 }
 
-/*------------------------------------------------*/
-// Sort Identity Providers
-/*------------------------------------------------*/
-
-if ($useSAML2Metadata) {
-    // Only automatically sort if list of Identity Provider is parsed
-    // from metadata instead of being manualy managed
-    sortIdentityProviders($IDProviders);
-}
+// /*------------------------------------------------*/
+// // Sort Identity Providers
+// /*------------------------------------------------*/
+//
+// if ($useSAML2Metadata) {
+//     // Only automatically sort if list of Identity Provider is parsed
+//     // from metadata instead of being manualy managed
+//     sortIdentityProviders($IDProviders);
+// }
 
 /*------------------------------------------------*/
 // Draw WAYF

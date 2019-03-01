@@ -70,3 +70,13 @@ foreach ($IDProviders as $key => $values) {
         $IDProviders[$key]['Type'] = 'unknown';
     }
 }
+
+/*------------------------------------------------*/
+// Sort Identity Providers
+/*------------------------------------------------*/
+
+if ($useSAML2Metadata) {
+    // Only automatically sort if list of Identity Provider is parsed
+    // from metadata instead of being manualy managed
+    sortIdentityProviders($IDProviders);
+}
