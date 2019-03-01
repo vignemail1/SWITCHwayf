@@ -13,9 +13,8 @@
 	<?php
 
     if ($useSelect2) {
-        echo '<link rel="stylesheet" href="'. $_SERVER['SCRIPT_NAME'] .'/select2.css" type="text/css" >'.PHP_EOL;
+        echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />'.PHP_EOL;
         echo '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>'.PHP_EOL;
-        // echo '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.js"></script>'.PHP_EOL;
         echo '<script type="text/javascript" src="'.$javascriptURL .'/select2Functions.js"></script>'.PHP_EOL;
     } elseif ($useImprovedDropDownList) {
         echo '<link rel="stylesheet" href="'. $_SERVER['SCRIPT_NAME'] .'/ImprovedDropDown.css" type="text/css">'.PHP_EOL;
@@ -95,8 +94,8 @@
 		if (<?php echo ($useSelect2) ? 'true' : 'false' ?>){
 			$('.userIdPSelection').select2({
 			ajax: {
-				url: <?php echo "'".$apiURL."/idps'" ?>,
-				delay: 250,
+				url: <?php echo "'".$_SERVER['REQUEST_URI']."api/idps'" ?>,
+				delay: 1000,
 				dataType: 'json',
 				data: function (params) {
 						var query = {
@@ -118,7 +117,7 @@
 			placeholder: "<?php echo getLocalString('select_idp') ?>",
 			allowClear: true,
 			templateResult: formatList,
-			templateSelection: formatSelection,
+			templateSelection: formatRepoSelection,
 			escapeMarkup: function (text) { return text; }
 		});
 
