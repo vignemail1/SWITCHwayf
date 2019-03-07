@@ -37,13 +37,15 @@ necessary for such releases.
 
 SWITCHwayf Version History
 --------------------------
-* Version 1.3 - Release date: XX. XXXXXX 2018
+* Version 1.3 - Release date: XX. XXXXXX 2019
    - Changed structure of directory and files
      Added update-metadata.php for handling metadata.
      Code provided by Guillaume Rousse.
    - Added code to filter IdPs by entity categories.
      Code provided by Michael Simon
-  - Added Turkish translation provided by M. Uğur Yilmaz
+   - Added Turkish translation provided by M. Uğur Yilmaz
+   - Added improved sorting for accented strings. 
+     Code provided by Geoffroy Arnoud
 
 * Version 1.21 - Release date: 19. January 2018
   - Allow loading configuration from a path in a 
@@ -283,12 +285,12 @@ found bugs, suggested improvements or contributed code. Have a look at the
 version history in order to see the individual contributions. The list is sorted 
 alphabetically.
 
+- Geoffroy Arnoud from RENATER (FR)
 - Robert Basch from MIT (US)
 - Pavlos Drandakis from University of Athens (GR)
 - Nicolas Dunand from Université Lausanne (CH)
 - Michael R. Gettes from Internet2 (US)
 - Christian Glahn, HTW Chur (CH)
-- Chris Philips, Canarie (CA)
 - Nuno Gonçalves from FCCN (PT)
 - Florent Guilleux from CRU (FR)
 - Guillaume Rousse from RENATER (FR)
@@ -297,6 +299,7 @@ alphabetically.
 - Wolgang Lierz from ETH Zurich (CH)
 - Takeshi Nishimura NII National Institute of Informatics (JP)
 - Lourival Pereira Vieira Neto from RNP (BR)
+- Chris Philips, Canarie (CA)
 - Martins Purins from Latvijas Universitates (LV)
 - Olivier Salaün from RENATER (FR)
 - Tom Scavo from Internet2 (US)
