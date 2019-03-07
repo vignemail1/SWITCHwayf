@@ -176,7 +176,7 @@ needs most time.
 SAML2 Metadata support
 ----------------------
 
-In case the WAYF/DS should display the list of IdPs by parsing them from a
+If the SWITCHwayf should display the list of IdPs by parsing them from a
 SAML2 Medatadata file that is used by Shibboleth:
 
 - Set $useSAML2Metadata in config.php to true
@@ -185,12 +185,17 @@ SAML2 Medatadata file that is used by Shibboleth:
 - Make sure the files specified in $metadataIDPFile and $metadataSPFile can be
   written by the userthat executes the PHP script (the web server user,
   e.g. www-data or _www)
+- You may want to execute php SWITCHwayf/bin/update-metadata.php 
+  manually or with a cron job to avoid that delayed requests for users
+  who happen to trigger automatic processing of new metadata files.
+  See php bin/update-metadata.php -h for some details and 
+  suggestions on how to use the script.
 
 The parsed IDP and SP entries will be stored in $metadataIDPFile and
 $metadataSPFile as executable PHP code, thus benefiting from opcode caching
-(see chapter "Optimization" above).
+(see chapter "Optimization" above) if enabled.
 
-If an entry should changed, removed or extended in this automatically
+If an entry should be changed, removed or extended in this automatically
 generated file, one can extend the IDP definitions by modifying them in
 the $IDPConfigFile. To overwrite IDP values with entries in the $IDPConfigFile,
 make sure the entry $SAML2MetaOverLocalConf is set to 'false';
