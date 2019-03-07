@@ -44,9 +44,9 @@ The latest release can be downloaded from:
 Installation
 ------------
 1. Unpack the SWITCHwayf_binary ${VERSION}_${DATE}.zip ZIP archive into a 
-   directory on a host where Apache or IIS is installed. 
+   directory that is *not* accessible via the web server.
 
-2. Make a copy of the *.dist.php files
+2. Make a copy of the *.dist.php files:
    - Copy the file SWITCHwayf/etc/config.dist.php and name it 
      SWITCHwayf/etc/config.php 
      This is the main configuration file of the SWITCHwayf
@@ -55,17 +55,23 @@ Installation
      This file contains the list of Identity Providers that that can be  
      configured by hand
 
-3. Ensure that permissions for the files:
-     - SProvider.metadata.php
-     - IDProvider.metadata.php 
-     - metadata.lock
-     - $WAYFLogFile (typically /var/log/apache2/wayf.log)
-   are set such that the web server user (e.g. www-data, www or httpd) has write
-   permissions for them.
-
-4. Adapt the SWITCHwayf configuration in SWITCHwayf/etc/config.php. 
+3. Adapt the SWITCHwayf configuration in SWITCHwayf/etc/config.php. 
    There are comments in that file that should help you make 
    suitable choices for your use case.
+   If you are relying on metadata for SP/IdP information, 
+   initialize the 
+   IDProvider.metadata.php//SProvider.metadata.php files with a 
+   command like
+   'php bin/update-metadata.php --metadata-file #PATH-TO-SAML2-METADATA#/metadata.xml --metadata-idp-file etc/IDProvider.metadata.php --metadata-sp-file etc/SProvider.metadata.php --verbose'
+
+4. Ensure that permissions for the files:
+     - SWITCHwayf/etc/SProvider.metadata.php (configured in $metadataSPFile)
+     - SWITCHwayf/etc/IDProvider.metadata.php  (configured in $metadataIDPFile)
+     - /tmp/metadata.lock (configured in $metadataLockFile)
+     - /var/log/apache2/wayf.log (configured in $WAYFLogFile)
+   are set such that the web server user (e.g. www-data, www or httpd) has write
+   permissions for them. E.g. with a command like:
+   'chown www-data etc/*metadata.php'
 
 5. If Apache 2 is used, add the following statement to the Apache configuration:
 
@@ -117,6 +123,12 @@ a2enmod headers
    will automatically be able to detect whether it receives a Shibboleth 
    authentication request or a Discovery Service request.
 
+8. Ensure to set the mode of the SWITCHwayf from developmentMode
+   to production by setting
+   '$developmentMode = false;'
+   in SWITCHwayf/etc/config.php
+   This will prevent some internal errors from being shown
+   to the client web browser.
 
 -------------------------------------------------------------------------------
 
