@@ -312,7 +312,8 @@ alphabetically.
 - And of course all SWITCH staff members who have contributed suggestions,
   bug fixes and translation to this code.
 
-Special also go to RENATER, the French Research & Education Network. The main 
-developer (Lukas Hämmerle) has been a guest at RENATER for 6 months in 2013, 
-during which he worked - among other things - also on the versions 1.18 and 1.19
-of the SWITCHwayf.
+Special thanks also go to RENATER, the French 
+Research & Education Network. The main developer 
+(Lukas Hämmerle) has been a guest at RENATER for 6 months in 
+2013, during which he worked - among other things - also on the 
+versions 1.18 and 1.19 of the SWITCHwayf.
