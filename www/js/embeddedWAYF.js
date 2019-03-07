@@ -11,7 +11,7 @@
 })(this, function($, global) {
 
 
-// Copyright (c) 2018, SWITCH
+// Copyright (c) 2019, SWITCH
 // To use this JavaScript, please access:
 // <?php echo $configurationScriptUrl ?>
 // and copy/paste the resulting HTML snippet to an unprotected web page that 
