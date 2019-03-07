@@ -1,4 +1,4 @@
-Copyright (c) 2018, SWITCH
+Copyright (c) 2019, SWITCH
 See LICENSE file for details.
 
 -------------------------------------------------------------------------------
@@ -6,10 +6,10 @@ See LICENSE file for details.
 SWITCHwayf Changes
 ==================
 
-SWITCHwayf version: v1.3
+SWITCHwayf version: v2.0
 Bundled with:
 
-* JQuery v3.2.1
+* JQuery v3.3.1
 * ImprovedDropDown v1.0.2 (with modifications)
 
 Find below the changes for past releases of the SWITCHwayf and in the credits
@@ -24,23 +24,26 @@ sections the people who contributed to the SWITCHwayf.
 Version Number Policy
 ---------------------
 
-* Releases with a version number 'X.Y.Z' are bug fix releases correcting
-small bugs, typos and graphical issues.
-* Releases with a version number 'X.Y' are minor releases that introduce 
-new functionality of fix non-trivial bugs. Few adaptions in the configuration 
-might be necessary to upgrade to minor releases.
-* Releases with a version number X are major releases that will require major 
-changes in the configuration files. Therefore, a clean instalation might be 
-necessary for such releases.
+* Releases with a version number 'X.Y.Z' are bug fix releases 
+  correcting small bugs, typos and graphical issues.
+* Releases with a version number 'X.Y' are minor releases that 
+  introduce new functionality of fix non-trivial bugs. 
+  Few adaptions in the configuration might be necessary to 
+  upgrade to minor releases.
+* Releases with a version number X are major releases that will 
+  require major changes in the configuration files. Therefore, 
+  a clean installation might be necessary for such releases.
 
 -------------------------------------------------------------------------------
 
 SWITCHwayf Version History
 --------------------------
-* Version 1.3 - Release date: XX. XXXXXX 2019
+* Version 2.0 - Release date: 7. March 2019
+  This version comes with a new directory structure that
+  is quite different from previous versions.
    - Changed structure of directory and files
      Added update-metadata.php for handling metadata.
-     Code provided by Guillaume Rousse.
+     Code provided by Guillaume Rousse
    - Added code to filter IdPs by entity categories.
      Code provided by Michael Simon
    - Added Turkish translation provided by M. Uğur Yilmaz
