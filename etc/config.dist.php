@@ -295,4 +295,4 @@
 //**************************
 // If the development mode is activated, PHP errors and warnings will be displayed
 // on pages the SWITCHwayf generates
-//$developmentMode = false;
+$developmentMode = true;
