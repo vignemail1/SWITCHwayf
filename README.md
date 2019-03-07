@@ -16,10 +16,6 @@ including the installation and update instructions.
 
 -------------------------------------------------------------------------------
 
-**This document is written in the markdown syntax**
-
--------------------------------------------------------------------------------
-
 Requirements
 ------------
 - PHP 5.3 or newer, PHP 7
@@ -62,36 +58,35 @@ Installation
    initialize the 
    IDProvider.metadata.php//SProvider.metadata.php files with a 
    command like
-   'php bin/update-metadata.php --metadata-file #PATH-TO-SAML2-METADATA#/metadata.xml --metadata-idp-file etc/IDProvider.metadata.php --metadata-sp-file etc/SProvider.metadata.php --verbose'
+   
+        php bin/update-metadata.php --metadata-file #PATH-TO-SAML2-METADATA#/metadata.xml --metadata-idp-file etc/IDProvider.metadata.php --metadata-sp-file etc/SProvider.metadata.php --verbose
 
 4. Ensure that permissions for the files:
      - SWITCHwayf/etc/SProvider.metadata.php (configured in $metadataSPFile)
      - SWITCHwayf/etc/IDProvider.metadata.php  (configured in $metadataIDPFile)
      - /tmp/metadata.lock (configured in $metadataLockFile)
      - /var/log/apache2/wayf.log (configured in $WAYFLogFile)
+   
    are set such that the web server user (e.g. www-data, www or httpd) has write
    permissions for them. E.g. with a command like:
-   'chown www-data etc/*metadata.php'
+   
+        chown www-data etc/*metadata.php
 
 5. If Apache 2 is used, add the following statement to the Apache configuration:
 
---
+        Alias /#SOME_PATH# /#YOUR-PATH-TO#/SWITCHwayf/www
+        <Directory /#YOUR-PATH-TO#/SWITCHwayf/www>
+            Options Indexes MultiViews
+            AllowOverride None
+            Order allow,deny
+            Allow from all
+            
+          <Files WAYF>
+              SetHandler php7-script
+              AcceptPathInfo On
+          </Files>
+        </Directory>
 
-Alias /#SOME_PATH# /#YOUR-PATH-TO#/SWITCHwayf/www
-<Directory /#YOUR-PATH-TO#/SWITCHwayf/www>
-    Options Indexes MultiViews
-    AllowOverride None
-    Order allow,deny
-    Allow from all
-
-    <Files WAYF>
-      SetHandler php7-script
-      AcceptPathInfo On
-    </Files>
-
-</Directory>
-
---
    Beware, only the www subdirectory should be exposed, but 
    not the whole top-level directory (SWITCHwayf).
 
@@ -103,22 +98,21 @@ Alias /#SOME_PATH# /#YOUR-PATH-TO#/SWITCHwayf/www
    the Apache configuration like below in order to prevent certain web browsers 
    from not displaying the Embedded WAYF or parts of it:
 
---
-Header set P3P "CP=\"NOI CUR DEVa OUR IND COM NAV PRE\""
---
+        Header set P3P "CP=\"NOI CUR DEVa OUR IND COM NAV PRE\""
 
    For that to work, the Apache header extension must also be enabled
    with a command like:
 
---
-a2enmod headers
-/etc/init.d/apache2 reload
---
+
+        a2enmod headers
+        /etc/init.d/apache2 reload
 
    See <http://www.w3.org/P3P/> for more details on P3P.
 
 7. Test access by calling the WAYF with a URL like:
+   
    <https://your.host.com/#SOME_PATH#/WAYF>
+   
    Use this URL as Location for your Shibboleth configuration. The WAYF
    will automatically be able to detect whether it receives a Shibboleth 
    authentication request or a Discovery Service request.
@@ -136,7 +130,7 @@ Git Access
 -----------------
 Check out the latest SWITHCHwayf code with:
 
-`git clone https://gitlab.switch.ch/aai/SWITCHwayf.git`
+    git clone https://gitlab.switch.ch/aai/SWITCHwayf.git
 
 Although the code in the GIT repository should always be 
 executable, it should be considered unstable and not be used for 
@@ -151,10 +145,12 @@ General Update Instructions
 
 2. Get the ZIP archive of the new version and move it into the same 
    directory as the WAYF script of the currently deployed version.
-   Download from: <https://forge.switch.ch/redmine/projects/wayf/files>
+   Download from <https://forge.switch.ch/redmine/projects/wayf/files>
 
-3. Unzip the archive, e.g. with the command 
-   'unzip -d #DD# SWITCHwayf_x.y_YYYYMMDD.zip '
+3. Unzip the archive, e.g. with the command:
+   
+        unzip -d #DD# SWITCHwayf_x.y_YYYYMMDD.zip
+   
    This step will overwrite all files except those whose names start 
    with 'custom-'.
    Alternatively, create a new directory, move the ZIP archive in that directory,
@@ -190,11 +186,13 @@ General Update Instructions
 
 6. If SAML2 metadata is used by SWITCHwayf, you might have to run the following
    command to bootstrap the metadata reading process again:
-   `php readMetadata.php`
+   
+        php bin/update-metadata.php --metadata-file #PATH-TO-SAML2-METADATA#/metadata.xml --metadata-idp-file etc/IDProvider.metadata.php --metadata-sp-file etc/SProvider.metadata.php --verbose
 
-It's also possible to retrive the latest code directly from the GIT 
+It's also possible to retrieve the latest code directly from the GIT 
 repository, which is located here: 
-https://gitlab.switch.ch/aai/SWITCHwayf
+
+    git clone https://gitlab.switch.ch/aai/SWITCHwayf.git
 
 -------------------------------------------------------------------------------
 
@@ -276,15 +274,15 @@ extension in SAML metadata. Since version 1.14 the SWITCHwayf supports this
 feature. In order to activate it, the SWITCHwayf has to use the SAML 2 metadata
 parsing features by using
 
-* $useSAML2Metadata = true;
+    $useSAML2Metadata = true;
 
 and set the options:
 
-* enableDSReturnParamCheck = true;
+    enableDSReturnParamCheck = true;
 
 and potentially
 
-* $useACURLsForReturnParamCheck = true;
+    $useACURLsForReturnParamCheck = true;
 
 in case the metadata loaded by SWITCHwayf does not include DiscoveryResponse 
 elements for many Service Providers.
@@ -298,7 +296,7 @@ Generally, if there is an error or an exception, the WAYF will log it to syslog.
 In case there is a problem and only a white page without any output is displayed, 
 open config.php in a text editor, go to the bottom of the file and set:
 
-$developmentMode = true;
+    $developmentMode = true;
 
 This should output PHP warning messages which are otherwise supressed.
 
