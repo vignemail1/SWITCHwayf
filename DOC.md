@@ -1,4 +1,4 @@
-Copyright (c) 2018, SWITCH
+Copyright (c) 2019, SWITCH
 See LICENSE file for details.
 
 -------------------------------------------------------------------------------
@@ -307,7 +307,7 @@ Kerberos protocol. For example by using mod_auth_kerb.
 Configuration file format
 -------------------------
 
-Have a look at the file 'IDProvider.conf.php' for an example of the file format
+Have a look at the file 'SWITCHwayf/etc/IDProvider.conf.php' for an example of the file format
 that is used to configure the list of Identity Provider to display. It's
 supposed to be mostly self-explanatory. Basically the file format is PHP code
 that defines an array of arrays called $IDProviders.
@@ -487,20 +487,20 @@ Below is an example of an Apache httpd server configuration
 with two different virtual hosts using different
 configuration files:
 
-    DocumentRoot /usr/share/switchwayf
-    <Directory /usr/share/switchwayf>
+    DocumentRoot /usr/share/SWITCHWwayf
+    <Directory /usr/share/SWITCHWwayf>
         Require all granted
         DirectoryIndex WAYF
     </Directory>
 
     <VirtualHost *:443>
         ServerName wayf.switch.ch
-        SetEnv SWITCHWAYF_CONFIG=/etc/switchwayf/switch_config.php
+        SetEnv SWITCHWAYF_CONFIG=/etc/SWITCHWwayf/switch_config.php
     </VirtualHost>
 
     <VirtualHost *:443>
         ServerName wayf.edugain.org
-        SetEnv SWITCHWAYF_CONFIG=/etc/switchwayf/edugain_config.php
+        SetEnv SWITCHWAYF_CONFIG=/etc/SWITCHWwayf/edugain_config.php
     </VirtualHost>
 
 -------------------------------------------------------------------------------
