@@ -8,9 +8,9 @@ if (isset($_SERVER['REMOTE_ADDR'])){
 }
 
 $topLevelDir           = dirname(__DIR__);
-$distConfigFilePath    = $topLevelDir . '/etc/config.dist.php');
-$newConfigFilePath     = $topLevelDir . '/etc/config.new.php');
-$currentConfigFilePath = $topLevelDir . '/etc/config.php');
+$distConfigFilePath    = $topLevelDir . '/etc/config.dist.php';
+$newConfigFilePath     = $topLevelDir . '/etc/config.new.php';
+$currentConfigFilePath = $topLevelDir . '/etc/config.php';
 
 if (!file_exists($distConfigFilePath)) {
 	die("The default configuration file 'config.dist.php' does not exist in configuration directory!");
