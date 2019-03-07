@@ -1,4 +1,4 @@
-Copyright (c) 2018, SWITCH
+Copyright (c) 2019, SWITCH
 See LICENSE file for details.
 
 -------------------------------------------------------------------------------
@@ -47,9 +47,11 @@ Installation
    directory on a host where Apache or IIS is installed. 
 
 2. Make a copy of the *.dist.php files
-   - Copy the file config.dist.php and name it config.php 
+   - Copy the file SWITCHwayf/etc/config.dist.php and name it 
+     SWITCHwayf/etc/config.php 
      This is the main configuration file of the SWITCHwayf
-   - Copy the file IDProvider.conf.dist.php and name it IDProvider.conf.php
+   - Copy the file etc/IDProvider.conf.dist.php and name it 
+     SWITCHwayf/etc/IDProvider.conf.php
      This file contains the list of Identity Providers that that can be  
      configured by hand
 
@@ -61,14 +63,15 @@ Installation
    are set such that the web server user (e.g. www-data, www or httpd) has write
    permissions for them.
 
-4. Adapt the SWITCHwayf configuration in config.php. There are comments in that
-   file that should help you make suitable choices for your use case.
+4. Adapt the SWITCHwayf configuration in SWITCHwayf/etc/config.php. 
+   There are comments in that file that should help you make 
+   suitable choices for your use case.
 
 5. If Apache 2 is used, add the following statement to the Apache configuration:
 
 --
 
-Alias /SWITCHaai /#YOUR-PATH-TO#/SWITCHwayf/www
+Alias /#SOME_PATH# /#YOUR-PATH-TO#/SWITCHwayf/www
 <Directory /#YOUR-PATH-TO#/SWITCHwayf/www>
     Options Indexes MultiViews
     AllowOverride None
@@ -76,16 +79,19 @@ Alias /SWITCHaai /#YOUR-PATH-TO#/SWITCHwayf/www
     Allow from all
 
     <Files WAYF>
-      SetHandler php5-script
+      SetHandler php7-script
       AcceptPathInfo On
     </Files>
 
 </Directory>
 
 --
-   Beware, only the www subdirectory should be exposed, not the top-level directory.
+   Beware, only the www subdirectory should be exposed, but 
+   not the whole top-level directory (SWITCHwayf).
 
-   Alternatively, one also could rename the file 'WAYF' to 'WAYF.php'.
+   Alternatively, one also could rename the file 'WAYF' to 
+   'WAYF.php' to avoid setting the PHP handler explicitly on 
+   this file.
 
 6. When using the embedded WAYF feature it might be necessary to add a line to 
    the Apache configuration like below in order to prevent certain web browsers 
@@ -106,7 +112,7 @@ a2enmod headers
    See <http://www.w3.org/P3P/> for more details on P3P.
 
 7. Test access by calling the WAYF with a URL like:
-   <https://your.host.com/path/to/WAYF>
+   <https://your.host.com/#SOME_PATH#/WAYF>
    Use this URL as Location for your Shibboleth configuration. The WAYF
    will automatically be able to detect whether it receives a Shibboleth 
    authentication request or a Discovery Service request.
@@ -114,15 +120,15 @@ a2enmod headers
 
 -------------------------------------------------------------------------------
 
-Subversion access
+Git Access
 -----------------
 Check out the latest SWITHCHwayf code with:
 
-`svn co https://subversion.switch.ch/svn/general/aai/SWITCHwayf/`
+`git clone https://gitlab.switch.ch/aai/SWITCHwayf.git`
 
-Although the code in the Subversion should be always executable, it should be 
-considered unstable and not be used for production environments without prior 
-testing. 
+Although the code in the GIT repository should always be 
+executable, it should be considered unstable and not be used for 
+production environments without prior testing.
 
 -------------------------------------------------------------------------------
 
@@ -174,10 +180,30 @@ General Update Instructions
    command to bootstrap the metadata reading process again:
    `php readMetadata.php`
 
+It's also possible to retrive the latest code directly from the GIT 
+repository, which is located here: 
+https://gitlab.switch.ch/aai/SWITCHwayf
+
 -------------------------------------------------------------------------------
 
 Specific Update Instructions
 ----------------------------
+
+* Updates from versions before 2.0
+  It's best to install version 2.0 or newer from scratch and 
+  then copy over the following files from the pre 2.0 deployment
+  to the new deployement:
+  - IDProvider.conf.php -> SWITCHwayf/etc/
+  - IDProvider.conf.php.bak -> SWITCHwayf/etc/
+  - IDProvider.metadata.php -> SWITCHwayf/etc/
+  - SProvider.metadata.php -> SWITCHwayf/etc/
+  - config.php -> SWITCHwayf/etc/
+  - custom-languages.php -> SWITCHwayf/lib/
+  - css/custom-* -> SWITCHwayf/www/css/  
+  
+  You then might run php SWITCHwayf/bin/update-config.php to
+  create a new configuration file based on previous settings.
+
 
 * Updates from versions before 1.18
   The following new configuration options were introduced:
