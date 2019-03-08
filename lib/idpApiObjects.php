@@ -10,6 +10,27 @@ $topLevelDir = dirname(__DIR__);
 
 require_once($topLevelDir . '/lib/functions.php');
 
+function getImage($imageString)
+{
+    global $disableRemoteLogos;
+
+    $image = '';
+
+    $pos = strpos($imageString, "data:image");
+
+    if ($pos === false) {
+        // remote image
+        if (!$disableRemoteLogos) {
+            $image = $imageString;
+        }
+    } else {
+        // embedded image
+        $image = $imageString;
+    }
+
+    return $image;
+}
+
 /*
  * This class models an IdP to be easily translated to Json
  */
@@ -52,7 +73,7 @@ final class IdpObject
             }
             if ($key == "Logo") {
                 if (sizeof($value) > 0) {
-                    $this->logo = $value{"URL"};
+                    $this->logo = getImage($value{"URL"});
                 }
             }
             // languages
@@ -101,11 +122,22 @@ final class IdpRepository
 
     public function __construct(array $IDProviders = array(), array $previouslySelectedIdps = null)
     {
-        if ($previouslySelectedIdps != null) {
-            foreach ($previouslySelectedIdps as $selIdp) {
+        global $showNumOfPreviouslyUsedIdPs;
+
+        if (isset($previouslySelectedIdps) && count($previouslySelectedIdps) > 0) {
+            $counter = (isset($showNumOfPreviouslyUsedIdPs)) ? $showNumOfPreviouslyUsedIdPs : 3;
+
+            for ($n = count($previouslySelectedIdps) - 1; $n >= 0; $n--) {
+                if ($counter <= 0) {
+                    break;
+                }
+
+                $selIdp = $previouslySelectedIdps[$n];
                 $idp = new IdpObject($selIdp, $IDProviders[$selIdp]);
                 $idp->type = getLocalString('last_used');
                 $this->idpObjects[] = $idp;
+
+                $counter--;
             }
         }
 

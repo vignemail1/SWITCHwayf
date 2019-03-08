@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2019, SWITCH ?>
+<?php // Copyright (c) 2019, SWITCH?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -13,7 +13,8 @@
 	<?php
 
     if ($useSelect2) {
-        echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />'.PHP_EOL;
+        echo '<link rel="stylesheet" href="'. $_SERVER['SCRIPT_NAME'] .'/select2.css" type="text/css" >'.PHP_EOL;
+        // echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />'.PHP_EOL;
         echo '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>'.PHP_EOL;
         echo '<script type="text/javascript" src="'.$javascriptURL .'/select2Functions.js"></script>'.PHP_EOL;
     } elseif ($useImprovedDropDownList) {
@@ -94,8 +95,8 @@
 		if (<?php echo ($useSelect2) ? 'true' : 'false' ?>){
 			$('.userIdPSelection').select2({
 			ajax: {
-				url: <?php echo "'".$_SERVER['REQUEST_URI']."api/idps'" ?>,
-				delay: 1000,
+				url: <?php echo "'".$apiURL."/idps'" ?>,
+				delay: 250,
 				dataType: 'json',
 				data: function (params) {
 						var query = {
