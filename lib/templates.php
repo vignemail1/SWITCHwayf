@@ -291,6 +291,7 @@ function printEmbeddedWAYFScript()
     global $langStrings, $language, $imageURL, $javascriptURL, $cssURL, $logoURL, $smallLogoURL, $federationURL;
     global $selectedIDP, $IDProviders, $SAMLDomainCookieName, $redirectCookieName, $redirectStateCookieName;
     global $customStrings;
+    global $apiURL, $developmentMode;
 
     // Set values that are used in the java script
     $loginWithString = getLocalString('login_with');

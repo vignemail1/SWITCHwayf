@@ -14,7 +14,6 @@
 
     if ($useSelect2) {
         echo '<link rel="stylesheet" href="'. $_SERVER['SCRIPT_NAME'] .'/select2.css" type="text/css" >'.PHP_EOL;
-        // echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />'.PHP_EOL;
         echo '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>'.PHP_EOL;
         echo '<script type="text/javascript" src="'.$javascriptURL .'/select2Functions.js"></script>'.PHP_EOL;
     } elseif ($useImprovedDropDownList) {
@@ -71,7 +70,6 @@
 
 	// Perform input validation on WAYF form for select2
 	function select2CheckForm() {
-	  // FIXME : to be reviewed for select2 !!!
 	  console.log("checkForm ", $('.userIdPSelection option:selected').text());
 	  if (
 	    document.IdPList.user_idp && (

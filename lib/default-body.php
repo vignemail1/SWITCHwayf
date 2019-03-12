@@ -1,16 +1,23 @@
-<?php // Copyright (c) 2019, SWITCH ?>
+<?php // Copyright (c) 2019, SWITCH?>
 
 <!-- Identity Provider Selection: Start -->
-<h1><?php echo getLocalString('header'); ?></h1> 
-<form id="IdPList" name="IdPList" method="post" onSubmit="return checkForm()" action="<?php echo $actionURL ?>">
+<h1><?php echo getLocalString('header'); ?></h1>
+<form id="IdPList" name="IdPList" method="post" onSubmit="<?php echo printSubmitAction() ?>" action="<?php echo $actionURL ?>">
 	<div id="userInputArea">
 		<p class="promptMessage"><?php echo $promptMessage ?></p>
 		<div style="text-align: center">
-			<select name="user_idp" id="userIdPSelection"> 
-				<option value="-" <?php echo $defaultSelected ?>><?php echo getLocalString('select_idp') ?> ...</option>
-			<?php printDropDownList($IDProviders, $selectedIDP) ?>
+
+			<select name="user_idp" id="userIdPSelection" class="userIdPSelection" tabindex="0">
+				<?php
+          // If we use select2, we don't want IDP to be in DOM, but to use AJAX instead
+          if (!$useSelect2) {
+              echo '<option value="-" '.$defaultSelected.'>'.getLocalString('select_idp').' ...</option>';
+              printDropDownList($IDProviders, $selectedIDP);
+          }
+            ?>
 			</select>
-			<input type="submit" name="Select" accesskey="s" value="<?php echo getLocalString('select_button') ?>"> 
+
+			<input type="submit" name="Select" accesskey="s" value="<?php echo getLocalString('select_button') ?>">
 		</div>
 		<div  style="text-align: left">
 			<p class="selectOptions">
@@ -26,7 +33,9 @@
 	</div>
 </form>
 
-<?php if (getLocalString('additional_info') != '') { ?>
+<?php if (getLocalString('additional_info') != '') {
+                ?>
 <p><?php echo getLocalString('additional_info') ?></p>
-<?php } ?>
+<?php
+            } ?>
 <!-- Identity Provider Selection: End -->

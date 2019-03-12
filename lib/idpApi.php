@@ -5,13 +5,13 @@
 // The API is compliant with select2 (https://select2.org/)
 /*------------------------------------------------*/
 
-// TODO : gérer la pré-sélection
 $topLevelDir = dirname(__DIR__);
 
 require('common.php');
 require('idpApiObjects.php');
 
 header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
 
 $repo = new IdpRepository($IDProviders, $IDPArray);
 

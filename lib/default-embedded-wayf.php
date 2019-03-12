@@ -1,10 +1,10 @@
-<?php // Copyright (c) 2019, SWITCH ?>
+<?php // Copyright (c) 2019, SWITCH?>
 
 <!-- EMBEDDED-WAYF-START -->
 <script type="text/javascript"><!--
 // To use this JavaScript, please access:
 // https://<?php echo $host ?><?php echo $path ?>/embedded-wayf.js/snippet.html
-// and copy/paste the resulting HTML snippet to an unprotected web page that 
+// and copy/paste the resulting HTML snippet to an unprotected web page that
 // you want the embedded WAYF to be displayed
 
 
@@ -36,18 +36,18 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 //////////////////// RECOMMENDED SETTINGS ////////////////////
 
 // Width of the embedded WAYF in pixels or "auto"
-// This is the width of the content only (without padding and border). 
-// Add 2 x (10px + 1px) = 22px for padding and border to get the actual 
+// This is the width of the content only (without padding and border).
+// Add 2 x (10px + 1px) = 22px for padding and border to get the actual
 // width of everything that is drawn.
 // [Optional, default: "auto"]
 // var wayf_width  = 250;
 
 // Height of the embedded WAYF in pixels or "auto"
-// This is the height of the content only (without padding and border). 
-// Add 2 x (10px + 1px) = 22px for padding and border to get the actual 
+// This is the height of the content only (without padding and border).
+// Add 2 x (10px + 1px) = 22px for padding and border to get the actual
 // height of everything that is drawn.
 // [Optional, default: "auto"]
-// Example for fixed size: 
+// Example for fixed size:
 // var wayf_height = 150;
 
 // Whether to show the checkbox to remember settings for this session
@@ -86,7 +86,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 //var wayf_auto_login = true;
 
 // Whether to hide the WAYF after the user was logged in
-// This requires that the _shib_session_* cookie is set when a user 
+// This requires that the _shib_session_* cookie is set when a user
 // could be authenticated, which is the default case when Shibboleth is used.
 // For other Service Provider implementations have a look at the setting
 // wayf_check_login_state_function that allows you to customize this
@@ -128,16 +128,16 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // Use the SAML2/Shibboleth 2 Discovery Service protocol where
 // the user is sent back to the Service Provider after selection
 // of his Home Organisation.
-// This feature should only be uncommented and set to false if there 
+// This feature should only be uncommented and set to false if there
 // is a good reason why to use the old and deprecated Shibboleth WAYF
 // protocol instead.
 // [Optional, default: true]
 // var wayf_use_discovery_service = false;
 
-// If enabled, the Embedded WAYF will activate the 
-// improved drop down list feature, which will transform the list of 
+// If enabled, the Embedded WAYF will activate the
+// improved drop down list feature, which will transform the list of
 // organisations into a search-field while keeping its original function as
-// a select list. To make this work, the JQuery library will dynamically be 
+// a select list. To make this work, the JQuery library will dynamically be
 // loaded if it is not yet present. Additionally, another Javascript and CSS
 // file are loaded to perform the actual transformation.
 // Please note that this feature will also display the organisations' logos,
@@ -147,10 +147,17 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // [Optional, default: false]
 // var wayf_use_improved_drop_down_list = false;
 
+// Whether or not use Select2 drop down
+// Attention: setting this to true, overrides $useImprovedDropDownList param
+// var wayf_use_select2 = false;
+
+// Config to change the number of IdP fetched when using Select2 dropdown
+// var wayf_select2_page_size = 100;
+
 // If true the improved drop-down-list will not display IdP logos that
 // have to be loaded from remote URLs. That way the web browser
 // does not have to make requests to third party hosts.
-// Logos that are embedded using data URIs 
+// Logos that are embedded using data URIs
 // (src="data:image/png;base64...") will however still be displayed
 // Don't confuse this with wayf_hide_logo, which shows or hides
 // the logo of this WAYF instance
@@ -159,7 +166,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 
 // If true the improved drop-down-list automatic filtering
 // of entries while typing content in the search box will
-// allow matching IdPs either by their name or entityID, 
+// allow matching IdPs either by their name or entityID,
 // whereas otherwise only the name is considered
 // [Optional, default: true]
 // wayf_enable_entityid_matching = true;
@@ -168,7 +175,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // current browser session. If wayf_show_remember_checkbox is true
 // the checkbox will be shown but will be read only.
 // WARNING: Only use this feature if you know exactly what you are doing
-//          This option will cause problems that are difficult to find 
+//          This option will cause problems that are difficult to find
 //          in case they accidentially select a wrong Home Organisation
 // [Optional, default: false]
 //var wayf_force_remember_for_session = false;
@@ -178,7 +185,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // This will implicitely be set to wayf_sp_samlDSURL = wayf_sp_handlerURL + "/Login";
 // or will be set automatically if the page where the Embedded WAYF is placed is called
 // with a 'return' and an 'entityID' GET Arguments
-// [Optional, if wayf_use_discovery_service = true 
+// [Optional, if wayf_use_discovery_service = true
 //  or if wayf_additional_idps is not empty, default: wayf_sp_handlerURL + "/Login"]
 // var wayf_sp_samlDSURL = wayf_sp_handlerURL + "/Login";
 
@@ -188,7 +195,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // var wayf_default_idp = "https://aai-logon.switch.ch/idp/shibboleth";
 
 // Number of last used IdPs to show
-// Will not be shown if wayf_show_categories is false 
+// Will not be shown if wayf_show_categories is false
 // Set to 0 to deactivate
 // [Optional, default: 3]
 // var wayf_num_last_used_idps = 3;
@@ -227,7 +234,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // var wayf_overwrite_from_other_federations_text = 'Other organisations';
 
 // Whether to hide the WAYF after the user was logged in
-// This requires that the _shib_session_* cookie is set when a user 
+// This requires that the _shib_session_* cookie is set when a user
 // could be authenticated
 // If you want to hide the embedded WAYF completely, uncomment
 // the property and set it to "". This then won't draw anything
@@ -236,7 +243,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 
 // If the user is already logged in and this variable is set to true, the WAYF
 // will automatically redirect the user to the URL set in wayf_return_url.
-// If the WAYF is embedded on a dedicated login page, this value should be set 
+// If the WAYF is embedded on a dedicated login page, this value should be set
 // to true. Else, it should be left at its default value 'false'.
 // [Optional, default: false]
 // var wayf_auto_redirect_if_logged_in = true;
@@ -244,19 +251,19 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // Provide the name of a JavaScript function that checks whether the user
 // already is logged in. The function should return true if the user is logged
 // in or false otherwise. If the user is logged in, the Embedded WAYF will
-// hide itself or draw a custom message depending on the 
+// hide itself or draw a custom message depending on the
 // setting wayf_logged_in_messsage. The default check will access a Shibboleth
 // session handler which typically is found at /Shibboleth.sso/Session.
 // [Optional, default: none]
-// var wayf_check_login_state_function = function() { 
+// var wayf_check_login_state_function = function() {
 // if (# specify user-is-logged-in condition#)
 //   return true;
-// else 
+// else
 //   return false;
 // }
 
-// EntityIDs, Names and SSO URLs of Identity Providers from other federations 
-// that should be added to the drop-down list. 
+// EntityIDs, Names and SSO URLs of Identity Providers from other federations
+// that should be added to the drop-down list.
 // name: Name of the Identity Provider to display
 // entityID: SAML entityID/providerID of this Identity Provider
 // SAML1SSOurl: Endpoint for the SAML1 SSO handler
@@ -264,17 +271,17 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 //          and it should be loaded from an HTTPS URL. Otherwise IE and other
 //          browsers complain
 // data: Non-visible data that may be used to find this Identity Provider when the
-//       improve drop-down feature is enabled. This string for example can  include 
-//       the domain names, abbreviations, localities or alternative names of the 
+//       improve drop-down feature is enabled. This string for example can  include
+//       the domain names, abbreviations, localities or alternative names of the
 //       organisation. Basically, anything the user could use to search his institution.
-//       
+//
 // The IdPs will be displayed in the order they are defined
 // [Optional, default: none]
 // var wayf_additional_idps = [ ];
 
 // Example of how to add Identity Provider from other federations
-// var wayf_additional_idps = [ 
-//        
+// var wayf_additional_idps = [
+//
 //        {name:"International University X",
 //        entityID:"urn:mace:example.org:example.university.org",
 //        SAML1SSOurl:"https://int.univ.org/shibboleth-idp/SSO",
@@ -290,13 +297,13 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 
 
 // Whether to load Identity Providers from the Discovery Feed provided by
-// the Service Provider. 
-// IdPs that are not listed in the Discovery Feed and that the SP therefore is 
+// the Service Provider.
+// IdPs that are not listed in the Discovery Feed and that the SP therefore is
 // not  are able to accept assertions from, are hidden by the Embedded WAYF
 // IdPs that are in the Discovery Feed but are unknown to the SWITCHwayf
-// are added to the wayf_additional_idps. 
+// are added to the wayf_additional_idps.
 // The list wayf_additional_idps will be sorted alphabetically
-// The SP must have configured the discovery feed handler that generates a 
+// The SP must have configured the discovery feed handler that generates a
 // JSON object. Otherwise it won't generate the JSON data containing the IdPs.
 // [Optional, default: false]
 // var wayf_use_disco_feed = false;
@@ -309,7 +316,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 //////////////////// ADDITIONAL CSS CUSTOMIZATIONS ////////////////////
 
 // To further customize the appearance of the Embedded WAYF you could
-// define CSS rules for the following CSS IDs that are used within the 
+// define CSS rules for the following CSS IDs that are used within the
 // Embedded WAYF:
 // #wayf_div                     - Container for complete Embedded WAYF
 // #wayf_logo_div                - Container for logo
@@ -333,10 +340,10 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 <script type="text/javascript" src="https://<?php echo $host ?><?php echo $path ?>/embedded-wayf.js"></script>
 
 <noscript>
-  <!-- 
-  Fallback to Shibboleth DS Session Initiator for non-JavaScript users 
-  Value of the target GET parameter should be set to an URL-encoded 
-  absolute URL that points to a Shibboleth protected web page where the user 
+  <!--
+  Fallback to Shibboleth DS Session Initiator for non-JavaScript users
+  Value of the target GET parameter should be set to an URL-encoded
+  absolute URL that points to a Shibboleth protected web page where the user
   is logged in into your application.
   -->
   <p>

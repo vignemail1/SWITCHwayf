@@ -1116,3 +1116,13 @@ function isRunViaInclude()
 {
     return basename($_SERVER['SCRIPT_NAME']) != 'readMetadata.php';
 }
+
+function printSubmitAction()
+{
+    global $useSelect2;
+    if ($useSelect2) {
+        return "return select2CheckForm()";
+    } else {
+        return "return checkForm()";
+    }
+}
