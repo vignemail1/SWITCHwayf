@@ -152,7 +152,10 @@ final class IdpRepository
         $tmp = array();
 
         $firstGroup = true;
-        $firstGroupName = $array[0]->type;
+        $firstGroupName = '';
+        if (!empty($array)) {
+            $array[0]->type;
+        }
 
         foreach ($array as $key => $idpObject) {
             $type = $idpObject->type;

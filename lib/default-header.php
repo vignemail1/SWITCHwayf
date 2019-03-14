@@ -58,7 +58,6 @@
 
 	// Perform input validation on WAYF form
 	function checkForm(){
-		//console.log("checkForm ", document.IdPList.user_idp, "/", document.IdPList.user_idp.selectedIndex);
 		if(
 			document.IdPList.user_idp &&
 			document.IdPList.user_idp.selectedIndex == 0
@@ -70,8 +69,6 @@
 		}
 	}
 
-
-
 	// Init WAYF
 	function init(){
 		preventIframeEmbedding();
@@ -81,47 +78,47 @@
 <?php if (isUseSelect2()) {
     if ($bodyType == "settings" || $bodyType == "WAYF") {
         ?>
-			$('.userIdPSelection').select2({
-			ajax: {
-				url: <?php echo "'".$apiURL."/idps'" ?>,
-				delay: 250,
-				dataType: 'json',
-				data: function (params) {
-						var query = {
-							search: params.term,
-							page: params.page || 1
-						}
-						// Query parameters will be ?search=[term]&page=[page]
-						return query;
-					},
-				error: function(jqxhr, status, exception) {
-					console.error('Exception:', exception);
-					<?php
-            if ($developmentMode) {
-                echo("alert('Exception:', exception);");
-            } ?>
-				}
-			},
-			placeholder: "<?php echo getLocalString('select_idp') ?>",
-			allowClear: true,
-			language: "<?php echo $language ?>",
-			templateResult: formatIdp,
-			templateSelection: formatIdp,
-			escapeMarkup: function (text) { return text; }
-		});
-		// Auto-submit when an idp is selected
-		$('.userIdPSelection').on('select2:select', function (e) {
-		    document.getElementById("IdPList").submit();
-		});
+        $('.userIdPSelection').select2({
+          ajax: {
+            url: <?php echo "'".$apiURL."/idps'" ?>,
+            delay: 250,
+            dataType: 'json',
+            data: function (params) {
+            var query = {
+            search: params.term,
+            page: params.page || 1
+            }
+            // Query parameters will be ?search=[term]&page=[page]
+            return query;
+            },
+            error: function(jqxhr, status, exception) {
+              console.error('Exception:', exception);
+              <?php
+              if ($developmentMode) {
+                  echo("alert('Exception:', exception);");
+              } ?>
+            }
+          },
+          placeholder: "<?php echo getLocalString('select_idp') ?>",
+          allowClear: true,
+          language: "<?php echo $language ?>",
+          templateResult: formatIdp,
+          templateSelection: formatIdp,
+          escapeMarkup: function (text) { return text; }
+        });
+        // Auto-submit when an idp is selected
+        $('.userIdPSelection').on('select2:select', function (e) {
+          document.getElementById("IdPList").submit();
+        });
 		<?php
     } elseif ($bodyType == "notice" && $permanentUserIdP != '') {
         ?>
-					$('.userIdPSelectionNotice').select2({
-						allowClear: false,
-						templateSelection: formatIdpNotice,
-						disabled: true,
-						escapeMarkup: function (text) { return text; }
-					});
+        $('.userIdPSelectionNotice').select2({
+          allowClear: false,
+          templateSelection: formatIdpNotice,
+          disabled: true,
+          escapeMarkup: function (text) { return text; }
+        });
 <?php
     }
 } elseif ($useImprovedDropDownList) {

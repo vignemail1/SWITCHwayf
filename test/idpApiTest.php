@@ -68,29 +68,4 @@ final class IdpApiTest extends TestCase
         getImage($imageString)
       );
     }
-
-    // public function testIdpObject()
-    // {
-    //     require("test.idps.php");
-    //     foreach ($metadataIDProviders as $key => $value) {
-    //         if ($key == "http://idp-condorcet.dev.entrouvert.org/idp/saml2/metadata") {
-    //             // printf("\nkey = %s\n", $key);
-    //             $idp = new IdpObject($key, $value);
-    //             // printf("\nidp = %s\n", json_encode($idp));
-    //             $this->assertEquals(
-    //                   "http://idp-condorcet.dev.entrouvert.org/idp/saml2/metadata",
-    //                   $idp->entityId
-    //                 );
-    //         }
-    //     }
-    // }
-
-    // public function testToJsonByQuery()
-    // {
-    //     require("test.IDProvider.metadata.php");
-    //
-    //     $repo = new IdpRepository($metadataIDProviders);
-    //
-    //     printf("\n%s\n", $repo->toJsonByQuery("arnoud", 1));
-    // }
 }
