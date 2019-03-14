@@ -829,6 +829,8 @@ function logInfo($infoMsg)
 
     syslog(LOG_INFO, $infoMsg);
 
+    wayfLog("INFO", $infoMsg);
+
     if ($developmentMode && isRunViaCLI()) {
         echo $infoMsg;
     }
@@ -843,6 +845,8 @@ function logWarning($warnMsg)
     initLogger();
 
     syslog(LOG_WARNING, $warnMsg);
+
+    wayfLog("WARN", $warnMsg);
 
     if ($developmentMode && isRunViaCLI()) {
         echo $warnMsg;
@@ -859,6 +863,8 @@ function logError($errorMsg)
 
     syslog(LOG_ERR, $errorMsg);
 
+    wayfLog("ERROR", $errorMsg);
+
     if ($developmentMode) {
         echo $errorMsg;
     }
@@ -870,6 +876,17 @@ function logFatalErrorAndExit($errorMsg)
 {
     logError($errorMsg);
     exit;
+}
+
+/******************************************************************************/
+// Logs a message to errorLog
+function wayfLog($level, $errorMsg)
+{
+    global $developmentMode;
+
+    if ($developmentMode) {
+        error_log(sprintf("[%s] %s", $level, $errorMsg));
+    }
 }
 
 /******************************************************************************/
@@ -1119,10 +1136,24 @@ function isRunViaInclude()
 
 function printSubmitAction()
 {
-    global $useSelect2;
-    if ($useSelect2) {
+    if (isUseSelect2()) {
         return "return select2CheckForm()";
     } else {
         return "return checkForm()";
     }
+}
+
+/******************************************************************************/
+// Getter for useSelect2: we can't only rely on config.php::$useSelect2
+// because of embeddedWAYF.
+// If SP want's to use Select2, it has to add ?useSelect2=true
+function isUseSelect2()
+{
+    global $useSelect2;
+
+    if (!isset($_GET["useSelect2"])) {
+        return $useSelect2;
+    }
+
+    return $_GET["useSelect2"];
 }

@@ -40,19 +40,14 @@ final class IdpObject
     public $id;
     public $text;
 
-    // Attributes required by WAY
-    public $entityId;
-    public $SSO;
     public $name;
-    public $names = array();
-    public $protocols;
     public $logo;
     /* group */
     public $type;
 
     public function __construct($entId, $idp)
     {
-        $this->entityId = $entId;
+        // $this->entityId = $entId;
         $this->id = $entId;
 
         global $language;
@@ -62,24 +57,13 @@ final class IdpObject
         $this->text = (isset($idp[$language]['Name'])) ? $idp[$language]['Name'] : $idp['Name'];
 
         foreach ($idp as $key => $value) {
-            if ($key == "SSO") {
-                $this->SSO = $value;
-            }
             if ($key == "Name") {
                 $this->name = $value;
-            }
-            if ($key == "Protocols") {
-                $this->protocols = $value;
             }
             if ($key == "Logo") {
                 if (sizeof($value) > 0) {
                     $this->logo = getImage($value{"URL"});
                 }
-            }
-            // languages
-            if (isset($value{"Name"})) {
-                // Assume it's a language
-                $this->names{$key} = $value{"Name"};
             }
             // Group
             if ($key == "Type") {
@@ -108,6 +92,7 @@ final class IdpGroup
 {
     public $text;
     public $children = array();
+    public $hide;
 }
 
 /*
@@ -124,9 +109,9 @@ final class IdpRepository
     {
         global $showNumOfPreviouslyUsedIdPs;
 
+
         if (isset($previouslySelectedIdps) && count($previouslySelectedIdps) > 0) {
             $counter = (isset($showNumOfPreviouslyUsedIdPs)) ? $showNumOfPreviouslyUsedIdPs : 3;
-
             for ($n = count($previouslySelectedIdps) - 1; $n >= 0; $n--) {
                 if ($counter <= 0) {
                     break;
@@ -161,10 +146,14 @@ final class IdpRepository
     /*
      * Groups a given array
      */
-    private function toGroups($array)
+    private function toGroups($array, $hideFirstGroup = false)
     {
         $result = array();
         $tmp = array();
+
+        $firstGroup = true;
+        $firstGroupName = $array[0]->type;
+
         foreach ($array as $key => $idpObject) {
             $type = $idpObject->type;
 
@@ -172,6 +161,7 @@ final class IdpRepository
                 $group = new IdpGroup();
                 $group->text = $type;
                 $tmp[$type] = $group;
+                $group->hide = $hideFirstGroup && ($type == $firstGroupName);
             }
             $tmp[$type]->children[] = $idpObject;
         }
@@ -209,10 +199,17 @@ final class IdpRepository
 
         $idpPage = array_slice($array, $from, $pageSize);
 
-        $result{"results"} = $this->toGroups($idpPage);
+        $hideFirstGroup = false;
+        if (isset($pageNumber) && $pageNumber > 1) {
 
-        // When using select2 optgroups, the pagination must be named "paginate"
-        // $result{"pagination"}{"more"} = (($pageNumber + 1)*$pageSize <= sizeof($array));
+            // Get last from previous page
+            $lastPageLastGroup = $this->idpObjects[$pageNumber * $pageSize - 1]->type;
+            $thisPageFirstGroup = $this->idpObjects[$pageNumber * $pageSize]->type;
+            $hideFirstGroup = ($lastPageLastGroup == $thisPageFirstGroup);
+        }
+
+        $result{"results"} = $this->toGroups($idpPage, $hideFirstGroup);
+
         $result{"pagination"}{"more"} = (($pageNumber + 1)*$pageSize <= sizeof($array));
 
         return json_encode($result, JSON_UNESCAPED_SLASHES);

@@ -31,7 +31,6 @@
   var wayf_use_discovery_service = global.wayf_use_discovery_service;
   var wayf_use_improved_drop_down_list = global.wayf_use_improved_drop_down_list;
   var wayf_use_select2 = global.wayf_use_select2;
-  //var wayf_use_select2 = true;
   var wayf_select2_page_size = global.wayf_select2_page_size;
   var wayf_disable_remote_idp_logos = global.wayf_disable_remote_idp_logos;
   var wayf_enable_entityid_matching = global.wayf_enable_entityid_matching;
@@ -77,9 +76,11 @@
   var wayf_categories = {
     <?php echo $JSONCategoryList ?>
   };
+  <?php if(!isUseSelect2()) { ?>
   var wayf_idps = {
     <?php echo $JSONIdPList ?>
   };
+  <?php } ?>
   var wayf_other_fed_idps = {};
 
   // Functions
@@ -144,6 +145,8 @@
     return false;
   }
 
+  <?php if(!isUseSelect2()) { ?>
+
   function writeOptGroup(IdPElements, category) {
 
     if (!wayf_categories[category]) {
@@ -167,6 +170,7 @@
       writeHTML('</optgroup>');
     }
   }
+  <?php } ?>
 
   function writeHTML(a) {
     wayf_html += a;
@@ -571,6 +575,7 @@
       }, 100);
     }
   }
+  <?php if(!isUseSelect2()) { ?>
 
   function getOptionHTML(entityID) {
 
@@ -661,6 +666,7 @@
       enableValueMatching: wayf_enable_entityid_matching
     });
   }
+  <?php } else { ?>
 
   function loadJQuerySelect2() {
     var head = document.getElementsByTagName('head')[0];
@@ -706,44 +712,62 @@
     var select2Script = document.createElement('script');
     select2Script.src = "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js";
     select2Script.type = 'text/javascript';
+
+    var select2Translation = document.createElement('script');
+
+    select2Translation.src = "<?php echo('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/i18n/'.$language.'.js') ?>";
+    select2Translation.type = 'text/javascript';
+
+
     select2Script.onload = function() {
-      console.log("Select2 JS loaded !");
-      $('.userIdPSelection').select2({
-        ajax: {
-          url: <?php echo "'".$apiURL."/idps'" ?>,
-          delay: 250,
-          dataType: 'json',
-          data: function(params) {
-            var query = {
-              search: params.term,
-              page: params.page || 1
-            }
-            // Query parameters will be ?search=[term]&page=[page]
-            return query;
-          },
-          error: function(jqxhr, status, exception) {
-            console.error('Exception:', exception);
-            <?php
+
+      // Load transalation
+      select2Translation.onload = function() {
+
+        console.log("Select2 JS loaded !");
+        $('.userIdPSelection').select2({
+          ajax: {
+            url: <?php echo "'".$apiURL."/idps'" ?>,
+            delay: 250,
+            dataType: 'json',
+            data: function(params) {
+              var query = {
+                search: params.term,
+                page: params.page || 1
+              }
+              // Query parameters will be ?search=[term]&page=[page]
+              return query;
+            },
+            error: function(jqxhr, status, exception) {
+              console.error('Exception:', exception);
+              <?php
             if ($developmentMode) {
                 echo("alert('Exception:', exception);");
             }
           ?>
+            }
+          },
+          placeholder: "<?php echo getLocalString('select_idp') ?>",
+          allowClear: true,
+          language: "<?php echo $language ?>",
+          templateResult: formatIdp,
+          templateSelection: formatIdp,
+          escapeMarkup: function(text) {
+            return text;
           }
-        },
-        placeholder: "<?php echo getLocalString('select_idp') ?>",
-        allowClear: true,
-        templateResult: formatList,
-        templateSelection: formatRepoSelection,
-        escapeMarkup: function(text) {
-          return text;
-        }
-      });
+        });
+        // Auto-submit when an idp is selected
+        $('.userIdPSelection').on('select2:select', function(e) {
+          document.getElementById("IdPList").submit();
+        });
+      }
     };
 
     head.appendChild(select2Script);
+    head.appendChild(select2Translation);
 
   }
-
+  <?php } ?>
   (function() {
 
     var config_ok = true;

@@ -13,14 +13,23 @@ if (!isset($_SERVER['REMOTE_ADDR']) || basename($_SERVER['SCRIPT_NAME']) == 'tem
 /*------------------------------------------------*/
 // Functions containing HTML code
 /*------------------------------------------------*/
-
-function printHeader()
+// $bodyType states which screen WAYF is going to display:
+// * settings
+// * notice
+// * WAYF
+// * error
+// This allows to adapt the content of the header
+function printHeader($bodyType)
 {
     global $langStrings, $language, $imageURL, $javascriptURL, $cssURL, $logoURL;
     global $useImprovedDropDownList, $disableRemoteLogos, $organizationLogoURL;
     global $federationURL, $organizationURL, $faqURL, $helpURL, $privacyURL;
     global $customStrings;
-    global $developmentMode, $useSelect2, $apiURL;
+    global $developmentMode, $apiURL;
+    global $permanentUserIdP, $permanentUserIdPName, $permanentUserIdPLogo;
+    global $IDProviders;
+
+    $permanentUserIdP = getPermanentUserIdp();
 
     include(get_template('header.php'));
 }
@@ -32,7 +41,6 @@ function printWAYF()
 {
     global $selectedIDP, $language, $IDProviders, $SProviders, $redirectCookieName, $imageURL, $redirectStateCookieName, $showPermanentSetting;
     global $customStrings;
-    global $useSelect2;
 
     if (!isset($showPermanentSetting)) {
         $showPermanentSetting = false;
@@ -92,7 +100,6 @@ function printSettings()
 {
     global $selectedIDP, $language, $IDProviders, $redirectCookieName;
     global $customStrings;
-    global $useSelect2;
 
     $actionURL = $_SERVER['SCRIPT_NAME'].'?'.htmlentities($_SERVER['QUERY_STRING']);
     $defaultSelected = ($selectedIDP == '-') ? 'selected="selected"' : '';
@@ -105,7 +112,6 @@ function printSettings()
 function printDropDownList($IDProviders, $selectedIDP = '')
 {
     global $language;
-    global $useSelect2;
 
     $previouslyUsedIdPsHTML = getPreviouslyUsedIdPsHTML();
     echo $previouslyUsedIdPsHTML;
@@ -233,22 +239,21 @@ function printNotice()
     $actionURL = $_SERVER['SCRIPT_NAME'].'?'.htmlentities($_SERVER['QUERY_STRING']);
 
     $hiddenUserIdPInput = '';
-    $permanentUserIdP = '';
+    $permanentUserIdP = getPermanentUserIdp();
     $permanentUserIdPName = '';
     $permanentUserIdPLogo = '';
 
-
-    if (
-            isset($_POST['user_idp'])
-            && checkIDPAndShowErrors($_POST['user_idp'])
-        ) {
-        $permanentUserIdP = $_POST['user_idp'];
-    } elseif (
-            isset($_COOKIE[$redirectCookieName])
-            && checkIDPAndShowErrors($_COOKIE[$redirectCookieName])
-        ) {
-        $permanentUserIdP = $_COOKIE[$redirectCookieName];
-    }
+    // if (
+    //         isset($_POST['user_idp'])
+    //         && checkIDPAndShowErrors($_POST['user_idp'])
+    //     ) {
+    //     $permanentUserIdP = $_POST['user_idp'];
+    // } elseif (
+    //         isset($_COOKIE[$redirectCookieName])
+    //         && checkIDPAndShowErrors($_COOKIE[$redirectCookieName])
+    //     ) {
+    //     $permanentUserIdP = $_COOKIE[$redirectCookieName];
+    // }
 
     if ($permanentUserIdP != '') {
         $hiddenUserIdPInput = '<input type="hidden" name="user_idp" value="'.$permanentUserIdP.'">';
@@ -259,6 +264,26 @@ function printNotice()
     }
 
     include(get_template('notice.php'));
+}
+
+function getPermanentUserIdp()
+{
+    global $redirectCookieName;
+    $permanentUserIdP = '';
+
+    if (
+          isset($_POST['user_idp'])
+          && checkIDPAndShowErrors($_POST['user_idp'])
+      ) {
+        $permanentUserIdP = $_POST['user_idp'];
+    } elseif (
+          isset($_COOKIE[$redirectCookieName])
+          && checkIDPAndShowErrors($_COOKIE[$redirectCookieName])
+      ) {
+        $permanentUserIdP = $_COOKIE[$redirectCookieName];
+    }
+
+    return $permanentUserIdP;
 }
 
 /******************************************************************************/
@@ -276,7 +301,7 @@ function printError($message)
     global $customStrings;
 
     // Show Header
-    printHeader();
+    printHeader("error");
 
     include(get_template('error.php'));
 

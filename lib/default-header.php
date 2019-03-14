@@ -12,9 +12,11 @@
 	<script type="text/javascript" src="<?php echo $javascriptURL ?>/jquery.js"></script>
 	<?php
 
-    if ($useSelect2) {
+    if (isUseSelect2()) {
         echo '<link rel="stylesheet" href="'. $_SERVER['SCRIPT_NAME'] .'/select2.css" type="text/css" >'.PHP_EOL;
         echo '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>'.PHP_EOL;
+        // Load translations
+        echo '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/i18n/'.$language.'.js"></script>'.PHP_EOL;
         echo '<script type="text/javascript" src="'.$javascriptURL .'/select2Functions.js"></script>'.PHP_EOL;
     } elseif ($useImprovedDropDownList) {
         echo '<link rel="stylesheet" href="'. $_SERVER['SCRIPT_NAME'] .'/ImprovedDropDown.css" type="text/css">'.PHP_EOL;
@@ -68,21 +70,7 @@
 		}
 	}
 
-	// Perform input validation on WAYF form for select2
-	function select2CheckForm() {
-	  console.log("checkForm ", $('.userIdPSelection option:selected').text());
-	  if (
-	    document.IdPList.user_idp && (
-				$('.userIdPSelection option:selected').text() == null ||
-	    $('.userIdPSelection option:selected').text() == ''
-		)
-	  ) {
-	    alert(unescape('<?php echo getLocalString('make_selection', 'js') ?>'));
-	    return false;
-	  } else {
-	    return true;
-	  }
-	}
+
 
 	// Init WAYF
 	function init(){
@@ -90,7 +78,9 @@
 
 		setFocus();
 
-		if (<?php echo ($useSelect2) ? 'true' : 'false' ?>){
+<?php if (isUseSelect2()) {
+    if ($bodyType == "settings" || $bodyType == "WAYF") {
+        ?>
 			$('.userIdPSelection').select2({
 			ajax: {
 				url: <?php echo "'".$apiURL."/idps'" ?>,
@@ -109,19 +99,33 @@
 					<?php
             if ($developmentMode) {
                 echo("alert('Exception:', exception);");
-            }
-          ?>
+            } ?>
 				}
 			},
 			placeholder: "<?php echo getLocalString('select_idp') ?>",
 			allowClear: true,
-			templateResult: formatList,
-			templateSelection: formatRepoSelection,
+			language: "<?php echo $language ?>",
+			templateResult: formatIdp,
+			templateSelection: formatIdp,
 			escapeMarkup: function (text) { return text; }
 		});
-
-
-		} else if (<?php echo ($useImprovedDropDownList) ? 'true' : 'false' ?>){
+		// Auto-submit when an idp is selected
+		$('.userIdPSelection').on('select2:select', function (e) {
+		    document.getElementById("IdPList").submit();
+		});
+		<?php
+    } elseif ($bodyType == "notice" && $permanentUserIdP != '') {
+        ?>
+					$('.userIdPSelectionNotice').select2({
+						allowClear: false,
+						templateSelection: formatIdpNotice,
+						disabled: true,
+						escapeMarkup: function (text) { return text; }
+					});
+<?php
+    }
+} elseif ($useImprovedDropDownList) {
+    ?>
 
 			var searchText = '<?php echo getLocalString('search_idp', 'js') ?>';
 			$("#userIdPSelection:enabled option[value='-']").text(searchText);
@@ -133,7 +137,8 @@
 				noItemsText: '<?php echo getLocalString('no_idp_available', 'js') ?>',
 				disableRemoteLogos: <?php echo ($disableRemoteLogos) ? 'true' : 'false' ?>
 			});
-		}
+		<?php
+} ?>
 	}
 
 	// Call init function when DOM is ready
@@ -149,37 +154,37 @@
 	<div class="box">
 		<div id="header">
 			<?php if (!empty($logoURL)) {
-              ?>
+        ?>
 			<a href="<?php echo sprintf($federationURL, $language) ?>"><img src="<?php echo $logoURL ?>" alt="Federation Logo" id="federationLogo"></a>
 			<?php
-          } ?>
+    } ?>
 			<?php if (!empty($organizationLogoURL)) {
-              ?>
+        ?>
 			<a href="<?php echo sprintf($organizationURL, $language) ?>"><img src="<?php echo $organizationLogoURL ?>" alt="Organization Logo" id="organisationLogo"></a>
 			<?php
-          } ?>
+    } ?>
 		</div>
 			<div id="content">
 				<ul class="menu">
 					<?php if (!empty($federationURL) && getLocalString('about_federation') != '') {
-              ?>
+        ?>
 					<li><a href="<?php echo sprintf($federationURL, $language) ?>"><?php echo getLocalString('about_federation'); ?></a></li>
 					<?php
-          } ?>
+    } ?>
 					<?php if (!empty($faqURL) && getLocalString('faq') != '') {
-              ?>
+        ?>
 					<li class="last"><a href="<?php echo sprintf($faqURL, $language) ?>"><?php echo getLocalString('faq') ?></a></li>
 					<?php
-          } ?>
+    } ?>
 					<?php if (!empty($helpURL) && getLocalString('help') != '') {
-              ?>
+        ?>
 					<li class="last"><a href="<?php echo sprintf($helpURL, $language) ?>"><?php echo getLocalString('help') ?></a></li>
 					<?php
-          } ?>
+    } ?>
 					<?php if (!empty($privacyURL) && getLocalString('privacy') != '') {
-              ?>
+        ?>
 					<li class="last"><a href="<?php echo sprintf($privacyURL, $language) ?>"><?php echo getLocalString('privacy') ?></a></li>
 					<?php
-          } ?>
+    } ?>
 				</ul>
 <!-- Body: Start -->

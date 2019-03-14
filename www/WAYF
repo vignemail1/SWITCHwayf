@@ -107,6 +107,7 @@ if (isset($_COOKIE[$SPCookieName])) {
 // Set Cookie to remember the selection
 if (isset($_POST['user_idp']) && checkIDPAndShowErrors($_POST['user_idp'])) {
     $IDPArray = appendValueToIdPArray($_POST['user_idp'], $IDPArray);
+
     setcookie($SAMLDomainCookieName, getValueFromIdPArray($IDPArray), time() + ($cookieValidity*24*3600), '/', $commonDomain, $cookieSecurity, $cookieSecurity);
 }
 
@@ -409,7 +410,7 @@ if (
     // Show selection
 
     // Show Header
-    printHeader();
+    printHeader("WAYF");
 
     // Show drop down list
     printWAYF();
@@ -615,7 +616,7 @@ if (
 
     // Show confirmatin notice
     // Show Header
-    printHeader();
+    printHeader("notice");
 
     // Show drop down list
     printNotice();
@@ -627,7 +628,7 @@ if (
 } else {
 
     // Show Header
-    printHeader();
+    printHeader("settings");
 
     // Show drop down list
     printSettings();

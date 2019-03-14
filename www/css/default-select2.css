@@ -190,6 +190,18 @@
   color: #999;
 }
 
+/* .select2-results__option .select2-results__option--load-more {
+  font-family: Verdana, sans-serif;
+  font-size: 12px;
+  color: #999;
+}
+
+.loading-results {
+  font-family: Verdana, sans-serif;
+  font-size: 12px;
+  color: #999;
+} */
+
 .select2-container--default .select2-selection--single .select2-selection__arrow {
   height: 26px;
   position: absolute;
@@ -350,6 +362,8 @@
 }
 
 .select2-container--default .select2-results__option[aria-disabled=true] {
+  font-family: Verdana, sans-serif;
+  font-size: 12px;
   color: #999;
 }
 
@@ -430,6 +444,8 @@
 }
 
 .select2-container--classic .select2-selection--single .select2-selection__placeholder {
+  font-family: Verdana, sans-serif;
+  font-size: 12px;
   color: #999;
 }
 
