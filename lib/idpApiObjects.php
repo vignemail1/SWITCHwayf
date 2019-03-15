@@ -154,7 +154,8 @@ final class IdpRepository
         $firstGroup = true;
         $firstGroupName = '';
         if (!empty($array)) {
-            $array[0]->type;
+            $firstGroupName = $array[0]->type;
+            // logInfo(sprintf("firstGroupName = %s", $firstGroupName));
         }
 
         foreach ($array as $key => $idpObject) {
@@ -164,6 +165,12 @@ final class IdpRepository
                 $group = new IdpGroup();
                 $group->text = $type;
                 $tmp[$type] = $group;
+                // logInfo(sprintf(
+                //     "hideFirstGroup = %s, type = %s, firstGroupName = %s",
+                //     $hideFirstGroup?"true":"false",
+                //   $type,
+                // $firstGroupName
+                // ));
                 $group->hide = $hideFirstGroup && ($type == $firstGroupName);
             }
             $tmp[$type]->children[] = $idpObject;
@@ -209,8 +216,9 @@ final class IdpRepository
             $lastPageLastGroup = $this->idpObjects[$pageNumber * $pageSize - 1]->type;
             $thisPageFirstGroup = $this->idpObjects[$pageNumber * $pageSize]->type;
             $hideFirstGroup = ($lastPageLastGroup == $thisPageFirstGroup);
+            // logInfo(sprintf("lastPageLastGroup = %s / thisPageFirstGroup = %s", $lastPageLastGroup, $thisPageFirstGroup));
         }
-
+        // logInfo(sprintf("hideFirstGroup = %s", $hideFirstGroup?"true":"false"));
         $result{"results"} = $this->toGroups($idpPage, $hideFirstGroup);
 
         $result{"pagination"}{"more"} = (($pageNumber + 1)*$pageSize <= sizeof($array));
