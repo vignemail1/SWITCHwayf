@@ -243,18 +243,6 @@ function printNotice()
     $permanentUserIdPName = '';
     $permanentUserIdPLogo = '';
 
-    // if (
-    //         isset($_POST['user_idp'])
-    //         && checkIDPAndShowErrors($_POST['user_idp'])
-    //     ) {
-    //     $permanentUserIdP = $_POST['user_idp'];
-    // } elseif (
-    //         isset($_COOKIE[$redirectCookieName])
-    //         && checkIDPAndShowErrors($_COOKIE[$redirectCookieName])
-    //     ) {
-    //     $permanentUserIdP = $_COOKIE[$redirectCookieName];
-    // }
-
     if ($permanentUserIdP != '') {
         $hiddenUserIdPInput = '<input type="hidden" name="user_idp" value="'.$permanentUserIdP.'">';
         $permanentUserIdPName = $IDProviders[$permanentUserIdP]['Name'];
