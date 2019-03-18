@@ -82,6 +82,11 @@
 // Config to change the number of IdP fetched when using Select2 dropdown
 //$select2PageSize = 100;
 
+// For Select2 to work in embedded WAYF, CORS must be enabled.
+// This settings allows to limit origins
+// default: *
+//$allowedCORSDomain = "*";
+
 // Number of previously used Identity Providers to show at top of drop-down list
 // Default is 3, set to 0 to disable
 //$showNumOfPreviouslyUsedIdPs = 3;

@@ -219,8 +219,7 @@ function printOptionElement($IDProviders, $key, $selectedIDP)
     $selected = ($selectedIDP == $key) ? ' selected="selected"' : $selected = '';
 
     // Add additional information as data attribute to the entry
-    $data = getDomainNameFromURI($key);
-    $data .= composeOptionData($values);
+    $data = buildIdpData($values, $key);
 
     // Add logo (which is assumed to be 16x16px) to extension string
     $logo =  (isset($values['Logo'])) ? 'logo="'.$values['Logo']['URL']. '"' : '' ;
@@ -352,8 +351,9 @@ function printEmbeddedWAYFScript()
         }
 
         // Add other information to find IdP
-        $IdPData = getDomainNameFromURI($key);
-        $IdPData .= composeOptionData($IDProvider);
+        // $IdPData = getDomainNameFromURI($key);
+        // $IdPData .= composeOptionData($IDProvider);
+        $IdPData= buildIdpData($IDProvider, $key);
         $IdPData = addslashes($IdPData);
 
         // Skip non-IdP entries

@@ -688,6 +688,7 @@
       if (typeof jQuery === "function") {
         $ = jQuery;
       }
+      console.log("Loading Select2 !");
       loadSelect2();
       select2Loaded = true;
     };
@@ -710,61 +711,71 @@
     var head = document.getElementsByTagName('head')[0];
 
     var select2Script = document.createElement('script');
-    select2Script.src = "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js";
+    select2Script.src = "<?php echo($javascriptURL .'/select2.min.js') ?>";
     select2Script.type = 'text/javascript';
 
-    var select2Translation = document.createElement('script');
-
-    select2Translation.src = "<?php echo('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/i18n/'.$language.'.js') ?>";
-    select2Translation.type = 'text/javascript';
 
 
     select2Script.onload = function() {
+      console.log("Select2 JS loaded !");
 
-      // Load transalation
-      select2Translation.onload = function() {
+      // typeof jQuery.fn.select2 === "function" && jQuery.fn.select2.amd ? require(["S2"], runSelect2) : runSelect2();
+      runSelect2();
 
-        console.log("Select2 JS loaded !");
-        $('.userIdPSelection').select2({
-          ajax: {
-            url: <?php echo "'".$apiURL."/idps'" ?>,
-            delay: 250,
-            dataType: 'json',
-            data: function(params) {
-              var query = {
-                search: params.term,
-                page: params.page || 1
-              }
-              // Query parameters will be ?search=[term]&page=[page]
-              return query;
-            },
-            error: function(jqxhr, status, exception) {
-              console.error('Exception:', exception);
-              <?php
-            if ($developmentMode) {
-                echo("alert('Exception:', exception);");
-            }
-          ?>
-            }
-          },
-          placeholder: "<?php echo getLocalString('select_idp') ?>",
-          allowClear: true,
-          language: "<?php echo $language ?>",
-          templateResult: formatIdp,
-          templateSelection: formatIdp,
-          escapeMarkup: function(text) {
-            return text;
-          }
-        });
-        // Auto-submit when an idp is selected
-        $('.userIdPSelection').on('select2:select', function(e) {
-          document.getElementById("IdPList").submit();
-        });
-      }
     };
 
     head.appendChild(select2Script);
+
+  }
+
+  function runSelect2() {
+    var head = document.getElementsByTagName('head')[0];
+    var select2Translation = document.createElement('script');
+    select2Translation.src = "<?php echo($javascriptURL .'/i18n/'.$language.'.js') ?>";
+    select2Translation.type = 'text/javascript';
+
+    select2Translation.onload = function() {
+      console.log("Select2 Translation loaded !");
+
+      $('.userIdPSelection').select2({
+        ajax: {
+          url: <?php echo "'".$apiURL."/idps'" ?>,
+          delay: 250,
+          dataType: 'json',
+          data: function(params) {
+            var query = {
+              search: params.term,
+              page: params.page || 1
+            }
+            // Query parameters will be ?search=[term]&page=[page]
+            return query;
+          },
+          error: function(jqxhr, status, exception) {
+            console.error('Exception:', exception);
+            <?php
+          if ($developmentMode) {
+              echo("alert('Exception:', exception);");
+          }
+        ?>
+          }
+        },
+        placeholder: "<?php echo getLocalString('select_idp') ?>",
+        allowClear: true,
+        language: "<?php echo $language ?>",
+        templateResult: formatIdp,
+        templateSelection: formatIdp,
+        escapeMarkup: function(text) {
+          return text;
+        }
+      });
+      // Auto-submit when an idp is selected
+      $('.userIdPSelection').on('select2:select', function(e) {
+        document.getElementById("IdPList").submit();
+      });
+
+    };
     head.appendChild(select2Translation);
+
 
   }
   <?php } ?>
@@ -802,7 +813,7 @@
       typeof wayf_select2_page_size === "undefined" ||
       typeof wayf_select2_page_size !== "number"
     ) {
-      wayf_select2_page_size = 50;
+      wayf_select2_page_size = 100;
     }
 
     if (

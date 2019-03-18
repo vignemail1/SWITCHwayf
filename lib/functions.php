@@ -58,6 +58,9 @@ function initConfigOptions()
     global $instanceIdentifier;
     global $developmentMode;
     global $topLevelDir;
+    global $useSelect2;
+    global $select2PageSize;
+    global $allowedCORSDomain;
 
 
     // Set independet default configuration options
@@ -71,7 +74,8 @@ function initConfigOptions()
     $defaults['showPermanentSetting'] = false;
     $defaults['useImprovedDropDownList'] = true;
     $defaults['useSelect2'] = false;
-    $defaults['select2PageSize'] = 50;
+    $defaults['select2PageSize'] = 100;
+    $defaults['allowedCORSDomain'] = '*';
     $defaults['disableRemoteLogos'] = false;
     $defaults['useSAML2Metadata'] = false;
     $defaults['SAML2MetaOverLocalConf'] = false;
@@ -820,54 +824,30 @@ function initLogger()
 }
 
 /******************************************************************************/
+// Logs a debug message
+function logDebug($infoMsg)
+{
+    wayfLog("DEBUG", $infoMsg);
+}
+
 // Logs an info message
 function logInfo($infoMsg)
 {
-    global $developmentMode;
-
-    initLogger();
-
-    syslog(LOG_INFO, $infoMsg);
-
     wayfLog("INFO", $infoMsg);
-
-    if ($developmentMode && isRunViaCLI()) {
-        echo $infoMsg;
-    }
 }
 
 /******************************************************************************/
 // Logs an warnimg message
 function logWarning($warnMsg)
 {
-    global $developmentMode;
-
-    initLogger();
-
-    syslog(LOG_WARNING, $warnMsg);
-
     wayfLog("WARN", $warnMsg);
-
-    if ($developmentMode && isRunViaCLI()) {
-        echo $warnMsg;
-    }
 }
 
 /******************************************************************************/
 // Logs an error message
 function logError($errorMsg)
 {
-    global $developmentMode;
-
-    initLogger();
-
-    syslog(LOG_ERR, $errorMsg);
-
     wayfLog("ERROR", $errorMsg);
-
-    if ($developmentMode) {
-        echo $errorMsg;
-    }
 }
 
 /******************************************************************************/
@@ -884,8 +864,26 @@ function wayfLog($level, $errorMsg)
 {
     global $developmentMode;
 
+    // If developmentMode => Log to errorLog
     if ($developmentMode) {
         error_log(sprintf("[%s] %s", $level, $errorMsg));
+        // Legacy logging
+        //echo $errorMsg;
+    }
+
+    $syslogPriority = LOG_INFO;
+    if ($level == "ERROR") {
+        $syslogPriority = LOG_ERR;
+    }
+    if ($level == "WARN") {
+        $syslogPriority = LOG_WARNING;
+    }
+
+    if ($level != "DEBUG") {
+        // Syslog Logging
+        initLogger();
+
+        syslog($syslogPriority, $errorMsg);
     }
 }
 
@@ -1156,4 +1154,22 @@ function isUseSelect2()
     }
 
     return $_GET["useSelect2"];
+}
+
+function getSelect2PageSize()
+{
+    global $select2PageSize;
+
+    if (!isset($_GET["select2PageSize"])) {
+        return $select2PageSize;
+    }
+
+    return $_GET["select2PageSize"];
+}
+
+function buildIdpData($IDProvider, $key)
+{
+    $data = getDomainNameFromURI($key);
+    $data .= composeOptionData($IDProvider);
+    return $data;
 }

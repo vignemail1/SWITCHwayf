@@ -11,27 +11,20 @@ require('common.php');
 require('idpApiObjects.php');
 
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+
+global $allowedCORSDomain;
+
+header('Access-Control-Allow-Origin: '.$allowedCORSDomain);
 
 $repo = new IdpRepository($IDProviders, $IDPArray);
-
-global $select2PageSize;
 
 if (array_key_exists("page", $_GET)) {
     if (array_key_exists("search", $_GET)) {
         //error_log("Search with request ".$_GET["search"]);
-        if (isset($select2PageSize)) {
-            echo $repo->toJsonByQuery($_GET["search"], $_GET["page"], $select2PageSize);
-        } else {
-            echo $repo->toJsonByQuery($_GET["search"], $_GET["page"]);
-        }
+        echo $repo->toJsonByQuery($_GET["search"], $_GET["page"], getSelect2PageSize());
     } else {
         //error_log("Search page ".$_GET["page"]);
-        if (isset($select2PageSize)) {
-            echo $repo->toJsonByPage($_GET["page"], $select2PageSize);
-        } else {
-            echo $repo->toJsonByPage($_GET["page"]);
-        }
+        echo $repo->toJsonByPage($_GET["page"], getSelect2PageSize());
     }
 } else {
     echo $repo->toJson();

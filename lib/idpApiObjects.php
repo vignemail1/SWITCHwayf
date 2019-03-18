@@ -2,7 +2,7 @@
 
 /*------------------------------------------------*/
 /*------------------------------------------------*/
-// Classes ued to ease API management
+// Classes used to ease API management
 /*------------------------------------------------*/
 /*------------------------------------------------*/
 
@@ -45,6 +45,7 @@ final class IdpObject
     /* group */
     public $type;
 
+
     public function __construct($entId, $idp)
     {
         // $this->entityId = $entId;
@@ -70,6 +71,16 @@ final class IdpObject
                 $this->type = $value;
             }
         }
+    }
+
+    /*
+     * Legacy data select field construction
+     * to enable serach as usual
+     */
+    public function getDataForSearch()
+    {
+        global $IDProviders;
+        return buildIdpData($IDProviders[$this->id], $this->id);
     }
 }
 
@@ -165,12 +176,6 @@ final class IdpRepository
                 $group = new IdpGroup();
                 $group->text = $type;
                 $tmp[$type] = $group;
-                // logInfo(sprintf(
-                //     "hideFirstGroup = %s, type = %s, firstGroupName = %s",
-                //     $hideFirstGroup?"true":"false",
-                //   $type,
-                // $firstGroupName
-                // ));
                 $group->hide = $hideFirstGroup && ($type == $firstGroupName);
             }
             $tmp[$type]->children[] = $idpObject;
@@ -227,7 +232,11 @@ final class IdpRepository
     }
 
     /*
-     * Return a pge of IDPs matching the $query
+     * Return a page of IDPs matching the $query.
+     * Search is done in:
+     * - name/text
+     * - getDomainNameFromURI(entityId)
+     * - composeOptionData(IDProviders[entityId])
      */
     public function toJsonByQuery($query, $pageNumber, $pageSize=10)
     {
@@ -236,9 +245,11 @@ final class IdpRepository
           array_filter(
             $this->idpObjects,
             function ($value) use ($query) {
+                // logDebug(sprintf("Data(%s) = %s", $value->id, $value->getDataForSearch()));
                 return (
                     fnmatch("*".removeAccents($query)."*", removeAccents($value->name), FNM_CASEFOLD)
                  || fnmatch("*".removeAccents($query)."*", removeAccents($value->text), FNM_CASEFOLD)
+                 || fnmatch("*".removeAccents($query)."*", removeAccents($value->getDataForSearch()), FNM_CASEFOLD)
                );
             }
           ),

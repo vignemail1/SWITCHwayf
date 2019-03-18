@@ -21,10 +21,6 @@ function doFormatIdp(idp, logo) {
     return idp.text;
   }
 
-  if (idp.id === '') { // adjust for custom placeholder values
-    console.log("null Id => ", idp);
-  }
-
   if (idp.children == null) {
     // IDP
     var img = "";

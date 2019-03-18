@@ -149,10 +149,10 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 
 // Whether or not use Select2 drop down
 // Attention: setting this to true, overrides $useImprovedDropDownList param
+// For this to fully work, one must also add useSelect2 query Param to the
+// embedded-wayf.js script loading URL.
+// Page size is contrrolled by WAYF server directly.
 // var wayf_use_select2 = false;
-
-// Config to change the number of IdP fetched when using Select2 dropdown
-// var wayf_select2_page_size = 100;
 
 // If true the improved drop-down-list will not display IdP logos that
 // have to be loaded from remote URLs. That way the web browser
@@ -336,7 +336,8 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 
 //-->
 </script>
-
+<!-- To fully enable select2, one have to add useSelect2 query param: --> 
+<!-- <script type="text/javascript" src="https://<?php echo $host ?><?php echo $path ?>/embedded-wayf.js?useSelect2=true"></script> -->
 <script type="text/javascript" src="https://<?php echo $host ?><?php echo $path ?>/embedded-wayf.js"></script>
 
 <noscript>
