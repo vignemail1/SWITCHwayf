@@ -1,4 +1,4 @@
-<?php // Copyright (c) 2018, SWITCH
+<?php // Copyright (c) 2019, SWITCH
 
 /*------------------------------------------------*/
 // Common stuff for PHP executable URI (WAYF, idps)

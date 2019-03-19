@@ -26,7 +26,7 @@ Some of the Features:
 - The central Discovery Service also works without Java Script
 - Search-as-you type or selection from a list of organisations
 - Various customizations options for header, footer, language strings etc.
-- I18N support, currently language packs for en, de, it, fr and some other
+- I18N support, currently language packs for en, de, it, fr, tr and some other
   languages are included
 - HTML code generation for embedding the WAYF directly into a web page
 - Support for remembering IdP selection accross different services (when
@@ -82,17 +82,22 @@ In particular, the following customizations can be applied:
   both for the stand-alone WAYF as well as the Embedded WAYF. The styles are
   loaded in addition to the default-ImprovedDropDown.css.
 
+* CSS Improved Drop Down Style:    `css/custom-select2.css`
+  Customize CSS styles to alter the appearance of the Select2 drop-down list,
+  both for the stand-alone WAYF as well as the Embedded WAYF. The styles are
+  loaded in addition to the default-select2.css.
+
 * Languages:     `custom-languages.php`
   Can be used to change default or add new language strings. The custom
   languages strings in addition to the default styles. Therefore, they can be
   used to overwrite the default CSS styles.
   This file can also be used to white or black list certain languages by
   adding to the end of the file:
-  
+
         // Example to black list Japanase and Portuguese
         unset($langStrings['ja']);
         unset($langStrings['pt']);
-  
+
         // Example to white list English, Italian, French and German
         foreach($langStrings as $lang => $strings){
           if ($lang != 'en' && $lang != 'it' && $lang != 'fr' && $lang != 'de'){
@@ -171,6 +176,10 @@ However, if the script is accessed via HTTPS, the overall speed gain by using
 an opcode cacher is much less because the TLS hand-shake is what
 needs most time.
 
+When having lot's of IDP, using Select2 drop-down can provide great performane
+increase from end-user point of view, because the full IDP list is not
+downloaded.
+
 -------------------------------------------------------------------------------
 
 SAML2 Metadata support
@@ -185,10 +194,10 @@ SAML2 Medatadata file that is used by Shibboleth:
 - Make sure the files specified in $metadataIDPFile and $metadataSPFile can be
   written by the userthat executes the PHP script (the web server user,
   e.g. www-data or _www)
-- You may want to execute php SWITCHwayf/bin/update-metadata.php 
+- You may want to execute php SWITCHwayf/bin/update-metadata.php
   manually or with a cron job to avoid that delayed requests for users
   who happen to trigger automatic processing of new metadata files.
-  See php bin/update-metadata.php -h for some details and 
+  See php bin/update-metadata.php -h for some details and
   suggestions on how to use the script.
 
 The parsed IDP and SP entries will be stored in $metadataIDPFile and
@@ -290,6 +299,10 @@ Embedded WAYF code limitations:
 * If placed on a host where no Service Provider is installed, the Embedded WAYF
   might not be able to detect whether a user is logged in or not. Also, the
   wayf_use_disco_feed might not be used.
+* When using Select2, one must activate settings both in the embedding web page
+  and as query param of the downloaded JS (this is explained in snippet)
+* IDP Api allows '*' as origin for requests, but limiting this can obviously
+  prevent embedded WAYF to work with Select2
 
 -------------------------------------------------------------------------------
 
@@ -546,3 +559,6 @@ Path Info Extensions:
 * [/IDProviders.php]
   Same as above but as PHP code
 
+* [/api/idps]
+  JSON API used by Select2 to fetch IDP. Supports pagination and server-side
+  searches. 

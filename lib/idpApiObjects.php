@@ -1,4 +1,4 @@
-<?php
+<?php // Copyright (c) 2019 Geoffroy Arnoud, Guillaume Rousse, and SWITCHwayf contributors
 
 /*------------------------------------------------*/
 /*------------------------------------------------*/
