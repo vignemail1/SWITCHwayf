@@ -74,8 +74,8 @@ Installation
 
 5. If Apache 2 is used, add the following statement to the Apache configuration:
 
-        Alias /#SOME_PATH# /#YOUR-PATH-TO#/SWITCHwayf/www
         Alias /#SOME_PATH#/api/idps /#YOUR-PATH-TO#/SWITCHwayf/lib/idpApi.php
+        Alias /#SOME_PATH# /#YOUR-PATH-TO#/SWITCHwayf/www
 
         <Directory /#YOUR-PATH-TO#/SWITCHwayf/www>
             Options Indexes MultiViews
