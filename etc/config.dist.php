@@ -244,7 +244,8 @@
 // the WAYF script.
 //$javascriptURL = 'https://ds.example.org/SWITCHwayf/js';
 
-
+// Abolute URL to point to APIs
+//$apiURL = 'https://ds.example.org/SWITCHwayf/api';
 
 // 5. Appearance Settings
 //**************************

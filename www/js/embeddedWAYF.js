@@ -672,12 +672,6 @@
     var head = document.getElementsByTagName('head')[0];
     var select2Loaded = false;
 
-    var select2Functions = document.createElement('script');
-    select2Functions.src = "<?php echo $javascriptURL ?>/select2Functions.js";
-    select2Functions.type = 'text/javascript';
-
-    head.appendChild(select2Functions);
-
     var script = document.createElement('script');
     script.src = '<?php echo $javascriptURL ?>/jquery.js';
     script.type = 'text/javascript';
@@ -709,6 +703,12 @@
 
     // Load Select2 JS
     var head = document.getElementsByTagName('head')[0];
+
+    var select2Functions = document.createElement('script');
+    select2Functions.src = "<?php echo $javascriptURL ?>/select2Functions.js";
+    select2Functions.type = 'text/javascript';
+
+    head.appendChild(select2Functions);
 
     var select2Script = document.createElement('script');
     select2Script.src = "<?php echo($javascriptURL .'/select2.min.js') ?>";
