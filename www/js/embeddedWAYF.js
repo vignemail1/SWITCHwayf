@@ -88,6 +88,7 @@ function redirectTo(url){
 function submitForm(eventObj){
 
 	if (document.IdPList.user_idp && document.IdPList.user_idp.selectedIndex == 0){
+                eventObj.preventDefault();
 		alert('<?php echo $makeSelectionString ?>');
 		return false;
 	}
