@@ -499,7 +499,9 @@ function getMDUIKeywords($RoleDescriptorNode){
 	$MDUIKeywords = $RoleDescriptorNode->getElementsByTagNameNS('urn:oasis:names:tc:SAML:metadata:ui', 'Keywords');
 	foreach( $MDUIKeywords as $MDUIKeywordEntry ){
 		$lang = $MDUIKeywordEntry->getAttributeNodeNS('http://www.w3.org/XML/1998/namespace', 'lang')->nodeValue;
-		$Entity[$lang] = trimToSingleLine($MDUIKeywordEntry->nodeValue);
+		$keywordEntry = $MDUIKeywordEntry->nodeValue;
+		$keywordEntry = preg_replace('/\+/',' ',$keywordEntry);
+		$Entity[$lang] = trimToSingleLine($keywordEntry);
 	}
 	
 	return $Entity;
