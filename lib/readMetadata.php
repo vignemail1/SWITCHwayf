@@ -292,6 +292,23 @@ function processIDPRoleDescriptor($IDPRoleDescriptorNode){
 		$IDP[$lang]['Keywords'] = $keywords;
 	}
 	
+	// Ensure there is a keyword entry for default language
+	if (!isset($IDP[$defaultLanguage]['Keywords'])){
+		$IDP[$defaultLanguage]['Keywords'] = '';
+	}
+	
+	// Also add entityID as keyword
+	$IDP[$defaultLanguage]['Keywords'] .= $IDPRoleDescriptorNode->parentNode->getAttribute('entityID');
+	
+	// Get scopes
+	$ShibScopes = getShibScopes($IDPRoleDescriptorNode);
+	
+	// Get domain hints
+	$MDUIDomainHints = getMDUIDomainHints($IDPRoleDescriptorNode);
+	
+	// Add unique domains as keywords as well
+	$IDP[$defaultLanguage]['Keywords'] .= ' '.implode(' ', array_unique(array_merge($ShibScopes, $MDUIDomainHints)));
+	
 	// Get Logos
 	$MDUILogos = getMDUILogos($IDPRoleDescriptorNode);
 	foreach ($MDUILogos as $Logo){
@@ -327,7 +344,6 @@ function processIDPRoleDescriptor($IDPRoleDescriptorNode){
 	}
 	
 	// Get DomainHints 
-	$MDUIDomainHints = getMDUIDomainHints($IDPRoleDescriptorNode);
 	if ($MDUIDomainHints){
 		$IDP['DomainHint'] = $MDUIDomainHints;
 	}
@@ -505,6 +521,24 @@ function getMDUIKeywords($RoleDescriptorNode){
 	}
 	
 	return $Entity;
+}
+
+// Get Shib Scopes from RoleDescriptor
+function getShibScopes($RoleDescriptorNode){
+	
+	$Scopes = Array();
+	
+	$ShibScopes = $RoleDescriptorNode->getElementsByTagNameNS('urn:mace:shibboleth:metadata:1.0', 'Scope');
+	foreach( $ShibScopes as $ShibScopeEntry ){
+		// Ignore regular expression scopes
+		if ($ShibScopeEntry->getAttribute('regexp') && $ShibScopeEntry->getAttribute('regexp') == 'true'){
+			continue;
+		}
+		
+		$Scopes[] = trim($ShibScopeEntry->nodeValue);
+	}
+	
+	return $Scopes;
 }
 
 // Get MD Logos from RoleDescriptor. Prefer the favicon logos
