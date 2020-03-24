@@ -129,11 +129,14 @@ final class IdpRepository
                 }
 
                 $selIdp = $previouslySelectedIdps[$n];
-                $idp = new IdpObject($selIdp, $IDProviders[$selIdp]);
-                $idp->type = getLocalString('last_used');
-                $this->idpObjects[] = $idp;
 
-                $counter--;
+                $selIdp = $previouslySelectedIdps[$n];
+                if (isset($IDProviders[$selIdp])) {
+                    $idp = new IdpObject($selIdp, $IDProviders[$selIdp]);
+                    $idp->type = getLocalString('last_used');
+                    $this->idpObjects[] = $idp;
+                    $counter--;
+                }
             }
         }
 
