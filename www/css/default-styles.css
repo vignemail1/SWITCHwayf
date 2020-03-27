@@ -132,20 +132,36 @@ pre {
 }
 
 #userInputArea, .userInputArea {
-	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 	background-color: #fafafa;
 	border-color: #c0c0c0;
 	border-width: 1px;
 	border-style: solid;
-	border-radius: 4px;
-	padding: 6px;
+	padding: 20px;
 }
 
 #userIdPSelection, .userIdPSelection {
-	width: 480px;
+	width: 460px;
 	font-size: 12px;
+}
+
+input[name="Select"]{
+	color: #fff;
+	background-color: #007bff;
+	border-color: #007bff;
+	border-radius: 4px;
+	border-style: none;
+}
+
+input[name="Select"]:hover {
+    background-color: #0069d9;
+	border-color: #0062cc;
+}
+
+input[name="Select"]:active {
+    background-color: #0062cc;
+	border-color: #005cbf;
 }
 
 /* Device specific styles */

@@ -140,7 +140,7 @@
 } ?>
 
 		// Ajust height of submit button to select
-		$('[name="Select"]').height($('#userIdPSelection').outerHeight());
+		$('[name="Select"]').height($('#userIdPSelection').outerHeight()+2);
 	}
 
 	// Call init function when DOM is ready

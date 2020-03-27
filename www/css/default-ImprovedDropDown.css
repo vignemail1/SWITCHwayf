@@ -8,9 +8,9 @@
 
 .idd_textbox:hover {
 	border-color: black;
-	box-shadow: 1px 1px 8px #999999;
-	-webkit-box-shadow: 1px 1px 8px #999999;
-	-moz-box-shadow: 1px 1px 8px #999999;
+	box-shadow:  0 0 6px 0 #0069d9;
+	-webkit-box-shadow: 0 0 6px 0 #0069d9;
+	-moz-box-shadow:  0 0 6px 0 #0069d9;
 }
 
 /* dropdown arrow control */
@@ -25,9 +25,9 @@
 .idd_icon:hover
 {
 	border-color: black;
-	box-shadow: 1px 1px 8px #999999;
-	-webkit-box-shadow: 1px 1px 8px #999999;
-	-moz-box-shadow: 1px 1px 8px #999999;
+	box-shadow:  0 0 6px 0 #0069d9;
+	-webkit-box-shadow: 0 0 6px 0 #0069d9;
+	-moz-box-shadow:  0 0 6px 0 #0069d9;
 }
 
 /* Dropdown list */
@@ -39,9 +39,9 @@ div.idd_list {
 	padding-bottom: 0px;
 	z-index: 900;
 	text-align:left;
-	box-shadow: 1px 1px 4px #999999;
-	-webkit-box-shadow: 1px 1px 4px #999999;
-	-moz-box-shadow: 1px 1px 4px #999999;
+	box-shadow:  0 0 6px 0 #0069d9;
+	-webkit-box-shadow: 0 0 6px 0 #0069d9;
+	-moz-box-shadow:  0 0 6px 0 #0069d9;
 }
 
 /* Option Group headers */

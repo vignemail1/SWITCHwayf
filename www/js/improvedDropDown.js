@@ -17,8 +17,8 @@
    limitations under the License.
 */
 
-/* 
-   All tab indented lines were modified by aai@switch.ch 
+/*
+   All tab indented lines were modified by aai@switch.ch
 */
 	(function(global, factory) {
 		typeof global.define === 'function' && global.define.amd ? define("improvedDropDown", ["jquery"], factory) :
@@ -65,12 +65,12 @@ var suspendTextBoxExitHandler = false;
 
 			if (arguments.length === 0 || typeof value === 'object') {
                     //init
-    
+
                     var iconPath='./img/dropIcon.png';
                     var noMatchesText='No Matches';
                     var noItemsText='No Items Available';
 					var disableRemoteLogos=false;
-                
+
 					if (arguments.length === 1) {
                       if ('iconPath' in value) {iconPath = value.iconPath.toString();}
                       if ('noMatchesText' in value) {noMatchesText = value.noMatchesText.toString();}
@@ -78,42 +78,42 @@ var suspendTextBoxExitHandler = false;
 						if ('disableRemoteLogos' in value) {disableRemoteLogos = value.disableRemoteLogos;}
 						if ('enableValueMatching' in value) {enableValueMatching = value.enableValueMatching;}
                     }
-    
+
                 this.each(function () {
                     var thisElement = $(this);
 
                     var wrapperControl = getWrapperElement(thisElement);
-                    
+
                     thisElement.after(wrapperControl);
-    
+
                     var newImgElement = getImageElement(thisElement,iconPath);
                     wrapperControl.append(newImgElement);
-    
+
                     var newTextElement = getTextElement(thisElement, newImgElement);
-                    wrapperControl.prepend(newTextElement); 
-    
+                    wrapperControl.prepend(newTextElement);
+
                     var newListControl = getListElement(thisElement);
-                    wrapperControl.append(newListControl); 
-    
+                    wrapperControl.append(newListControl);
+
 					// Remove logos from remote URL if this features is activated
 					if (disableRemoteLogos){
 						removeRemoteLogos(thisElement);
 					}
-					
+
                     populateList(thisElement, newListControl,noMatchesText,noItemsText);
-    
+
                     if (document.activeElement == thisElement[0]) {
                         //if replaced element had focus, move it to new control.
-                        newTextElement.focus().select(); 
+                        newTextElement.focus().select();
                     }
-    
-                    if (debugMode != 1) { 
-                        thisElement.hide();                                                
+
+                    if (debugMode != 1) {
+                        thisElement.hide();
                     }
                  });
              }
-             else {  
-                    //setvalue                                               
+             else {
+                    //setvalue
                     this.each(function () {
                         var listControl = getListControlFromOtherControl($(this));
                             if (listControl!=null) {
@@ -122,7 +122,7 @@ var suspendTextBoxExitHandler = false;
                             }
                     });
              }
-    
+
              return this; //preserve chaining.
         };
 	})(jq);
@@ -143,7 +143,7 @@ function getWrapperElement(sourceElement) {
                      .css('border-style','none')
                      .css('white-space', 'nowrap')
 					.css('float', 'left')
-                     .css('padding', '0')                     
+                     .css('padding', '0')
                      .click(function () {return false;});
 
     return newWrapperElement;
@@ -152,20 +152,20 @@ function getWrapperElement(sourceElement) {
 
 function removeRemoteLogos(existingSelectControl){
 	var sourceListItems = existingSelectControl.find('OPTION');
-	
+
 	if (sourceListItems.length === 0) {
 		return;
 	}
-	
+
 	sourceListItems.each(
 		 function () {
 			var optionItem = jq(this);
-			
+
 			// Skip items without logos
 			if (!optionItem.attr('logo')){
 				return;
 			}
-			
+
 			// Remove logos that are not embedded as data URIs
 			if (optionItem.attr('logo').toLowerCase().indexOf('data:image') !== 0){
 				optionItem.removeAttr('logo');
@@ -174,21 +174,21 @@ function removeRemoteLogos(existingSelectControl){
 }
 
 function addLogoToTextElement(newTextElement, url){
-	
+
 	if (!displayLogos){
 		return;
 	}
-	
+
 	if (!url){
-		newTextElement.css('text-indent' , '0');
+		newTextElement.css('text-indent' , '5px');
 		newTextElement.css('background' , '#fff');
 		return;
 	}
-	
+
 	newTextElement.css('text-indent' , '20px');
 	// IE Fix
 	newTextElement.css('line-height' , '18px');
-	
+
 	// Add logo as background
 	newTextElement.css('background-color' , '#fff');
 	newTextElement.css('background-size' , '16px 16px');
@@ -208,7 +208,7 @@ function getTextElement(sourceElement, imgElement) {
 	var newTextElement = jq('<input type="text" />');
 	// We have to substract 2px from the height if page is not rendered in standard mode
 	var quirksModeOffset = (document.compatMode ==='CSS1Compat') ? 0 : 2 ;
-	
+
 	var controlWidth = Math.max(sourceElement.outerWidth() - imgElement.outerWidth() + quirksModeOffset,40);
 
     newTextElement.attr('id', newID + idd_text_suffix)
@@ -221,11 +221,11 @@ function getTextElement(sourceElement, imgElement) {
                   .css('padding','0')
                   .attr('autocomplete', 'off')
                   .width(controlWidth);
-    
+
 	if (displayLogos){
 		addLogoToTextElement(newTextElement, sourceElement.find('option:selected').attr('logo'));
 	}
-    
+
     setIsDirty(newTextElement, false);
 
     newTextElement.keydown(function (e) {
@@ -284,11 +284,11 @@ function getTextElement(sourceElement, imgElement) {
     });
 
     newTextElement.focusout(function () {
-        if (!suspendTextBoxExitHandler) { 
+        if (!suspendTextBoxExitHandler) {
 		   selectFirstMatch(jq(this),true);
         }
     });
-    
+
 	// Clear text area on click
 	newTextElement.click(function (obj) {
 		if (obj.target.value !== ''){
@@ -297,10 +297,10 @@ function getTextElement(sourceElement, imgElement) {
 			obj.target.savedLogo = jq(obj.target).css('background-image');
 			addLogoToTextElement(jq(obj.target), null);
 		}
-		
+
 		jq('#' + newID + idd_icon_suffix).click();
 	});
-	
+
 	// Restore text area on focos out
 	newTextElement.focusout(function (obj) {
 		if (obj.target.value === '' && obj.target.savedValue !== ''){
@@ -342,17 +342,17 @@ function getImageElement(sourceElement,iconPath) {
             selectFirstMatch(textControl,true);
         }
         else {
-            windowDismissOpenLists(listControl); 
+            windowDismissOpenLists(listControl);
 			clearFilter(getTextControlFromOtherControl(jq(this)));
             showList(listControl)
-            textControl.focus().select(); 
+            textControl.focus().select();
         }
 
 		// Highlight selected item
 		var selectElement = getSelectControlFromOtherControl(listControl);
 		var selectedListElement = jq("[savedValue='" + selectElement.val() + "']").first();
 		selectedListElement.addClass("idd_listItem_Hover");
-		
+
 		// Scroll to proper list entry
 		listControl.scrollTop(selectedListElement.position().top + listControl.scrollTop() - 30);
 
@@ -368,11 +368,11 @@ function getListElement(sourceElement) {
 	var newListControl = jq('<div></div>');
 
     newListControl.attr('id', newID + idd_list_suffix)
-                  .css('position','absolute')    
-                  .css('display','none')    
-                  .css('overflow','auto')    
+                  .css('position','absolute')
+                  .css('display','none')
+                  .css('overflow','auto')
                   .css('overflow-y','auto')
-                  .css('overflow-x', 'hidden') 
+                  .css('overflow-x', 'hidden')
                   .css('padding-right','20px')
 				  .css('background-color','white')
 				  .scroll(function() {
@@ -381,14 +381,14 @@ function getListElement(sourceElement) {
                   .addClass('idd_list')
                   .mouseenter(function () { suspendTextBoxExitHandler = true; })
                   .mouseleave(function () { suspendTextBoxExitHandler = false; });
-                  
+
 
     newListControl.keydown(function (e) {
 
         switch (e.which) {
 
             case KEY_DOWNARROW:
-                {                    
+                {
 					navItem(getTextControlFromOtherControl(jq(this)), 'forward');
                     e.stopPropagation();
                     return false;
@@ -430,21 +430,21 @@ function populateList(existingSelectControl, newListControl,noMatchesText,noItem
         var noItemsHeader = getListGroupItem(noItemsText,true).addClass('idd_message');
         newListControl.append(noItemsHeader);
     }
-    
+
     sourceListItems.each(
          function () {
-			 if (isOptGroup(jq(this))) { 
-				populateListGroupItem(newListControl, jq(this)); 
+			 if (isOptGroup(jq(this))) {
+				populateListGroupItem(newListControl, jq(this));
              }
-             else { 
-				populateListItem(newListControl, jq(this)); 
+             else {
+				populateListItem(newListControl, jq(this));
              }
          });
 
 }
 
 function populateListGroupItem(newListControl, optionGroupItem) {
-    var newListItem = getListGroupItem(optionGroupItem.attr('label'),true);    
+    var newListItem = getListGroupItem(optionGroupItem.attr('label'),true);
     newListControl.append(newListItem);
 	optionGroupItem.children('OPTION').each(function () { populateListItem(newListControl, jq(this)); });
 }
@@ -456,16 +456,16 @@ function getListGroupItem(label,visible) {
                .css('cursor','default');
 
    if (!visible) {newListItem.css('display','none');}
-    
+
     return newListItem;
 }
 
 function populateListItem(newListControl, optionItem) {
     var title = '';
-	
+
 	var noImage = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 	var loadingImage = 'data:image/gif;base64,R0lGODlhEAAQAPIAAM7a5wAAAJ2msDU4PAAAAE9UWWlvdnZ9hCH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==';
-	
+
 	// Add logo if there is at least one logo
 	var logo = '';
 	if (displayLogos){
@@ -480,16 +480,16 @@ function populateListItem(newListControl, optionItem) {
 	var newListItem = jq('<div>' + logo + optionItem.text() + '</div>');
 
     newListItem.addClass('idd_listItem');
-    
+
     if (isOptGroup(optionItem.parent())) {
         newListItem.addClass('idd_listItem_Nested');
         title = optionItem.parent().attr('label') + ': ';
     }
 
     title += newListItem.text();
-    
+
     newListItem.attr('savedValue', optionItem.val())
-               .attr('title', title)    
+               .attr('title', title)
                .css('white-space','nowrap')
                .css('cursor','pointer');
 
@@ -500,7 +500,7 @@ function populateListItem(newListControl, optionItem) {
 	} else {
 		newListItem.attr('data', optionItem.text())
 	}
-	
+
 	// Copy logo from source element to list
 	if (optionItem.attr('logo')){
 		newListItem.attr('logo', optionItem.attr('logo'));
@@ -520,7 +520,7 @@ function populateListItem(newListControl, optionItem) {
 				var textControl = getTextControlFromOtherControl(newListControl);
 				addLogoToTextElement(jq(textControl), optionItem.attr('logo'));
 			}
-			
+
 			jq('[name="Select"]').click();
         });
     }
@@ -535,27 +535,27 @@ function populateListItem(newListControl, optionItem) {
 function getItemValue(item) { return item.attr('savedValue'); }
 function setItemValue(item, value) { item.attr('savedValue', value); }
 
-function selectItem(selectedItem,forceDirty,closeList, supressChangeEvent) {    
+function selectItem(selectedItem,forceDirty,closeList, supressChangeEvent) {
     var listControl = selectedItem.parent();
     var textControl = getTextControlFromOtherControl(listControl);
 
-    // update visible textbox 
+    // update visible textbox
     textControl.val(selectedItem.text());
-    
+
    //update underlying control value
-   var sourceControl = getSelectControlFromOtherControl(textControl); 
+   var sourceControl = getSelectControlFromOtherControl(textControl);
    sourceControl.val(getItemValue(selectedItem));
 
    if (forceDirty) {setIsDirty(textControl, true);}
 
-   if (getIsDirty(textControl) && !supressChangeEvent) { 
-        sourceControl.change(); 
+   if (getIsDirty(textControl) && !supressChangeEvent) {
+        sourceControl.change();
         setIsDirty(textControl,false);
    }
 
    if (closeList) {
        listControl.hide();
-   } else {              
+   } else {
        makeListItemVisible(listControl, selectedItem);
    }
 
@@ -577,7 +577,7 @@ function findItemByValue(listControl,value) {
             if (getItemValue(item) == value) { retVal=item; return false; }
         });
 
-        return retVal;   
+        return retVal;
 }
 
 function getBestMatch(value, listControl) {
@@ -655,17 +655,17 @@ function closeListUndoTyping(textControl) {
     var listControl = getListControlFromOtherControl(textControl);
 
     resetValue(textControl)
-    listControl.hide();    
+    listControl.hide();
 }
 
 function clearFilter(textControl) {
     var listControl = getListControlFromOtherControl(textControl);
-    
+
     listControl.children('.idd_listItemGroupHeader').show();
     listControl.children('.grpHdrNoMatches').hide();
 
     listControl.children('.idd_listItem').show()
-                                         .removeClass('idd_listItem_Hover');        
+                                         .removeClass('idd_listItem_Hover');
 }
 
 function showList(listControl) {
@@ -706,13 +706,13 @@ function positionList(listControl) {
 
             var minListWidthPx = textElement.outerWidth() + imgElement.outerWidth()
             var listWidthPx = Math.max(minListWidthPx, widestListItemPx);
-            
+
             // List width shall be at max page width - 100px
 			listWidthPx = Math.min((jq(window).width() - 100), listWidthPx);
 
 			var effectiveListWidth = listWidthPx;
 			listControl.css('width', effectiveListWidth + 'px');
-            
+
             // Determine on which side to expand list
 			var listLeft = textElement.position().left;
 			if ((listLeft + effectiveListWidth + 20)  >= jq(window).width()) {
@@ -735,17 +735,17 @@ function getElementsLongestWidthPx(jElements) {
         maxLenPx = Math.max(maxLenPx, thisControl.outerWidth());
     });
 
-    return maxLenPx; 
+    return maxLenPx;
 }
 
 function getElementsTotalHeightPx(jElements) {
     var maxHeight = 0;
- 
+
     jElements.each(function () {
 		maxHeight += jq(this).outerHeight() + 4;
     });
 
-    return maxHeight; 
+    return maxHeight;
 }
 
 function updateListFilter(textControl) {
@@ -754,7 +754,7 @@ function updateListFilter(textControl) {
     var listControl = getListControlFromOtherControl(textControl);
     var listItems = listControl.children('.idd_listItem')
 
-    setIsDirty(textControl, true);    
+    setIsDirty(textControl, true);
     listItems.removeClass('idd_listItem_Hover');
 
     showList(listControl);
@@ -764,7 +764,7 @@ function updateListFilter(textControl) {
          });
 
     //show nomatches item, and no other headers if the filter excludes everything
-    var anyMatches = Boolean(listItems.filter(':visible').length!=0);        
+    var anyMatches = Boolean(listItems.filter(':visible').length!=0);
     listControl.children('.idd_listItemGroupHeader').toggle(anyMatches);
     listControl.children('.grpHdrNoMatches').toggle(!anyMatches);
 
@@ -780,20 +780,20 @@ function updateListFilter(textControl) {
 			}
 			previousElement = jq(this);
 	});
-	
+
 	// Hide last visible item if it is a category
 	if (allListItems.last().hasClass("idd_listItemGroupHeader") && !allListItems.last().hasClass("grpHdrNoMatches")){
 		allListItems.last().hide();
 	}
 
     positionList(listControl); //resize list to fit new visible elements.
-    
+
 	// Load logos
 	loadVisibleLogos(listControl);
 }
 
 function doesListItemMach(listItem, compareText) {
-	
+
 	// Ensure the is not returned
 	if (listItem.attr('savedValue') === '-'){
 		return false;
@@ -824,13 +824,13 @@ function getIsDirty(textControl) {
 function setIsDirty(textControl,isDirty) {
    var dirtyVal = '';
 
-   if (isDirty) { 
+   if (isDirty) {
     dirtyVal = 'yes';
    }
    else {
     dirtyVal = '';
    }
-    
+
    textControl.attr('isDirty',dirtyVal);
 }
 
@@ -860,7 +860,7 @@ function navItem(textControl, navDirection) {
             }
         }
         else {
-            selectedItem = currentItem; 
+            selectedItem = currentItem;
         }
 
     }
@@ -873,7 +873,7 @@ function navItem(textControl, navDirection) {
     if ((selectedItem != null) && (selectedItem.length>0)) {
         selectItem(selectedItem, Boolean(currentValue!=selectedItem.text()) ,false,true);
         if (isItemSelected) { listControl.find('.idd_listItem_Hover').removeClass('idd_listItem_Hover'); }
-        selectedItem.addClass("idd_listItem_Hover");         
+        selectedItem.addClass("idd_listItem_Hover");
     }
 }
 
@@ -884,8 +884,8 @@ function makeListItemVisible(listControl, item) {
     var itemScrollTop = item.position().top + listControl.scrollTop();
     var itemBottom = itemTop + item.outerHeight();
 
-    if ((itemBottom > listHeight) || (itemTop < 0)) {             
-        listControl.scrollTop(itemScrollTop + (item.outerHeight() * 2) - listHeight);  
+    if ((itemBottom > listHeight) || (itemTop < 0)) {
+        listControl.scrollTop(itemScrollTop + (item.outerHeight() * 2) - listHeight);
     }
 
 
@@ -921,8 +921,8 @@ var delayedCalls = Object;
 
 function delayCall(key, func, delayMs) {
     if (key in delayedCalls) {
-        clearTimeout(delayedCalls[key]);                
-    }      
+        clearTimeout(delayedCalls[key]);
+    }
 
     delayedCalls[key] = setTimeout(function () { processDelayedCall(key,func);} ,delayMs);
 }
@@ -960,10 +960,10 @@ $.fn.visible = function(partial,hidden){
 	compareTop	= partial === true ? _bottom : _top,
 	compareBottom	= partial === true ? _top : _bottom,
 	clientSize	= hidden === true ? t.offsetWidth * t.offsetHeight : true;
-	
+
 	return !!clientSize && ((compareBottom <= viewBottom) && (compareTop >= viewTop));
 };
-    
+
 })(jq);
 
 });
