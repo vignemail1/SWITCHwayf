@@ -131,13 +131,16 @@
 
 			// Convert select element into improved drop down list
 			$("#userIdPSelection:enabled").improveDropDown({
-				iconPath:'<?php echo $imageURL ?>/drop_icon.png',
+				iconPath:'<?php echo $imageURL ?>/drop_icon.svg',
 				noMatchesText: '<?php echo getLocalString('no_idp_found', 'js') ?>',
 				noItemsText: '<?php echo getLocalString('no_idp_available', 'js') ?>',
 				disableRemoteLogos: <?php echo ($disableRemoteLogos) ? 'true' : 'false' ?>
 			});
 		<?php
 } ?>
+
+		// Ajust height of submit button to select
+		$('[name="Select"]').height($('#userIdPSelection').outerHeight());
 	}
 
 	// Call init function when DOM is ready

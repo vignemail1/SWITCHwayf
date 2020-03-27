@@ -106,7 +106,7 @@ pre {
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	margin-left: -320px; 
+	margin-left: -320px;
 	margin-top: -200px;
 }
 
@@ -135,10 +135,11 @@ pre {
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
-	background-color: #F0F0F0;
-	border-color: #969696;
+	background-color: #fafafa;
+	border-color: #c0c0c0;
 	border-width: 1px;
 	border-style: solid;
+	border-radius: 4px;
 	padding: 6px;
 }
 
@@ -152,31 +153,31 @@ pre {
 	.box {
 		width: auto;
 		box-shadow: none;
-		border-radius: 0;  
+		border-radius: 0;
 		-webkit-box-shadow: none;
 		-webkit-border-radius: 0;
 		-moz-box-shadow: none;
 		-moz-border-radius: 0;
 		padding: 0;
 	}
-	
+
 	#content, .content {
 		width: 96%;
 	}
-	
+
 	#container, .container {
 		width: 96%;
 		position: auto;
 		left: auto;
 		top: auto;
-		margin-left: 0; 
+		margin-left: 0;
 		margin-top: 0;
 	}
-	
+
 	#userIdPSelection, .userIdPSelection {
 		width: 60%;
 	}
-	
+
 	#userIdPSelection_iddwrap input {
 		width:90%!important;
 	}

@@ -69,7 +69,7 @@ var wayf_discofeed_url = global.wayf_discofeed_url;
 // Internal variables
 var wayf_improved_dropdown_url = '<?php echo $javascriptURL ?>/improvedDropDown.js';
 var wayf_jquery_url = '<?php echo $javascriptURL ?>/jquery.js';
-var wayf_dropdown_icon_url = '<?php echo $imageURL ?>/drop_icon.png';
+var wayf_dropdown_icon_url = '<?php echo $imageURL ?>/drop_icon.svg';
 var wayf_disco_feed_idps;
 var wayf_html = "";
 var wayf_categories = {
@@ -658,12 +658,15 @@ function runImproveDropDown(){
 
   // Convert select element into improved drop down list
   $("#user_idp:enabled").improveDropDown({
-    iconPath: '<?php echo $imageURL ?>/drop_icon.png',
+    iconPath: '<?php echo $imageURL ?>/drop_icon.svg',
     noMatchesText: '<?php echo $noIdPFoundText ?>',
     noItemsText: '<?php echo $noIdPAvailableText ?>',
     disableRemoteLogos: wayf_disable_remote_idp_logos,
     enableValueMatching: wayf_enable_entityid_matching
   });
+
+  // Ajust height of submit button to select
+  $('[name="Select"]').height($('#userIdPSelection').outerHeight());
 }
 <?php else: ?>
 
