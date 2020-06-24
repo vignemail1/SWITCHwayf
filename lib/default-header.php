@@ -3,6 +3,8 @@
 <html>
 <head>
 	<title><?php echo getLocalString('title') ?></title>
+    <!-- WAYF instance: <?php echo gethostname(); ?> -->
+    <!-- Remote IP: <?php echo $_SERVER['REMOTE_ADDR']; ?> -->
 	<!-- <meta http-equiv="content-type" content="text/html; charset=utf-8"> -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="keywords" content="Home Organisation, Discovery Service, WAYF, Shibboleth, Login, AAI">
