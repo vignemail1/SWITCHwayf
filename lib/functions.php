@@ -655,6 +655,9 @@ function verifyReturnURL($entityID, $returnURL)
 {
     global $SProviders, $useACURLsForReturnParamCheck;
 
+    // Prevent attacks with return URLs like https://ilias.unibe.ch@google.com
+    $returnURL = preg_replace('|(https?://)(.+@)(.+)|','\1\3', $returnURL);
+
     // If SP has a <idpdisc:DiscoveryResponse>, check return param
     if (isset($SProviders[$entityID]['DSURL'])) {
         $returnURLWithoutArguments = getURLWithoutArguments($returnURL);
