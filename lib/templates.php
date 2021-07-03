@@ -1,4 +1,6 @@
-<?php // Copyright (c) 2019, SWITCH
+<?php
+
+// Copyright (c) 2019, SWITCH
 
 /*
 ******************************************************************************
@@ -46,7 +48,7 @@ function printWAYF()
         $showPermanentSetting = false;
     }
 
-    $promptMessage =  getLocalString('make_selection');
+    $promptMessage = getLocalString('make_selection');
     $serviceName = '';
     $entityID = '';
 
@@ -80,16 +82,16 @@ function printWAYF()
         } else {
             $serviceName = $entityID;
         }
-        $serviceName = '<span class="hostName">'.$serviceName.'</span>';
+        $serviceName = '<span class="hostName">' . $serviceName . '</span>';
     } else {
-        $serviceName = '<span class="serviceName">'.$serviceName.'</span>';
+        $serviceName = '<span class="serviceName">' . $serviceName . '</span>';
     }
 
     // Compose strings
     $promptMessage =  sprintf(getLocalString('access_host'), $serviceName);
-    $actionURL = $_SERVER['SCRIPT_NAME'].'?'.htmlentities($_SERVER['QUERY_STRING']);
+    $actionURL = $_SERVER['SCRIPT_NAME'] . '?' . htmlentities($_SERVER['QUERY_STRING']);
     $defaultSelected = ($selectedIDP == '-') ? 'selected="selected"' : '';
-    $rememberSelectionChecked = (isset($_COOKIE[$redirectStateCookieName])) ? 'checked="checked"' : '' ;
+    $rememberSelectionChecked = (isset($_COOKIE[$redirectStateCookieName])) ? 'checked="checked"' : '';
 
     include(get_template('body.php'));
 }
@@ -101,7 +103,7 @@ function printSettings()
     global $selectedIDP, $language, $IDProviders, $redirectCookieName;
     global $customStrings;
 
-    $actionURL = $_SERVER['SCRIPT_NAME'].'?'.htmlentities($_SERVER['QUERY_STRING']);
+    $actionURL = $_SERVER['SCRIPT_NAME'] . '?' . htmlentities($_SERVER['QUERY_STRING']);
     $defaultSelected = ($selectedIDP == '-') ? 'selected="selected"' : '';
 
     include(get_template('settings.php'));
@@ -120,17 +122,15 @@ function printDropDownList($IDProviders, $selectedIDP = '')
     $counter = 0;
     $optgroup = '';
     foreach ($IDProviders as $key => $values) {
-
         // Get IdP Name
-        $IdPName = (isset($values[$language]['Name'])) ? $values[$language]['Name'] : $IdPName = $values['Name'];
+        $IdPName = (isset($values[$language]['Name'])) ? $values[$language]['Name'] : $values['Name'];
 
         // Figure out if entry is valid or a category
         if (!isset($values['SSO'])) {
-
             // Check if entry is a category
             if (isset($values['Type']) && $values['Type'] == 'category') {
                 if (!empty($optgroup)) {
-                    echo "\n".'</optgroup>';
+                    echo "\n" . '</optgroup>';
                 }
 
                 // Skip adding a new category if first category is 'unknown'
@@ -139,20 +139,20 @@ function printDropDownList($IDProviders, $selectedIDP = '')
                     continue;
                 }
 
-                echo "\n".'<optgroup label="'.$IdPName.'">';
+                echo "\n" . '<optgroup label="' . $IdPName . '">';
                 $optgroup = $key;
             }
             continue;
         }
 
-        echo "\n\t".printOptionElement($IDProviders, $key, $selectedIDP);
+        echo "\n\t" . printOptionElement($IDProviders, $key, $selectedIDP);
 
         $counter++;
     }
 
     // Add last optgroup if that was used
     if (!empty($optgroup)) {
-        echo "\n".'</optgroup>';
+        echo "\n" . '</optgroup>';
     }
 }
 
@@ -180,7 +180,7 @@ function getPreviouslyUsedIdPsHTML()
             continue;
         }
 
-        $content .= "\t".$optionHTML."\n";
+        $content .= "\t" . $optionHTML . "\n";
 
         $counter--;
     }
@@ -192,7 +192,7 @@ function getPreviouslyUsedIdPsHTML()
 
     // Print previously used IdPs
     $categoryName = getLocalString('last_used');
-    $content = "\n".'<optgroup label="'.$categoryName.'">'."\n".$content;
+    $content = "\n" . '<optgroup label="' . $categoryName . '">' . "\n" . $content;
     $content .= '</optgroup>';
 
     return $content;
@@ -222,9 +222,9 @@ function printOptionElement($IDProviders, $key, $selectedIDP)
     $data = buildIdpData($values, $key);
 
     // Add logo (which is assumed to be 16x16px) to extension string
-    $logo =  (isset($values['Logo'])) ? 'logo="'.$values['Logo']['URL']. '"' : '' ;
+    $logo =  (isset($values['Logo'])) ? 'logo="' . $values['Logo']['URL'] . '"' : '';
 
-    return '<option value="'.$key.'"'.$selected.' data="'.htmlspecialchars($data).'" '.$logo.'>'.$IdPName.'</option>';
+    return '<option value="' . $key . '"' . $selected . ' data="' . htmlspecialchars($data) . '" ' . $logo . '>' . $IdPName . '</option>';
 }
 
 /******************************************************************************/
@@ -235,7 +235,7 @@ function printNotice()
     global $redirectCookieName, $IDProviders;
     global $customStrings;
 
-    $actionURL = $_SERVER['SCRIPT_NAME'].'?'.htmlentities($_SERVER['QUERY_STRING']);
+    $actionURL = $_SERVER['SCRIPT_NAME'] . '?' . htmlentities($_SERVER['QUERY_STRING']);
 
     $hiddenUserIdPInput = '';
     $permanentUserIdP = getPermanentUserIdp();
@@ -243,7 +243,7 @@ function printNotice()
     $permanentUserIdPLogo = '';
 
     if ($permanentUserIdP != '') {
-        $hiddenUserIdPInput = '<input type="hidden" name="user_idp" value="'.$permanentUserIdP.'">';
+        $hiddenUserIdPInput = '<input type="hidden" name="user_idp" value="' . $permanentUserIdP . '">';
         $permanentUserIdPName = $IDProviders[$permanentUserIdP]['Name'];
         if (isset($IDProviders[$permanentUserIdP]['Logo']['URL'])) {
             $permanentUserIdPLogo = $IDProviders[$permanentUserIdP]['Logo']['URL'];
@@ -259,14 +259,14 @@ function getPermanentUserIdp()
     $permanentUserIdP = '';
 
     if (
-          isset($_POST['user_idp'])
-          && checkIDPAndShowErrors($_POST['user_idp'])
-      ) {
+        isset($_POST['user_idp'])
+        && checkIDPAndShowErrors($_POST['user_idp'])
+    ) {
         $permanentUserIdP = $_POST['user_idp'];
     } elseif (
-          isset($_COOKIE[$redirectCookieName])
-          && checkIDPAndShowErrors($_COOKIE[$redirectCookieName])
-      ) {
+        isset($_COOKIE[$redirectCookieName])
+        && checkIDPAndShowErrors($_COOKIE[$redirectCookieName])
+    ) {
         $permanentUserIdP = $_COOKIE[$redirectCookieName];
     }
 
@@ -311,9 +311,9 @@ function printEmbeddedWAYFScript()
     $loginWithString = getLocalString('login_with');
     $makeSelectionString = getLocalString('make_selection', 'js');
     $loggedInString =  getLocalString('logged_in');
-    $configurationScriptUrl = preg_replace('/embedded-wayf.js/', 'embedded-wayf.js/snippet.html', 'https://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
+    $configurationScriptUrl = preg_replace('/embedded-wayf.js/', 'embedded-wayf.js/snippet.html', 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
     $utcTime = time();
-    $checkedBool = (isset($_COOKIE[$redirectStateCookieName]) && !empty($_COOKIE[$redirectStateCookieName])) ? 'checked="checked"' : '' ;
+    $checkedBool = (isset($_COOKIE[$redirectStateCookieName]) && !empty($_COOKIE[$redirectStateCookieName])) ? 'checked="checked"' : '';
     $rememberSelectionText = addslashes(getLocalString('remember_selection'));
     $loginString = addslashes(getLocalString('login'));
     $selectIdPString = addslashes(getLocalString('select_idp'));
@@ -326,7 +326,6 @@ function printEmbeddedWAYFScript()
     $JSONIdPArray = array();
     $JSONCategoryArray = array();
     foreach ($IDProviders as $key => $IDProvider) {
-
         // Get IdP Name
         if (isset($IDProvider[$language]['Name'])) {
             $IdPName = addslashes($IDProvider[$language]['Name']);
@@ -335,7 +334,7 @@ function printEmbeddedWAYFScript()
         }
 
         // Set selected attribute
-        $selected = ($selectedIDP == $key) ? ' selected:"true",' : '' ;
+        $selected = ($selectedIDP == $key) ? ' selected:"true",' : '';
         $IdPType = isset($IDProviders[$key]['Type']) ? $IDProviders[$key]['Type'] : '';
 
         // SSO
@@ -355,7 +354,7 @@ function printEmbeddedWAYFScript()
         // Add other information to find IdP
         // $IdPData = getDomainNameFromURI($key);
         // $IdPData .= composeOptionData($IDProvider);
-        $IdPData= buildIdpData($IDProvider, $key);
+        $IdPData = buildIdpData($IDProvider, $key);
         $IdPData = addslashes($IdPData);
 
         // Skip non-IdP entries
@@ -413,7 +412,7 @@ function printEmbeddedConfigurationScript()
 
     $host = $_SERVER['SERVER_NAME'];
     $path = $_SERVER['SCRIPT_NAME'];
-    $types = '"'.implode('","', $types).'"';
+    $types = '"' . implode('","', $types) . '"';
 
     header('Content-type: text/plain;charset="utf-8"');
 
@@ -427,15 +426,15 @@ function printCSS($file)
     global $imageURL;
 
     if ($file != 'ImprovedDropDown.css' && $file != 'select2.css') {
-        $file= 'styles.css';
+        $file = 'styles.css';
     }
 
-    $defaultCSSFile =  'css/default-'.$file;
+    $defaultCSSFile =  'css/default-' . $file;
     $cssContent = file_get_contents($defaultCSSFile);
 
     // Read custom CSS if available
-    if (file_exists('css/custom-'.$file)) {
-        $customCSSFile =  'css/custom-'.$file;
+    if (file_exists('css/custom-' . $file)) {
+        $customCSSFile =  'css/custom-' . $file;
         $cssContent .= file_get_contents($customCSSFile);
     }
 
@@ -453,5 +452,5 @@ function get_template($name)
     $default_template = $topLevelDir . '/lib/default-' . $name;
 
     return (file_exists($custom_template)) ?
-               $custom_template : $default_template;
+        $custom_template : $default_template;
 }

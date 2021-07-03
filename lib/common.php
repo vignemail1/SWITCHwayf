@@ -1,4 +1,6 @@
-<?php // Copyright (c) 2019, SWITCH
+<?php
+
+// Copyright (c) 2019, SWITCH
 
 /*------------------------------------------------*/
 // Common stuff for PHP executable URI (WAYF, idps)
@@ -11,8 +13,8 @@
 
 $topLevelDir = dirname(__DIR__);
 
-if (isset($_SERVER{'SWITCHWAYF_CONFIG'})) {
-    require_once($_SERVER{'SWITCHWAYF_CONFIG'});
+if (isset($_SERVER['SWITCHWAYF_CONFIG'])) {
+    require_once($_SERVER['SWITCHWAYF_CONFIG']);
 } else {
     require_once($topLevelDir . '/etc/config.php');
 }
@@ -34,7 +36,7 @@ if (file_exists($topLevelDir . '/lib/custom-languages.php')) {
 if ($developmentMode) {
     ini_set('error_reporting', E_ALL);
     ini_set('display_errors', 'On');
-    ini_set('log_erros', 'Off');
+    ini_set('log_errors', 'Off');
 } else {
     error_reporting(0);
 }
@@ -77,7 +79,7 @@ foreach ($IDProviders as $key => $values) {
 
 if ($useSAML2Metadata) {
     // Only automatically sort if list of Identity Provider is parsed
-    // from metadata instead of being manualy managed
+    // from metadata instead of being manually managed
     sortIdentityProviders($IDProviders);
 }
 
@@ -86,8 +88,7 @@ if ($useSAML2Metadata) {
 /*------------------------------------------------*/
 
 // Get previously accessed IdPs
+$IDPArray = array();
 if (isset($_COOKIE[$SAMLDomainCookieName])) {
     $IDPArray = getIdPArrayFromValue($_COOKIE[$SAMLDomainCookieName]);
-} else {
-    $IDPArray = array();
 }

@@ -1,4 +1,6 @@
-<?php // Copyright (c) 2019 Geoffroy Arnoud, Guillaume Rousse, and SWITCHwayf contributors
+<?php
+
+// Copyright (c) 2019 Geoffroy Arnoud, Guillaume Rousse, and SWITCHwayf contributors
 
 /*------------------------------------------------*/
 // JSON Api to retrieve IDPs with paging and query
@@ -14,7 +16,7 @@ header('Content-Type: application/json');
 
 global $allowedCORSDomain;
 
-header('Access-Control-Allow-Origin: '.$allowedCORSDomain);
+header('Access-Control-Allow-Origin: ' . $allowedCORSDomain);
 
 $repo = new IdpRepository($IDProviders, $IDPArray);
 

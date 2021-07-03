@@ -1,4 +1,6 @@
-<?php // Copyright (c) 2019 Geoffroy Arnoud, Guillaume Rousse, and SWITCHwayf contributors
+<?php
+
+// Copyright (c) 2019 Geoffroy Arnoud, Guillaume Rousse, and SWITCHwayf contributors
 
 /*------------------------------------------------*/
 /*------------------------------------------------*/
@@ -10,6 +12,12 @@ $topLevelDir = dirname(__DIR__);
 
 require_once($topLevelDir . '/lib/functions.php');
 
+/**
+ * getImage
+ *
+ * @param  string $imageString
+ * @return string
+ */
 function getImage($imageString)
 {
     global $disableRemoteLogos;
@@ -46,6 +54,13 @@ final class IdpObject
     public $type;
 
 
+    /**
+     * __construct
+     *
+     * @param  string $entId
+     * @param  array $idp
+     * @return void
+     */
     public function __construct($entId, $idp)
     {
         // $this->entityId = $entId;
@@ -63,7 +78,8 @@ final class IdpObject
             }
             if ($key == "Logo") {
                 if (sizeof($value) > 0) {
-                    $this->logo = getImage($value{"URL"});
+                    $this->logo = getImage($value{
+                    "URL"});
                 }
             }
             // Group
@@ -73,9 +89,10 @@ final class IdpObject
         }
     }
 
-    /*
+    /**
      * Legacy data select field construction
-     * to enable serach as usual
+     * to enable search as usual
+     * @return string
      */
     public function getDataForSearch()
     {
@@ -116,10 +133,16 @@ final class IdpRepository
     // The idps in the form of IdpObject
     public $idpObjects = array();
 
+    /**
+     * Class constructor
+     *
+     * @param  array $IDProviders
+     * @param  array $previouslySelectedIdps
+     * @return void
+     */
     public function __construct(array $IDProviders = array(), array $previouslySelectedIdps = null)
     {
         global $showNumOfPreviouslyUsedIdPs;
-
 
         if (isset($previouslySelectedIdps) && count($previouslySelectedIdps) > 0) {
             $counter = (isset($showNumOfPreviouslyUsedIdPs)) ? $showNumOfPreviouslyUsedIdPs : 3;
@@ -141,7 +164,6 @@ final class IdpRepository
         }
 
         foreach ($IDProviders as $key => $value) {
-
             // Skip categories
             if ($value['Type'] == 'category') {
                 continue;
@@ -157,8 +179,12 @@ final class IdpRepository
         }
     }
 
-    /*
+    /**
      * Groups a given array
+     *
+     * @param array $array
+     * @param bool $hideFirstGroup
+     * @return array
      */
     private function toGroups($array, $hideFirstGroup = false)
     {
@@ -190,27 +216,46 @@ final class IdpRepository
         return $result;
     }
 
+    /**
+     * countIdps
+     *
+     * @return int
+     */
     public function countIdps()
     {
         return sizeof($this->idpObjects);
     }
 
-    /*
+    /**
      * JSON conversion of all IDPs
+     *
+     * @return string|bool
      */
     public function toJson()
     {
         return json_encode($this->toGroups($this->idpObjects), JSON_UNESCAPED_SLASHES);
     }
 
-    /*
+    /**
      * Return a page of the IDPs
+     *
+     * @param  mixed $pageNumber
+     * @param  mixed $pageSize
+     * @return string
      */
-    public function toJsonByPage($pageNumber, $pageSize=10)
+    public function toJsonByPage($pageNumber, $pageSize = 10)
     {
         return $this->getPage($this->idpObjects, $pageNumber, $pageSize);
     }
 
+    /**
+     * getPage
+     *
+     * @param  array $array
+     * @param  int $pageNumber
+     * @param  int $pageSize
+     * @return string
+     */
     private function getPage($array, $pageNumber, $pageSize)
     {
         $from = ($pageNumber - 1) * $pageSize;
@@ -219,7 +264,6 @@ final class IdpRepository
 
         $hideFirstGroup = false;
         if (isset($pageNumber) && $pageNumber > 1) {
-
             // Get last from previous page
             $lastPageLastGroup = $this->idpObjects[$pageNumber * $pageSize - 1]->type;
             $thisPageFirstGroup = $this->idpObjects[$pageNumber * $pageSize]->type;
@@ -227,37 +271,40 @@ final class IdpRepository
             // logInfo(sprintf("lastPageLastGroup = %s / thisPageFirstGroup = %s", $lastPageLastGroup, $thisPageFirstGroup));
         }
         // logInfo(sprintf("hideFirstGroup = %s", $hideFirstGroup?"true":"false"));
-        $result{"results"} = $this->toGroups($idpPage, $hideFirstGroup);
+        $result["results"] = $this->toGroups($idpPage, $hideFirstGroup);
 
-        $result{"pagination"}{"more"} = (($pageNumber + 1)*$pageSize <= sizeof($array));
+        $result["pagination"]["more"] = (($pageNumber + 1) * $pageSize <= sizeof($array));
 
         return json_encode($result, JSON_UNESCAPED_SLASHES);
     }
 
-    /*
+    /**
      * Return a page of IDPs matching the $query.
      * Search is done in:
      * - name/text
      * - getDomainNameFromURI(entityId)
      * - composeOptionData(IDProviders[entityId])
+     *
+     * @param  string $query
+     * @param  int $pageNumber
+     * @param  int $pageSize
+     * @return string
      */
-    public function toJsonByQuery($query, $pageNumber, $pageSize=10)
+    public function toJsonByQuery($query, $pageNumber, $pageSize = 10)
     {
         // Search in IdpObject::text, IdpObject::name
         return $this->getPage(
-          array_filter(
-            $this->idpObjects,
-            function ($value) use ($query) {
-                // logDebug(sprintf("Data(%s) = %s", $value->id, $value->getDataForSearch()));
-                return (
-                    fnmatch("*".removeAccents($query)."*", removeAccents($value->name), FNM_CASEFOLD)
-                 || fnmatch("*".removeAccents($query)."*", removeAccents($value->text), FNM_CASEFOLD)
-                 || fnmatch("*".removeAccents($query)."*", removeAccents($value->getDataForSearch()), FNM_CASEFOLD)
-               );
-            }
-          ),
-          $pageNumber,
-          $pageSize
-          );
+            array_filter(
+                $this->idpObjects,
+                function ($value) use ($query) {
+                    // logDebug(sprintf("Data(%s) = %s", $value->id, $value->getDataForSearch()));
+                    return (fnmatch("*" . removeAccents($query) . "*", removeAccents($value->name), FNM_CASEFOLD)
+                        || fnmatch("*" . removeAccents($query) . "*", removeAccents($value->text), FNM_CASEFOLD)
+                        || fnmatch("*" . removeAccents($query) . "*", removeAccents($value->getDataForSearch()), FNM_CASEFOLD));
+                }
+            ),
+            $pageNumber,
+            $pageSize
+        );
     }
 }

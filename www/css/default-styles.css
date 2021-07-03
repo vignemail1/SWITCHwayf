@@ -1,204 +1,229 @@
 /*  Copyright (c) 2019, SWITCH */
+
 h1 {
-	font-family:Verdana, sans-serif;
-	font-size: 13px;
-	padding-bottom: 6px;
-	text-align: left;
+    font-family: Verdana, sans-serif;
+    font-size: 13px;
+    padding-bottom: 6px;
+    text-align: left;
 }
 
 p {
-	font-family:Verdana, sans-serif;
-	font-size: 12px;
-	text-align: left;
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+    text-align: left;
 }
 
 a {
-	color: #00247D;
-	text-decoration: underline;
+    color: #00247D;
+    text-decoration: underline;
 }
 
 a:visited {
-	color: #00247D;
-	text-decoration: underline;
+    color: #00247D;
+    text-decoration: underline;
 }
 
-a:focus, a:hover, a:active {
-	color: #F39800;
-	text-decoration: underline;
+a:focus,
+a:hover,
+a:active {
+    color: #F39800;
+    text-decoration: underline;
 }
 
 pre {
-	text-align: left;
+    text-align: left;
 }
 
-
 .promptMessage {
-	margin-top: 0;
+    margin-top: 0;
 }
 
 .selectOptions {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
-.box
-{
-	width: 600px;
-	text-align: center;
-	background-color: #FFFFFF;
-	box-shadow: 1px 1px 8px #999999;
-	border-radius: 13px;
-	-webkit-box-shadow: 1px 1px 8px #999999;
-	-webkit-border-radius: 13px;
-	-moz-box-shadow: 1px 1px 8px #999999;
-	-moz-border-radius: 13px;
-	padding: 10px 24px 10px 24px;
+.box {
+    width: 600px;
+    text-align: center;
+    background-color: #FFFFFF;
+    box-shadow: 1px 1px 8px #999999;
+    border-radius: 13px;
+    -webkit-box-shadow: 1px 1px 8px #999999;
+    -webkit-border-radius: 13px;
+    -moz-box-shadow: 1px 1px 8px #999999;
+    -moz-border-radius: 13px;
+    padding: 10px 24px 10px 24px;
 }
 
 
 /* IE 6 hack */
-* html .box { border: 2px #969696 solid; }
+
+* html .box {
+    border: 2px #969696 solid;
+}
+
 
 /* IE 7 hack */
-*+html .box { border: 2px #969696 solid; }
+
+*+html .box {
+    border: 2px #969696 solid;
+}
 
 
 /* IE 8 hack */
+
 @media \0screen {
-	.box { border: 2px #969696 solid; }
+    .box {
+        border: 2px #969696 solid;
+    }
 }
 
 .menu {
-	width: 100%;
-	padding-left: 2px;
-	margin-top: 10px;
-	margin-left: 0;
-	float: left;
-	background: url("{$imageURL}/dual_line.png") repeat-x scroll 0 100% transparent;
-	font-family: Verdana, sans-serif;
-	font-size: 12px;
-	line-height: 45px;
+    width: 100%;
+    padding-left: 2px;
+    margin-top: 10px;
+    margin-left: 0;
+    float: left;
+    background: url("{$imageURL}/dual_line.png") repeat-x scroll 0 100% transparent;
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+    line-height: 45px;
 }
 
 .menu li {
-	float: left;
-	list-style:none;
-	line-height:35px;
-	margin-right:10px;
+    float: left;
+    list-style: none;
+    line-height: 35px;
+    margin-right: 10px;
 }
 
 .menu li.last {
-	background: url("{$imageURL}/separator.png") no-repeat scroll left center transparent;
-	padding-left: 8px;
-	float: left;
-	list-style:none;
+    background: url("{$imageURL}/separator.png") no-repeat scroll left center transparent;
+    padding-left: 8px;
+    float: left;
+    list-style: none;
 }
 
 .serviceName {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .hostName {
-	font-weight: bold;
+    font-weight: bold;
 }
 
-
-#container, .container {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin-left: -320px;
-	margin-top: -200px;
+#container,
+.container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -320px;
+    margin-top: -200px;
 }
 
-#content, .content {
-	width: 98%;
+#content,
+.content {
+    width: 98%;
 }
 
 #header {
-	width: 100%;
-	display: inline-block;
-	text-align: left;
+    width: 100%;
+    display: inline-block;
+    text-align: left;
 }
 
 #federationLogo {
-	border: 0;
-	float: left;
+    border: 0;
+    float: left;
 }
 
-#organisationLogo
-{
-	border: 0;
-	float: right;
+#organisationLogo {
+    border: 0;
+    float: right;
 }
 
-#userInputArea, .userInputArea {
-	margin-left: auto;
-	margin-right: auto;
-	background-color: #fafafa;
-	border-color: #c0c0c0;
-	border-width: 1px;
-	border-style: solid;
-	padding: 20px;
+#userInputArea,
+.userInputArea {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fafafa;
+    border-color: #c0c0c0;
+    border-width: 1px;
+    border-style: solid;
+    padding: 20px;
 }
 
-#userIdPSelection, .userIdPSelection {
-	width: 460px;
-	font-size: 12px;
+#userIdPSelection,
+.userIdPSelection {
+    width: 460px;
+    font-size: 12px;
 }
 
-input[name="Select"]{
-	color: #fff;
-	background-color: #007bff;
-	border-color: #007bff;
-	border-radius: 4px;
-	border-style: none;
+input[name="Select"] {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 4px;
+    border-style: none;
 }
 
 input[name="Select"]:hover {
     background-color: #0069d9;
-	border-color: #0062cc;
+    border-color: #0062cc;
 }
 
 input[name="Select"]:active {
     background-color: #0062cc;
-	border-color: #005cbf;
+    border-color: #005cbf;
 }
+
 
 /* Device specific styles */
-@media only screen and (max-device-width: 720px){
-	.box {
-		width: auto;
-		box-shadow: none;
-		border-radius: 0;
-		-webkit-box-shadow: none;
-		-webkit-border-radius: 0;
-		-moz-box-shadow: none;
-		-moz-border-radius: 0;
-		padding: 0;
-	}
 
-	#content, .content {
-		width: 96%;
-	}
-
-	#container, .container {
-		width: 96%;
-		position: auto;
-		left: auto;
-		top: auto;
-		margin-left: 0;
-		margin-top: 0;
-	}
-
-	#userIdPSelection, .userIdPSelection {
-		width: 60%;
-	}
-
-	#userIdPSelection_iddwrap input {
-		width:90%!important;
-	}
+@media only screen and (max-device-width: 720px) {
+    .box {
+        width: auto;
+        box-shadow: none;
+        border-radius: 0;
+        -webkit-box-shadow: none;
+        -webkit-border-radius: 0;
+        -moz-box-shadow: none;
+        -moz-border-radius: 0;
+        padding: 0;
+    }
+    #content,
+    .content {
+        width: 96%;
+    }
+    #container,
+    .container {
+        width: 96%;
+        position: auto;
+        left: auto;
+        top: auto;
+        margin-left: 0;
+        margin-top: 0;
+    }
+    #userIdPSelection,
+    .userIdPSelection {
+        width: 60%;
+    }
+    #userIdPSelection_iddwrap input {
+        width: 90%!important;
+    }
 }
 
-html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6 {
-    -webkit-text-size-adjust:none;
+html,
+body,
+form,
+fieldset,
+p,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    -webkit-text-size-adjust: none;
 }

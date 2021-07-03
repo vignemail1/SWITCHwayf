@@ -1,4 +1,6 @@
-<?php // Copyright (c) 2019, SWITCH
+<?php
+
+// Copyright (c) 2019, SWITCH
 
 /*
 ******************************************************************************
@@ -6,7 +8,11 @@ This file contains common functions of the SWITCHwayf
 ******************************************************************************
 */
 
-// Initilizes default configuration options if they were not set already
+/**
+ * Initializes default configuration options if they were not set already
+ *
+ * @return void
+ */
 function initConfigOptions()
 {
     global $defaultLanguage;
@@ -63,7 +69,7 @@ function initConfigOptions()
     global $allowedCORSDomain;
 
 
-    // Set independet default configuration options
+    // Set independent default configuration options
     $defaults = array();
     $defaults['instanceIdentifier'] = 'SWITCHwayf';
     $defaults['defaultLanguage'] = 'en';
@@ -90,24 +96,24 @@ function initConfigOptions()
     $defaults['useLogging'] = true;
     $defaults['exportPreselectedIdP'] = false;
     $defaults['federationName'] = 'Identity Federation';
-    $defaults['organizationURL'] = 'http://www.'.$defaults['commonDomain'];
-    $defaults['federationURL'] = $defaults['organizationURL'].'/aai';
-    $defaults['faqURL'] = $defaults['federationURL'].'/faq';
-    $defaults['helpURL'] = $defaults['federationURL'].'/help';
-    $defaults['privacyURL'] = $defaults['federationURL'].'/privacy';
-    $defaults['supportContactEmail'] = 'support-contact@'.$defaults['commonDomain'];
-    $defaults['imageURL'] = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/images';
-    $defaults['javascriptURL'] = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/js';
-    $defaults['cssURL'] = 'https://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/css';
+    $defaults['organizationURL'] = 'http://www.' . $defaults['commonDomain'];
+    $defaults['federationURL'] = $defaults['organizationURL'] . '/aai';
+    $defaults['faqURL'] = $defaults['federationURL'] . '/faq';
+    $defaults['helpURL'] = $defaults['federationURL'] . '/help';
+    $defaults['privacyURL'] = $defaults['federationURL'] . '/privacy';
+    $defaults['supportContactEmail'] = 'support-contact@' . $defaults['commonDomain'];
+    $defaults['imageURL'] = 'https://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['SCRIPT_NAME']) . '/images';
+    $defaults['javascriptURL'] = 'https://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['SCRIPT_NAME']) . '/js';
+    $defaults['cssURL'] = 'https://' . $_SERVER['SERVER_NAME'] . dirname($_SERVER['SCRIPT_NAME']) . '/css';
     $defaults['IDPConfigFile'] = 'IDProvider.conf.php';
     $defaults['backupIDPConfigFile'] = 'IDProvider.conf.php';
     $defaults['metadataFile'] = '/etc/shibboleth/metadata.switchaai.xml';
     $defaults['metadataIDPFile'] = 'IDProvider.metadata.php';
     $defaults['metadataSPFile'] = 'SProvider.metadata.php';
     $lockFileName = preg_replace('/[^-_\.a-zA-Z]/', '', $defaults['instanceIdentifier']);
-    $defaults['metadataLockFile'] = (substr($_SERVER['PATH'], 0, 1) == '/') ? '/tmp/wayf_metadata-'.$lockFileName.'.lock' : 'C:\windows\TEMP\wayf_metadata-'.$lockFileName.'.lock';
+    $defaults['metadataLockFile'] = (substr($_SERVER['PATH'], 0, 1) == '/') ? '/tmp/wayf_metadata-' . $lockFileName . '.lock' : 'C:\windows\TEMP\wayf_metadata-' . $lockFileName . '.lock';
     $defaults['WAYFLogFile'] = '/var/log/apache2/wayf.log';
-    $defaults['kerberosRedirectURL'] = dirname($_SERVER['SCRIPT_NAME']).'kerberosRedirect.php';
+    $defaults['kerberosRedirectURL'] = dirname($_SERVER['SCRIPT_NAME']) . 'kerberosRedirect.php';
     $defaults['developmentMode'] = false;
     $defaults['customStrings'] = array();
 
@@ -120,13 +126,13 @@ function initConfigOptions()
 
     // Set dependent default configuration options
     $defaults = array();
-    $defaults['redirectCookieName'] = $cookieNamePrefix.'_redirect_user_idp';
-    $defaults['redirectStateCookieName'] = $cookieNamePrefix.'_redirection_state';
-    $defaults['SAMLDomainCookieName'] = $cookieNamePrefix.'_saml_idp';
-    $defaults['SPCookieName'] = $cookieNamePrefix.'_saml_sp';
-    $defaults['logoURL'] = $imageURL.'/federation-logo.png';
-    $defaults['smallLogoURL'] = $imageURL.'/small-federation-logo.png';
-    $defaults['organizationLogoURL'] = $imageURL.'/organization-logo.png';
+    $defaults['redirectCookieName'] = $cookieNamePrefix . '_redirect_user_idp';
+    $defaults['redirectStateCookieName'] = $cookieNamePrefix . '_redirection_state';
+    $defaults['SAMLDomainCookieName'] = $cookieNamePrefix . '_saml_idp';
+    $defaults['SPCookieName'] = $cookieNamePrefix . '_saml_sp';
+    $defaults['logoURL'] = $imageURL . '/federation-logo.png';
+    $defaults['smallLogoURL'] = $imageURL . '/small-federation-logo.png';
+    $defaults['organizationLogoURL'] = $imageURL . '/organization-logo.png';
 
     // Initialize dependent defaults
     foreach ($defaults as $key => $value) {
@@ -147,11 +153,14 @@ function initConfigOptions()
     }
 }
 
-/******************************************************************************/
-// Generates an array of IDPs using the cookie value
+/**
+ * Generates an array of IDPs using the cookie value
+ *
+ * @param  string $value
+ * @return array
+ */
 function getIdPArrayFromValue($value)
 {
-
     // Decodes and splits cookie value
     $CookieArray = preg_split('/ /', $value);
     $CookieArray = array_map('base64_decode', $CookieArray);
@@ -159,23 +168,30 @@ function getIdPArrayFromValue($value)
     return $CookieArray;
 }
 
-/******************************************************************************/
-// Generate the value that is stored in the cookie using the list of IDPs
+/**
+ * Generate the value that is stored in the cookie using the list of IDPs
+ *
+ * @param  array $CookieArray
+ * @return string
+ */
 function getValueFromIdPArray($CookieArray)
 {
-
     // Merges cookie content and encodes it
     $CookieArray = array_map('base64_encode', $CookieArray);
     $value = implode(' ', $CookieArray);
     return $value;
 }
 
-/******************************************************************************/
-// Append a value to the array of IDPs, ensure no more than 5
-// entries are in array
+/**
+ * Append a value to the array of IDPs, ensure no more than 5
+ * entries are in array
+ *
+ * @param  mixed $value
+ * @param  array $CookieArray
+ * @return array
+ */
 function appendValueToIdPArray($value, $CookieArray)
 {
-
     // Remove value if it already existed in array
     foreach (array_keys($CookieArray) as $i) {
         if ($CookieArray[$i] == $value) {
@@ -195,9 +211,14 @@ function appendValueToIdPArray($value, $CookieArray)
     return $CookieArray;
 }
 
-/******************************************************************************/
-// Checks if the configuration file has changed. If it has, check the file
-// and change its timestamp.
+/**
+ * Checks if the configuration file has changed. If it has, check the file
+ * and change its timestamp.
+ *
+ * @param  string $IDPConfigFile file path
+ * @param  string $backupIDPConfigFile file path
+ * @return bool
+ */
 function checkConfig($IDPConfigFile, $backupIDPConfigFile)
 {
 
@@ -222,28 +243,35 @@ function checkConfig($IDPConfigFile, $backupIDPConfigFile)
     }
 
     // Make modification time the same
-    // If that doesnt work we won't notice it
+    // If that doesn't work we won't notice it
     touch($IDPConfigFile, filemtime($backupIDPConfigFile));
 
     return true;
 }
 
-/******************************************************************************/
-// Checks if an IDP exists and returns true if it does, false otherwise
+/**
+ * Checks if an IDP exists and returns true if it does, false otherwise
+ *
+ * @param  string $IDP
+ * @return bool
+ */
 function checkIDP($IDP)
 {
     global $IDProviders;
 
     if (isset($IDProviders[$IDP])) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
-/******************************************************************************/
-// Checks if an IDP exists and returns true if it exists and prints an error
-// if it doesnt
+/**
+ * Checks if an IDP exists and returns true if it exists and prints an error
+ * if it doesn't
+ *
+ * @param  mixed $IDP
+ * @return mixed
+ */
 function checkIDPAndShowErrors($IDP)
 {
     global $IDProviders;
@@ -253,10 +281,10 @@ function checkIDPAndShowErrors($IDP)
     }
 
     // Otherwise show an error
-    $message = sprintf(getLocalString('invalid_user_idp'), htmlentities($IDP))."</p><p>\n<code>";
+    $message = sprintf(getLocalString('invalid_user_idp'), htmlentities($IDP)) . "</p><p>\n<code>";
     foreach ($IDProviders as $key => $value) {
         if (isset($value['SSO'])) {
-            $message .= $key."<br>\n";
+            $message .= $key . "<br>\n";
         }
     }
     $message .= "</code>\n";
@@ -265,25 +293,30 @@ function checkIDPAndShowErrors($IDP)
     exit;
 }
 
-
-/******************************************************************************/
-// Validates the URL and returns it if it is valid or false otherwise
+/**
+ * Validates the URL and returns it if it is valid or false otherwise
+ *
+ * @param  mixed $url
+ * @return string|bool
+ */
 function getSanitizedURL($url)
 {
     $components = parse_url($url);
 
     if ($components) {
         return $url;
-    } else {
-        return false;
     }
+    return false;
 }
 
-/******************************************************************************/
-// Parses the hostname out of a string and returns it
+/**
+ * Parses the hostname out of a string and returns it
+ *
+ * @param  string $string
+ * @return string
+ */
 function getHostNameFromURI($string)
 {
-
     // Check if string is URN
     if (preg_match('/^urn:mace:/i', $string)) {
         // Return last component of URN
@@ -294,16 +327,18 @@ function getHostNameFromURI($string)
     // Apparently we are dealing with something like a URL
     if (preg_match('/([a-zA-Z0-9\-\.]+\.[a-zA-Z0-9\-\.]{2,6})/', $string, $matches)) {
         return $matches[0];
-    } else {
-        return '';
     }
+    return '';
 }
 
-/******************************************************************************/
-// Parses the domain out of a string and returns it
+/**
+ * Parses the domain out of a string and returns it
+ *
+ * @param  string $string
+ * @return string
+ */
 function getDomainNameFromURI($string)
 {
-
     // Check if string is URN
     if (preg_match('/^urn:mace:/i', $string)) {
         // Return last component of URN
@@ -314,25 +349,30 @@ function getDomainNameFromURI($string)
     // Apparently we are dealing with something like a URL
     if (preg_match('/[a-zA-Z0-9\-\.]+\.([a-zA-Z0-9\-\.]{2,6})/', $string, $matches)) {
         return getTopLevelDomain($matches[0]);
-    } else {
-        return '';
     }
+    return '';
 }
 
-/******************************************************************************/
-// Returns top level domain name from a DNS name
+/**
+ * Returns top level domain name from a DNS name
+ *
+ * @param  string $string
+ * @return string
+ */
 function getTopLevelDomain($string)
 {
     $hostnameComponents = explode('.', $string);
     if (count($hostnameComponents) >= 2) {
-        return $hostnameComponents[count($hostnameComponents)-2].'.'.$hostnameComponents[count($hostnameComponents)-1];
-    } else {
-        return $string;
+        return $hostnameComponents[count($hostnameComponents) - 2] . '.' . $hostnameComponents[count($hostnameComponents) - 1];
     }
+    return $string;
 }
 
-/******************************************************************************/
-// Parses the reverse dns lookup hostname out of a string and returns domain
+/**
+ * Parses the reverse dns lookup hostname out of a string and returns domain
+ *
+ * @return string
+ */
 function getDomainNameFromURIHint()
 {
     global $IDProviders;
@@ -351,8 +391,9 @@ function getDomainNameFromURIHint()
     // Return first matching IdP entityID that contains the client domain name
     foreach ($IDProviders as $key => $value) {
         if (
-               preg_match('/^http.+'.$clientDomainName.'/', $key)
-            || preg_match('/^urn:.+'.$clientDomainName.'$/', $key)) {
+            preg_match('/^http.+' . $clientDomainName . '/', $key)
+            || preg_match('/^urn:.+' . $clientDomainName . '$/', $key)
+        ) {
             return $key;
         }
     }
@@ -361,8 +402,12 @@ function getDomainNameFromURIHint()
     return '-';
 }
 
-/******************************************************************************/
-// Get the user's language using the accepted language http header
+
+/**
+ * Get the user's language using the accepted language http header
+ *
+ * @return string
+ */
 function determineLanguage()
 {
     global $langStrings, $defaultLanguage;
@@ -370,7 +415,7 @@ function determineLanguage()
     // Check if language is enforced by PATH-INFO argument
     if (isset($_SERVER['PATH_INFO']) && !empty($_SERVER['PATH_INFO'])) {
         foreach ($langStrings as $lang => $values) {
-            if (preg_match('#/'.$lang.'($|/)#', $_SERVER['PATH_INFO'])) {
+            if (preg_match('#/' . $lang . '($|/)#', $_SERVER['PATH_INFO'])) {
                 return $lang;
             }
         }
@@ -382,8 +427,7 @@ function determineLanguage()
         if (
             $localeComponents !== false
             && isset($langStrings[$localeComponents[0]])
-            ) {
-
+        ) {
             // Return language
             return $localeComponents[0];
         }
@@ -405,8 +449,7 @@ function determineLanguage()
         if (
             $localeComponents !== false
             && isset($langStrings[$localeComponents[0]])
-            ) {
-
+        ) {
             // Return language
             return $localeComponents[0];
         }
@@ -415,11 +458,15 @@ function determineLanguage()
     return $defaultLanguage;
 }
 
-/******************************************************************************/
 
-// Splits up a  string (relazed) according to
-// http://www.debian.org/doc/manuals/intro-i18n/ch-locale.en.html#s-localename
-// and returns an array with the four components
+/**
+ * Splits up a string (relazed) according to
+ * http://www.debian.org/doc/manuals/intro-i18n/ch-locale.en.html#s-localename
+ * and returns an array with the four components
+ *
+ * @param  string $locale
+ * @return string|bool|null
+ */
 function decomposeLocale($locale)
 {
 
@@ -434,9 +481,14 @@ function decomposeLocale($locale)
     }
 }
 
-/******************************************************************************/
-// Gets a string in a specific language. Fallback to default language and
-// to English.
+/**
+ * Gets a string in a specific language. Fallback to default language and
+ * to English.
+ *
+ * @param  string $string
+ * @param  string $encoding
+ * @return string
+ */
 function getLocalString($string, $encoding = '')
 {
     global $defaultLanguage, $langStrings, $language;
@@ -458,22 +510,33 @@ function getLocalString($string, $encoding = '')
     return $textString;
 }
 
-/******************************************************************************/
-// Converts string to a JavaScript format that can be used in JS alert
+/**
+ * Converts string to a JavaScript format that can be used in JS alert
+ *
+ * @param  string $string
+ * @return string
+ */
 function convertToJSString($string)
 {
     return addslashes(html_entity_decode($string, ENT_COMPAT, 'UTF-8'));
 }
 
-/******************************************************************************/
-// Replaces all newlines with spaces and then trims the string to get one line
+/**
+ * Replaces all newlines with spaces and then trims the string to get one line
+ *
+ * @param  string $string
+ * @return string
+ */
 function trimToSingleLine($string)
 {
     return trim(preg_replace("|\n|", ' ', $string));
 }
 
-/******************************************************************************/
-// Checks if entityID hostname of a valid IdP exists in path info
+/**
+ * Checks if entityID hostname of a valid IdP exists in path info
+ *
+ * @return string
+ */
 function getIdPPathInfoHint()
 {
     global $IDProviders;
@@ -487,11 +550,11 @@ function getIdPPathInfoHint()
     foreach ($IDProviders as $key => $value) {
         // Only check actual IdPs
         if (
-                isset($value['SSO'])
-                && !empty($value['SSO'])
-                && $value['Type'] != 'wayf'
-                && isPartOfPathInfo(getHostNameFromURI($key))
-                ) {
+            isset($value['SSO'])
+            && !empty($value['SSO'])
+            && $value['Type'] != 'wayf'
+            && isPartOfPathInfo(getHostNameFromURI($key))
+        ) {
             return $key;
         }
     }
@@ -500,11 +563,11 @@ function getIdPPathInfoHint()
     foreach ($IDProviders as $key => $value) {
         // Only check actual IdPs
         if (
-                isset($value['SSO'])
-                && !empty($value['SSO'])
-                && $value['Type'] != 'wayf'
-                && isPartOfPathInfo(getDomainNameFromURI($key))
-                ) {
+            isset($value['SSO'])
+            && !empty($value['SSO'])
+            && $value['Type'] != 'wayf'
+            && isPartOfPathInfo(getDomainNameFromURI($key))
+        ) {
             return $key;
         }
     }
@@ -512,31 +575,39 @@ function getIdPPathInfoHint()
     return '-';
 }
 
-/******************************************************************************/
-// Joins localized names and keywords of an IdP to a single string
+/**
+ * Joins localized names and keywords of an IdP to a single string
+ *
+ * @param  string[][] $IdPValues
+ * @return string
+ */
 function composeOptionData($IdPValues)
 {
     $data = '';
     foreach ($IdPValues as $key => $value) {
         if (is_array($value) && isset($value['Name'])) {
-            $data .= ' '.$value['Name'];
+            $data .= ' ' . $value['Name'];
         }
 
         if (is_array($value) && isset($value['Keywords'])) {
-            $data .= ' '.$value['Keywords'];
+            $data .= ' ' . $value['Keywords'];
         }
     }
 
     return $data;
 }
 
-/******************************************************************************/
-// Parses the Kerbores realm out of the string and returns it
+/**
+ * Parses the Kerberos realm out of the string and returns it
+ *
+ * @param  mixed $string
+ * @return string
+ */
 function getKerberosRealm($string)
 {
     global $IDProviders;
 
-    if ($string !='') {
+    if ($string != '') {
         // Find a matching Kerberos realm
         foreach ($IDProviders as $key => $value) {
             if ($value['Realm'] == $string) {
@@ -549,8 +620,11 @@ function getKerberosRealm($string)
 }
 
 
-/******************************************************************************/
-// Determines the IdP according to the IP address if possible
+/**
+ * Determines the IdP according to the IP address if possible
+ *
+ * @return string
+ */
 function getIPAdressHint()
 {
     global $IDProviders;
@@ -569,9 +643,14 @@ function getIPAdressHint()
     return '-';
 }
 
-/******************************************************************************/
-// Returns true if IP is in IPv4/IPv6 CIDR range
-// and returns false otherwise
+/**
+ * Returns true if IP is in IPv4/IPv6 CIDR range
+ * and returns false otherwise
+ *
+ * @param  string $cidr
+ * @param  mixed $ip
+ * @return bool
+ */
 function isIPinCIDRBlock($cidr, $ip)
 {
 
@@ -589,7 +668,6 @@ function isIPinCIDRBlock($cidr, $ip)
 
     // Compare the first $mask bits
     for ($i = 0; $i < $mask; $i++) {
-
         // Return false if bits don't match
         if ($netAsBinary[$i] != $ipAsBinary[$i]) {
             return false;
@@ -600,8 +678,12 @@ function isIPinCIDRBlock($cidr, $ip)
     return true;
 }
 
-/******************************************************************************/
-// Converts IP in human readable format to binary string
+/**
+ * Converts IP in human readable format to binary string
+ *
+ * @param  mixed $ip
+ * @return string|bool false if not IPv4 of if not IPv6 address
+ */
 function convertIPtoBinaryForm($ip)
 {
 
@@ -620,7 +702,6 @@ function convertIPtoBinaryForm($ip)
         return false;
     }
 
-
     $numOfBytes = 16;
     $ipAsBinaryString = '';
 
@@ -629,11 +710,11 @@ function convertIPtoBinaryForm($ip)
         // Convert current byte to decimal number
         $currentByte = ord($ipAsBinStructure[$numOfBytes - 1]);
 
-        // Convert currenty byte to string of 1 and 0
+        // Convert currently byte to string of 1 and 0
         $currentByteAsBinary = sprintf("%08b", $currentByte);
 
         // Prepend to rest of IP in binary string
-        $ipAsBinaryString = $currentByteAsBinary.$ipAsBinaryString;
+        $ipAsBinaryString = $currentByteAsBinary . $ipAsBinaryString;
 
         // Decrease byte counter
         $numOfBytes--;
@@ -642,21 +723,30 @@ function convertIPtoBinaryForm($ip)
     return $ipAsBinaryString;
 }
 
-/******************************************************************************/
-// Returns URL without GET arguments
+/**
+ * Returns URL without GET arguments
+ *
+ * @param  string $url
+ * @return string
+ */
 function getURLWithoutArguments($url)
 {
     return preg_replace('/\?.*/', '', $url);
 }
 
-/******************************************************************************/
-// Returns true if URL could be verified or if no check is necessary, false otherwise
+/**
+ * Returns true if URL could be verified or if no check is necessary, false otherwise
+ *
+ * @param  string $entityID
+ * @param  string $returnURL
+ * @return bool
+ */
 function verifyReturnURL($entityID, $returnURL)
 {
     global $SProviders, $useACURLsForReturnParamCheck;
 
     // Prevent attacks with return URLs like https://ilias.unibe.ch@google.com
-    $returnURL = preg_replace('|(https?://)(.+@)(.+)|','\1\3', $returnURL);
+    $returnURL = preg_replace('|(https?://)(.+@)(.+)|', '\1\3', $returnURL);
 
     // If SP has a <idpdisc:DiscoveryResponse>, check return param
     if (isset($SProviders[$entityID]['DSURL'])) {
@@ -693,37 +783,47 @@ function verifyReturnURL($entityID, $returnURL)
     return false;
 }
 
-/******************************************************************************/
-// Returns a reasonable value for returnIDParam
+/**
+ * Returns a reasonable value for returnIDParam
+ *
+ * @return string
+ */
 function getReturnIDParam()
 {
     if (isset($_GET['returnIDParam']) && !empty($_GET['returnIDParam'])) {
         return $_GET['returnIDParam'];
-    } else {
-        return 'entityID';
     }
+    return 'entityID';
 }
 
-/******************************************************************************/
-// Returns true if valid Shibboleth 1.x request or Directory Service request
+/**
+ * Returns true if valid Shibboleth 1.x request or Directory Service request
+ *
+ * @return bool
+ */
 function isValidShibRequest()
 {
     return (isValidShib1Request() || isValidDSRequest());
 }
 
-/******************************************************************************/
-// Returns true if valid Shibboleth request
+/**
+ * Returns true if valid Shibboleth request
+ *
+ * @return bool
+ */
 function isValidShib1Request()
 {
     if (isset($_GET['shire']) && isset($_GET['target'])) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
-/******************************************************************************/
-// Returns true if request is a valid Directory Service request
+/**
+ * Returns true if request is a valid Directory Service request
+ *
+ * @return bool
+ */
 function isValidDSRequest()
 {
     global $SProviders;
@@ -753,27 +853,45 @@ function isValidDSRequest()
     return true;
 }
 
-/******************************************************************************/
-// Sets the Location header to redirect the user's web browser
+/**
+ * Sets the Location header to redirect the user's web browser
+ *
+ * @param  string $url
+ * @return void
+ */
 function redirectTo($url)
 {
-    header('Location: '.$url);
+    header('Location: ' . $url);
 }
 
-/******************************************************************************/
-// Sets the Location that is used for redirect the web browser back to the SP
+/**
+ * Sets the Location that is used for redirect the web browser back to the SP
+ *
+ * @param  string $url
+ * @param  string $IdP
+ * @return void
+ */
 function redirectToSP($url, $IdP)
 {
     if (preg_match('/\?/', $url) > 0) {
-        redirectTo($url.'&'.getReturnIDParam().'='.urlencode($IdP));
+        redirectTo($url . '&' . getReturnIDParam() . '=' . urlencode($IdP));
     } else {
-        redirectTo($url.'?'.getReturnIDParam().'='.urlencode($IdP));
+        redirectTo($url . '?' . getReturnIDParam() . '=' . urlencode($IdP));
     }
 }
-/******************************************************************************/
-// Logs all events where users were redirected to their IdP or back to an SP
-// The log then can be used to approximately detect how many users were served
-// by the SWITCHwayf
+
+/**
+ * Logs all events where users were redirected to their IdP or back to an SP
+ * The log then can be used to approximately detect how many users were served
+ * by the SWITCHwayf
+ *
+ * @param  mixed $protocol
+ * @param  mixed $type
+ * @param  mixed $sp
+ * @param  mixed $idp
+ * @param  mixed $return
+ * @return void
+ */
 function logAccessEntry($protocol, $type, $sp, $idp, $return)
 {
     global $WAYFLogFile, $useLogging;
@@ -786,20 +904,20 @@ function logAccessEntry($protocol, $type, $sp, $idp, $return)
     // Create log file if it does not exist yet
     if (!file_exists($WAYFLogFile) && !touch($WAYFLogFile)) {
         // File does not exist and cannot be written to
-        logFatalErrorAndExit('WAYF log file '.$WAYFLogFile.' does not exist and could not be created.');
+        logFatalErrorAndExit('WAYF log file ' . $WAYFLogFile . ' does not exist and could not be created.');
     }
 
     // Ensure that the file exists and is writable
     if (!is_writable($WAYFLogFile)) {
-        logFatalErrorAndExit('Current file permission do not allow WAYF to write to its log file '.$WAYFLogFile.'.');
+        logFatalErrorAndExit('Current file permission do not allow WAYF to write to its log file ' . $WAYFLogFile . '.');
     }
 
     // Compose log entry
-    $entry = date('Y-m-d H:i:s').' '.$_SERVER['REMOTE_ADDR'].' '.$protocol.' '.$type.' '.$idp.' '.$return.' '.$sp."\n";
+    $entry = date('Y-m-d H:i:s') . ' ' . $_SERVER['REMOTE_ADDR'] . ' ' . $protocol . ' ' . $type . ' ' . $idp . ' ' . $return . ' ' . $sp . "\n";
 
     // Open file in append mode
     if (!$handle = fopen($WAYFLogFile, 'a')) {
-        logFatalErrorAndExit('Could not open file '.$WAYFLogFile.' for appending log entries.');
+        logFatalErrorAndExit('Could not open file ' . $WAYFLogFile . ' for appending log entries.');
     }
 
     // Try getting the lock
@@ -817,8 +935,11 @@ function logAccessEntry($protocol, $type, $sp, $idp, $return)
     fclose($handle);
 }
 
-/******************************************************************************/
-// Init connection to system logger
+/**
+ * Init connection to system logger
+ *
+ * @return void
+ */
 function initLogger()
 {
     global $instanceIdentifier;
@@ -826,43 +947,69 @@ function initLogger()
     openlog($instanceIdentifier, LOG_NDELAY, LOG_USER);
 }
 
-/******************************************************************************/
-// Logs a debug message
+/**
+ * Logs a debug message
+ *
+ * @param  mixed $infoMsg
+ * @return void
+ */
 function logDebug($infoMsg)
 {
     wayfLog("DEBUG", $infoMsg);
 }
 
-// Logs an info message
+/**
+ * Logs an info message
+ *
+ * @param  mixed $infoMsg
+ * @return void
+ */
 function logInfo($infoMsg)
 {
     wayfLog("INFO", $infoMsg);
 }
 
-/******************************************************************************/
-// Logs an warnimg message
+/**
+ * Logs an warning message
+ *
+ * @param  mixed $warnMsg
+ * @return void
+ */
 function logWarning($warnMsg)
 {
     wayfLog("WARN", $warnMsg);
 }
 
-/******************************************************************************/
-// Logs an error message
+/**
+ * Logs an error message
+ *
+ * @param  mixed $errorMsg
+ * @return void
+ */
 function logError($errorMsg)
 {
     wayfLog("ERROR", $errorMsg);
 }
 
-/******************************************************************************/
-// Logs an fatal error message
+/**
+ * Logs an fatal error message
+ *
+ * @param  mixed $errorMsg
+ * @return void
+ */
 function logFatalErrorAndExit($errorMsg)
 {
     logError($errorMsg);
     exit;
 }
 
-/******************************************************************************/
-// Logs a message to errorLog
+/**
+ * Logs a message to errorLog
+ *
+ * @param  string $level
+ * @param  string $errorMsg
+ * @return void
+ */
 function wayfLog($level, $errorMsg)
 {
     global $developmentMode;
@@ -890,42 +1037,53 @@ function wayfLog($level, $errorMsg)
     }
 }
 
-/******************************************************************************/
-// Returns true if PATH info indicates a request of type $type
+/**
+ * Returns true if PATH info indicates a request of type $type
+ *
+ * @param  string $type
+ * @return bool
+ */
 function isRequestType($type)
 {
     // Make sure the type is checked at end of path info
-    return isPartOfPathInfo($type.'$');
+    return isPartOfPathInfo($type . '$');
 }
 
-/******************************************************************************/
-// Checks for substrings in Path Info and returns true if match was found
+/**
+ * Checks for substrings in Path Info and returns true if match was found
+ *
+ * @param  string $needle
+ * @return bool
+ */
 function isPartOfPathInfo($needle)
 {
     if (
         isset($_SERVER['PATH_INFO'])
         && !empty($_SERVER['PATH_INFO'])
-        && preg_match('|/'.$needle.'|', $_SERVER['PATH_INFO'])) {
+        && preg_match('|/' . $needle . '|', $_SERVER['PATH_INFO'])
+    ) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
-/******************************************************************************/
-// Converts to the unified datastructure that the Shibboleth DS will be using
+/**
+ * Converts to the unified data structure that the Shibboleth DS will be using
+ *
+ * @param  array $IDProviders
+ * @return array
+ */
 function convertToShibDSStructure($IDProviders)
 {
     $ShibDSIDProviders = array();
 
     foreach ($IDProviders as $key => $value) {
-
         // Skip unknown and category entries
         if (
             !isset($value['Type'])
             || $value['Type'] == 'category'
             || $value['Type'] == 'wayf'
-            ) {
+        ) {
             continue;
         }
 
@@ -937,12 +1095,11 @@ function convertToShibDSStructure($IDProviders)
         // Add DisplayNames in other languages
         foreach ($value as $lang => $name) {
             if (
-                   $lang == 'Name'
+                $lang == 'Name'
                 || $lang == 'SSO'
                 || $lang == 'Realm'
                 || $lang == 'Type'
                 || $lang == 'IP'
-
             ) {
                 continue;
             }
@@ -959,8 +1116,12 @@ function convertToShibDSStructure($IDProviders)
     return $ShibDSIDProviders;
 }
 
-/******************************************************************************/
-// Sorts the IDProviders array
+/**
+ * Sorts the IDProviders array
+ *
+ * @param  array $IDProviders
+ * @return void
+ */
 function sortIdentityProviders(&$IDProviders)
 {
     $orderedCategories = array();
@@ -983,7 +1144,6 @@ function sortIdentityProviders(&$IDProviders)
     }
 
     foreach ($IDProviders as $entityId => $IDProvider) {
-
         // Skip categories
         if ($IDProvider['Type'] == 'category') {
             continue;
@@ -1022,7 +1182,6 @@ function sortIdentityProviders(&$IDProviders)
     // Recompose $IDProviders
     $IDProviders = array();
     foreach ($orderedCategories as $category => $object) {
-
         // Skip category if it contains no IdPs
         if (!isset($object['IdPs']) || count($object['IdPs']) < 1) {
             continue;
@@ -1041,8 +1200,14 @@ function sortIdentityProviders(&$IDProviders)
     }
 }
 
-/******************************************************************************/
-// Sorts two entries according to their Type, Index and (local) Name
+
+/**
+ * Sorts two entries according to their Type, Index and (local) Name
+ *
+ * @param  string[] $a
+ * @param  string[] $b
+ * @return int
+ */
 function sortUsingTypeIndexAndName($a, $b)
 {
     global $language;
@@ -1059,23 +1224,32 @@ function sortUsingTypeIndexAndName($a, $b)
     }
 }
 
-/******************************************************************************/
-// Return given Strring without accents
+
+/**
+ * Return given String without accents
+ * 
+ * @param string $string input value
+ * 
+ * @return string
+ */
 function removeAccents($string)
 {
-    $accents =    array("À","Á","Â","Ã","Ä","Å","à","á","â","ã","ä","å","Ò","Ó","Ô","Õ","Ö","Ø","ò","ó","ô","õ","ö","ø","È","É","Ê","Ë","è","é","ê","ë","Ç","ç","Ì","Í","Î","Ï","ì","í","î","ï","Ù","Ú","Û","Ü","ù","ú","û","ü","ÿ","Ñ","ñ");
-    $nonAccents = array("a","a","a","a","a","a","a","a","a","a","a","a","o","o","o","o","o","o","o","o","o","o","o","o","e","e","e","e","e","e","e","e","c","c","i","i","i","i","i","i","i","i","u","u","u","u","u","u","u","u","y","n","n");
+    $accents =    array("À", "Á", "Â", "Ã", "Ä", "Å", "à", "á", "â", "ã", "ä", "å", "Ò", "Ó", "Ô", "Õ", "Ö", "Ø", "ò", "ó", "ô", "õ", "ö", "ø", "È", "É", "Ê", "Ë", "è", "é", "ê", "ë", "Ç", "ç", "Ì", "Í", "Î", "Ï", "ì", "í", "î", "ï", "Ù", "Ú", "Û", "Ü", "ù", "ú", "û", "ü", "ÿ", "Ñ", "ñ");
+    $nonAccents = array("a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "e", "e", "e", "e", "e", "e", "e", "e", "c", "c", "i", "i", "i", "i", "i", "i", "i", "i", "u", "u", "u", "u", "u", "u", "u", "u", "y", "n", "n");
     return str_replace(
         $accents,
         $nonAccents,
         $string
-        );
+    );
 }
 
 
-/******************************************************************************/
-// Returns true if the referer of the current request is matching an assertion
-// consumer or discovery service URL of a Service Provider
+/**
+ * Returns true if the referer of the current request is matching an assertion
+ * consumer or discovery service URL of a Service Provider
+ *
+ * @return bool
+ */
 function isRequestRefererMatchingSPHost()
 {
     global $SProviders;
@@ -1121,27 +1295,37 @@ function isRequestRefererMatchingSPHost()
     return false;
 }
 
-/******************************************************************************/
-// Is this script run in CLI mode
+/**
+ * Is this script run in CLI mode
+ *
+ * @return bool
+ */
 function isRunViaCLI()
 {
     return !isset($_SERVER['REMOTE_ADDR']);
 }
 
-/******************************************************************************/
-// Is this script run in CLI mode
+/**
+ * Is this script run in CLI mode
+ *
+ * @return bool
+ */
 function isRunViaInclude()
 {
     return basename($_SERVER['SCRIPT_NAME']) != 'readMetadata.php';
 }
 
+/**
+ * printSubmitAction
+ *
+ * @return string
+ */
 function printSubmitAction()
 {
     if (isUseSelect2()) {
         return "return select2CheckForm()";
-    } else {
-        return "return checkForm()";
     }
+    return "return checkForm()";
 }
 
 /******************************************************************************/

@@ -1,4 +1,6 @@
-<?php // Copyright (c) 2019 Geoffroy Arnoud, Guillaume Rousse, and SWITCHwayf contributors
+<?php
+
+// Copyright (c) 2019 Geoffroy Arnoud, Guillaume Rousse, and SWITCHwayf contributors
 
 $metadataIDProviders = array(
   'http://idp-condorcet.dev.entrouvert.org/idp/saml2/metadata' =>

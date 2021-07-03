@@ -1,4 +1,6 @@
-<?php // Copyright (c) 2019, SWITCH
+<?php
+
+// Copyright (c) 2019, SWITCH
 
 //******************************************************************************
 // This file contains the configuration of SWITCHwayf, a light-weight
@@ -24,7 +26,7 @@
 // Domain within the WAYF cookie should be readable. Must start with a .
 //$commonDomain = '.example.org';
 
-// Optionnal cookie name prefix in case you run several
+// Optional cookie name prefix in case you run several
 // instances of the WAYF in the same domain.
 // Example: $cookieNamePrefix = '_mywayf';
 //$cookieNamePrefix = '';
@@ -34,12 +36,12 @@
 //$redirectCookieName = $cookieNamePrefix.'_redirect_user_idp';
 
 // Stores last selected IdPs
-// This value shouldn't be changed because _saml_idp is the officilly
+// This value shouldn't be changed because _saml_idp is the officially
 // defined name in the SAML specification
 //$SAMLDomainCookieName = $cookieNamePrefix.'_saml_idp';
 
 // Stores last selected SP
-// This value can be choosen as you like because it is something specific
+// This value can be chosen as you like because it is something specific
 // to this WAYF implementation. It can be used to display help/contact
 // information on a page in the same domain as $commonDomain by accessing
 // the federation metadata and parsing out the contact information of the
@@ -47,7 +49,7 @@
 //$SPCookieName = $cookieNamePrefix.'_saml_sp';
 
 // If enabled cookies are set/transmitted only via https connections
-// and the http only option is set to prevent javascripts from reading the
+// and the http only option is set to prevent javascript from reading the
 // cookies
 //$cookieSecurity = false;
 
@@ -110,7 +112,7 @@
 
   // Whether the return parameter is checked against SAML2 metadata or not
   // The Discovery Service specification says the DS SHOULD check this in order
-  // to mitigate phising problems.
+  // to mitigate phishing problems.
   // The return parameter will only be checked if the Service Provider's metadata
   // contains an <idpdisc:DiscoveryResponse> or if the assertion consumer url
   // check below is enabled
@@ -127,10 +129,10 @@
     // Requires $useSAML2Metadata and $enableDSReturnParamCheck to be true
     //$useACURLsForReturnParamCheck = false;
 
-// Whether to turn on Kerberos support for Identity Provider preselection
+// Whether to turn on Kerberos support for Identity Provider pre-selection
 //$useKerberos = false;
 
-  // A Kerboros-protected page that redirects back to the WAYF script
+  // A Kerberos-protected page that redirects back to the WAYF script
   //$kerberosRedirectURL = '/myFederation/kerberosRedirect.php';
 
 // If enabled, the user's IP is used for a reverse DNS lookup whose resulting
@@ -139,7 +141,7 @@
 
 // Whether the JavaScript required for embedding the WAYF
 // on a remote site should be generated or not
-// Lowers security against phising!
+// Lowers security against phishing!
 // If this value is set to true, any web page in the world can
 // (with some efforts) find out with a high probability from which
 // organization a user is from. This could be misused for phishing attacks.
@@ -148,7 +150,7 @@
 
   // If enabled the Embedded WAYF will prevent releasing information
   // about the user's preselected Identity Provider
-  // While this is benefical to the data protection of the user, it will also
+  // While this is beneficial to the data protection of the user, it will also
   // prevent preselecting the user's Identity Provider. Thus, users will have
   // to preselect their IdP each and every time
   // Requires $useEmbeddedWAYF to be true
@@ -181,7 +183,7 @@
 
 // Whether or not to add the entityID of the preselected IdP to the
 // exported JSON/Text/PHP Code
-// Lowers security against phising!
+// Lowers security against phishing!
 // If this value is set to true, any web page
 // in the world can easily find out with a high probability from which
 // organization a user is from. This could be misused for phishing attacks.
@@ -206,7 +208,7 @@
 
 // Set both config files to the same value if you don't want to use the
 // the WAYF to read a (potential) automatically generated file that undergoes
-// some plausability checks before being used
+// some plausibility checks before being used
 //$IDPConfigFile = 'IDProvider.conf.php';
 //$backupIDPConfigFile = 'IDProvider.conf.php';
 
@@ -244,7 +246,7 @@
 // the WAYF script.
 //$javascriptURL = 'https://ds.example.org/SWITCHwayf/js';
 
-// Abolute URL to point to APIs
+// Absolute URL to point to APIs
 //$apiURL = 'https://ds.example.org/SWITCHwayf/api';
 
 // 5. Appearance Settings

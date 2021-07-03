@@ -1,9 +1,11 @@
-<?php // Copyright (c) 2019, SWITCH
+<?php
+
+// Copyright (c) 2019, SWITCH
 
 // Localized language strings for SWITCHwayf
-// Make sure to use HTML entities instead of plain UTF-8 characters for 
+// Make sure to use HTML entities instead of plain UTF-8 characters for
 // non-ASCII characters if you are using the Embedded WAYF. It could be that the
-// Embedded WAYF is used on non-UTF8 web pages, which then could cause 
+// Embedded WAYF is used on non-UTF8 web pages, which then could cause
 // encoding issues
 
 // *********************************************************************************
@@ -14,12 +16,12 @@
 // ****************************
 
 // To permanently customize locales such that they are not overwritten by updates
-// of the SWITCHwayf, create a file 'custom-languages.php' and override any 
+// of the SWITCHwayf, create a file 'custom-languages.php' and override any
 // individual locale in the $langStrings array. For example like this:
-// 
+//
 // $langStrings['en']['about_federation'] = 'About Example Federation';
 // $langStrings['en']['additional_info'] = 'My <b>sample HTML content</b>';
-// 
+//
 //
 // Set a locale to an empty string ('') in order to hide it
 // Note that any string in custom-languages.php will survive updates
@@ -35,7 +37,7 @@ $langStrings['en']['faq'] = 'FAQ'; // This string can be hidden by setting it to
 $langStrings['en']['help'] = 'Help';// This string can be hidden by setting it to ''
 $langStrings['en']['privacy'] = 'Data Privacy'; // This string can be hidden by setting it to ''
 $langStrings['en']['title'] = 'Organisation Selection';
-$langStrings['en']['header'] = 'Select your organisation'; 
+$langStrings['en']['header'] = 'Select your organisation';
 $langStrings['en']['make_selection'] = 'You must select an organisation.';
 $langStrings['en']['settings'] = 'Default organisation for this web browser';
 $langStrings['en']['permanent_select_header'] = 'Permanently set your organisation';

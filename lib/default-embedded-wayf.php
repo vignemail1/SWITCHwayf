@@ -151,7 +151,7 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // Attention: setting this to true, overrides $useImprovedDropDownList param
 // For this to fully work, one must also add useSelect2 query Param to the
 // embedded-wayf.js script loading URL.
-// Page size is contrrolled by WAYF server directly.
+// Page size is controlled by WAYF server directly.
 // var wayf_use_select2 = false;
 
 // If true the improved drop-down-list will not display IdP logos that
@@ -176,13 +176,13 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // the checkbox will be shown but will be read only.
 // WARNING: Only use this feature if you know exactly what you are doing
 //          This option will cause problems that are difficult to find
-//          in case they accidentially select a wrong Home Organisation
+//          in case they accidentally select a wrong Home Organisation
 // [Optional, default: false]
 //var wayf_force_remember_for_session = false;
 
 // Session Initiator URL of the Service Provider
 // Examples: "https://interact.switch.ch/Shibboleth.sso/Login", "https://dokeos.unige.ch/Shibboleth.sso/DS"
-// This will implicitely be set to wayf_sp_samlDSURL = wayf_sp_handlerURL + "/Login";
+// This will implicitly be set to wayf_sp_samlDSURL = wayf_sp_handlerURL + "/Login";
 // or will be set automatically if the page where the Embedded WAYF is placed is called
 // with a 'return' and an 'entityID' GET Arguments
 // [Optional, if wayf_use_discovery_service = true
@@ -204,11 +204,11 @@ var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome"
 // the default wayf_sp_handlerURL + '/SAML/POST'
 // Only relevant if wayf_use_discovery_service is false and SAML1 is used.
 // Examples: "https://my-app.switch.ch/custom/saml-implementation/samlaa"
-// This will implicitely be set to wayf_sp_samlACURL = wayf_sp_handlerURL + "/SAML/POST";
+// This will implicitly be set to wayf_sp_samlACURL = wayf_sp_handlerURL + "/SAML/POST";
 // [Optional, default: wayf_sp_handlerURL + "/SAML/POST"]
 // var wayf_sp_samlACURL = "https://my-app.switch.ch/custom/saml-implementation/samlaa";
 
-// Overwites the text of the checkbox if
+// Overwrites the text of the checkbox if
 // wayf_show_remember_checkbox is set to true
 // [Optional, default: none]
 // var wayf_overwrite_checkbox_label_text = 'Save setting for today';
